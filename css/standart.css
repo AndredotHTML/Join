@@ -2,3 +2,7 @@
     --primaryColor: #4589FF;
     --secondaryColor: #FFFFFF; 
 }
+
+* {
+    margin: 0;
+}

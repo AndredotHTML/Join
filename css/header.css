@@ -1,0 +1,24 @@
+
+/* Header Style  which i use for my board.html */
+.zeljko_head{
+    height: 96px;
+    background-color: var(--primaryColor);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.header_right{
+    display: inline-block;
+}
+
+.header_right {
+    display: flex;
+    align-items: center;
+    gap: 20px; 
+    color: var(--secondaryColor);
+}
+
+/*End of Style */
