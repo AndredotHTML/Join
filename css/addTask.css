@@ -1,0 +1,28 @@
+#add-task-header-placeholder{
+    height: 96px;
+    background-color:var(--primaryColor);
+}
+
+#add-task-navbar-placeholder{
+    width: 232px;
+    background-color: beige;
+    height: calc(100vh - 96px)
+}
+
+#add-task-main{
+    display: flex;
+    max-width: 1920px;
+}
+
+#add-task-content{
+    
+}
+form{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 488px;
+    background-color: aquamarine;
+}
+
+
