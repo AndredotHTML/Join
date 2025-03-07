@@ -150,7 +150,6 @@
     color: var(--secondaryColor);
     border: none;
     border-radius: 8px;
-    transition: background-color 0.3s ease-in-out ;
 }
 
 .add_btn button img{
@@ -165,4 +164,57 @@
     cursor: pointer;
     background-color: #0038ff;
     transform: scale(1.1);
+}
+
+.board_content{
+    display: flex;
+    justify-content: space-between;
+    padding-left: 50px;
+    padding-right: 50px; 
+    height: 100%;
+}
+
+.toDo, .inProgress, .awaitFeedback, .done {
+    width: 250px;
+    height: 100%;
+}
+
+.toDo_header, .inProgress_header, .awaitFeedback_header, .done_header {
+    padding-bottom: 20px;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.toDo_header img:hover, .inProgress_header img:hover, .awaitFeedback_header img:hover, .done_header img:hover {
+   cursor: pointer;
+   transform: scale(1.1);
+   filter: brightness(0.9);
+
+}
+
+.drag_area {
+    height: 40px;
+    background-color: #e7e7e7;
+    border: 1px dotted #a8a8a8;
+    color: #a8a8a8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.drag_area span {
+    font-size: 20px;
+}
+
+.drag_area_highlight {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.todo {
+    background-color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
 }
