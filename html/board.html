@@ -17,7 +17,15 @@
         <div class="header_right">
             <span>Kanban Project Management Tool</span>
             <img src="../assets/icons/help.png" alt="Help Logo">
-            <img src="../assets/icons/user_profile.png" alt="User Logo">
+            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                alt="User Logo">
+        </div>
+        <div class="profile_menu">
+            <ul class="profile_menu_list">
+                <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+            </ul>
         </div>
     </header>
     <div class="content">
@@ -95,4 +103,5 @@
     </div>
 </body>
 <script src="../script/board.js"></script>
+<script src="../script/header.js"></script>
 </html>

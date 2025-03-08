@@ -1,32 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Task</title>
-    <link rel="shortcut icon" href="../assets/icons/logo.png" type="image/x-icon">
-    <link rel="stylesheet" href="../css/standart.css">
-    <link rel="stylesheet" href="../css/addTask.css">
-</head>
-<body>
-    <div id="add-task-header-placeholder">
-        <p>This is a placeholder</p>
-    </div>
-    <section id="add-task-main">
-    <div id="add-task-navbar-placeholder">
-        <p>This is a placeholder</p>
-    </div>
-    <div id="add-task-content">
-        <form action="">
-            <input type="text" placeholder="Enter a title">
-            <label for="description-add-task"></label>
-            <textarea name="description-add-task" id="description-add-task"></textarea>
-            <label for="dateInput-add-task">Due date</label>
-            <input type="date" name="dateInput-add-task" id="dateInput--add-task" placeholder="dd/mm/yyyy">
-            <label for=""></label>
-            <input type="checkbox" name="" id="">
-        </form>
-    </div>
-    </section>
-</body>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Add Task</title>
+        <link rel="shortcut icon" href="../assets/icons/logo.png" type="image/x-icon">
+        <link rel="stylesheet" href="../css/standart.css">
+        <link rel="stylesheet" href="../css/addTask.css">
+        <link rel="stylesheet" href="../css/header.css">
+
+        <script src="../script/header.js"></script>
+    </head>
+
+    <body>
+        <header class="zeljko_head">
+            <div class="logo">
+                <img src="../assets/icons/logo.png" alt="Join Logo">
+            </div>
+            <div class="header_right">
+                <span>Kanban Project Management Tool</span>
+                <img src="../assets/icons/help.png" alt="Help Logo">
+                <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                    alt="User Logo">
+            </div>
+            <div class="profile_menu">
+                <ul class="profile_menu_list">
+                    <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                    <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                    <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+                </ul>
+            </div>
+        </header>
+        <section id="add-task-main">
+            <div id="add-task-navbar-placeholder">
+                <p>This is a placeholder</p>
+            </div>
+            <div id="add-task-content">
+                <form action="">
+                    <input type="text" placeholder="Enter a title">
+                    <label for="description-add-task"></label>
+                    <textarea name="description-add-task" id="description-add-task"></textarea>
+                    <label for="dateInput-add-task">Due date</label>
+                    <input type="date" name="dateInput-add-task" id="dateInput--add-task" placeholder="dd/mm/yyyy">
+                    <label for=""></label>
+                    <input type="checkbox" name="" id="">
+                </form>
+            </div>
+        </section>
+    </body>
+
 </html>
