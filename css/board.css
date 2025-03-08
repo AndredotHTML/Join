@@ -20,7 +20,7 @@
     width: calc(100% - 200px);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
     height: 100%;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .nav_bar{
@@ -194,7 +194,19 @@
 }
 
 .drag_area {
+    height: 550px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    gap: 15px;
+}
+
+.noTask_msg{
     height: 40px;
+    width: 90%;
     background-color: #e7e7e7;
     border: 1px dotted #a8a8a8;
     color: #a8a8a8;
@@ -202,19 +214,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 5px 10px;
 }
 
-.drag_area span {
-    font-size: 20px;
-}
-
-.drag_area_highlight {
-    background-color: rgba(0, 0, 0, 0.2);
+.drag-area-highlight {
+    background-color: #e7e7e7;
+    border: 1px dashed rgba(0, 0, 0, 0.5);
 }
 
 .todo {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 10px;
+    width: 200px;
 }
