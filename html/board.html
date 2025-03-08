@@ -17,7 +17,15 @@
         <div class="header_right">
             <span>Kanban Project Management Tool</span>
             <img src="../assets/icons/help.png" alt="Help Logo">
-            <img src="../assets/icons/user_profile.png" alt="User Logo">
+            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                alt="User Logo">
+        </div>
+        <div class="profile_menu">
+            <ul class="profile_menu_list">
+                <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+            </ul>
         </div>
     </header>
     <div class="content">
@@ -55,8 +63,9 @@
                         <h2>To do </h2>
                         <img src="../assets/icons/plus_button.png" alt="">
                     </div>
-                    <div class="toDo_content"> 
-                        <div  id="toDo" ondrop="moveTo('toDo')" ondragover="allowDrop(event); highlight('toDo')"ondragleave="removeHighlight('toDo')"></div>
+                    <div class="toDo_content">
+                        <div class="drag_area" id="toDo" ondrop="moveTo('toDo')" ondragover="allowDrop(event); highlight('toDo')"ondragleave="removeHighlight('toDo')">
+                        </div> 
                     </div>
                 </div>
                 <div class="inProgress">
@@ -65,7 +74,8 @@
                         <img src="../assets/icons/plus_button.png" alt="">
                     </div>
                     <div class="inProgress_content" >
-                    <div id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"ondragleave="removeHighlight('inProgress')" ></div>
+                        <div class="drag_area" id="inProgress" ondrop="moveTo('inProgress')" ondragover="allowDrop(event); highlight('inProgress')"ondragleave="removeHighlight('inProgress')">
+                        </div> 
                 </div>
                 </div>
                 <div class="awaitFeedback">
@@ -74,7 +84,8 @@
                         <img src="../assets/icons/plus_button.png" alt="">
                     </div>
                     <div class="awaitFeedback_content" >
-                        <div  id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')"ondragleave="removeHighlight('awaitFeedback')"></div>
+                        <div class="drag_area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')" ondragover="allowDrop(event); highlight('awaitFeedback')"ondragleave="removeHighlight('awaitFeedback')">
+                    </div>
                     </div>
                 </div>
                 <div class="done">
@@ -83,12 +94,14 @@
                         <img src="../assets/icons/plus_button.png" alt="">
                     </div>
                     <div class="done_content" >
-                        <div  id="done" ondrop="moveTo('done')" ondragover="allowDrop(event); highlight('done')" ondragleave="removeHighlight('done')"></div>
+                        <div class="drag_area" id="done" ondrop="moveTo('done')" ondragover="allowDrop(event); highlight('done')" ondragleave="removeHighlight('done')">
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
     </div>
 </body>
-<script src="../scripts/board.js"></script>
+<script src="../script/board.js"></script>
+<script src="../script/header.js"></script>
 </html>

@@ -8,12 +8,30 @@
     <link rel="shortcut icon" href="../assets/icons/logo.png" type="image/x-icon">
     <link rel="stylesheet" href="../css/standart.css">
     <link rel="stylesheet" href="../css/addTask.css">
+    <link rel="stylesheet" href="../css/header.css">
+
+    <script src="../script/header.js"></script>
 </head>
 
 <body>
-    <div id="add-task-header-placeholder">
-        <p>This is a placeholder</p>
-    </div>
+    <header class="zeljko_head">
+        <div class="logo">
+            <img src="../assets/icons/logo.png" alt="Join Logo">
+        </div>
+        <div class="header_right">
+            <span>Kanban Project Management Tool</span>
+            <img src="../assets/icons/help.png" alt="Help Logo">
+            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                alt="User Logo">
+        </div>
+        <div class="profile_menu">
+            <ul class="profile_menu_list">
+                <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+            </ul>
+        </div>
+    </header>
     <section id="add-task-main">
         <div id="add-task-navbar-placeholder">
             <p>This is a placeholder</p>
@@ -79,5 +97,5 @@
         </div>
     </section>
 </body>
-
+   
 </html>
