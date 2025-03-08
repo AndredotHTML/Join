@@ -43,6 +43,10 @@
     background-color: #d2e2ff;
 }
 
+.active {
+    background-color: #d2e2ff;
+}
+
 .nav_bar nav li a img {
     width: 24px;
     height: 24px;
