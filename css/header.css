@@ -1,6 +1,5 @@
-
 /* Header Style  which i use for my board.html */
-.zeljko_head{
+.zeljko_head {
     height: 96px;
     background-color: var(--primaryColor);
     display: flex;
@@ -8,17 +7,73 @@
     align-items: center;
     padding-left: 30px;
     padding-right: 30px;
+    position: relative;
 }
 
-.header_right{
+.header_right {
     display: inline-block;
 }
 
 .header_right {
     display: flex;
     align-items: center;
-    gap: 20px; 
+    gap: 20px;
     color: var(--secondaryColor);
+}
+
+.profile_menu {
+    background-color: var(--secondaryColor);
+    width: 172px;
+    height: 0px;
+    position: absolute;
+    top: 96px;
+    right: 4px;
+    text-align: right;
+    padding: 0 10px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #42526e;
+    font-size: 19px;
+    line-height: 1.2;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out, padding 0.3s ease-in-out;
+}
+
+.profile_menu.open {
+    height: 137px;
+    padding: 10px;
+}
+
+.profile_menu_list {
+    list-style-type: none;
+    padding-left: 0;
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.profile_menu_item {
+    border-radius: 8px;
+}
+
+.profile_menu_item:hover,
+.profile_menu_item:active {
+    background-color: #d2e2ff;
+}
+
+.profile_menu_item > a {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    padding: 8px 16px;
+}
+
+.user_profile_icon {
+    user-select: none;
+}
+
+.user_profile_icon:hover {
+    cursor: pointer;
 }
 
 /*End of Style */
