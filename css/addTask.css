@@ -1,20 +1,23 @@
+
+
 body {
     line-height: 120%;
 }
 
-#add-task-main {
+
+#add-task-content {
     display: flex;
     width: 100%;
     margin: 0 auto;
     height: calc(100vh - 96px);
 }
 
-#add-task-content {
+#add-task-main{
     width: 100%;
     display: flex;
     align-items: end;
     justify-content: space-between;
-
+    max-width: 1420px;
 }
 
 form {
@@ -38,26 +41,38 @@ form {
     height: 16px;
 }
 
-form > label,
+form>label,
 legend {
     height: 23px;
     font-size: 19px;
     font-weight: bold;
 }
 
-form > input,
-form > select {
+form>input,
+form>select {
     padding: 12px 16px;
     border: none;
     border-bottom: 1px solid #D1D1D1;
+    -webkit-appearance: none;
+    -moz-appearance: none;
     appearance: none;
 }
 
-label > span {
+form>select {
+    height: 48px;
+    background: url("../assets/icons/arrow_drop_down.svg") no-repeat center right 16px;
+}
+
+.open {
+    background: url("../assets/icons/arrow_drop_down_close.svg")no-repeat center right 16px;
+}
+
+label>span {
     font-weight: 400;
 }
 
 textarea {
+    resize: none;
     height: 103px;
     border-radius: 0px 10px 10px 10px;
     border: 1px solid #D1D1D1;
@@ -93,11 +108,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="date"]::-webkit-datetime-edit-fields-wrapper {
-    color: gray;
+    color: #647188;
     font-style: italic;
 }
 
-button > img {
+button>img {
     width: 20px;
     height: 14.51;
 }
