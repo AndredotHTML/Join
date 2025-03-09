@@ -11,14 +11,12 @@
 }
 
 .header_right {
-    display: inline-block;
-}
-
-.header_right {
     display: flex;
     align-items: center;
     gap: 20px;
     color: var(--secondaryColor);
+    line-height: 1.2;
+    font-size: 19px;
 }
 
 .profile_menu {
