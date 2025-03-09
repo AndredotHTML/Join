@@ -7,6 +7,42 @@ body {
     background-color: #4589FF;
 }
 
+#signup_overlay {
+    position: fixed;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.288);
+    z-index: 998;
+}
+
+#signup_msg {
+    background-color: #4589FF;
+    border-radius: 12px;
+    height: 40px;
+    width: 216px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+    color: white;
+    position: fixed;
+    bottom: -100px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    padding: 20px;
+    transition: opacity 0.5s ease-out, bottom 0.5s ease-out;
+    z-index: 1000;
+}
+
+.show {
+    bottom: 50% !important; 
+    opacity: 1 !important; 
+}
+
 #signup_top {
     display: flex;
     justify-content: space-between;
@@ -158,6 +194,15 @@ input.error {
 }
 
 #error_msg_password {
+    color: rgba(255, 0, 0, 0.534);
+    position: absolute;
+    bottom: -20px; 
+    left: 0;
+    font-size: 12px; 
+    display: none;
+}
+
+#error_msg_email {
     color: rgba(255, 0, 0, 0.534);
     position: absolute;
     bottom: -20px; 
