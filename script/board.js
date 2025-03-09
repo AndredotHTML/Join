@@ -1,18 +1,22 @@
 let task = [{
     'id' : 0,
-    'title' : 'Task1',
-    'category' : 'toDo'
-},{
-    'id' :1,
-    'title' : 'Task2',
+    'title' : 'Kochwelt Page & Recipe Recommender',
+    'type' : 'User Story',
+    'description' : 'Build start page with recipe recommendataion...',
+    'date' : '11.3.2025' ,
+    'priority': 'medium',
+    'users' : ['Emmanuel Mauer' , 'Marcel Bauer', 'Anton Mayer'],
+    'subtasks' : ['Implement Recipe Recommendation', 'Start Page Layout'],
     'category' : 'inProgress'
 },{
-    'id' : 2,
-    'title' : 'Task3',
-    'category' : 'awaitFeedback'
-},{
-    'id' : 3,
-    'title' : 'Task4',
+    'id' : 1,
+    'title' : 'CSS Architecture Planning',
+    'type' : 'Technical Task',
+    'description' : 'Define CSS naming conventions and structure',
+    'date' : '11.3.2025' ,
+    'priority': 'urgent',
+    'users' : ['Benedikt Ziegler' , 'Sofia Müller'],
+    'subtasks' : ['Establish CSS Methodology', 'Setup Base Styles'],
     'category' : 'done'
 }];
 
@@ -86,13 +90,14 @@ function displayDone() {
 }
 
 function generateTask(element) {
-    return `<div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`
+    return `
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="todo">${element['title']}</div>`
 }
 
 function generateNoTask(){
     return `
-        <div class="drag_area">
-        <span>No task</span>
+        <div class="noTask_msg">
+        <span>No task </span>
     </div>
 `;
 }
@@ -108,12 +113,15 @@ function allowDrop(ev) {
 function moveTo(category){
     task[currentDraggedElement]['category'] = category;
     updateHTML();
+    removeHighlight(category); 
 }
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
+
 }
 
 function highlight(id) {
     document.getElementById(id).classList.add('drag-area-highlight');
+    
 }

@@ -1,105 +1,18 @@
-
 .content {
     display: flex;
     width: 100%;
     margin: 0 auto;
-    height: calc(100vh - 96px); 
+    height: calc(100vh - 96px);
 }
 
-.nav_wrapper{
-    width: 50px;
-    flex-grow: 1;
-    box-shadow: 0 5px 6px 0 rgba(0, 0, 0, 0.3);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between; 
-    height: 100%;
-}
-
-.main_wrapper{
+.main_wrapper {
     width: calc(100% - 200px);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
     height: 100%;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
-.nav_bar{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 30px;
-}
-
-.nav_bar nav {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column; 
-    gap: 10px; 
-}
-
-.nav_bar nav li {
-    list-style: none;
-}
-
-.nav_bar nav li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color:#42526e;
-    font-size:18px ;
-    padding: 10px 20px;
-    border-radius: 20px;
-}
-
-.nav_bar nav li  :hover{
-    background-color: #d2e2ff;
-}
-
-.nav_bar nav li a img {
-    width: 24px;
-    height: 24px;
-}
-
-.legal_stuff{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-bottom: 30px;
-}
-
-.legal_stuff nav {
-    padding: 0;
-    margin: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column; 
-    gap: 10px; 
-}
-
-.legal_stuff nav li {
-    list-style: none;
-}
-
-.legal_stuff nav li a {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-    color:#42526e;
-    font-size:17px;
-    padding: 10px 20px;
-    border-radius: 20px;
-}
-
-.legal_stuff nav li :hover{
-    background-color: var(--primaryColor);
-    color: var(--secondaryColor);
-}
-
-.board_header{
+.board_header {
     display: flex;
     padding-left: 50px;
     padding-bottom: 50px;
@@ -139,38 +52,38 @@
 .search_container input:hover {
     cursor: pointer;
 }
-    
-.add_btn{
+
+.add_btn {
     margin-left: 40px;
 }
 
 .add_btn button {
     padding: 10px 10px;
-    background-color:var(--primaryColor);
+    background-color: var(--primaryColor);
     color: var(--secondaryColor);
     border: none;
     border-radius: 8px;
 }
 
-.add_btn button img{
+.add_btn button img {
     margin-left: 10px;
 }
 
-.add_btn button  span{
+.add_btn button span {
     font-size: 18px;
 }
 
-.add_btn button:hover{
+.add_btn button:hover {
     cursor: pointer;
     background-color: #0038ff;
     transform: scale(1.1);
 }
 
-.board_content{
+.board_content {
     display: flex;
     justify-content: space-between;
     padding-left: 50px;
-    padding-right: 50px; 
+    padding-right: 50px;
     height: 100%;
 }
 
@@ -181,20 +94,32 @@
 
 .toDo_header, .inProgress_header, .awaitFeedback_header, .done_header {
     padding-bottom: 20px;
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
 .toDo_header img:hover, .inProgress_header img:hover, .awaitFeedback_header img:hover, .done_header img:hover {
-   cursor: pointer;
-   transform: scale(1.1);
-   filter: brightness(0.9);
+    cursor: pointer;
+    transform: scale(1.1);
+    filter: brightness(0.9);
 
 }
 
 .drag_area {
+    height: 550px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    gap: 15px;
+}
+
+.noTask_msg {
     height: 40px;
+    width: 90%;
     background-color: #e7e7e7;
     border: 1px dotted #a8a8a8;
     color: #a8a8a8;
@@ -202,19 +127,17 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 5px 10px;
 }
 
-.drag_area span {
-    font-size: 20px;
-}
-
-.drag_area_highlight {
-    background-color: rgba(0, 0, 0, 0.2);
+.drag-area-highlight {
+    background-color: #e7e7e7;
+    border: 1px dashed rgba(0, 0, 0, 0.5);
 }
 
 .todo {
     background-color: white;
     border: 1px solid black;
     border-radius: 5px;
-    padding: 10px;
+    width: 200px;
 }

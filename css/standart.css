@@ -1,6 +1,20 @@
+@font-face {
+    font-family: "Open Sans";
+    src: url("../assets/fonts/oenSans/OpenSansVariableFont.ttf");
+    font-style: normal;
+    font-weight: 300 800;
+}
+
+@font-face {
+    font-family: "Open Sans";
+    src: url("../assets/fonts/oenSans/OpenSansItalicVariableFont.ttf");
+    font-style: italic;
+    font-weight: 300 800;
+}
+
 :root {
     --primaryColor: #4589FF;
-    --secondaryColor: #FFFFFF; 
+    --secondaryColor: #FFFFFF;
 }
 
 * {
@@ -13,4 +27,7 @@
 
 .d_none {
     display: none !important;
+}
+html {
+    font-family: "Open Sans", sans-serif;
 }
