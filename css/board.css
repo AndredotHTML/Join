@@ -88,7 +88,7 @@
 }
 
 .toDo, .inProgress, .awaitFeedback, .done {
-    width: 250px;
+    width: 300px;
     height: 100%;
 }
 
@@ -128,6 +128,7 @@
     align-items: center;
     justify-content: center;
     padding: 5px 10px;
+    margin-top: 5px;
 }
 
 .drag-area-highlight {
@@ -135,9 +136,100 @@
     border: 1px dashed rgba(0, 0, 0, 0.5);
 }
 
-.todo {
-    background-color: white;
-    border: 1px solid black;
-    border-radius: 5px;
-    width: 200px;
+.ticket {
+    background-color:var(--secondaryColor);
+    border: 1px solid #f7f7f7;
+    border-radius: 10px;
+    width: 290px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+    margin-top: 5px;
+}
+
+.ticket :hover{
+    cursor: pointer;
+}
+
+.ticket_category {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    padding: 20px ; 
+}
+
+.ticket_category span {
+    padding: 5px 15px;
+    border-radius: 10px;
+    color: var(--secondaryColor);
+}
+
+.ticket_title{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    color: #4589ff;
+}
+
+.ticket_description{
+    padding-left: 20px;
+    padding-right: 20px;
+    color: #a8a8a8;
+}
+
+.ticket_subtasks {
+    display: flex;
+    align-items: center;
+    gap: 10px; 
+    padding:20px;
+}
+
+.progress_bar {
+    width: 50%;
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+}
+
+.progress {
+    height: 100%;
+    background-color: #4589ff; 
+    transition: width 0.3s ease-in-out;
+}
+
+.completed {
+    font-weight: bold;
+    color: #333;
+}
+
+.ticket_footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px; 
+    padding-right: 20px; 
+    padding-bottom: 20px; 
+}
+
+
+.ticket_users {
+    position: relative;  
+    width: 100%;  
+    height: 50px; 
+    white-space: nowrap;  
+    overflow: hidden;  
+}
+
+
+.user_icon {
+    position: absolute; 
+    width: 40px;  
+    height: 40px; 
+    border-radius: 50%;  
+    text-align: center; 
+    line-height: 40px; 
+    font-size: 18px;  
+    font-weight: bold;  
+    color: white;   
+    border: 2px solid white;
 }
