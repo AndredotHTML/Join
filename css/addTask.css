@@ -28,12 +28,6 @@ form {
     gap: 4px;
 }
 
-#title-add-task {
-    height: 38px;
-    font-size: 32px;
-    padding: 13px 16px;
-}
-
 .validation-add-task-form {
     height: 16px;
 }
@@ -45,6 +39,7 @@ legend {
     font-weight: bold;
 }
 
+#form-header>input,
 form>input,
 #shell-subtask,
 #shell-date,
@@ -60,6 +55,18 @@ form>select {
     font-size: 19px;
 }
 
+#form-header{
+    display: flex;
+    flex-direction: column;
+    height: 361px;
+    gap: 12px;
+}
+#title-add-task {
+    height: 38px;
+    font-size: 32px !important;
+}
+
+#form-header>input:focus,
 form>input:focus,
 #shell-subtask:focus,
 #shell-date:focus,

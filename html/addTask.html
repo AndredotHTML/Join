@@ -14,64 +14,65 @@
     <script src="../script/header.js"></script>
 </head>
 
-    <body>
-        <header class="zeljko_head">
-            <div class="logo">
-                <img src="../assets/icons/logo.png" alt="Join Logo">
+<body>
+    <header class="zeljko_head">
+        <div class="logo">
+            <img src="../assets/icons/logo.png" alt="Join Logo">
+        </div>
+        <div class="header_right">
+            <span>Kanban Project Management Tool</span>
+            <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
+            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                alt="User Logo">
+        </div>
+        <div class="profile_menu" id="profile_menu">
+            <ul class="profile_menu_list">
+                <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+            </ul>
+        </div>
+    </header>
+    <section id="add-task-content">
+        <section class="nav_wrapper">
+            <div class="nav_bar">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="summary.html">
+                                <img src="../assets/icons/summary_icon.png" alt="Join Logo">
+                                <span>Summary</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a class="active" href="addTask.html">
+                                <img src="../assets/icons/add_task_icon.png" alt="Join Logo">
+                                <span>Add Task</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="board.html">
+                                <img src="../assets/icons/board_icon.png" alt="Join Logo">
+                                <span>Board</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="contacts.html">
+                                <img src="../assets/icons/contacts_icon.png" alt="Join Logo">
+                                <span>Contacts</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
-            <div class="header_right">
-                <span>Kanban Project Management Tool</span>
-                <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-                <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                    alt="User Logo">
+            <div class="legal_stuff">
+                <a href="privacyPolicy.html"><span>Privacy Policy</span></a>
+                <a href="legalNotice.html"><span>Legal Notice</span></a>
             </div>
-            <div class="profile_menu" id="profile_menu">
-                <ul class="profile_menu_list">
-                    <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
-                    <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
-                    <li class="profile_menu_item"><a href="login.html">Log out</a></li>
-                </ul>
-            </div>
-        </header>
-        <section id="add-task-content">
-            <section class="nav_wrapper">
-                <div class="nav_bar">
-                    <nav>
-                        <ul>
-                            <li>
-                                <a href="summary.html">
-                                    <img src="../assets/icons/summary_icon.png" alt="Join Logo">
-                                    <span>Summary</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a class="active" href="addTask.html">
-                                    <img src="../assets/icons/add_task_icon.png" alt="Join Logo">
-                                    <span>Add Task</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="board.html">
-                                    <img src="../assets/icons/board_icon.png" alt="Join Logo">
-                                    <span>Board</span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="contacts.html">
-                                    <img src="../assets/icons/contacts_icon.png" alt="Join Logo">
-                                    <span>Contacts</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-                </div>
-                <div class="legal_stuff">
-                    <a href="privacyPolicy.html"><span>Privacy Policy</span></a>
-                    <a href="legalNotice.html"><span>Legal Notice</span></a>
-                </div>
-            </section>
-            <div id="add-task-main">
-                <form action="">
+        </section>
+        <div id="add-task-main">
+            <form action="">
+                <div id="form-header" >
                     <input type="text" id="title-add-task" placeholder="Enter a title">
                     <div class="validation-add-task-form">
                     </div>
@@ -85,7 +86,7 @@
                     </label>
                     <input type="date" name="dateInput-add-task" id="dateInput-add-task" placeholder="dd/mm/yyyy">
                     <div class="validation-add-task-form">
-
+                    </div>
                 </div>
                 <div id="shell-radio-area">
                     <legend>Priority</legend>
@@ -107,7 +108,6 @@
                         </label>
                     </div>
                 </div>
-
                 <label for="assigned-to">Assigned to <span>(optional)</span></label>
                 <select name="assigned-to" id="assigned-to">
                     <option id="placeholder" value="Select task category" selected disabled hidden>Select contacts to
@@ -140,7 +140,6 @@
             </div>
         </div>
     </section>
-
     <script src="../script/addTask.js"></script>
 </body>
 
