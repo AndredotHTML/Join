@@ -3,8 +3,8 @@ let task = [{
     'title' : 'Kochwelt Page & Recipe Recommender',
     'category' : 'User Story',
     'description' : 'Build start page with recipe recommendataion...',
-    'date' : '11.3.2025' ,
-    'priority': 'medium',
+    'date' : '11/3/2025' ,
+    'priority': 'Medium',
     'users' : {
         'userId1' : {
             'name' : "Emmanuel Mauer"
@@ -32,8 +32,8 @@ let task = [{
     'title' : 'CSS Architecture Planning',
     'category' : 'Technical Task',
     'description' : 'Define CSS naming conventions and structure',
-    'date' : '11.3.2025' ,
-    'priority': 'urgent',
+    'date' : '11/3/2025' ,
+    'priority': 'Urgent',
     'users' : {
         'userId1' : {
             'name' : "Benedikt Ziegler"
@@ -132,7 +132,7 @@ function generateTask(element) {
     let user_icon =generateUserIcons(element.users);
 
     return `
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket">
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket" onclick="showOverlay(${element['id']})">
     <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
@@ -145,6 +145,29 @@ function generateTask(element) {
     <div class="ticket_footer">
     <div class="ticket_users">${user_icon}</div>
     <div class="ticket_priority">${priority_img}</div>
+    </div>
+    </div>`
+}
+
+function generateTaskOverlay(element) {
+    let bg_color = toggleCategoryColor(element.category);
+    let {completed,total,progress} = calculateSubtaskProgress(element.subtasks);
+    let priority_img = togglePriority(element.priority);
+    let user_icon =generateUserIcons(element.users);
+
+    return `
+    <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket">
+    <div class="overlay_header">
+    <div class="category_overlay"><span style="background-color: ${bg_color};" >${element.category}</span></div>
+    <div class="x"><img src="../assets/icons/x.png" alt="X"></div>
+    </div>
+    <div class="title_overlay"><h1>${element.title}</h1></div>
+    <div class="description_overlay">${element.description}</div>
+    <div class="date_overlay"><span>Due date : </span>
+    <div class="date">${element.date}</div>
+    </div>
+    <div class="priority_overlay"><span>Priority: </span>
+    <div class="priority">${element.priority}  ${priority_img}</div>
     </div>
     </div>`
 }
@@ -190,9 +213,9 @@ function toggleCategoryColor(category) {
 }
 
 function togglePriority(priority){
-    if(priority === 'urgent') {
+    if(priority === 'Urgent') {
         return  `<img src="../assets/icons/urgent.png" alt="urgent">` ;
-    }else if(priority === 'medium') {
+    }else if(priority === 'Medium') {
         return  `<img src="../assets/icons/medium.png" alt="medium">`;
     } else {
         return  `<img src="../assets/icons/low.png" alt="low">`
@@ -261,4 +284,20 @@ function getColorForUser(name) {
 }
 
 
+function showOverlay(id){
+    let element = task.find(t => t.id === id);
+    let overlay = document.getElementById('overlay');
+    overlay.style.display ='flex';
+    document.body.style.overflow ='hidden';
+    overlay.innerHTML = generateTaskOverlay(element);
+    overlay.classList.add('show');
+}
 
+function closeOverlay(event) {
+    let overlay = document.getElementById('overlay');
+    if (event.target === overlay) {
+        overlay.classList.remove('show'); 
+        overlay.style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+    }
+}
