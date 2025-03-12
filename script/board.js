@@ -151,12 +151,12 @@ function generateTask(element) {
 
 function generateTaskOverlay(element) {
     let bg_color = toggleCategoryColor(element.category);
-    let {completed,total,progress} = calculateSubtaskProgress(element.subtasks);
     let priority_img = togglePriority(element.priority);
-    let user_icon =generateUserIcons(element.users);
+    let user_icon_name =generateOverlayUserIcons(element.users);
+    let subtask = generateSubtasks(element.subtasks, element.id);
 
     return `
-    <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket">
+    <div  class="ticket_overlay">
     <div class="overlay_header">
     <div class="category_overlay"><span style="background-color: ${bg_color};" >${element.category}</span></div>
     <div class="x"><img src="../assets/icons/x.png" alt="X"></div>
@@ -168,6 +168,15 @@ function generateTaskOverlay(element) {
     </div>
     <div class="priority_overlay"><span>Priority: </span>
     <div class="priority">${element.priority}  ${priority_img}</div>
+    </div>
+    <div class="assigned_overlay">
+    <table>
+    <tr><th>Assigned To:</th> </tr>
+    <tr><td>${user_icon_name}</td></tr>
+    </table>
+    </div>
+    <div class="subtasks"><span>Subtasks:</span>
+        ${subtask}
     </div>
     </div>`
 }
@@ -267,6 +276,68 @@ function generateUserIcons(users){
 function generateSingleUserIcon(initial, leftPosition, color) {
     return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
 }
+
+function generateOverlayUserIcons(users){
+    let usersData = getUsersInitials(users);
+    let userIcon = '';
+
+    for(let i= 0; i<usersData.length;i++){
+        let color = getColorForUser(usersData[i].name); 
+        userIcon += generateOverlaySingleUserIcon(usersData[i].initials,usersData[i].name,color)
+    }
+    return userIcon;
+}
+
+function generateOverlaySingleUserIcon(initial,name, color) {
+    return `<div class="user_icon_plus_name">
+                <span class="user_icon_overlay" style="background-color: ${color}">${initial}</span>
+                <span class="user_name_overlay">${name}</span>
+            </div>`;
+}
+
+
+function getSubtasks (subtasks){
+    let allSubtasks = Object.keys(subtasks);
+    let  subArray =[];
+
+    for (let i = 0; i < allSubtasks.length; i++) {
+       let title = subtasks[allSubtasks[i]].title;
+       let completed =  subtasks[allSubtasks[i]].completed;
+       subArray.push({
+        'title' : title,
+        'completed' : completed
+       })
+    }
+    return subArray;
+}
+
+function generateSubtasks(subtasks,taskId){
+    let subtasksData = getSubtasks(subtasks);
+    let subtaskHTML ='';
+
+    for (let i = 0; i < subtasksData.length; i++) {
+        let checked = subtasksData[i].completed? 'checked' : '';
+        subtaskHTML += generateSingleSubtask( subtasksData[i].title,checked,taskId,i);
+    }
+    return subtaskHTML;
+}
+
+function generateSingleSubtask(title, checked, taskId, index) {
+    return `
+        <div class="subtask_item">
+            <input type="checkbox" id="${taskId}-subtask-${index}" ${checked} onchange="toggleSubtask('${taskId}', '${index}')">
+            <label for="${taskId}-subtask-${index}">${title}</label>
+        </div>
+    `;
+}
+
+function toggleSubtask(taskId, subtaskId) {
+    let tasks = task.find(t => t.id === taskId);
+    if (tasks) {
+        task.subtasks[subtaskId].completed = !task.subtasks[subtaskId].completed;
+    }
+}
+
 
 /**
  * Determines a color for the user based on the first letter of their name.
