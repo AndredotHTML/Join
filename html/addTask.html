@@ -84,27 +84,27 @@
                     </div>
                     <label for="dateInput-add-task">Due date
                     </label>
-                    <input type="date" name="dateInput-add-task" id="dateInput-add-task" placeholder="dd/mm/yyyy">
+                    <input type="date" name="dateInput-add-task" id="dateInput-add-task">
                     <div class="validation-add-task-form">
                     </div>
                 </div>
                 <div id="shell-radio-area">
                     <legend>Priority</legend>
                     <div id="shell-radio-btn">
-                        <label>
-                            <button type="radio" name="priority-urgent">
-                                Urgent <img src="../assets/icons/urgent.png" alt="">
-                            </button>
+                        <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
+                            <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
+                                Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                         </label>
-                        <label>
-                            <button type="radio" name="priority-medium">
-                                Medium <img src="../assets/icons/medium.png" alt="">
-                            </button>
+                        <label class="radio-btn" id="add-task-medium" for="medium-rad" >
+                            <input type="radio" name="priority" id="medium-rad" onclick="radioBtnChecked('medium')">
+                                Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                         </label>
-                        <label>
-                            <button type="radio" name="priority-low">
-                                Low <img src="../assets/icons/low.png" alt="">
-                            </button>
+                        <label class="radio-btn" id="add-task-low" for="low-rad">
+                            <input type="radio" name="priority" id="low-rad" onclick="radioBtnChecked('low')" >
+                                Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
                         </label>
                     </div>
                 </div>

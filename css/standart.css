@@ -15,6 +15,9 @@
 :root {
     --primaryColor: #4589FF;
     --secondaryColor: #FFFFFF;
+    --urgentColor:#FF3D00;
+    --mediumColor:#FFA800;
+    --lowColor:#7AE229;
 }
 
 * {

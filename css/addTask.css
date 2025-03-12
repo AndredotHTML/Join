@@ -14,7 +14,6 @@ body {
     display: flex;
     align-items: end;
     justify-content: space-between;
-    /* max-width: 1920px; */
 }
 
 form {
@@ -32,11 +31,12 @@ form {
     height: 16px;
 }
 
+#form-header>label,
 form>label,
 legend {
     height: 23px;
     font-size: 19px;
-    font-weight: bold;
+    font-weight: 700;
 }
 
 #form-header>input,
@@ -55,12 +55,13 @@ form>select {
     font-size: 19px;
 }
 
-#form-header{
+#form-header {
     display: flex;
     flex-direction: column;
     height: 361px;
     gap: 12px;
 }
+
 #title-add-task {
     height: 38px;
     font-size: 32px !important;
@@ -91,6 +92,7 @@ form>select:focus {
 #dateInput-add-task {
     border: none;
 }
+
 #dateInput-add-task:focus {
     outline: none;
 }
@@ -124,7 +126,6 @@ textarea {
     font-size: 19px;
 }
 
-
 textarea:focus {
     border: 1px solid var(--primaryColor);
 }
@@ -139,12 +140,37 @@ textarea:focus {
     justify-content: space-between;
 }
 
-#shell-radio-area{
+#shell-radio-area {
     height: 84px;
-    gap: 8px ;
+    gap: 8px;
 }
 
-button[type="radio"] {
+#shell-radio-btn>label>input~.unchecked-priority {
+    display: flex;
+    width: 20px;
+    height: 15px;
+}
+
+#shell-radio-btn>label>input~.checked-priority {
+    display: none;
+    width: 20px;
+    height: 15px;
+}
+
+#shell-radio-btn>label>input:checked~.unchecked-priority {
+    display: none;
+}
+
+#shell-radio-btn>label>input:checked~.checked-priority {
+    display: flex;
+
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+.radio-btn {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -156,18 +182,41 @@ button[type="radio"] {
     border: 1px solid #D1D1D1;
     background-color: var(--secondaryColor);
     font-size: 19px;
+    box-sizing: border-box;
+}
+
+#add-task-urgent:hover {
+    border-bottom: 2px solid var(--urgentColor);
+}
+
+#add-task-medium:hover {
+    border-bottom: 2px solid var(--mediumColor);
+}
+
+#add-task-low:hover {
+    border-bottom: 2px solid var(--lowColor);
 }
 
 input[type="date"]::-webkit-calendar-picker-indicator {
-    background: none
+    background: url("/assets/icons/event.png") no-repeat center;
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    display: block;
 }
+
+/* #dateInput-add-task {
+    visibility: ;
+} */
+
+/* input[type="date"]:invalid::-webkit-datetime-edit-text {
+    content: "dd/mm/yyyy";
+  } */
 
 input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     color: #647188;
     font-style: italic;
 }
-
-
 
 #add-task-btns {
     display: flex;
@@ -211,14 +260,3 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 .btn-title {
     height: 28px;
 }
-
-
-  
-/* .btn-icon-shell{
-    height: 24px;
-    width: 24px;
-}
-
-.btn-icon-shell > img{
-    object-fit: cover;
-} */
