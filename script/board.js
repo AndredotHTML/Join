@@ -372,7 +372,95 @@ function closeOverlay(event) {
     let overlay = document.getElementById('overlay');
     if (event.target === overlay) {
         overlay.classList.remove('show'); 
+        overlay.classList.remove('slide_in'); 
         overlay.style.display = 'none';
         document.body.style.overflow = 'auto'; 
     }
+}
+
+function showAddTaskOverlay(){
+    let overlay = document.getElementById('overlay');
+    overlay.style.display ='flex';
+    document.body.style.overflow ='hidden';
+    overlay.innerHTML = addTaskOverlay();
+    overlay.classList.add('slide_in');
+}
+
+function addTaskOverlay(){
+    return `<div  class="add_task_overlay">
+            <div class="addTask_header_overlay">
+            <div class="header_x"><img src="../assets/icons/x.png" alt="X"></div>
+            <div class="header_headline"><h1> Add Task</h1></div>
+            </div>
+            <div class="addTask_content">
+            <div id="form-header" >
+                    <input type="text" id="title-add-task" placeholder="Enter a title">
+                    <div class="validation-add-task-form">
+                    </div>
+                    <label for="description-add-task">Description <span>(optional)</span>
+                    </label>
+                    <textarea name="description-add-task" class="custom-resize" id="description-add-task"
+                        placeholder="Enter a Description"></textarea>
+                    <div class="validation-add-task-form">
+                    </div>
+                    <label for="dateInput-add-task">Due date
+                    </label>
+                    <input type="date" name="dateInput-add-task" id="dateInput-add-task">
+                    <div class="validation-add-task-form">
+                    </div>
+            </div>
+            <div id="shell-radio-area">
+                    <legend>Priority</legend>
+                    <div id="shell-radio-btn">
+                        <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
+                            <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
+                                Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
+                        </label>
+                        <label class="radio-btn" id="add-task-medium" for="medium-rad" >
+                            <input type="radio" name="priority" id="medium-rad" onclick="radioBtnChecked('medium')">
+                                Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
+                        </label>
+                        <label class="radio-btn" id="add-task-low" for="low-rad">
+                            <input type="radio" name="priority" id="low-rad" onclick="radioBtnChecked('low')" >
+                                Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
+                                <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
+                        </label>
+                    </div>
+            </div>
+            <div class="assigned">
+            <label for="assigned-to">Assigned to<span>(optional)</span></label>
+            <select name="assigned-to" id="assigned-to">
+                    <option id="placeholder" value="Select task category" selected disabled hidden>Select contacts to
+                        assign</option>
+            </select>
+            </div>
+            <div class="category">
+            <label for="category">Category</label>
+            <select name="category" id="category"> Select task category
+                    <option value="Select task category" selected disabled hidden>Select task category</option>
+                    <option value="">Technical Task</option>
+                    <option value="">User Story</option>
+            </select>
+            </div>
+            <div class="subtask">
+            <label for="subtask">Subtasks <span>(optional)</span></label>
+            <div id="shell-subtask">
+                    <input type="text" id="subtask" placeholder="Add new subtask">
+                    <div><img src="/assets/icons/add.png" alt=""></div>
+            </div>
+            <ul id="added-subtasks">
+            </ul>
+            </div>
+            </div>
+             <div class="button_div">
+            <button id="add-task-create-btn">
+                    <div class="btn-title">Create Task </div>
+                    <div class="btn-icon-shell">
+                        <img src="../assets/icons/check.svg" alt="">
+                    </div>
+            </button>
+             </div>
+    </div>`
 }

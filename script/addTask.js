@@ -10,9 +10,7 @@ document.querySelectorAll("form select").forEach(select => {
         select.classList.remove("open");
     });
 });
-
-
-
+  
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
     let priorityRef = priority
