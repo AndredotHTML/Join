@@ -385,14 +385,16 @@
 
 [type="checkbox"] + label {
     position: absolute;
-  }
-  [type="checkbox"] {
+}
+
+[type="checkbox"] {
     position: relative;
     left: 15px;
     top: -4px;
     z-index: 0;
-  }
-  [type="checkbox"] + label::before {
+}
+  
+[type="checkbox"] + label::before {
     width: 22px;
     height: 18px;
     background-image: url("../assets/icons/unchecked.png");
@@ -403,7 +405,48 @@
     z-index: 5;
     position: relative;
     background-position: center; 
-  }
-  [type="checkbox"]:checked+label::before {
+}
+  
+[type="checkbox"]:checked+label::before {
     background-image: url("../assets/icons/checked.png");
-  }
+}
+
+.delete_edit {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+
+.delete_btn, .edit_btn {
+    display: flex;
+    align-items: center;
+    border: none; 
+    background-color: var(--secondaryColor);
+    cursor: pointer;
+    height: 20px; 
+    gap: 10px;
+}
+
+.delete_btn {
+    border-right: 1px solid #ccc; 
+    justify-content: right;
+    padding-right: 10px
+}
+
+.edit_btn {
+    border-left: 1px solid #ccc;
+    justify-content: left;
+    padding-left: 10px;
+}
+
+.delete_btn:hover, .edit_btn:hover {
+    transform: scale(1.1);
+    color:#0038ff;
+    font-weight: 600;
+}
+
+.delete_btn img:hover, .edit_btn img:hover {
+    filter: brightness(0.9);
+}

@@ -2,7 +2,7 @@ let task = [{
     'id' : 0,
     'title' : 'Kochwelt Page & Recipe Recommender',
     'category' : 'User Story',
-    'description' : 'Build start page with recipe recommendataion...',
+    'description' : 'Build start page with recipe recommendatation...',
     'date' : '11/3/2025' ,
     'priority': 'Medium',
     'users' : {
@@ -177,6 +177,10 @@ function generateTaskOverlay(element) {
     </div>
     <div class="subtasks"><span>Subtasks:</span>
         ${subtask}
+    </div>
+    <div class="delete_edit">
+        <button type="button" class="delete_btn"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
+        <button type="button" class="edit_btn"><img src="../assets/icons/edit.png" alt="edit icon">Edit</button>
     </div>
     </div>`
 }
