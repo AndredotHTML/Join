@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/addTask.css">
 
+   
     <script src="../script/header.js"></script>
 </head>
 
@@ -120,12 +121,14 @@
                     <option value="">User Story</option>
                 </select>
                 <label for="subtask">Subtasks <span>(optional)</span></label>
-                <div id="shell-subtask"><input type="text" id="subtask" placeholder="Add new subtask"><button><img
-                            src="/assets/icons/add.png" alt=""></button></div>
-                <div id="added-subtasks"></div>
+                <div id="shell-subtask">
+                    <input type="text" id="subtask" placeholder="Add new subtask"><div>
+                    <img src="/assets/icons/add.png" alt="" onclick="addSubtask()"></div></div>
+                <ul id="added-subtasks">
+                </ul>
             </form>
             <div id="add-task-btns">
-                <button id="clear-form-btn">
+                <button id="clear-form-btn" onclick="clearForm()" >
                     <div class="btn-title">Clear</div>
                     <div class="btn-icon-shell">
                         <img src="../assets/icons/clear.svg" alt="">
@@ -140,7 +143,8 @@
             </div>
         </div>
     </section>
-    <script src="../script/addTask.js"></script>
+    <script src="/script/addTask.js"></script>
+    <script src="/script/template.js"></script>
 </body>
 
 </html>

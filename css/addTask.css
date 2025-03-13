@@ -1,5 +1,6 @@
 body {
     line-height: 120%;
+    
 }
 
 #add-task-content {
@@ -7,6 +8,7 @@ body {
     width: 100%;
     margin: 0 auto;
     height: calc(100vh - 96px);
+    max-width: 1920px;
 }
 
 #add-task-main {
@@ -21,10 +23,11 @@ form {
     flex-direction: column;
     position: fixed;
     top: 96px;
-    height: 100%;
     width: 440px;
     padding: 64px 24px 24px;
     gap: 4px;
+    overflow:auto;
+    height: 928px;
 }
 
 .validation-add-task-form {
@@ -168,6 +171,7 @@ textarea:focus {
 
 input[type="radio"] {
     opacity: 0;
+    position: absolute;
 }
 
 .radio-btn {
@@ -183,6 +187,12 @@ input[type="radio"] {
     background-color: var(--secondaryColor);
     font-size: 19px;
     box-sizing: border-box;
+}
+
+/* img move have to be corrected */
+.radio-btn img {
+    position: relative;
+    z-index: 1;
 }
 
 #add-task-urgent:hover {
@@ -259,4 +269,8 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 
 .btn-title {
     height: 28px;
+}
+
+.addedSubtask{
+    font-size: 16px;
 }
