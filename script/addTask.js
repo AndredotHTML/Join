@@ -1,3 +1,5 @@
+const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
+
 document.querySelectorAll("form select").forEach(select => {
     select.addEventListener("click", () => {
         if (select.classList.contains("open")) {
@@ -10,7 +12,9 @@ document.querySelectorAll("form select").forEach(select => {
         select.classList.remove("open");
     });
 });
-  
+
+
+
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
     let priorityRef = priority
@@ -31,10 +35,10 @@ function addSubtask() {
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let inputSubtaskVal = inputSubtaskRef.value
     displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
-    inputSubtaskRef.value =""
+    inputSubtaskRef.value = ""
 }
 
-function clearForm(){
+function clearForm() {
     document.forms[0].reset()
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     displaydSubtaskRef.innerHTML = ""
@@ -46,8 +50,49 @@ function clearForm(){
 }
 
 function creatTask() {
-    
+    let titleNewTaskRef = document.getElementById("title-add-task")
+    let descriptionNewTaskRef = document.getElementById("description-add-task")
+    let dateNewTaskRef = document.getElementById("date-input-add-task")
+    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
+    let categoryNewTaskRef = document.getElementById("category")
+    let selectedOption = categoryNewTaskRef.options[categoryNewTaskRef.selectedIndex]
+    let assignedUserRef = "user"
+    let subtasksNewTaskRef = document.getElementById("added-subtasks")
+    let data = {
+        [titleNewTaskRef.value]: {
+            description: descriptionNewTaskRef.value,
+            dueDate: dateNewTaskRef.value,
+            priority: priorityNewTaskRef.value,
+            category: selectedOption.textContent,
+            assigned: assignedUserRef,
+        }
+    };
+    postTask("/tasks", data)
+
 }
+
+async function postTask(path = "", data = {}) {
+    try {
+        const response = await fetch(BASE_URL + path + ".json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        if (!response.ok) {
+            throw new Error("Fehler beim Senden der Daten");
+        }
+        const result = await response.json()
+        console.log("Task wurde angenommen", result);
+        return result;
+    } catch (error) {
+        console.error("Fehler:", error.message);
+        return null;
+    }
+}
+
+
 
 
 

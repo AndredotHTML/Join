@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/addTask.css">
 
-   
+
     <script src="../script/header.js"></script>
 </head>
 
@@ -73,39 +73,44 @@
         </section>
         <div id="add-task-main">
             <form action="">
-                <div id="form-header" >
-                    <input type="text" id="title-add-task" placeholder="Enter a title">
+                <div id="form-header">
+                    <input type="text" id="title-add-task" placeholder="Enter a title" required>
                     <div class="validation-add-task-form">
                     </div>
                     <label for="description-add-task">Description <span>(optional)</span>
                     </label>
-                    <textarea name="description-add-task" class="custom-resize" id="description-add-task"
-                        placeholder="Enter a Description"></textarea>
+                    <textarea name="description-add-task" class="custom-resize" id="description-add-task" 
+                        placeholder="Enter a Description">
+
+                    </textarea>
                     <div class="validation-add-task-form">
                     </div>
-                    <label for="dateInput-add-task">Due date
+                    <label for="date-input-add-task">Due date
                     </label>
-                    <input type="date" name="dateInput-add-task" id="dateInput-add-task">
+                    <input type="date" name="date-input-add-task" id="date-input-add-task" required>
                     <div class="validation-add-task-form">
                     </div>
                 </div>
                 <div id="shell-radio-area">
                     <legend>Priority</legend>
                     <div id="shell-radio-btn">
-                        <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
-                            <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
-                                Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
-                                <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
+                        <label class="radio-btn btn" id="add-task-urgent" for="urgent-rad">
+                            <input type="radio" name="priority" id="urgent-rad" value="urgent"
+                                onclick="radioBtnChecked('urgent')" required>
+                            Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
+                            <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-medium" for="medium-rad" >
-                            <input type="radio" name="priority" id="medium-rad" onclick="radioBtnChecked('medium')">
-                                Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
-                                <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
+                        <label class="radio-btn btn" id="add-task-medium" for="medium-rad">
+                            <input type="radio" name="priority" id="medium-rad" value="medium"
+                                onclick="radioBtnChecked('medium')">
+                            Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
+                            <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-low" for="low-rad">
-                            <input type="radio" name="priority" id="low-rad" onclick="radioBtnChecked('low')" >
-                                Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
-                                <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
+                        <label class="radio-btn btn" id="add-task-low" for="low-rad">
+                            <input type="radio" name="priority" id="low-rad" value="low"
+                                onclick="radioBtnChecked('low')">
+                            Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
+                            <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
                         </label>
                     </div>
                 </div>
@@ -115,26 +120,29 @@
                         assign</option>
                 </select>
                 <label for="category">Category</label>
-                <select name="category" id="category"> Select task category
+                <select name="category" id="category" required> Select task category
                     <option value="Select task category" selected disabled hidden>Select task category</option>
                     <option value="">Technical Task</option>
                     <option value="">User Story</option>
                 </select>
                 <label for="subtask">Subtasks <span>(optional)</span></label>
                 <div id="shell-subtask">
-                    <input type="text" id="subtask" placeholder="Add new subtask"><div>
-                    <img src="/assets/icons/add.png" alt="" onclick="addSubtask()"></div></div>
+                    <input type="text" id="subtask" placeholder="Add new subtask">
+                    <div>
+                        <img src="/assets/icons/add.png"  alt="" onclick="addSubtask()">
+                    </div>
+                </div>
                 <ul id="added-subtasks">
                 </ul>
             </form>
             <div id="add-task-btns">
-                <button id="clear-form-btn" onclick="clearForm()" >
+                <button id="clear-form-btn" class="btn" onclick="clearForm()">
                     <div class="btn-title">Clear</div>
                     <div class="btn-icon-shell">
                         <img src="../assets/icons/clear.svg" alt="">
                     </div>
                 </button>
-                <button id="add-task-create-btn">
+                <button id="add-task-create-btn" class="btn" onclick="creatTask()" type="submit">
                     <div class="btn-title">Create Task </div>
                     <div class="btn-icon-shell">
                         <img src="../assets/icons/check.svg" alt="">

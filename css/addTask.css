@@ -1,6 +1,10 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     line-height: 120%;
-    
+
 }
 
 #add-task-content {
@@ -9,6 +13,7 @@ body {
     margin: 0 auto;
     height: calc(100vh - 96px);
     max-width: 1920px;
+    box-sizing: border-box;
 }
 
 #add-task-main {
@@ -150,7 +155,7 @@ form {
     width: 440px;
     padding: 64px 24px 24px;
     gap: 4px;
-    overflow:auto;
+    overflow: auto;
     height: 928px;
 }
 
@@ -164,6 +169,10 @@ legend {
     height: 23px;
     font-size: 19px;
     font-weight: 700;
+}
+
+.btn{
+    cursor: pointer;
 }
 
 #form-header>input,
@@ -216,11 +225,11 @@ form>select:focus {
     outline: none;
 }
 
-#dateInput-add-task {
+#date-input-add-task {
     border: none;
 }
 
-#dateInput-add-task:focus {
+#date-input-add-task:focus {
     outline: none;
 }
 
@@ -265,11 +274,15 @@ textarea:focus {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    gap: 16px;
 }
 
 #shell-radio-area {
-    height: 84px;
+    height: 82px;
+    flex-direction: column;
+    display: flex;
     gap: 8px;
+
 }
 
 #shell-radio-btn>label>input~.unchecked-priority {
@@ -361,6 +374,8 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     right: 0;
     justify-content: space-between;
     gap: 25px;
+    right: 39px;
+    bottom: 66px;
 }
 
 #clear-form-btn {
@@ -374,6 +389,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    height: 61px;
 }
 
 #add-task-create-btn {
@@ -395,6 +411,6 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     height: 28px;
 }
 
-.addedSubtask{
+.addedSubtask {
     font-size: 16px;
 }
