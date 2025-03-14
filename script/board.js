@@ -159,7 +159,7 @@ function generateTaskOverlay(element) {
     <div  class="ticket_overlay">
     <div class="overlay_header">
     <div class="category_overlay"><span style="background-color: ${bg_color};" >${element.category}</span></div>
-    <div class="x"><img src="../assets/icons/x.png" alt="X"></div>
+    <div class="x" onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
     </div>
     <div class="title_overlay"><h1>${element.title}</h1></div>
     <div class="description_overlay">${element.description}</div>
@@ -370,7 +370,7 @@ function showOverlay(id){
 
 function closeOverlay(event) {
     let overlay = document.getElementById('overlay');
-    if (event.target === overlay) {
+    if (!event || event.target === overlay) {
         overlay.classList.remove('show'); 
         overlay.classList.remove('slide_in'); 
         overlay.style.display = 'none';
@@ -389,7 +389,7 @@ function showAddTaskOverlay(){
 function addTaskOverlay(){
     return `<div  class="add_task_overlay">
             <div class="addTask_header_overlay">
-            <div class="header_x"><img src="../assets/icons/x.png" alt="X"></div>
+            <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
             <div class="header_headline"><h1> Add Task</h1></div>
             </div>
             <div class="addTask_content">

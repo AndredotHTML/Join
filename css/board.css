@@ -290,6 +290,14 @@
     color: var(--secondaryColor);
 }
 
+.x:hover{
+    background-color: #d2e2ff;;
+    cursor: pointer;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+}
+
 .x img {
     height: 25px;
     width: 25px;
@@ -297,6 +305,14 @@
 
 .title_overlay{
     padding-bottom: 10px;
+}
+
+.title_overlay h1 {
+    word-break: break-word; 
+    overflow-wrap: break-word; 
+    white-space: normal; 
+    line-height: 1.2; 
+    margin-bottom: 10px; 
 }
 
 .date_overlay {
@@ -371,10 +387,23 @@
     padding:5px 10px;
     border-radius: 20px;
     transition: background-color 0.3s ease, padding 0.3s ease;
+    font-weight: 400 !important;
 }
   
 .subtask_item label:hover {
     background-color:  #d2e2ff; 
+}
+
+.subtask_item label {
+    cursor: default;
+}
+
+.subtask_item input[type="checkbox"] {
+    cursor: pointer; 
+}
+
+.subtask_item input[type="checkbox"] + label::before {
+    cursor: pointer; 
 }
 
 [type="checkbox"] {

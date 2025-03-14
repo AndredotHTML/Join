@@ -20,6 +20,7 @@ body {
 
 .add_task_overlay {
     width: 450px;
+    height: 94vh;
     background: white;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
@@ -29,6 +30,10 @@ body {
     right: 0;
     border-radius:  30px 0 0 30px;
     color: #42526e;
+}
+
+#title-add-task, #description-add-task, #dateInput-add-task,.radio-btn,#assigned-to,#category,#shell-subtask,#subtask {
+    cursor: pointer; 
 }
 
 
@@ -78,19 +83,31 @@ select:focus{
     outline: none;
 }
 
-.header_x{
-    display: grid;
-    justify-content: end;
-    padding-bottom: 10px;
+.header_x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
 }
 
-.header_x img{
+.header_x:hover {
+    background-color: #d2e2ff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.header_x img {
+    width: 25px;
     height: 25px;
-    width: 25px;    
 }
 
 .header_headline{
     padding-bottom: 50px;
+    padding-top: 20px;
 }
 
 .slide_in {
@@ -111,13 +128,18 @@ select:focus{
 }
 
 .assigned, .category, .subtask{
-    padding-bottom: 40px;
+    padding-top: 30px;
 }
 
 .button_div{
-    margin-top: 15px;
+    margin-top: 20px;
     display: flex;
     justify-content: end;
+}
+
+#add-task-create-btn:hover{
+    cursor: pointer;
+    background-color: #0038ff;
 }
 
 form {
