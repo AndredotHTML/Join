@@ -445,16 +445,17 @@ function addTaskOverlay(){
             </select>
             </div>
             <div class="subtask">
-            <label for="subtask">Subtasks <span>(optional)</span></label>
+                     <label for="subtask">Subtasks <span>(optional)</span></label>
             <div id="shell-subtask">
                     <input type="text" id="subtask" placeholder="Add new subtask">
-                    <div><img src="/assets/icons/add.png" alt=""></div>
-            </div>
-            <ul id="added-subtasks">
-            </ul>
+            <div id="subtask-icons">
+                    <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
             </div>
             </div>
-             <div class="button_div">
+                    <ul id="added-subtasks"></ul>
+            </div>
+            </div>
+            <div class="button_div">
             <button id="add-task-create-btn">
                     <div class="btn-title">Create Task </div>
                     <div class="btn-icon-shell">
@@ -464,3 +465,41 @@ function addTaskOverlay(){
              </div>
     </div>`
 }
+
+function showSubtaskActions() {
+    let subtaskIcons = document.getElementById("subtask-icons");
+
+    subtaskIcons.innerHTML = `
+        <img id="subtask-check-icon" src="../assets/icons/check.png" alt="Check" onclick="addSubtaskOverlay()">
+        <img id="subtask-delete-icon" src="../assets/icons/x.png" alt="Delete" onclick="resetSubtaskIcons()">
+    `;
+}
+
+function addSubtaskOverlay() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskList = document.getElementById("added-subtasks");
+
+    if (subtaskInput.value.trim() === "") {
+        return; 
+    }
+    subtaskList.innerHTML += subtaskTemplate(subtaskInput.value);
+    subtaskInput.value = ""; 
+    resetSubtaskIcons(); 
+}
+
+function subtaskTemplate( subtaskValue){
+    return `<li class="subtask_item">
+             <span class="subtask_text">${subtaskValue}</span>
+            <div class="subtask_actions">
+                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon">
+                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon">
+            </div></li>`
+}
+
+function resetSubtaskIcons() {
+    let subtaskIcons = document.getElementById("subtask-icons");
+
+    subtaskIcons.innerHTML = `<img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">`;
+    document.getElementById("subtask").value = "";
+}
+
