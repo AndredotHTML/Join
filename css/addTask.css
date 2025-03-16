@@ -228,11 +228,177 @@ form {
     cursor: pointer;
 }
 
+#subtask-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#subtask-add-icon {
+    width: 15px;
+    height: 15px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#subtask-check-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#subtask-delete-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.subtask_item{
+    display: flex;
+    align-items: center;
+    padding-inline-start: 0;
+    padding: 5px 10px;
+    list-style: none;
+    padding-bottom: 5px;
+    position: relative;  
+    transition: background-color 0.3s ease;  
+}
+
+.subtask_item::before {
+    content: "•"; 
+    font-size: 20px; 
+    margin-right: 10px;
+}
+
+.subtask_item:hover {
+    background-color: #d2e2ff;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.subtask_item:hover .subtask_actions {
+    opacity: 1;  
+}
+
+
+.subtask_text {
+    flex-grow: 1;  
+}
+
+.subtask_actions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    padding-right: 15px;
+    position: absolute; 
+    right: 0;
+    opacity: 0;  
+    transition: opacity 0.3s ease;  
+}
+
+.subtask_actions img {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+#subtask-icons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+#subtask-add-icon {
+    width: 15px;
+    height: 15px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#subtask-check-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+#subtask-delete-icon {
+    width: 20px;
+    height: 20px;
+    position: relative;
+    transition: background-color 0.3s ease;
+}
+
+.subtask_item{
+    display: flex;
+    align-items: center;
+    padding-inline-start: 0;
+    padding: 5px 10px;
+    list-style: none;
+    padding-bottom: 5px;
+    position: relative;  
+    transition: background-color 0.3s ease;  
+}
+
+.subtask_item::before {
+    content: "•"; 
+    font-size: 20px; 
+    margin-right: 10px;
+}
+
+.subtask_item:hover {
+    background-color: #d2e2ff;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.subtask_item:hover .subtask_actions {
+    opacity: 1;  
+}
+
+
+.subtask_text {
+    flex-grow: 1;  
+}
+
+.subtask_actions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto;
+    padding-right: 15px;
+    position: absolute; 
+    right: 0;
+    opacity: 0;  
+    transition: opacity 0.3s ease;  
+}
+
+.subtask_actions img {
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.subtask_actions img:hover {
+    opacity: 0.8;
+}
+
+
+.subtask_actions img:hover {
+    opacity: 0.8;
+}
+
+
 .title-shell>input,
 .form-header>input,
 form>input,
 .subtask-area {
-    padding: 12px 16px;
+    padding:12px 16px;
     border: none;
     border-bottom: 1px solid #D1D1D1;
     appearance: none;
@@ -336,6 +502,8 @@ textarea:focus {
 
 #added-subtasks {
     min-height: 48px;
+    padding-top: 10px;
+    padding-inline-start: 0;
 }
 
 .shell-radio-btn {

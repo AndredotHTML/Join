@@ -378,11 +378,6 @@
     color: #42526e ;
 }
 
-.subtask_item{
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-
 .subtask_item label {
     padding:5px 10px;
     border-radius: 20px;
