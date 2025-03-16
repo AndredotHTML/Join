@@ -6,23 +6,23 @@ function validateLoginForm() {
     let password = document.getElementById("password");
     let errorMsg = document.getElementById("error_msg");
     if (!email.validity.valid || !password.validity.valid) {
-        email.classList.add("error"); 
-        password.classList.add("error"); 
-        errorMsg.style.display = "block";
+      displayError()
+      return false;
     } else {
         email.classList.remove("error"); 
         password.classList.remove("error");
         errorMsg.style.display = "none";
+        return true;
       }
 }
 
 
 /**
  * redirects the user to the summary page 
- * @param {*} User - userdata to give over information as parameter
+ * @param {*} user - userdata to give over information as parameter
  */
-function redirectToSummary(User) {
-    window.location.href = "http://127.0.0.1:5500/html/summary.html"
+function redirectToSummary() {
+  window.location.href = "http://127.0.0.1:5500/html/summary.html"  
 }
 
 
@@ -30,6 +30,7 @@ function redirectToSummary(User) {
  * checks if the users e-mail and password match to login
  */
 function login() {
+  if (!validateLoginForm()) return;
   const emailInput = document.getElementById("email").value;
   const passwordInput = document.getElementById("password").value;
   const user = users.find(user => user.userData.email === emailInput);
@@ -37,20 +38,32 @@ function login() {
       if (user.userData.password === passwordInput) {
           handleSuccessfulLogin(user.userData);
       } else {
-        email.classList.add("error"); 
-        password.classList.add("error"); 
-        errorMsg.style.display = "block";
+        displayError()
       }
-  } 
+  } else {
+    displayError()
+  }
 }
+
+
+function displayError() {
+  let email = document.getElementById("email");
+  let password = document.getElementById("password");
+  let errorMsg = document.getElementById("error_msg");
+  email.classList.add("error"); 
+  password.classList.add("error"); 
+  errorMsg.style.display = "block";
+}
+
 
 /**
  * when login is succesful redirect the user to the summary
  * @param {*} userData - userdata to give over information as parameter
  */
 function handleSuccessfulLogin(userData) {
-  console.log("Angemeldeter Nutzer:", userData);
-  redirectToSummary(userData)
+  localStorage.removeItem('user');
+  localStorage.setItem('user', JSON.stringify(userData));
+  redirectToSummary()
 }
 
 

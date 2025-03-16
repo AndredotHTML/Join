@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="/css/login.css">
         <script src="/script/login.js"></script>
         <script src="/script/signup.js"></script>
+        <script src="/script/summary.js"></script>
     </head>
 
     <body onload="pushToUsersArray()">
@@ -34,7 +35,7 @@
                             <p id="error_msg">Check your email and password. Please try again.</p>
                         </div>
                         <div id="login_buttons">
-                            <button type="submit" onclick="validateLoginForm()">Log in</button>
+                            <button type="submit">Log in</button>
                             <button type="button" onclick="redirectToSummary('guest')" id="guest_button"> Guest log in</button>
                         </div>
                     </form>

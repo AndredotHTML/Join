@@ -10,13 +10,16 @@
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/navigation.css">
         <link rel="stylesheet" href="../css/contacts.css">
+        <link rel="stylesheet" href="../css/summary.css">
 
         <script src="../script/header.js"></script>
+        <script src="/script/login.js"></script>
+        <script src="/script/summary.js"></script>
 
-        <title>Contacts</title>
+        <title>Summary</title>
     </head>
 
-    <body>
+    <body onload="getCurrentUser()">
         <header class="zeljko_head">
             <div class="logo">
                 <img src="../assets/icons/logo.png" alt="Join Logo">
@@ -24,8 +27,9 @@
             <div class="header_right">
                 <span>Kanban Project Management Tool</span>
                 <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-                <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                    alt="User Logo">
+                <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                    <div class="icon-container" id="icon-container">G</div>
+                </div>
             </div>
             <div class="profile_menu" id="profile_menu">
                 <ul class="profile_menu_list">
@@ -73,8 +77,38 @@
                 </div>
             </section>
             <section class="main_wrapper">
-
-
+                <div class="dashboard">
+                    <h2><span id="greet">Good morning,</span><span class="user-name" id="user_name">Guest</span></h2>
+                    <div class="stats">
+                        <div class="task-overview-top">
+                            <div class="urgent-tasks">
+                                <div class="urgent-tasks-left">
+                                    <div class="task-card-head">
+                                        <img class="summary_icon" src="/assets/icons/urgent_icon.png">
+                                        <h3>1</h3>
+                                    </div>
+                                    <p>Tasks Urgent</p>
+                                </div>
+                                <div class="divider">
+                                    
+                                </div>
+                                <div>
+                                    <h4>October 16, 2022</h4>
+                                    <p>Upcoming Deadline</p>
+                                </div>
+                            </div>
+                            <div class="task-card" id="in-board">
+                                <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/in-board_icon.png"> <h3>5</h3> </div> <p>Task in Board</p>
+                            </div>
+                        </div>
+                        <div class="task-overview-bottom">
+                            <div class="task-card" id="to-do"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/to-do_icon.png"> <h3>1</h3></div> <p>Tasks To-do</p> </div>
+                            <div class="task-card"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/progress_icon.png"> <h3>2</h3> </div> <p>Task in Progress</p> </div>
+                            <div class="task-card"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/feedback_icon.png"> <h3>2</h3> </div> <p>Awaiting Feedback</p> </div>
+                            <div class="task-card"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/done_icon.png"> <h3>1</h3> </div> <p>Tasks Done</p> </div>
+                        </div>
+                    </div>
+                </div>
             </section>
         </div>
     </body>
