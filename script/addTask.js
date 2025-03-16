@@ -61,6 +61,12 @@ function creatTask() {
     let categoryNewTaskRef = document.getElementById("category-add-task")
     let assignedUserRef = "user"
     let subtasksNewTaskRef = document.getElementById("added-subtasks")
+    let subtaskCollection = subtasksNewTaskRef.getElementsByTagName("li")
+    console.log(subtaskCollection);
+    let subtasks = []
+    for (const subtask of subtaskCollection) {
+        subtasks.push(subtask.textContent.trim().replace(/\s+/g, " "))
+    }
     let data = {
         [titleNewTaskRef.value]: {
             description: descriptionNewTaskRef.value,
@@ -69,6 +75,7 @@ function creatTask() {
             category:categoryNewTaskRef.textContent,
             assigned: assignedUserRef,
             status: "toDo",
+            subtasks:subtasks
         }
     };
     postTask("/tasks", data)
