@@ -4,24 +4,22 @@
 
 body {
     line-height: 120%;
-
 }
 
-#add-task-content {
+.add-task-content {
     display: flex;
-    width: 100%;
-    margin: 0 auto;
+    margin: 0;
     height: calc(100vh - 96px);
     max-width: 1920px;
     box-sizing: border-box;
 }
 
-#add-task-main {
-    width: 100%;
-    display: flex;
-    align-items: end;
-    justify-content: space-between;
-}
+.content-wrapper {
+    max-width: 1920px;
+    margin: 0 ;
+    position: relative;
+  }
+
 
 .add_task_overlay {
     width: 450px;
@@ -33,17 +31,23 @@ body {
     position: fixed;
     top: 0;
     right: 0;
-    border-radius:  30px 0 0 30px;
+    border-radius: 30px 0 0 30px;
     color: #42526e;
 }
 
-#title-add-task, #description-add-task, #dateInput-add-task,.radio-btn,#assigned-to,#category,#shell-subtask,#subtask {
-    cursor: pointer; 
+.title-add-task,
+.description-add-task,
+#dateInput-add-task,
+.radio-btn,
+.assigned-to,
+.category,
+.subtask-area,
+.subtask {
+    cursor: pointer;
 }
 
-
 .addTask_content {
-    max-height: 670px; 
+    max-height: 670px;
     overflow-y: auto;
 }
 
@@ -52,23 +56,24 @@ body {
     height: 0;
 }
 
-label{
+label,
+legend {
     height: 23px;
     font-size: 19px;
     font-weight: 700;
 }
 
-label span{
-    color: #42526e;  
+label span {
+    color: #42526e;
 }
 
-.add_task_overlay button{
+.add_task_overlay button {
     display: flex;
     align-items: end;
     justify-content: end;
 }
 
-select{
+select {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -83,10 +88,36 @@ select{
     background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right 16px;
 }
 
-select:focus{
-    border-bottom: 1px solid var(--primaryColor);
-    outline: none;
+.wrapper-category-select{
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-bottom: 1px solid #D1D1D1;
+    align-items: center;
+    font-size: 19px;
+    height: 48px;
 }
+
+
+
+
+.category-add-task{
+    width: 100%;
+}
+.option-category{
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    align-items: center;
+    font-size: 19px;
+    height: 47px;
+}
+.drop-down-arrow-open{
+    height: 24px;
+    width: 24px;
+    background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right ;
+}
+
 
 .header_x {
     position: absolute;
@@ -110,7 +141,7 @@ select:focus{
     height: 25px;
 }
 
-.header_headline{
+.header_headline {
     padding-bottom: 50px;
     padding-top: 20px;
 }
@@ -126,23 +157,45 @@ select:focus{
         transform: translateX(100%);
         opacity: 0;
     }
+
     to {
         transform: translateX(0);
         opacity: 1;
     }
 }
 
-.assigned, .category, .subtask{
-    padding-top: 30px;
+.assigned-to .category,
+.subtask {
+    /* padding-top: 30px; */
 }
 
-.button_div{
+.button_div {
     margin-top: 20px;
     display: flex;
     justify-content: end;
 }
 
-#add-task-create-btn:hover{
+.assigned-to-input{
+    width: 100%;
+    padding: 12px 16px;
+    border: none;
+    border-bottom: 1px solid #D1D1D1;
+    align-items: center;
+    font-size: 19px;
+    height: 48px;
+    outline: none;
+}
+.assigned-contacts{
+    justify-content: space-between;
+}
+
+.checkbox{
+    height: 24px;
+    width: 24px;
+    border: 2px solid #0038ff;
+}
+
+.add-task-create-btn:hover {
     cursor: pointer;
     background-color: #0038ff;
 }
@@ -150,36 +203,35 @@ select:focus{
 form {
     display: flex;
     flex-direction: column;
+    width: 488px;
+    padding: 64px 24px 24px;
+    gap: 24px;
+    height: auto;
+    box-sizing: border-box;
+}
+.form-scroll-container {
     position: fixed;
     top: 96px;
-    width: 440px;
-    padding: 64px 24px 24px;
-    gap: 4px;
-    overflow: auto;
     height: 928px;
+    width: 488px;
+    overflow-y: auto; 
+    padding-right: 24px; 
+    overflow-x: hidden; 
 }
+
 
 .validation-add-task-form {
     height: 16px;
 }
 
-#form-header>label,
-form>label,
-legend {
-    height: 23px;
-    font-size: 19px;
-    font-weight: 700;
-}
-
-.btn{
+.btn {
     cursor: pointer;
 }
 
-#form-header>input,
+.title-shell>input,
+.form-header>input,
 form>input,
-#shell-subtask,
-#shell-date,
-form>select {
+.subtask-area {
     padding: 12px 16px;
     border: none;
     border-bottom: 1px solid #D1D1D1;
@@ -189,54 +241,70 @@ form>select {
     justify-content: space-between;
     align-items: center;
     font-size: 19px;
+    width: 100%;
 }
 
-#form-header {
+.title-shell {
+    height: 84px;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header {
     display: flex;
     flex-direction: column;
     height: 361px;
     gap: 12px;
 }
 
-#title-add-task {
-    height: 38px;
+.title-add-task {
+    /* height: 38px; */
     font-size: 32px !important;
 }
 
-#form-header>input:focus,
-form>input:focus,
-#shell-subtask:focus,
-#shell-date:focus,
-form>select:focus {
-    border-bottom: 1px solid var(--primaryColor);
+.form-header>input:focus,
+.subtask-area:focus-within,
+.subtask-area:hover,
+.title-add-task:focus,
+select:focus,
+select:hover,
+.wrapper-category-select:hover,
+.assigned-to-input:hover
+/* .added-subtasks:focus */
+ {
     outline: none;
+    border-bottom: 1px solid var(--primaryColor);
 }
 
 ::placeholder {
     color: #D1D1D1;
 }
 
-#subtask {
+.subtask {
     border: none;
     font-size: 19px;
+    width: 100%;
 }
 
-#subtask:focus {
+.subtask:focus {
     outline: none;
 }
 
-#date-input-add-task {
+.added-subtasks{
+    height: 32px;
+    padding: 4px 16px;
+    justify-content: space-between;
+}
+
+.date-input-add-task {
     border: none;
 }
 
-#date-input-add-task:focus {
+.date-input-add-task:focus {
     outline: none;
 }
 
-#shell-subtask>button {
-    border: none;
-    background-color: white;
-}
 
 form>select {
     height: 48px;
@@ -270,14 +338,14 @@ textarea:focus {
     min-height: 48px;
 }
 
-#shell-radio-btn {
+.shell-radio-btn {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     gap: 16px;
 }
 
-#shell-radio-area {
+.shell-radio-area {
     height: 82px;
     flex-direction: column;
     display: flex;
@@ -285,25 +353,24 @@ textarea:focus {
 
 }
 
-#shell-radio-btn>label>input~.unchecked-priority {
+.shell-radio-btn>label>input~.unchecked-priority {
     display: flex;
     width: 20px;
     height: 15px;
 }
 
-#shell-radio-btn>label>input~.checked-priority {
+.shell-radio-btn>label>input~.checked-priority {
     display: none;
     width: 20px;
     height: 15px;
 }
 
-#shell-radio-btn>label>input:checked~.unchecked-priority {
+.shell-radio-btn>label>input:checked~.unchecked-priority {
     display: none;
 }
 
-#shell-radio-btn>label>input:checked~.checked-priority {
+.shell-radio-btn>label>input:checked~.checked-priority {
     display: flex;
-
 }
 
 input[type="radio"] {
@@ -332,15 +399,15 @@ input[type="radio"] {
     z-index: 1;
 }
 
-#add-task-urgent:hover {
+.add-task-urgent:hover {
     border-bottom: 2px solid var(--urgentColor);
 }
 
-#add-task-medium:hover {
+.add-task-medium:hover {
     border-bottom: 2px solid var(--mediumColor);
 }
 
-#add-task-low:hover {
+.add-task-low:hover {
     border-bottom: 2px solid var(--lowColor);
 }
 
@@ -365,7 +432,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     font-style: italic;
 }
 
-#add-task-btns {
+.add-task-btns {
     display: flex;
     padding: 16px 10px;
     max-width: 335px;
@@ -378,7 +445,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     bottom: 66px;
 }
 
-#clear-form-btn {
+.clear-form-btn {
     width: 136px;
     color: #647188;
     background-color: var(--secondaryColor);
@@ -392,7 +459,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     height: 61px;
 }
 
-#add-task-create-btn {
+.add-task-create-btn {
     width: 174px;
     background-color: var(--primaryColor);
     font-size: 23px;
