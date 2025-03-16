@@ -58,8 +58,7 @@ function creatTask() {
     let descriptionNewTaskRef = document.getElementById("description-add-task")
     let dateNewTaskRef = document.getElementById("date-input-add-task")
     let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
-    let categoryNewTaskRef = document.getElementById("category")
-    let selectedOption = categoryNewTaskRef.options[categoryNewTaskRef.selectedIndex]
+    let categoryNewTaskRef = document.getElementById("category-add-task")
     let assignedUserRef = "user"
     let subtasksNewTaskRef = document.getElementById("added-subtasks")
     let data = {
@@ -67,9 +66,9 @@ function creatTask() {
             description: descriptionNewTaskRef.value,
             dueDate: dateNewTaskRef.value,
             priority: priorityNewTaskRef.value,
-            category: selectedOption.textContent,
+            category:categoryNewTaskRef.textContent,
             assigned: assignedUserRef,
-            status: "todo"
+            status: "toDo",
         }
     };
     postTask("/tasks", data)
