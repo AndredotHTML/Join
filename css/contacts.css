@@ -54,6 +54,14 @@
     border-bottom: 1px solid #eee;
 }
 
+.contact.selected {
+    background-color: #007bff;
+    /* Blaue Hervorhebung */
+    color: #fff;
+    border-color: #0056b3;
+}
+
+
 .avatar {
     width: 36px;
     height: 36px;
