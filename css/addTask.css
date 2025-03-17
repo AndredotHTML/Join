@@ -257,7 +257,7 @@ form {
     transition: background-color 0.3s ease;
 }
 
-.subtask_item{
+.added_subtask{
     display: flex;
     align-items: center;
     padding-inline-start: 0;
@@ -268,19 +268,19 @@ form {
     transition: background-color 0.3s ease;  
 }
 
-.subtask_item::before {
+.added_subtask::before {
     content: "•"; 
     font-size: 20px; 
     margin-right: 10px;
 }
 
-.subtask_item:hover {
+.added_subtask:hover {
     background-color: #d2e2ff;
     cursor: pointer;
     border-radius: 10px;
 }
 
-.subtask_item:hover .subtask_actions {
+.added_subtask:hover .subtask_actions {
     opacity: 1;  
 }
 
@@ -335,7 +335,7 @@ form {
     transition: background-color 0.3s ease;
 }
 
-.subtask_item{
+.added_subtask{
     display: flex;
     align-items: center;
     padding-inline-start: 0;
@@ -346,19 +346,19 @@ form {
     transition: background-color 0.3s ease;  
 }
 
-.subtask_item::before {
+.added_subtask::before {
     content: "•"; 
     font-size: 20px; 
     margin-right: 10px;
 }
 
-.subtask_item:hover {
+.added_subtask:hover {
     background-color: #d2e2ff;
     cursor: pointer;
     border-radius: 10px;
 }
 
-.subtask_item:hover .subtask_actions {
+.added_subtask:hover .subtask_actions {
     opacity: 1;  
 }
 
