@@ -430,11 +430,18 @@ function addTaskOverlay(){
                     </div>
             </div>
             <div class="assigned">
-            <label for="assigned-to">Assigned to<span>(optional)</span></label>
-            <select name="assigned-to" id="assigned-to">
-                    <option id="placeholder" value="Select task category" selected disabled hidden>Select contacts to
-                        assign</option>
-            </select>
+            <label>Assigned to <span>(optional)</span></label>
+            <div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown()">
+            <span id="selected-users">Select contacts</span>
+            <img src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
+            </div>
+            <div class="dropdown-menu" id="dropdown-menu">
+            <label for="user-1"><input type="checkbox" id="user-1" value="User 1" onclick="updateSelectedUsers()"> User 1</label>
+            <label for="user-2"><input type="checkbox" id="user-2" value="User 2" onclick="updateSelectedUsers()"> User 2</label>
+            <label for="user-3"><input type="checkbox" id="user-3" value="User 3" onclick="updateSelectedUsers()"> User 3</label>
+             </div>
+            </div>
             </div>
             <div class="category">
             <label for="category">Category</label>
@@ -503,3 +510,34 @@ function resetSubtaskIcons() {
     document.getElementById("subtask").value = "";
 }
 
+function radioBtnChecked(priority) {
+    let labelList = document.querySelectorAll(".radio-btn")
+    let priorityRef = priority
+    let inputRef = document.getElementById(priorityRef + "-rad")
+    let labelRef = document.querySelector('label[for="' + priorityRef + '-rad"]')
+    labelList.forEach(radioBtn => {
+        radioBtn.style.backgroundColor = `var(--secondaryColor)`;
+        radioBtn.style.color = `black`;
+    });
+    if (inputRef.checked) {
+        labelRef.style.backgroundColor = `var(--${priorityRef}Color)`;
+        labelRef.style.color = `var(--secondaryColor)`;
+    }
+}
+
+
+function toggleDropdown() {
+    document.getElementById("dropdown-menu").classList.toggle("show");
+}
+
+function updateSelectedUsers() {
+    const selectedUsers = [];
+    // Check which users are selected
+    if (document.getElementById("user-1").checked) selectedUsers.push("User 1");
+    if (document.getElementById("user-2").checked) selectedUsers.push("User 2");
+    if (document.getElementById("user-3").checked) selectedUsers.push("User 3");
+
+    // Update the text in the dropdown header
+    const selectedUsersText = selectedUsers.length > 0 ? selectedUsers.join(", ") : "Select contacts";
+    document.getElementById("selected-users").innerText = selectedUsersText;
+}

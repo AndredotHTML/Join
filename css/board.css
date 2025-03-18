@@ -510,6 +510,53 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
+/* Dropdown styling */
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+/* Header styling (clickable area) */
+.dropdown-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #D1D1D1;
+    cursor: pointer;
+}
 
 
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #D1D1D1;
+    display: none;  
+    flex-direction: column;
+    padding: 5px;
+    z-index: 9999;
+}
 
+
+.dropdown-menu label {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    cursor: pointer;
+}
+
+.dropdown-menu label:hover {
+    background: #f0f0f0;
+}
+
+.dropdown-menu input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+
+.dropdown-menu.show {
+    display: block; 
+}
