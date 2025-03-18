@@ -488,7 +488,7 @@ function addSubtaskOverlay() {
 }
 
 function subtaskTemplate( subtaskValue){
-    return `<li class="subtask_item">
+    return `<li class="added_subtask">
              <span class="subtask_text">${subtaskValue}</span>
             <div class="subtask_actions">
                 <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon">
