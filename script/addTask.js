@@ -1,10 +1,11 @@
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
-
+let isDropdownOpen = false;
 document.addEventListener("DOMContentLoaded", function () {
     dropDownForCategory();
     getUser(path = "/users");
-    dropDownForAssigned();
 });
+document.getElementById("assigned-to-input").addEventListener("click", dropDownForAssigned);
+
 
 document.querySelectorAll("form select").forEach(select => {
     select.addEventListener("click", () => {
@@ -59,10 +60,9 @@ function creatTask() {
     let dateNewTaskRef = document.getElementById("date-input-add-task")
     let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
     let categoryNewTaskRef = document.getElementById("category-add-task")
-    let assignedUserRef = "user"
+    let assignedUserRef = assignetUserToData()
     let subtasksNewTaskRef = document.getElementById("added-subtasks")
     let subtaskCollection = subtasksNewTaskRef.getElementsByTagName("li")
-    console.log(subtaskCollection);
     let subtasks = []
     for (const subtask of subtaskCollection) {
         subtasks.push(subtask.textContent.trim().replace(/\s+/g, " "))
@@ -72,14 +72,30 @@ function creatTask() {
             description: descriptionNewTaskRef.value,
             dueDate: dateNewTaskRef.value,
             priority: priorityNewTaskRef.value,
-            category:categoryNewTaskRef.textContent,
+            category: categoryNewTaskRef.textContent,
             assigned: assignedUserRef,
             status: "toDo",
-            subtasks:subtasks
+            subtasks: subtasks
         }
     };
     postTask("/tasks", data)
 }
+
+function assignetUserToData() {
+    let assignedRef = document.getElementById("assigned-to-display");
+    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    let selectedUser = [];
+    assignetContactRef.forEach(contact => {
+        let nameIcon = contact.querySelector(".name-icon");
+        let checkbox = contact.querySelector("input[type='checkbox']");
+        if (checkbox && checkbox.checked) {
+            let assignetData = nameIcon.dataset.value;
+            selectedUser.push(assignetData)
+        }
+    })
+    return selectedUser
+}
+
 
 async function postTask(path = "", data = {}) {
     try {
@@ -123,19 +139,48 @@ function displayUser(userArray) {
     for (let i = 0; i < userArray.length; i++) {
         let user = userArray[i];
         let userName = user.name;
-        let userEmail = user.email;
         allContacts += templateAssignedTo(userName)
     }
     assignedToAreaRef.innerHTML = allContacts
+    assignedToAreaRef.classList.add("d_none");
 }
 
-function dropDownForAssigned(){
-    console.log("function läuft");
-    let assignedInputRef = document.getElementById("assigned-to-input")
-    let assignedRef = document.getElementById("assigned-to-display")
-    let options = document.querySelectorAll(".assigned-to-container .assigned-contacts")
-    assignedInputRef.addEventListener("click", function () {
-        assignedRef.classList.toggle("d_none")
+function dropDownForAssigned() {
+    if (!isDropdownOpen) {
+        openDropdown();
+    } else {
+        closeDropdown();
+    }
+    isDropdownOpen = !isDropdownOpen;
+}
+
+function openDropdown() {
+    let assignedRef = document.getElementById("assigned-to-display");
+    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    assignedRef.classList.remove("d_none");
+    assignetContactRef.forEach(contact => {
+        contact.style.display = "flex";
+        let label = contact.querySelector("label");
+        if (label) {
+            label.style.display = "flex";
+        }
+    });
+}
+
+function closeDropdown() {
+    let assignedRef = document.getElementById("assigned-to-display");
+    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    assignetContactRef.forEach(contact => {
+        let checkbox = contact.querySelector("input[type='checkbox']");
+        let label = contact.querySelector("label");
+        if (checkbox && checkbox.checked) {
+            if (label) {
+                label.style.display = "none";
+            }
+            // contact.style.display = "flex";
+        } else {
+            contact.style.display = "none";
+        }
     });
 }
 

@@ -16,9 +16,9 @@ body {
 
 .content-wrapper {
     max-width: 1920px;
-    margin: 0 ;
+    margin: 0;
     position: relative;
-  }
+}
 
 
 .add_task_overlay {
@@ -88,7 +88,7 @@ select {
     background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right 16px;
 }
 
-.wrapper-category-select{
+.wrapper-category-select {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -98,13 +98,19 @@ select {
     height: 48px;
 }
 
+.wrapper-subtasks,.added-subtasks {
+    gap: 8px;
+    display: flex;
+    flex-direction: column;
+}
 
 
 
-.category-add-task{
+.category-add-task {
     width: 100%;
 }
-.option-category{
+
+.option-category {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -112,10 +118,11 @@ select {
     font-size: 19px;
     height: 47px;
 }
-.drop-down-arrow-open{
+
+.drop-down-arrow-open {
     height: 24px;
     width: 24px;
-    background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right ;
+    background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right;
 }
 
 
@@ -175,7 +182,7 @@ select {
     justify-content: end;
 }
 
-.assigned-to-input{
+.assigned-to-input {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -185,15 +192,43 @@ select {
     height: 48px;
     outline: none;
 }
-.assigned-contacts{
+
+.assigned-contacts>label {
     justify-content: space-between;
+    align-items: center;
+    width: 100%;
 }
 
+.assigned-contacts {
+    padding: 7px 16px;
+    border-radius: 10px;
+    height: 56px;
+    align-items: center;
+}
+
+/*background-color placeholder*/
+.name-icon {
+    color: white;
+    height: 42px;
+    width: 42px;
+    font-size: 12px;
+    background-color: orange;
+    border-radius: 45px;
+    border: 2px solid white;
+    justify-content: center;
+    align-items: center;
+    gap: 12px
+}
+
+
+
+
+/* 
 .checkbox{
     height: 24px;
     width: 24px;
     border: 2px solid #0038ff;
-}
+} */
 
 .add-task-create-btn:hover {
     cursor: pointer;
@@ -204,19 +239,20 @@ form {
     display: flex;
     flex-direction: column;
     width: 488px;
-    padding: 64px 24px 24px;
+    padding: 64px 24px 0px;
     gap: 24px;
     height: auto;
     box-sizing: border-box;
 }
+
 .form-scroll-container {
     position: fixed;
     top: 96px;
-    height: 928px;
+    height: 816px;
     width: 488px;
-    overflow-y: auto; 
-    padding-right: 24px; 
-    overflow-x: hidden; 
+    overflow-y: auto;
+    padding-right: 24px;
+    overflow-x: hidden;
 }
 
 
@@ -257,20 +293,20 @@ form {
     transition: background-color 0.3s ease;
 }
 
-.subtask_item{
+.subtask_item {
     display: flex;
     align-items: center;
     padding-inline-start: 0;
     padding: 5px 10px;
     list-style: none;
     padding-bottom: 5px;
-    position: relative;  
-    transition: background-color 0.3s ease;  
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .subtask_item::before {
-    content: "•"; 
-    font-size: 20px; 
+    content: "•";
+    font-size: 20px;
     margin-right: 10px;
 }
 
@@ -281,12 +317,12 @@ form {
 }
 
 .subtask_item:hover .subtask_actions {
-    opacity: 1;  
+    opacity: 1;
 }
 
 
 .subtask_text {
-    flex-grow: 1;  
+    flex-grow: 1;
 }
 
 .subtask_actions {
@@ -294,10 +330,10 @@ form {
     gap: 10px;
     margin-left: auto;
     padding-right: 15px;
-    position: absolute; 
+    position: absolute;
     right: 0;
-    opacity: 0;  
-    transition: opacity 0.3s ease;  
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .subtask_actions img {
@@ -335,20 +371,20 @@ form {
     transition: background-color 0.3s ease;
 }
 
-.subtask_item{
+.subtask_item {
     display: flex;
     align-items: center;
     padding-inline-start: 0;
     padding: 5px 10px;
     list-style: none;
     padding-bottom: 5px;
-    position: relative;  
-    transition: background-color 0.3s ease;  
+    position: relative;
+    transition: background-color 0.3s ease;
 }
 
 .subtask_item::before {
-    content: "•"; 
-    font-size: 20px; 
+    content: "•";
+    font-size: 20px;
     margin-right: 10px;
 }
 
@@ -359,12 +395,12 @@ form {
 }
 
 .subtask_item:hover .subtask_actions {
-    opacity: 1;  
+    opacity: 1;
 }
 
 
 .subtask_text {
-    flex-grow: 1;  
+    flex-grow: 1;
 }
 
 .subtask_actions {
@@ -372,10 +408,10 @@ form {
     gap: 10px;
     margin-left: auto;
     padding-right: 15px;
-    position: absolute; 
+    position: absolute;
     right: 0;
-    opacity: 0;  
-    transition: opacity 0.3s ease;  
+    opacity: 0;
+    transition: opacity 0.3s ease;
 }
 
 .subtask_actions img {
@@ -398,7 +434,7 @@ form {
 .form-header>input,
 form>input,
 .subtask-area {
-    padding:12px 16px;
+    padding: 12px 16px;
     border: none;
     border-bottom: 1px solid #D1D1D1;
     appearance: none;
@@ -437,8 +473,9 @@ select:focus,
 select:hover,
 .wrapper-category-select:hover,
 .assigned-to-input:hover
+
 /* .added-subtasks:focus */
- {
+    {
     outline: none;
     border-bottom: 1px solid var(--primaryColor);
 }
@@ -457,7 +494,7 @@ select:hover,
     outline: none;
 }
 
-.added-subtasks{
+.added-subtasks {
     height: 32px;
     padding: 4px 16px;
     justify-content: space-between;
@@ -647,5 +684,12 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 }
 
 .addedSubtask {
+    max-height: 32px;
     font-size: 16px;
+    padding: 6px 16px;
+    list-style-position: inside;
+}
+
+.placeholder-container{
+    height: 48px;
 }
