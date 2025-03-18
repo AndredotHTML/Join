@@ -393,7 +393,7 @@ function addTaskOverlay(){
             <div class="header_headline"><h1> Add Task</h1></div>
             </div>
             <div class="addTask_content">
-            <div id="form-header" >
+            <div class="form-header" >
                     <input type="text" id="title-add-task" placeholder="Enter a title">
                     <div class="validation-add-task-form">
                     </div>
@@ -409,9 +409,9 @@ function addTaskOverlay(){
                     <div class="validation-add-task-form">
                     </div>
             </div>
-            <div id="shell-radio-area">
+            <div class="shell-radio-area">
                     <legend>Priority</legend>
-                    <div id="shell-radio-btn">
+                    <div class="shell-radio-btn">
                         <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
                             <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
                                 Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
@@ -446,7 +446,7 @@ function addTaskOverlay(){
             </div>
             <div class="subtask">
                      <label for="subtask">Subtasks <span>(optional)</span></label>
-            <div id="shell-subtask">
+            <div class="subtask-area" id="shell-subtask">
                     <input type="text" id="subtask" placeholder="Add new subtask">
             <div id="subtask-icons">
                     <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
@@ -454,9 +454,9 @@ function addTaskOverlay(){
             </div>
                     <ul id="added-subtasks"></ul>
             </div>
-            </div>
-            <div class="button_div">
-            <button id="add-task-create-btn">
+                    </div>
+                <div class="button_div">
+                <button class="btn add-task-create-btn" id="add-task-create-btn">
                     <div class="btn-title">Create Task </div>
                     <div class="btn-icon-shell">
                         <img src="../assets/icons/check.svg" alt="">

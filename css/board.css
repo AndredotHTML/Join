@@ -475,3 +475,41 @@
 .delete_btn img:hover, .edit_btn img:hover {
     filter: brightness(0.9);
 }
+
+/* Floating Add Task Style */
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url("/assets/icons/event.png") no-repeat center;
+    cursor: pointer;
+    display: block;
+    position: sticky !important;
+    margin-left: 330px; 
+    z-index: 10 !important;
+    overflow-x:hidden;
+}
+
+.assigned, .category, .subtask {
+    padding-top: 20px;
+}
+
+#shell-subtask {
+    display: flex;
+    align-items: center; 
+    gap: 10px; 
+}
+
+#shell-subtask input{
+     border: none;
+     outline: none;
+     width: 100%;
+     font-size: 19px;
+}
+
+#shell-subtask input:hover{
+    cursor: pointer;
+}
+
+
+
+
+
