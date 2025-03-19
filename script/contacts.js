@@ -10,4 +10,10 @@ function selectContact ( id ) {
     if ( !alreadySelected ) {
         selectedElement.classList.add( 'selected' );
     }
+    showDetail();
+}
+
+function showDetail () {
+    let detailEle = document.getElementById( "detail" );
+    detailEle?.classList.toggle( "open" );
 }

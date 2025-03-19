@@ -7,6 +7,7 @@
     width: 232px;
     box-sizing: border-box;
     align-items: center;
+    z-index: 20;
 }
 
 .nav_bar {

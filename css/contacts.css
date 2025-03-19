@@ -8,7 +8,6 @@
     display: flex;
     width: 100%;
     height: calc(100vh - 96px);
-    column-gap: 16px;
 }
 
 .main_wrapper {
@@ -19,26 +18,17 @@
 }
 
 .contact_bar {
-    max-width: 400px;
+    width: 456px;
     height: 100%;
     overflow-y: auto;
-    /* ← Hier scrollen */
+    overflow-x: hidden;
     border-right: 1px solid #ccc;
+    padding-left: 24px;
 }
 
 .contacts_list {
     flex: 1;
-    /* nimmt restlichen Platz */
-    overflow-y: auto;
-    /* macht scrollbar */
-    scrollbar-width: thin;
-    scrollbar-color: #b0b0b0 transparent;
-
-    /* Optional Styling für Scrollbar */
-}
-
-.contact_bar::-webkit-scrollbar {
-    width: 10px;
+    padding: 0 24px;
 }
 
 .letter-header {
@@ -50,29 +40,31 @@
 .contact {
     display: flex;
     align-items: center;
-    padding: 12px 16px;
-    border-bottom: 1px solid #eee;
+    padding: 15px 24px;
+    border-radius: 10px;
+    height: 77px;
+    box-sizing: border-box;
+    gap: 35px;
 }
 
-.contact.selected {
-    background-color: #007bff;
-    /* Blaue Hervorhebung */
-    color: #fff;
-    border-color: #0056b3;
+.contact:hover {
+    background-color: #d2e2ff;
+    cursor: pointer;
 }
-
 
 .avatar {
-    width: 36px;
-    height: 36px;
+    width: 42px;
+    height: 42px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    font-weight: bold;
-    margin-right: 12px;
-    font-size: 0.9em;
+    font-size: 12px;
+    border: 2px solid var(--secondaryColor);
+    line-height: 1.2;
+    font-family: Inter, sans-serif;
+
 }
 
 .contact-info {
@@ -80,15 +72,13 @@
     flex-direction: column;
 }
 
-.contact-name {
-    font-weight: 500;
-    color: #222;
+.contact .contact-name {
+    font-size: 19px;
 }
 
-.contact-email {
-    color: #1976d2;
-    font-size: 0.9em;
-    text-decoration: none;
+.contact .contact-email {
+    font-size: 16px;
+    color: var(--primaryColor);
 }
 
 /* Farben für Initialen */
@@ -172,49 +162,20 @@
 
 }
 
-/* Für WebKit-basierte Browser */
-.contact_bar::-webkit-scrollbar {
-    width: 10px;
-    background-color: transparent;
-}
-
-.contact_bar::-webkit-scrollbar-thumb {
-    background-color: #b0b0b0;
-    border-radius: 10px;
-    border: 2px solid white;
-}
-
-.contact_bar::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
-.contact_bar::-webkit-scrollbar-button {
-    height: 20px;
-    background-color: transparent;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 8px;
-}
-
-.contact_bar::-webkit-scrollbar-button:single-button:decrement {
-    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' width='10' height='10' xmlns='http://www.w3.org/2000/svg'><polygon points='5,2 2,7 8,7'/></svg>");
-}
-
-.contact_bar::-webkit-scrollbar-button:single-button:increment {
-    background-image: url("data:image/svg+xml;utf8,<svg fill='gray' width='10' height='10' xmlns='http://www.w3.org/2000/svg'><polygon points='2,3 8,3 5,8'/></svg>");
-}
-
 .contact-detail {
-    flex: 1;
     padding: 48px;
     box-sizing: border-box;
     background-color: white;
     display: flex;
-    align-items: flex-start;
+    justify-content: end;
 }
 
 .contact-info-wrapper {
-    max-width: 600px;
+    width: 0%;
+    overflow: hidden;
+}
+
+.open {
     width: 100%;
 }
 
@@ -299,4 +260,14 @@
     font-weight: 500;
     font-size: 47px;
     line-height: 1.2;
+}
+
+.contact.selected {
+    color: var(--secondaryColor);
+    background-color: var(--primaryColor);
+    border-color: #0056b3;
+}
+
+.contact.selected .contact-email {
+    color: var(--secondaryColor);
 }
