@@ -63,6 +63,7 @@ function updateHTML() {
     displayInProgress();
     displayAwaitFeedback();
     displayDone();
+    pushToUsersArray();
 }
 
 function displayToDo() {
@@ -387,7 +388,11 @@ function showAddTaskOverlay(){
 }
 
 function addTaskOverlay(){
-    return `<div  class="add_task_overlay">
+    return `<div id="task-message" style="display: none;">
+            <p>Task added to board</p>
+            <img src="../assets/icons/board_icon.png" alt="Board Icon">
+            </div>
+            <div  class="add_task_overlay">
             <div class="addTask_header_overlay">
             <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
             <div class="header_headline"><h1> Add Task</h1></div>
@@ -429,26 +434,24 @@ function addTaskOverlay(){
                         </label>
                     </div>
             </div>
-            <div class="assigned">
-            <label>Assigned to <span>(optional)</span></label>
-            <div class="dropdown">
-            <div class="dropdown-header" onclick="toggleDropdown()">
+          <div class="assigned">
+    <label>Assigned to <span>(optional)</span></label>
+    <div class="dropdown">
+        <div class="dropdown-header" onclick="toggleDropdown()">
             <span id="selected-users">Select contacts</span>
             <img src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
-            </div>
-            <div class="dropdown-menu" id="dropdown-menu">
-            <label for="user-1"><input type="checkbox" id="user-1" value="User 1" onclick="updateSelectedUsers()"> User 1</label>
-            <label for="user-2"><input type="checkbox" id="user-2" value="User 2" onclick="updateSelectedUsers()"> User 2</label>
-            <label for="user-3"><input type="checkbox" id="user-3" value="User 3" onclick="updateSelectedUsers()"> User 3</label>
-             </div>
-            </div>
-            </div>
+        </div>
+        <div class="dropdown-menu" id="dropdown-menu">
+            <!-- User list will be generated here -->
+        </div>
+    </div>
+</div>
             <div class="category">
             <label for="category">Category</label>
             <select name="category" id="category"> Select task category
                     <option value="Select task category" selected disabled hidden>Select task category</option>
-                    <option value="">Technical Task</option>
-                    <option value="">User Story</option>
+                    <option value="Technical Task">Technical Task</option>
+                    <option value="User Story">User Story</option>
             </select>
             </div>
             <div class="subtask">
@@ -463,7 +466,7 @@ function addTaskOverlay(){
             </div>
                     </div>
                 <div class="button_div">
-                <button class="btn add-task-create-btn" id="add-task-create-btn">
+                <button class="btn add-task-create-btn" id="add-task-create-btn" onclick="createTask()">
                     <div class="btn-title">Create Task </div>
                     <div class="btn-icon-shell">
                         <img src="../assets/icons/check.svg" alt="">
@@ -527,17 +530,151 @@ function radioBtnChecked(priority) {
 
 
 function toggleDropdown() {
-    document.getElementById("dropdown-menu").classList.toggle("show");
+   let dropDownMenu = document.getElementById("dropdown-menu");
+
+   if (!dropDownMenu.classList.contains("show")) {
+    generateUsers();
+    }
+    dropDownMenu.classList.toggle("show");
 }
 
 function updateSelectedUsers() {
-    const selectedUsers = [];
-    // Check which users are selected
-    if (document.getElementById("user-1").checked) selectedUsers.push("User 1");
-    if (document.getElementById("user-2").checked) selectedUsers.push("User 2");
-    if (document.getElementById("user-3").checked) selectedUsers.push("User 3");
+    assignedUsers = []; 
 
-    // Update the text in the dropdown header
-    const selectedUsersText = selectedUsers.length > 0 ? selectedUsers.join(", ") : "Select contacts";
-    document.getElementById("selected-users").innerText = selectedUsersText;
+    for (let i = 0; i < users.length; i++) {
+        let userCheckbox = document.getElementById(`user-${users[i].id}`);
+        if (userCheckbox.checked) {
+            assignedUsers.push(users[i].userData.name); 
+        }
+    }
+    document.getElementById("selected-users").innerText = assignedUsers.length > 0 ? assignedUsers.join(", ") : "Select contacts";
+}
+
+
+function generateUsers(){
+    let dropDownMenu = document.getElementById("dropdown-menu");
+    dropDownMenu.innerHTML="";
+
+    for (let index = 0; index < users.length; index++) {
+        let element = users[index];
+        dropDownMenu.innerHTML += generateSingleUser(element);
+    }
+}
+
+function generateSingleUser(element) {
+    return `
+        <label for="user-${element.id}">
+            <input type="checkbox" id="user-${element.id}" value="${element.userData.name}" onclick="updateSelectedUsers()">
+            ${element.userData.name}
+        </label>
+    `;
+}
+
+function generateUsers(){
+    let dropDownMenu = document.getElementById("dropdown-menu");
+    dropDownMenu.innerHTML="";
+
+    for (let index = 0; index < users.length; index++) {
+        let element = users[index];
+        dropDownMenu.innerHTML += generateSingleUser(element);
+    }
+}
+
+function generateSingleUser(element) {
+    return `
+        <label for="user-${element.id}">
+            <input type="checkbox" id="user-${element.id}" value="${element.userData.name}" onclick="updateSelectedUsers()">
+            ${element.userData.name}
+        </label>
+    `;
+}
+
+let assignedUsers=[];
+
+function createTask() {
+    let title = document.getElementById("title-add-task").value;
+    let description = document.getElementById("description-add-task").value;
+    let dueDate = document.getElementById("dateInput-add-task").value;
+    let priority = getPriority();
+    let category = document.getElementById("category").value;
+    let subtasks = getSubtasks();
+
+    const task = {
+        title: title,
+        description: description,
+        dueDate: dueDate,
+        priority: priority,
+        assignedUsers: assignedUsers,
+        category: category,
+        subtasks: subtasks,
+        status: "To Do" 
+    };
+
+    postTask("/tasks", task);
+    showTaskMessage();
+    console.log("New task created:", task);
+    resetFormFields(); 
+    resetSubtasks();
+}
+
+function getPriority() {
+    if (document.getElementById("urgent-rad").checked) return "Urgent";
+    if (document.getElementById("medium-rad").checked) return "Medium";
+    if (document.getElementById("low-rad").checked) return "Low";
+    return null;
+}
+
+function getSubtasks() {
+    let subtasks = [];
+    let subtaskElements = document.querySelectorAll("#added-subtasks li");
+
+    for (let i = 0; i < subtaskElements.length; i++) {
+        subtasks.push(subtaskElements[i].innerText); 
+    }
+    return subtasks;
+}
+
+function showTaskMessage() {
+    let messageDiv = document.getElementById("task-message");
+    messageDiv.style.display = "flex";  
+    messageDiv.classList.add("show");  
+
+    setTimeout(() => {
+        messageDiv.classList.remove("show");
+        messageDiv.style.display = "none";  
+    }, 3000); 
+}
+
+function resetFormFields() {
+    document.getElementById("title-add-task").value = "";
+    document.getElementById("description-add-task").value = "";
+    document.getElementById("dateInput-add-task").value = "";
+    document.getElementById("category").value = "Select task category"; 
+}
+
+
+function resetSubtasks() {
+    document.getElementById("subtask").value = ""; 
+    document.getElementById("added-subtasks").innerHTML = "";
+}
+
+async function postTask(path = "", data = {}) {
+    try {
+        const response = await fetch(BASE_URL + path + ".json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+        if (!response.ok) {
+            throw new Error("Fehler beim Senden der Daten");
+        }
+        const result = await response.json()
+        console.log("Task wurde angenommen", result);
+        return result;
+    } catch (error) {
+        console.error("Fehler:", error.message);
+        return null;
+    }
 }
