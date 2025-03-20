@@ -8,8 +8,7 @@
 .main_wrapper {
     width: calc(100% - 200px);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-    height: 100%;
-    overflow-y: hidden;
+    overflow-x: hidden;
 }
 
 .board_header {
@@ -107,14 +106,13 @@
 }
 
 .drag_area {
-    height: 550px;
     background-color: white;
     border-radius: 10px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: auto;
     gap: 15px;
+    padding-bottom: 20px;
 }
 
 .noTask_msg {

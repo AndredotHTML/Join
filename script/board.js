@@ -1,4 +1,4 @@
-let task = [{
+/*let task = [{
     'id' : 0,
     'title' : 'Kochwelt Page & Recipe Recommender',
     'category' : 'User Story',
@@ -53,17 +53,46 @@ let task = [{
         }
     },
     'status' : 'done'
-}];
+}];  */
+
+let task = [];
 
 let currentDraggedElement;
 const predefinedColors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF"];
 
-function updateHTML() {
+async function updateHTML() {
+    await pushToUsersArray(); 
+    await pushToTask();
     displayToDo();
     displayInProgress();
     displayAwaitFeedback();
     displayDone();
-    pushToUsersArray();
+}
+
+
+async function getAllTasks(path) {
+    let response = await fetch(BASE_URL + path + ".json");
+    return responseToJson = await response.json()
+}
+
+async function pushToTask() {
+    let tasks = await getAllTasks("/tasks"); 
+    let tasksArray = Object.keys(tasks);
+
+    for (let index = 0; index < tasksArray.length; index++) {
+        let taskData = tasks[tasksArray[index]]; 
+        task.push({
+            id: tasksArray[index], 
+            category: taskData.category,
+            title: taskData.title,
+            description: taskData.description,
+            dueDate: taskData.dueDate,
+            priority: taskData.priority,
+            status: taskData.status,
+            subtasks: taskData.subtasks,
+            assignedUsers: taskData.assignedUsers
+        });
+    }
 }
 
 function displayToDo() {
@@ -111,7 +140,7 @@ function displayAwaitFeedback(){
     }
 }
 
-function displayDone() {
+ function displayDone() {
     let done = task.filter(t => t['status'] == 'done');
     let doneContainer = document.getElementById('done');
     doneContainer.innerHTML = '';
@@ -130,7 +159,7 @@ function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);
     let {completed,total,progress} = calculateSubtaskProgress(element.subtasks);
     let priority_img = togglePriority(element.priority);
-    let user_icon =generateUserIcons(element.users);
+    let user_icon =generateUserIcons(element.assignedUsers);
 
     return `
     <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket" onclick="showOverlay(${element['id']})">
@@ -196,15 +225,16 @@ function generateNoTask(){
 
 function startDragging(id) {
     currentDraggedElement = id ;
+    console.log("Dragging task ID:", currentDraggedElement);
 }
 
 function allowDrop(ev) {
     ev.preventDefault();
 }
 
-function moveTo(status){
+async function moveTo(status){
     task[currentDraggedElement]['status'] = status;
-    updateHTML();
+    await updateHTML(); 
     removeHighlight(status); 
 }
 
@@ -250,33 +280,33 @@ function calculateSubtaskProgress(subtasks) {
 
 
 
-function getUsersInitials(users) {
-    let allUsers = Object.keys(users);
+function getUsersInitials(assignedUsers) {
     let usersWithInitials = [];
 
-    for (let index = 0; index < allUsers.length; index++) {
-        let name = users[allUsers[index]].name;
+    for (let index = 0; index < assignedUsers.length; index++) {
+        let name = assignedUsers[index];
         let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
-        usersWithInitials.push({ 
-            'initials' : initials, 
-            'name' : name 
+        usersWithInitials.push({
+            'initials': initials,
+            'name': name
         });
     }
     return usersWithInitials;
 }
 
-function generateUserIcons(users){
-    let usersData = getUsersInitials(users);
+function generateUserIcons(assignedUsers){
+    let usersData = getUsersInitials(assignedUsers);
     let userIcon = '';
     let overlapDistance = 30;
 
-    for(let i= 0; i<usersData.length;i++){
+    for (let i = 0; i < usersData.length; i++) {
         let color = getColorForUser(usersData[i].name); 
         let leftPosition = i * overlapDistance;
-        userIcon += generateSingleUserIcon(usersData[i].initials,leftPosition,color)
+        userIcon += generateSingleUserIcon(usersData[i].initials, leftPosition, color);
     }
     return userIcon;
 }
+
 
 function generateSingleUserIcon(initial, leftPosition, color) {
     return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
@@ -388,7 +418,7 @@ function showAddTaskOverlay(){
 }
 
 function addTaskOverlay(){
-    return `<div id="task-message" style="display: none;">
+    return ` <div id="task-message" style="display: none;">
             <p>Task added to board</p>
             <img src="../assets/icons/board_icon.png" alt="Board Icon">
             </div>
@@ -473,7 +503,7 @@ function addTaskOverlay(){
                     </div>
             </button>
              </div>
-    </div>`
+    </div> `
 }
 
 function showSubtaskActions() {
@@ -529,7 +559,7 @@ function radioBtnChecked(priority) {
 }
 
 
-function toggleDropdown() {
+async function toggleDropdown() {
    let dropDownMenu = document.getElementById("dropdown-menu");
 
    if (!dropDownMenu.classList.contains("show")) {
@@ -570,28 +600,10 @@ function generateSingleUser(element) {
     `;
 }
 
-function generateUsers(){
-    let dropDownMenu = document.getElementById("dropdown-menu");
-    dropDownMenu.innerHTML="";
-
-    for (let index = 0; index < users.length; index++) {
-        let element = users[index];
-        dropDownMenu.innerHTML += generateSingleUser(element);
-    }
-}
-
-function generateSingleUser(element) {
-    return `
-        <label for="user-${element.id}">
-            <input type="checkbox" id="user-${element.id}" value="${element.userData.name}" onclick="updateSelectedUsers()">
-            ${element.userData.name}
-        </label>
-    `;
-}
-
 let assignedUsers=[];
 
-function createTask() {
+async  function createTask() {
+    await pushToUsersArray(); 
     let title = document.getElementById("title-add-task").value;
     let description = document.getElementById("description-add-task").value;
     let dueDate = document.getElementById("dateInput-add-task").value;
@@ -607,14 +619,22 @@ function createTask() {
         assignedUsers: assignedUsers,
         category: category,
         subtasks: subtasks,
-        status: "To Do" 
+        status: "toDo" 
     };
 
     postTask("/tasks", task);
+    updateToDo(task);
     showTaskMessage();
-    console.log("New task created:", task);
     resetFormFields(); 
     resetSubtasks();
+    setTimeout(() => {
+        closeOverlay();
+    }, 1000); 
+}
+
+function updateToDo(task){
+    let toDo = document.getElementById('toDo');
+    toDo.innerHTML +=generateTask(task);
 }
 
 function getPriority() {
@@ -629,7 +649,10 @@ function getSubtasks() {
     let subtaskElements = document.querySelectorAll("#added-subtasks li");
 
     for (let i = 0; i < subtaskElements.length; i++) {
-        subtasks.push(subtaskElements[i].innerText); 
+        subtasks.push({
+            title: subtaskElements[i].innerText, 
+            completed: false
+        });
     }
     return subtasks;
 }
