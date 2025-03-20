@@ -33,13 +33,13 @@
 
                         <div class="input_container">
                             <input required id="password" type="password" placeholder="Password">
-                            <img class="input_icon_password" onclick="togglePassword('password')"
+                            <img class="input_icon_password" id="password_icon" onclick="togglePassword('password','password_icon')"
                                 src="/assets/icons/visibility_off.png">
                         </div>
 
                         <div class="input_container">
                             <input required id="confirm_password" type="password" placeholder="Confirm Password">
-                            <img class="input_icon_password" onclick="togglePassword('confirm_password')"
+                            <img class="input_icon_password" id="confirm_password_icon" onclick="togglePassword('confirm_password','confirm_password_icon')"
                                 src="/assets/icons/visibility_off.png">
                             <p id="error_msg_password">Youre Passwords don't match. Please try again.</p>
                             <p id="error_msg">Check your email and name. Please try again.</p>

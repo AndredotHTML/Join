@@ -21,7 +21,6 @@ body {
     background-color: #4589FF;
     border-radius: 12px;
     height: 40px;
-    width: 216px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -150,6 +149,7 @@ button:hover {
     height: auto;
     width: 18px;
 }
+
 
 #signup_container h2 {
     text-decoration: underline 3px #4589FF;

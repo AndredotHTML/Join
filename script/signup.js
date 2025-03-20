@@ -7,9 +7,9 @@ const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.
  * toggles the visibility for the password input
  * @param {*} id - the ID of the element which will be toggled 
  */
-function togglePassword(id) {
+function togglePassword(id, icon) {
     const passwordInput = document.getElementById(id);
-    const passwordIcon = document.querySelector(".input_icon_password");
+    const passwordIcon = document.getElementById(icon);
     if (passwordInput.type === "password") {
       passwordInput.type = "text";
       passwordIcon.src = "/assets/icons/visibility.png"

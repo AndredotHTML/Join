@@ -61,9 +61,12 @@ function displayError() {
  * @param {*} userData - userdata to give over information as parameter
  */
 function handleSuccessfulLogin(userData) {
-  localStorage.removeItem('user');
   localStorage.setItem('user', JSON.stringify(userData));
   redirectToSummary()
+}
+
+function deleteLocalUser() {
+  localStorage.removeItem('user');
 }
 
 

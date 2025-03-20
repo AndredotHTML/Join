@@ -40,6 +40,8 @@
     height: 191px;
     font-size: 23px;
     transition: width 0.1s ease-in-out, height 0.1s ease-in-out, font-size 0.1s ease-in-out;
+    position: absolute;
+    left: 0;
 }
 
 .urgent-tasks:hover {
@@ -102,22 +104,25 @@
     width: 912px;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 #in-board {
     width: 208px;
     height: 191px;
+    position: absolute;
+    right: 0;
 }
 
 #in-board:hover {
     width: 271px;
     height: 207px;
+    border: none;
 } 
 
 .task-overview-bottom {
     display: flex;
     justify-content: space-between;
-    gap: 20px;
     min-height: 216px;
     max-height: 216px;
 }
@@ -139,6 +144,8 @@
 .task-card:hover {
     border-radius: 0px 30px 30px 30px;
     color: white;
+    width: 220px;
+    height: 235px;
     background-color: #005DFF;
 }
 
@@ -148,6 +155,7 @@
 
 .task-card:hover p {
     font-size: 28px;
+    color: white;
 }
 
 .task-card:hover .summary_icon {
@@ -171,7 +179,7 @@
     width: 76px;
     transition: all 0.3s ease-in-out;
     border-radius: 50%;
-    border: 2px solid white;
+    border: 3px solid white;
 }
 
 .task-card-head {
@@ -180,8 +188,20 @@
     gap: 8px;
 }
 
-#to-do {
+.to-do {
     background-color: #D2E2FF;
+    position: absolute;
+    z-index: 999;
+}
+
+.to-do:hover {
+    width: 271px;
+    height: 207px;
+    background-color: white;
+    color: #4589FF;
+}
+.to-do:hover p {
+    color: #4589FF;
 }
 
 .icon-wrapper {
@@ -212,4 +232,31 @@
     font-weight: 600;
     color: #005DFF;
 }
+
+.task-overview-left {
+    display: flex;
+    position: relative;
+    width: 48.5%;
+}
+
+.task-overview-right {
+    display: flex;
+    position: relative;
+    width: 48.5%;
+}
+
+.progress {
+    position: absolute;
+    right: 0;
+}
+
+.feedback {
+    position: absolute;
+}
+
+.done {
+    position: absolute;
+    right: 0;
+}
+
 
