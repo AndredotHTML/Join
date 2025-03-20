@@ -1,11 +1,34 @@
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 let isDropdownOpen = false;
+const form = document.getElementById("form-add-task")
+
 document.addEventListener("DOMContentLoaded", function () {
     dropDownForCategory();
     getUser(path = "/users");
+    document.getElementById("assigned-to-input").addEventListener("click", dropDownForAssigned);
 });
-document.getElementById("assigned-to-input").addEventListener("click", dropDownForAssigned);
 
+form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    let inputToValidateTitle = document.getElementById("title-add-task");
+    let requerdTitleRef = document.getElementById("title-validation");
+    let inputToValidateDate = document.getElementById("date-input-add-task");
+    let requerdDateRef = document.getElementById("date-validation");
+    requerdDateRef.innerHTML = ""
+    requerdTitleRef.innerHTML = ""
+    let errMsg = "This field is required"
+    if (inputToValidateTitle.value === "") {
+        requerdTitleRef.innerHTML = errMsg;
+        requerdTitleRef.style.color = 'red'
+        return
+    }
+    if (inputToValidateDate.value === "") {
+        requerdDateRef.innerHTML = errMsg;
+        requerdDateRef.style.color = 'red'
+        return
+    }
+    creatTask()
+})
 
 document.querySelectorAll("form select").forEach(select => {
     select.addEventListener("click", () => {
@@ -164,6 +187,8 @@ function openDropdown() {
         if (label) {
             label.style.display = "flex";
         }
+        assignedRef.style.display = "block";
+        assignedRef.style.flexDirection = "column"
     });
 }
 
@@ -177,7 +202,8 @@ function closeDropdown() {
             if (label) {
                 label.style.display = "none";
             }
-            // contact.style.display = "flex";
+            assignedRef.style.display = "flex";
+            assignedRef.style.flexDirection = "row"
         } else {
             contact.style.display = "none";
         }
@@ -201,6 +227,9 @@ function dropDownForCategory() {
         })
     })
 }
+
+
+
 
 
 

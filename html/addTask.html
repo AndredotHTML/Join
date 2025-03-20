@@ -75,26 +75,26 @@
 
             <div class="add-task-main">
                 <div class="form-scroll-container">
-                    <form action="">
+                    <form action="" id="form-add-task" method="POST" >
                         <div class="form-header">
                             <div class="title-shell">
                                 <input type="text" id="title-add-task" class="title-add-task"
-                                    placeholder="Enter a title" required>
-                                <div class="validation-add-task-form">
+                                    placeholder="Enter a title">
+                                <div class="validation-add-task-form" id="title-validation">
                                 </div>
                             </div>
                             <label for="description-add-task">Description <span>(optional)</span>
                             </label>
                             <textarea name="description-add-task" class="custom-resize description-add-task"
                                 id="description-add-task" placeholder="Enter a Description">
-                    </textarea>
+                            </textarea>
                             <div class="validation-add-task-form">
                             </div>
                             <label for="date-input-add-task">Due date
                             </label>
                             <input type="date" name="date-input-add-task" id="date-input-add-task"
-                                class="date-input-add-task" required>
-                            <div class="validation-add-task-form">
+                                class="date-input-add-task" >
+                            <div class="validation-add-task-form" id="date-validation">
                             </div>
                         </div>
                         <div class="shell-radio-area">
@@ -102,7 +102,7 @@
                             <div class="shell-radio-btn">
                                 <label class="radio-btn btn add-task-urgent" id="add-task-urgent" for="urgent-rad">
                                     <input type="radio" name="priority" id="urgent-rad" value="urgent"
-                                        onclick="radioBtnChecked('urgent')" required>
+                                        onclick="radioBtnChecked('urgent')">
                                     Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
                                     <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                                 </label>
@@ -168,8 +168,9 @@
                                 <img src="../assets/icons/clear.svg" alt="">
                             </div>
                         </button>
-                        <button id="add-task-create-btn" class="btn add-task-create-btn" onclick="creatTask()"
-                            type="submit">
+                        <button id="add-task-create-btn"  class="btn add-task-create-btn" form="form-add-task"
+                            onclick=""
+                             type="submit">
                             <div class="btn-title">Create Task </div>
                             <div class="btn-icon-shell">
                                 <img src="../assets/icons/check.svg" alt="">

@@ -9,7 +9,7 @@ function templateAssignedTo(userName) {
     return `
     <div class="assigned-contacts d_flex">
             <div class="name-icon d_flex" data-value="${userName}">
-                    ${userName.split(' ')[0][0]}
+                    ${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}
                 </div>
             <label for="assigned-user-${userName}" class="d_flex">
                 <div>

@@ -241,14 +241,14 @@ form {
     width: 488px;
     padding: 64px 24px 0px;
     gap: 24px;
-    height: auto;
+    height: 928px;
     box-sizing: border-box;
 }
 
 .form-scroll-container {
     position: fixed;
     top: 96px;
-    height: 816px;
+    height: calc(100vh  - 96px );
     width: 488px;
     overflow-y: auto;
     padding-right: 24px;
@@ -258,6 +258,7 @@ form {
 
 .validation-add-task-form {
     height: 16px;
+    font-size:13px ;
 }
 
 .btn {
