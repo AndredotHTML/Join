@@ -508,13 +508,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 
-/* Dropdown styling */
+
 .dropdown {
     position: relative;
     width: 100%;
 }
 
-/* Header styling (clickable area) */
+
 .dropdown-header {
     display: flex;
     justify-content: space-between;
@@ -526,13 +526,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 
 .dropdown-menu {
-    position: absolute;
-    top: 100%;
-    left: 0;
+    position: relative; 
     width: 100%;
     background: white;
-    border: 1px solid #D1D1D1;
-    display: none;  
+    display: flex;  
     flex-direction: column;
     padding: 5px;
     z-index: 9999;
@@ -542,8 +539,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .dropdown-menu label {
     display: flex;
     align-items: center;
+    justify-content: space-between; 
     padding: 5px;
     cursor: pointer;
+    width: 100%;
 }
 
 .dropdown-menu label:hover {
@@ -551,12 +550,33 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 .dropdown-menu input[type="checkbox"] {
-    margin-right: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    background-image: url("../assets/icons/unchecked.png");
+    background-size: cover;
+    cursor: pointer;
+    border: none;
+    margin-right: 20px;
 }
 
+.dropdown-menu input[type="checkbox"]:checked {
+    background-image: url("../assets/icons/checked.png");
+}
 
 .dropdown-menu.show {
-    display: block; 
+    visibility: visible;
+    opacity: 1;
+  }
+
+.selected-users {
+    display: none; /* Po defaultu je skriven */
+}
+
+.selected-users.visible {
+    display: inline; /* Prikazivanje kada je dropdown zatvoren */
 }
 
 #task-message {
@@ -608,4 +628,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         bottom: 50%; 
         opacity: 1;
     }
+}
+
+.user-icon {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: white;
+    font-weight: bold;
+    margin-right: 10px;
+    text-transform: uppercase;
+}
+
+.user-item {
+    display: flex;
+    align-items: center;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+.user-name {
+    flex-grow: 1;
 }

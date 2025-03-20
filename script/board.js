@@ -1,60 +1,3 @@
-/*let task = [{
-    'id' : 0,
-    'title' : 'Kochwelt Page & Recipe Recommender',
-    'category' : 'User Story',
-    'description' : 'Build start page with recipe recommendatation...',
-    'date' : '11/3/2025' ,
-    'priority': 'Medium',
-    'users' : {
-        'userId1' : {
-            'name' : "Emmanuel Mauer"
-        },
-        'userId2' : {
-            'name' : "Marchel Bauer"
-        },
-        'userId3' : {
-            'name' : "Anton Mayer"
-        }
-    },
-    'subtasks' : {
-        'subtaskId1' :{
-            'title' : 'Implement Recipe Recommendation',
-            'completed' : true
-        }, 
-        'subtaskId2':{ 
-            'title' : 'Start Page Layout',
-            'completed' : false
-        }
-    },
-    'status' : 'inProgress'
-},{
-    'id' : 1,
-    'title' : 'CSS Architecture Planning',
-    'category' : 'Technical Task',
-    'description' : 'Define CSS naming conventions and structure',
-    'date' : '11/3/2025' ,
-    'priority': 'Urgent',
-    'users' : {
-        'userId1' : {
-            'name' : "Benedikt Ziegler"
-        },
-        'userId2' : {
-            'name' : "Sofia Müller"
-        }
-    },
-   'subtasks' : {
-        'subtaskId1' :{
-            'title' : 'Implement Establish CSS Methodology',
-            'completed' : true
-        }, 
-        'subtaskId2':{ 
-            'title' : 'Setup Base Styles',
-            'completed' : true
-        }
-    },
-    'status' : 'done'
-}];  */
-
 let task = [];
 
 let currentDraggedElement;
@@ -312,8 +255,8 @@ function generateSingleUserIcon(initial, leftPosition, color) {
     return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
 }
 
-function generateOverlayUserIcons(users){
-    let usersData = getUsersInitials(users);
+function generateOverlayUserIcons(assignedUsers){
+    let usersData = getUsersInitials(assignedUsers);
     let userIcon = '';
 
     for(let i= 0; i<usersData.length;i++){
@@ -430,19 +373,12 @@ function addTaskOverlay(){
             <div class="addTask_content">
             <div class="form-header" >
                     <input type="text" id="title-add-task" placeholder="Enter a title">
-                    <div class="validation-add-task-form">
-                    </div>
                     <label for="description-add-task">Description <span>(optional)</span>
                     </label>
                     <textarea name="description-add-task" class="custom-resize" id="description-add-task"
                         placeholder="Enter a Description"></textarea>
-                    <div class="validation-add-task-form">
-                    </div>
-                    <label for="dateInput-add-task">Due date
-                    </label>
+                    <label for="dateInput-add-task">Due date</label>
                     <input type="date" name="dateInput-add-task" id="dateInput-add-task">
-                    <div class="validation-add-task-form">
-                    </div>
             </div>
             <div class="shell-radio-area">
                     <legend>Priority</legend>
@@ -464,21 +400,20 @@ function addTaskOverlay(){
                         </label>
                     </div>
             </div>
-          <div class="assigned">
-    <label>Assigned to <span>(optional)</span></label>
-    <div class="dropdown">
-        <div class="dropdown-header" onclick="toggleDropdown()">
+           <div class="assigned">
+           <label>Assigned to <span>(optional)</span></label>
+            <div class="dropdown">
+            <div class="dropdown-header" onclick="toggleDropdown()">
             <span id="selected-users">Select contacts</span>
             <img src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
-        </div>
-        <div class="dropdown-menu" id="dropdown-menu">
-            <!-- User list will be generated here -->
-        </div>
-    </div>
-</div>
+            </div>
+            <div id="selected-users-container" class="selected-users"></div>
+             <div class="dropdown-menu" id="dropdown-menu"></div>
+            </div>
+            </div>
             <div class="category">
             <label for="category">Category</label>
-            <select name="category" id="category"> Select task category
+            <select name="category" id="category"> 
                     <option value="Select task category" selected disabled hidden>Select task category</option>
                     <option value="Technical Task">Technical Task</option>
                     <option value="User Story">User Story</option>
@@ -558,8 +493,7 @@ function radioBtnChecked(priority) {
     }
 }
 
-
-async function toggleDropdown() {
+function toggleDropdown() {
    let dropDownMenu = document.getElementById("dropdown-menu");
 
    if (!dropDownMenu.classList.contains("show")) {
@@ -569,21 +503,22 @@ async function toggleDropdown() {
 }
 
 function updateSelectedUsers() {
-    assignedUsers = []; 
+    assignedUsers = [];
 
     for (let i = 0; i < users.length; i++) {
         let userCheckbox = document.getElementById(`user-${users[i].id}`);
-        if (userCheckbox.checked) {
-            assignedUsers.push(users[i].userData.name); 
+        if (userCheckbox && userCheckbox.checked) {
+            assignedUsers.push(users[i].userData.name);
         }
     }
+    
     document.getElementById("selected-users").innerText = assignedUsers.length > 0 ? assignedUsers.join(", ") : "Select contacts";
 }
 
 
-function generateUsers(){
+function generateUsers() {
     let dropDownMenu = document.getElementById("dropdown-menu");
-    dropDownMenu.innerHTML="";
+    dropDownMenu.innerHTML = "";
 
     for (let index = 0; index < users.length; index++) {
         let element = users[index];
@@ -591,11 +526,17 @@ function generateUsers(){
     }
 }
 
+
 function generateSingleUser(element) {
+    let name = element.userData.name;
+    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    let color = getColorForUser(name); 
+
     return `
-        <label for="user-${element.id}">
-            <input type="checkbox" id="user-${element.id}" value="${element.userData.name}" onclick="updateSelectedUsers()">
-            ${element.userData.name}
+        <label for="user-${element.id}" class="user-item">
+            <span class="user-icon" style="background-color: ${color};">${initials}</span>
+            <span class="user-name">${name}</span>
+            <input type="checkbox" id="user-${element.id}" value="${name}" onclick="updateSelectedUsers()">
         </label>
     `;
 }
