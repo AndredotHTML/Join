@@ -486,8 +486,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     overflow-x:hidden;
 }
 
-.assigned, .category, .subtask {
+.category, .subtask {
     padding-top: 20px;
+}
+
+.assigned {
+    margin-top: 40px;
 }
 
 #shell-subtask {
@@ -531,7 +535,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background: white;
     display: flex;  
     flex-direction: column;
-    padding: 5px;
+    padding: 10px;
     z-index: 9999;
 }
 
@@ -540,13 +544,14 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: flex;
     align-items: center;
     justify-content: space-between; 
-    padding: 5px;
+    padding: 20px 10px;
     cursor: pointer;
     width: 100%;
 }
 
 .dropdown-menu label:hover {
-    background: #f0f0f0;
+    background:#d2e2ff;
+    border-radius: 15px;
 }
 
 .dropdown-menu input[type="checkbox"] {
@@ -572,11 +577,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
   }
 
 .selected-users {
-    display: none; /* Po defaultu je skriven */
+    display: none; 
 }
 
 .selected-users.visible {
-    display: inline; /* Prikazivanje kada je dropdown zatvoren */
+    display: inline; 
 }
 
 #task-message {
@@ -647,9 +652,28 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     display: flex;
     align-items: center;
     padding: 5px;
-    margin-bottom: 10px;
 }
 
 .user-name {
     flex-grow: 1;
+}
+
+
+#selected-user-container {
+    display: none;
+    padding-top:15px;
+}
+
+.form-header {
+    height: 320px !important;
+}
+
+.form-header label{
+    padding-top: 20px;
+    margin-bottom: 10px;
+}
+
+.shell-radio-area legend {
+    padding-top: 20px;
+    margin-bottom: 15px;
 }
