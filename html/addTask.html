@@ -75,26 +75,30 @@
 
             <div class="add-task-main">
                 <div class="form-scroll-container">
-                    <form action="" id="form-add-task" method="POST" >
+                    <form action="" id="form-add-task" method="POST">
                         <div class="form-header">
-                            <div class="title-shell">
+                            <div class="title-wrapper">
                                 <input type="text" id="title-add-task" class="title-add-task"
                                     placeholder="Enter a title">
                                 <div class="validation-add-task-form" id="title-validation">
                                 </div>
                             </div>
-                            <label for="description-add-task">Description <span>(optional)</span>
-                            </label>
-                            <textarea name="description-add-task" class="custom-resize description-add-task"
-                                id="description-add-task" placeholder="Enter a Description">
+                            <div class="description-wrapper">
+                                <label for="description-add-task">Description <span>(optional)</span>
+                                </label>
+                                <textarea name="description-add-task" class="custom-resize description-add-task"
+                                    id="description-add-task" placeholder="Enter a Description">
                             </textarea>
-                            <div class="validation-add-task-form">
+                                <div class="validation-add-task-form">
+                                </div>
                             </div>
-                            <label for="date-input-add-task">Due date
-                            </label>
-                            <input type="date" name="date-input-add-task" id="date-input-add-task"
-                                class="date-input-add-task" >
-                            <div class="validation-add-task-form" id="date-validation">
+                            <div class="date-wrapper">
+                                <label for="date-input-add-task">Due date
+                                </label>
+                                <input type="date" name="date-input-add-task" id="date-input-add-task"
+                                    class="date-input-add-task">
+                                <div class="validation-add-task-form" id="date-validation">
+                                </div>
                             </div>
                         </div>
                         <div class="shell-radio-area">
@@ -168,9 +172,8 @@
                                 <img src="../assets/icons/clear.svg" alt="">
                             </div>
                         </button>
-                        <button id="add-task-create-btn"  class="btn add-task-create-btn" form="form-add-task"
-                            onclick=""
-                             type="submit">
+                        <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick=""
+                            type="submit">
                             <div class="btn-title">Create Task </div>
                             <div class="btn-icon-shell">
                                 <img src="../assets/icons/check.svg" alt="">

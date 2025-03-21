@@ -10,24 +10,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
+    let valide = true
     let inputToValidateTitle = document.getElementById("title-add-task");
     let requerdTitleRef = document.getElementById("title-validation");
     let inputToValidateDate = document.getElementById("date-input-add-task");
     let requerdDateRef = document.getElementById("date-validation");
-    requerdDateRef.innerHTML = ""
-    requerdTitleRef.innerHTML = ""
+    clearValidationArea()
     let errMsg = "This field is required"
     if (inputToValidateTitle.value === "") {
         requerdTitleRef.innerHTML = errMsg;
         requerdTitleRef.style.color = 'red'
-        return
+        valide = false
     }
     if (inputToValidateDate.value === "") {
         requerdDateRef.innerHTML = errMsg;
         requerdDateRef.style.color = 'red'
-        return
+        valide = false
     }
-    creatTask()
+    if (valide === true) {
+        creatTask()
+    }
 })
 
 document.querySelectorAll("form select").forEach(select => {
@@ -75,6 +77,7 @@ function clearForm() {
         radioBtn.style.backgroundColor = `var(--secondaryColor)`;
         radioBtn.style.color = `black`;
     });
+    clearValidationArea()
 }
 
 function creatTask() {
@@ -91,7 +94,7 @@ function creatTask() {
         subtasks.push(subtask.textContent.trim().replace(/\s+/g, " "))
     }
     let data = {
-        [titleNewTaskRef.value]: {
+            title:titleNewTaskRef.value,
             description: descriptionNewTaskRef.value,
             dueDate: dateNewTaskRef.value,
             priority: priorityNewTaskRef.value,
@@ -99,7 +102,6 @@ function creatTask() {
             assigned: assignedUserRef,
             status: "toDo",
             subtasks: subtasks
-        }
     };
     postTask("/tasks", data)
 }
@@ -133,7 +135,6 @@ async function postTask(path = "", data = {}) {
             throw new Error("Fehler beim Senden der Daten");
         }
         const result = await response.json()
-        console.log("Task wurde angenommen", result);
         return result;
     } catch (error) {
         console.error("Fehler:", error.message);
@@ -227,6 +228,16 @@ function dropDownForCategory() {
         })
     })
 }
+
+
+function clearValidationArea(){
+    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
+    for (let index = 0; index < validationAreaRef.length; index++) {
+        let singValidArea = validationAreaRef[index];
+        singValidArea.innerHTML ="";
+    }
+}
+
 
 
 

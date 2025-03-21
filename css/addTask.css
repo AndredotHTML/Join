@@ -258,7 +258,8 @@ form {
 
 .validation-add-task-form {
     height: 16px;
-    font-size:13px ;
+    font-size:13px;
+    font-family: inter;
 }
 
 .btn {
@@ -425,13 +426,8 @@ form {
     opacity: 0.8;
 }
 
-
-.subtask_actions img:hover {
-    opacity: 0.8;
-}
-
-
-.title-shell>input,
+.date-wrapper>input,
+.title-wrapper>input,
 .form-header>input,
 form>input,
 .subtask-area {
@@ -447,9 +443,9 @@ form>input,
     width: 100%;
 }
 
-.title-shell {
+.title-wrapper {
     height: 84px;
-    gap: 10px;
+    gap: 4px;
     display: flex;
     flex-direction: column;
 }
@@ -466,7 +462,13 @@ form>input,
     font-size: 32px !important;
 }
 
-.form-header>input:focus,
+.date-wrapper{
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header>div>input:focus,
 .subtask-area:focus-within,
 .subtask-area:hover,
 .title-add-task:focus,
@@ -532,6 +534,13 @@ textarea {
     padding-top: 18px;
     padding-left: 16px;
     font-size: 19px;
+    width: 100%;
+}
+
+.description-wrapper{
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
 }
 
 textarea:focus {
