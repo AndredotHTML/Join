@@ -34,12 +34,15 @@
     font-size: 19px;
     line-height: 1.2;
     overflow: hidden;
-    transition: height 0.3s ease-in-out, padding 0.3s ease-in-out;
+    transition: height 75ms ease-in-out, padding 0.3s ease-in-out;
 }
 
 .profile_menu.open {
-    height: 137px;
+    height: auto;
     padding: 10px;
+    width: 172px;
+    box-sizing: border-box;
+    background-color: var(--secondaryColor);
 }
 
 .profile_menu_list {
