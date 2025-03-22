@@ -1,19 +1,41 @@
+const ALL_cONTACTS_ELEM = document.querySelectorAll( '.contact' );
+const DETAIL_ELEM = document.getElementById( 'detail' );
+
 /**
- * selects element using id
- * @param {string} id - HTML-Element Id
+ *
+ * changes selection or highlighting
+ * @param {HTMLElement} contact - contact from this
  */
-function selectContact ( id ) {
-    const selectedElement = document.getElementById( id );
-    const alreadySelected = selectedElement.classList.contains( 'selected' );
-    document.querySelectorAll( '.contact' ).forEach( el => el.classList.remove( 'selected' ) );
-
-    if ( !alreadySelected ) {
-        selectedElement.classList.add( 'selected' );
+function toggleContactSelection ( contact ) {
+    if ( contact.classList.contains( 'selected' ) ) {
+        contact.classList.remove( 'selected' );
+    } else {
+        ALL_cONTACTS_ELEM.forEach( contact => contact.classList.remove( 'selected' ) );
+        contact.classList.add( 'selected' );
     }
-    showDetail();
 }
 
-function showDetail () {
-    let detailEle = document.getElementById( "detail" );
-    detailEle?.classList.toggle( "open" );
+/**
+ *  fades detail view in and out
+ */
+function toggleDetailPanel () {
+    if ( DETAIL_ELEM.classList.contains( 'open' ) ) {
+        DETAIL_ELEM.classList.remove( 'open', 'slide_in' );
+    } else {
+        DETAIL_ELEM.classList.add( 'open' );
+        DETAIL_ELEM.classList.add( 'slide_in' );
+    }
 }
+
+ALL_cONTACTS_ELEM.forEach( contact => {
+    contact.addEventListener( 'click', function () {
+        if ( this.classList.contains( 'selected' ) ) {
+            toggleContactSelection( this );
+            toggleDetailPanel();
+        } else {
+            toggleContactSelection( this );
+            if ( !DETAIL_ELEM.classList.contains( 'open' ) )
+                toggleDetailPanel();
+        }
+    } );
+} );
