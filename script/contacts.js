@@ -1,5 +1,8 @@
 const ALL_cONTACTS_ELEM = document.querySelectorAll( '.contact' );
 const DETAIL_ELEM = document.getElementById( 'detail' );
+let contacts = [];
+const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
+
 
 /**
  *
@@ -86,15 +89,15 @@ function addTaskOverlay () {
                             <p id="error_msg">Check your email and password. Please try again.</p>
                         </div>
                         <div class="add-task-btns">
-                            <button class="btn clear-form-btn" >
+                            <button class="btn clear-form-btn" onclick="closeOverlay()">
                                 <span class="btn-title">Cancel</span>
                                 <span class="btn-icon-shell">
                                     <img src="../assets/icons/close.png" alt="close">
                                 </span>
                             </button>
-                            <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick=""
-                            type="submit">
-                                <span class="btn-title">Save </span>
+                            <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick="setContactData ()"
+                            type="button">
+                                <span class="btn-title">Save</span>
                                 <span class="btn-icon-shell">
                                     <img src="../assets/icons/check.svg" alt="">
                                  </span>
@@ -112,5 +115,47 @@ function closeOverlay ( event ) {
         overlay.classList.remove( 'slide_in' );
         overlay.style.display = 'none';
         document.body.style.overflow = 'auto';
+    }
+}
+
+/**
+ * gets the data from the input values 
+ */
+function setContactData () {
+    let name = document.getElementById( "name" ).value;
+    let email = document.getElementById( "email" ).value;
+    let phone = document.getElementById( "phone" ).value;
+    postContactData( "/contacts", { "name": name, "email": email, "phone": phone } );
+}
+
+/**
+ * posts the userdata into the Storage API 
+ * @param {*} path - is the path where the data will be safed
+ * @param {*} data - is the userdata input by the user
+ */
+async function postContactData ( path = "", data = {} ) {
+    await fetch( BASE_URL + path + ".json", {
+        method: "POST",
+        header: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify( data )
+    } );
+    // pushToUsersArray();
+}
+
+/**
+ * pushes the users from the Storage API into a local array [users]
+ */
+async function pushToUsersArray () {
+    let userResponse = await getAllUsers( "/users" );
+    let userKeysArray = Object.keys( userResponse );
+    for ( let index = 0; index < userKeysArray.length; index++ ) {
+        users.push(
+            {
+                id: userKeysArray[ index ],
+                userData: userResponse[ userKeysArray[ index ] ],
+            }
+        );
     }
 }
