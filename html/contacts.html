@@ -75,7 +75,7 @@
             <section class="main_wrapper">
                 <section class="contact_bar">
                     <div class="btn_container">
-                        <button>
+                        <button onclick="showAddTaskOverlay()">
                             <span>Add new contact</span>
                             <img src="../assets/icons/person_add.svg" alt="">
                         </button>
@@ -241,11 +241,11 @@
                         </div>
                     </div>
                 </section>
-
-
-
-
             </section>
+            <div class="overlay" id="overlay" onclick="closeOverlay(event)">
+
+            </div>
+
         </div>
         <script src="../script/contacts.js"></script>
 
