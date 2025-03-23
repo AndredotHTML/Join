@@ -2,12 +2,21 @@ const DETAIL_ELEM = document.getElementById( 'detail' );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
+// Updates the detail panel with the data of the selected contact
 function updateDetailPanel ( contactId ) {
     const selectedContact = contacts.find( contact => contact.id === contactId );
     if ( !selectedContact ) return;
     DETAIL_ELEM.innerHTML = contactDetailTemplate( selectedContact );
+    // Delete-Button-Listener hinzufügen
+    const deleteBtn = DETAIL_ELEM.querySelector( '.delete-btn' );
+    if ( deleteBtn ) {
+        deleteBtn.addEventListener( 'click', function () {
+            deleteContact( contactId );
+        } );
+    }
 }
 
+// Toggle function for the detail panel
 function toggleDetailPanel () {
     if ( DETAIL_ELEM.classList.contains( 'open' ) ) {
         DETAIL_ELEM.classList.remove( 'open', 'slide_in' );
@@ -132,3 +141,12 @@ function getAvatarFromName ( name ) {
 }
 
 pushToContactsArray();
+
+// Deletes a contact via a DELETE request
+async function deleteContact ( contactId ) {
+    await fetch( BASE_URL + "/contacts/" + contactId + ".json", {
+        method: "DELETE"
+    } );
+    pushToContactsArray();
+    DETAIL_ELEM.innerHTML = ""; // Optional: Detail-Panel leeren
+}
