@@ -141,21 +141,30 @@ async function postContactData ( path = "", data = {} ) {
         },
         body: JSON.stringify( data )
     } );
-    // pushToUsersArray();
+    pushToContactsArray();
 }
 
 /**
  * pushes the users from the Storage API into a local array [users]
  */
-async function pushToUsersArray () {
-    let userResponse = await getAllUsers( "/users" );
+async function pushToContactsArray () {
+    let userResponse = await getAllUsers( "/contacts" );
     let userKeysArray = Object.keys( userResponse );
     for ( let index = 0; index < userKeysArray.length; index++ ) {
-        users.push(
+        contacts.push(
             {
                 id: userKeysArray[ index ],
                 userData: userResponse[ userKeysArray[ index ] ],
             }
         );
     }
+}
+
+/**
+ * fetches the userData from the storage API
+    * @param {*} path - is the path from where it fetches the data
+        */;
+async function getAllUsers ( path ) {
+    let response = await fetch( BASE_URL + path + ".json" );
+    return responseToJson = await response.json();
 }
