@@ -1,8 +1,11 @@
+// contacts.js
+
+// Globale Deklarationen
 const DETAIL_ELEM = document.getElementById( 'detail' );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
-// Updates the detail panel with the data of the selected contact
+// Aktualisiert das Detail-Panel mit den Daten des ausgewählten Kontakts
 function updateDetailPanel ( contactId ) {
     const selectedContact = contacts.find( contact => contact.id === contactId );
     if ( !selectedContact ) return;
@@ -16,7 +19,7 @@ function updateDetailPanel ( contactId ) {
     }
 }
 
-// Toggle function for the detail panel
+// Schaltet das Detail-Panel um
 function toggleDetailPanel () {
     if ( DETAIL_ELEM.classList.contains( 'open' ) ) {
         DETAIL_ELEM.classList.remove( 'open', 'slide_in' );
@@ -43,6 +46,7 @@ function attachContactListeners () {
     );
 }
 
+// Overlay-Funktion für "Add Contact" – Animation von rechts nach links
 function showaddContactOverlay () {
     let overlay = document.getElementById( 'overlay' );
     overlay.style.display = 'flex';
@@ -51,10 +55,21 @@ function showaddContactOverlay () {
     overlay.classList.add( 'slide_in' );
 }
 
+// Overlay-Funktion für "Edit Contact" – identisches Layout wie Add, aber Animation von links nach rechts
+function showEditContactOverlay ( contactId ) {
+    let overlay = document.getElementById( 'overlay' );
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    const selectedContact = contacts.find( contact => contact.id === contactId );
+    if ( !selectedContact ) return;
+    overlay.innerHTML = editContactOverlay( selectedContact );
+    overlay.classList.add( 'slide_in_left' );
+}
+
 function closeOverlay ( event ) {
     let overlay = document.getElementById( 'overlay' );
     if ( !event || event.target === overlay ) {
-        overlay.classList.remove( 'show', 'slide_in' );
+        overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
         overlay.style.display = 'none';
         document.body.style.overflow = 'auto';
     }
@@ -133,20 +148,44 @@ function renderContacts () {
     Object.keys( groupedContacts ).sort().forEach( letter => {
         contactsListElement.appendChild( renderGroup( letter, groupedContacts[ letter ] ) );
     } );
-    attachContactListeners(); // Bindet Klick-Listener an alle neu gerenderten .contact-Elemente
+    attachContactListeners();
 }
 
 function getAvatarFromName ( name ) {
     return name.split( " " ).map( word => word.charAt( 0 ).toUpperCase() ).join( "" );
 }
 
-pushToContactsArray();
+// Funktion zum Aktualisieren eines Kontakts (Update)
+async function updateContact ( contactId ) {
+    const updatedName = document.getElementById( "edit_name" ).value;
+    const updatedEmail = document.getElementById( "edit_email" ).value;
+    const updatedPhone = document.getElementById( "edit_phone" ).value;
+    try {
+        await fetch( BASE_URL + "/contacts/" + contactId + ".json", {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify( {
+                name: updatedName,
+                email: updatedEmail,
+                phone: updatedPhone
+            } )
+        } );
+        await pushToContactsArray();
+        closeOverlay();
+        // Aktualisiere Detailpanel, falls dieser gerade angezeigt wird
+        updateDetailPanel( contactId );
+    } catch ( error ) {
+        console.error( "Error updating contact:", error );
+    }
+}
 
-// Deletes a contact via a DELETE request
+// Löscht einen Kontakt via DELETE-Request
 async function deleteContact ( contactId ) {
     await fetch( BASE_URL + "/contacts/" + contactId + ".json", {
         method: "DELETE"
     } );
     pushToContactsArray();
-    DETAIL_ELEM.innerHTML = ""; // Optional: Detail-Panel leeren
+    DETAIL_ELEM.innerHTML = "";
 }
+
+pushToContactsArray();
