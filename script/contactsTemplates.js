@@ -1,7 +1,7 @@
 // contactsTemplates.js
 
 function contactDetailTemplate ( selectedContact ) {
-    return `
+  return `
     <div class="contact-header">
       <div class="contact-circle-detail">${ getAvatarFromName( selectedContact.contactData.name ) }</div>
       <div class="contact-main-info">
@@ -33,7 +33,7 @@ function contactDetailTemplate ( selectedContact ) {
 }
 
 function addContactOverlay () {
-    return `
+  return `
     <div class="add_task_overlay">
       <div class="addTask_header_overlay">
         <div class="header_x" onclick="closeOverlay()">
@@ -88,7 +88,7 @@ function addContactOverlay () {
 }
 
 function editContactOverlay ( selectedContact ) {
-    return `
+  return `
     <div class="add_task_overlay">
       <div class="addTask_header_overlay">
         <div class="header_x" onclick="closeOverlay()">
@@ -143,15 +143,19 @@ function editContactOverlay ( selectedContact ) {
 }
 
 function headerTemplate ( letter ) {
-    return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
+  return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
 
 function contactTemplate ( c ) {
-    return `<div class="contact" id="${ c.id }">
-            <div class="avatar">${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }</div>
-            <div class="contact-info">
-                <div class="contact-name">${ c.contactData.name }</div>
-                <a href="mailto:${ c.contactData.email }" class="contact-email">${ c.contactData.email }</a>
-            </div>
-          </div>`;
+  const avatarColor = getRandomColor();
+  return `<div class="contact" id="${ c.id }">
+      <div class="avatar" style="background-color: ${ avatarColor };">
+          ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
+      </div>
+      <div class="contact-info">
+          <div class="contact-name">${ c.contactData.name }</div>
+          <a href="mailto:${ c.contactData.email }" class="contact-email">${ c.contactData.email }</a>
+      </div>
+  </div>`;
 }
+
