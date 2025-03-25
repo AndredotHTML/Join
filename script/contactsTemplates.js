@@ -1,9 +1,12 @@
 // contactsTemplates.js
 
 function contactDetailTemplate ( selectedContact ) {
+  const avatarColor = getColorForContact( selectedContact.contactData.name );
   return `
     <div class="contact-header">
-      <div class="contact-circle-detail">${ getAvatarFromName( selectedContact.contactData.name ) }</div>
+      <div class="contact-circle-detail" style="background-color: ${ avatarColor };">
+        ${ getAvatarFromName( selectedContact.contactData.name ) }
+      </div>
       <div class="contact-main-info">
         <h2 class="contact-name">${ selectedContact.contactData.name }</h2>
         <div class="contact-actions">
@@ -31,6 +34,7 @@ function contactDetailTemplate ( selectedContact ) {
     </div>
   `;
 }
+
 
 function addContactOverlay () {
   return `
@@ -88,6 +92,7 @@ function addContactOverlay () {
 }
 
 function editContactOverlay ( selectedContact ) {
+  const avatarColor = getColorForContact( selectedContact.contactData.name );
   return `
     <div class="add_task_overlay">
       <div class="addTask_header_overlay">
@@ -104,9 +109,9 @@ function editContactOverlay ( selectedContact ) {
       </div>
       <div class="addTask_content">
         <div class="contact-overlay-profile-sec">
-          <picture class="contact-circle">
-            <img src="../assets/icons/person-white.svg" alt="person">
-          </picture>
+          <div class="contact-circle" style="background-color: ${ avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
+            ${ getAvatarFromName( selectedContact.contactData.name ) }
+          </div>
         </div>
         <form id="edit_form" action="" onsubmit="updateContact(); return false">
           <div class="input_container">
@@ -142,12 +147,14 @@ function editContactOverlay ( selectedContact ) {
   `;
 }
 
+
+
 function headerTemplate ( letter ) {
   return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
 
 function contactTemplate ( c ) {
-  const avatarColor = getRandomColor();
+  const avatarColor = getColorForContact( c.contactData.name );
   return `<div class="contact" id="${ c.id }">
       <div class="avatar" style="background-color: ${ avatarColor };">
           ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
@@ -158,4 +165,5 @@ function contactTemplate ( c ) {
       </div>
   </div>`;
 }
+
 

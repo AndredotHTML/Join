@@ -188,10 +188,14 @@ async function deleteContact ( contactId ) {
     DETAIL_ELEM.innerHTML = "";
 }
 
-function getRandomColor () {
+function getColorForContact ( name ) {
     const colors = [ '#f57c00', '#8e24aa', '#5c6bc0', '#f48fb1', '#ffb300', '#26a69a' ];
-    return colors[ Math.floor( Math.random() * colors.length ) ];
+    // Hier wird der erste Buchstabe herangezogen – so wie in alten, guten Zeiten
+    let firstLetter = name.charAt( 0 ).toUpperCase();
+    let index = firstLetter.charCodeAt( 0 ) % colors.length;
+    return colors[ index ];
 }
+
 
 
 pushToContactsArray();
