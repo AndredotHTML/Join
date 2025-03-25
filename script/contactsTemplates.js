@@ -1,5 +1,3 @@
-// contactsTemplates.js
-
 function contactDetailTemplate ( selectedContact ) {
   const avatarColor = getColorForContact( selectedContact.contactData.name );
   return `
@@ -34,7 +32,6 @@ function contactDetailTemplate ( selectedContact ) {
     </div>
   `;
 }
-
 
 function addContactOverlay () {
   return `
@@ -96,7 +93,7 @@ function editContactOverlay ( selectedContact ) {
   return `
     <div class="add_task_overlay">
       <div class="addTask_header_overlay">
-        <div class="header_x" onclick="closeOverlay()">
+        <div class="header_x close-btn" onclick="closeEditOverlay(event)">
           <img src="../assets/icons/close-white.svg" alt="Close">
         </div>
         <picture class="header-logo-container">
@@ -128,7 +125,7 @@ function editContactOverlay ( selectedContact ) {
             <p id="error_msg">Check your email and password. Please try again.</p>
           </div>
           <div class="add-task-btns">
-            <button class="btn clear-form-btn" onclick="closeOverlay()">
+            <button type="button" class="btn clear-form-btn close-btn" onclick="closeEditOverlay(event)">
               <span class="btn-title">Cancel</span>
               <span class="btn-icon-shell">
                 <img src="../assets/icons/close.png" alt="close">
@@ -147,8 +144,6 @@ function editContactOverlay ( selectedContact ) {
   `;
 }
 
-
-
 function headerTemplate ( letter ) {
   return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
@@ -165,5 +160,3 @@ function contactTemplate ( c ) {
       </div>
   </div>`;
 }
-
-

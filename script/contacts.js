@@ -55,16 +55,32 @@ function showaddContactOverlay () {
     overlay.classList.add( 'slide_in' );
 }
 
-// Overlay-Funktion für "Edit Contact" – identisches Layout wie Add, aber Animation von links nach rechts
 function showEditContactOverlay ( contactId ) {
-    let overlay = document.getElementById( 'overlay' );
-    overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
+    const editOverlay = document.getElementById( "editOverlay" );
     const selectedContact = contacts.find( contact => contact.id === contactId );
     if ( !selectedContact ) return;
-    overlay.innerHTML = editContactOverlay( selectedContact );
-    overlay.classList.add( 'slide_in_left' );
+    // Fülle das Overlay mit dem HTML-Inhalt, der über deine editContactOverlay-Funktion erzeugt wird
+    editOverlay.innerHTML = editContactOverlay( selectedContact );
+    // Verhindere, dass der Body scrollt, solange das Overlay sichtbar ist
+    document.body.style.overflow = "hidden";
+    // Füge die Klasse "active" hinzu, damit das Overlay von links hereinschiebt
+    editOverlay.classList.add( "active" );
 }
+
+function closeEditOverlay ( event ) {
+    const editOverlay = document.getElementById( "editOverlay" );
+    // Schließe, wenn der Klick auf den Hintergrund oder ein Element mit der Klasse close-btn erfolgt
+    if ( !event || event.target === editOverlay || event.target.closest( ".close-btn" ) ) {
+        editOverlay.classList.remove( "active" );
+        document.body.style.overflow = "auto";
+        // Optional: Nach Übergangsende den Inhalt löschen
+        setTimeout( () => {
+            editOverlay.innerHTML = "";
+        }, 300 );
+    }
+}
+
+
 
 function closeOverlay ( event ) {
     let overlay = document.getElementById( 'overlay' );
