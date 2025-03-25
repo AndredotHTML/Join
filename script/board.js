@@ -385,17 +385,17 @@ function addTaskOverlay(){
             <div class="shell-radio-area">
                     <legend>Priority</legend>
                     <div class="shell-radio-btn">
-                        <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
+                        <label class="radio-btn add-task-urgent for="urgent-rad">
                             <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
                                 Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-medium" for="medium-rad" >
+                        <label class="radio-btn add-task-medium"  for="medium-rad" >
                             <input type="radio" name="priority" id="medium-rad" onclick="radioBtnChecked('medium')">
                                 Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-low" for="low-rad">
+                        <label class="radio-btn add-task-low"  for="low-rad">
                             <input type="radio" name="priority" id="low-rad" onclick="radioBtnChecked('low')" >
                                 Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
@@ -413,17 +413,22 @@ function addTaskOverlay(){
              <div class="dropdown-menu" id="dropdown-menu"></div>
             </div>
             </div>
-            <div class="category">
-            <label for="category">Category</label>
-            <select name="category" id="category"> 
-                    <option value="Select task category" selected disabled hidden>Select task category</option>
-                    <option value="Technical Task">Technical Task</option>
-                    <option value="User Story">User Story</option>
-            </select>
+          <div class="category">
+            <label>Category</label>
+          <div class="wrapper-category-select d_flex">
+          <div id="category-add-task" class="category-add-task" onclick="toggleCategoryOptions()">
+            Select task category
+            <img  id="dropdown-arrow" src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
+           </div>
+          </div>
+           <div id="options-container" class="options-container" style="display: none;">
+           <div class="option-category" onclick="selectCategory('Technical Task')">Technical Task</div>
+           <div class="option-category" onclick="selectCategory('User Story')">User Story</div>
+           </div>
             </div>
             <div class="subtask">
                      <label for="subtask">Subtasks <span>(optional)</span></label>
-            <div class="subtask-area" id="shell-subtask">
+            <div class="subtask-area" id="shell-subtask" >
                     <input type="text" id="subtask" placeholder="Add new subtask">
             <div id="subtask-icons">
                     <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
@@ -441,6 +446,16 @@ function addTaskOverlay(){
             </button>
              </div>
     </div> `
+}
+
+function toggleCategoryOptions() {
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+}
+
+function selectCategory(category) {
+    document.getElementById('category-add-task').textContent = category;
+    document.getElementById('options-container').style.display = 'none';
 }
 
 function showSubtaskActions() {
