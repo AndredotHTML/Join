@@ -491,6 +491,7 @@ form>input,
     align-items: center;
     font-size: 19px;
     width: 100%;
+    outline: none;
 }
 
 .title-wrapper {

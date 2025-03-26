@@ -271,3 +271,584 @@
 .contact.selected .contact-email {
     color: var(--secondaryColor);
 }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    line-height: 120%;
+}
+
+.add-task-content {
+    display: flex;
+    margin: 0;
+    height: calc(100vh - 96px);
+    max-width: 1920px;
+    box-sizing: border-box;
+}
+
+.content-wrapper {
+    max-width: 1920px;
+    margin: 0;
+    position: relative;
+}
+
+
+.add_task_overlay {
+    width: 584px;
+    height: 100vh;
+    background: white;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    position: fixed;
+    top: 0;
+    right: 0;
+    border-radius: 30px 0 0 30px;
+}
+
+.addTask_content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+label,
+legend {
+    height: 23px;
+    font-size: 19px;
+    font-weight: 700;
+}
+
+label span {
+    color: #42526e;
+}
+
+.add_task_overlay button {
+    display: flex;
+    align-items: end;
+    justify-content: end;
+}
+
+.header_x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 4px;
+    box-sizing: border-box;
+
+}
+
+.header_x:hover {
+    cursor: pointer;
+}
+
+.header_x img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+}
+
+.header_headline {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    flex-direction: column;
+    row-gap: 12px;
+}
+
+.slide_in {
+    transform: translateX(100%);
+    opacity: 0;
+    animation: slideRight 0.1s ease-in forwards;
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.button_div {
+    margin-top: 20px;
+    display: flex;
+    justify-content: end;
+}
+
+/*background-color placeholder*/
+.name-icon {
+    color: white;
+    height: 42px;
+    width: 42px;
+    font-size: 12px;
+    background-color: orange;
+    border-radius: 45px;
+    border: 2px solid white;
+    justify-content: center;
+    align-items: center;
+    gap: 12px
+}
+
+.add-task-create-btn:hover {
+    cursor: pointer;
+    background-color: #0038ff;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 24px;
+    box-sizing: border-box;
+}
+
+.form-scroll-container {
+    position: fixed;
+    top: 96px;
+    height: calc(100vh - 96px);
+    width: 488px;
+    overflow-y: auto;
+    padding-right: 24px;
+    overflow-x: hidden;
+}
+
+
+.validation-add-task-form {
+    height: 16px;
+    font-size: 13px;
+    font-family: inter;
+}
+
+.btn {
+    cursor: pointer;
+}
+
+.form-header {
+    display: flex;
+    flex-direction: column;
+    height: 361px;
+    gap: 12px;
+}
+
+.title-add-task {
+    /* height: 38px; */
+    font-size: 32px !important;
+}
+
+.date-wrapper {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-header > div > input:focus,
+.subtask-area:focus-within,
+.subtask-area:hover,
+.title-add-task:focus,
+select:focus,
+select:hover,
+.wrapper-category-select:hover,
+.assigned-to-input:hover
+
+/* .added-subtasks:focus */
+    {
+    outline: none;
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+::placeholder {
+    color: #D1D1D1;
+}
+
+.date-input-add-task {
+    border: none;
+}
+
+.date-input-add-task:focus {
+    outline: none;
+}
+
+
+form > select {
+    height: 48px;
+    background: url("../assets/icons/arrow_drop_down.svg") no-repeat center right 16px;
+}
+
+.open {
+    background: url("../assets/icons/arrow_drop_down_close.svg")no-repeat center right 16px;
+}
+
+label > span {
+    font-weight: 400;
+}
+
+.description-wrapper {
+    gap: 4px;
+    display: flex;
+    flex-direction: column;
+}
+
+#added-subtasks {
+    min-height: 48px;
+    padding-top: 10px;
+    padding-inline-start: 0;
+}
+
+.shell-radio-btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.shell-radio-area {
+    height: 82px;
+    flex-direction: column;
+    display: flex;
+    gap: 8px;
+
+}
+
+.shell-radio-btn > label > input ~ .unchecked-priority {
+    display: flex;
+    width: 20px;
+    height: 15px;
+}
+
+.shell-radio-btn > label > input ~ .checked-priority {
+    display: none;
+    width: 20px;
+    height: 15px;
+}
+
+.shell-radio-btn > label > input:checked ~ .unchecked-priority {
+    display: none;
+}
+
+.shell-radio-btn > label > input:checked ~ .checked-priority {
+    display: flex;
+}
+
+input[type="radio"] {
+    opacity: 0;
+    position: absolute;
+}
+
+.add-task-medium:hover {
+    border-bottom: 2px solid var(--mediumColor);
+}
+
+.add-task-low:hover {
+    border-bottom: 2px solid var(--lowColor);
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url("/assets/icons/event.png") no-repeat center;
+    position: absolute;
+    cursor: pointer;
+    right: 40px;
+    display: block;
+}
+
+input[type="date"]::-webkit-datetime-edit-fields-wrapper {
+    color: #647188;
+    font-style: italic;
+}
+
+.add-task-btns {
+    display: flex;
+    padding: 16px 10px;
+    justify-content: end;
+    column-gap: 25px;
+    width: 100%;
+}
+
+.clear-form-btn {
+    width: 136px;
+    color: #647188;
+    background-color: var(--secondaryColor);
+    border: 1px solid #647188;
+    border-radius: 10px;
+    font-size: 23px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 61px;
+}
+
+.add-task-create-btn {
+    width: 174px;
+    background-color: var(--primaryColor);
+    font-size: 23px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    color: var(--secondaryColor);
+    padding: 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.btn-title {
+    height: 28px;
+}
+
+.placeholder-container {
+    height: 48px;
+}
+
+.addTask_header_overlay {
+    background-color: #005DFF;
+    color: var(--secondaryColor);
+    padding: 30px 46px;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    justify-content: center;
+    align-items: center;
+    row-gap: 12px;
+
+}
+
+.header-logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.contact-circle {
+    height: 120px;
+    width: 120px;
+    background-color: #D1D1D1;
+    border-radius: 50%;
+}
+
+.contact-overlay-profile-sec {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 72px 0;
+}
+
+.contact-circle > img {
+    height: 100%;
+    width: auto;
+    object-fit: contain;
+}
+
+body {
+    min-height: 100vh;
+    max-width: 1920px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+#login_top {
+    display: flex;
+    justify-content: space-between;
+    padding: 64px;
+    align-items: center;
+}
+
+#to_signup {
+    justify-content: flex-end;
+    display: flex;
+    width: 32%;
+    gap: 40px;
+    align-items: center;
+    font-size: 20px;
+}
+
+button {
+    background-color: #4589FF;
+    color: #FFFFFF;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 20px;
+}
+
+button:hover {
+    background-color: rgb(64, 80, 224);
+    transform: translateY(-2%);
+    cursor: pointer;
+}
+
+#main {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+#login_border {
+    border: 1px solid #d3d3d3a1;
+    border-radius: 16px;
+    box-shadow: 0px 0px 16px 2px rgba(151, 150, 150, 0.3);
+    height: 20%;
+    margin-top: 4%;
+}
+
+#login_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 104px;
+}
+
+#login_form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+}
+
+.input_container {
+    position: relative;
+    width: 100%;
+}
+
+.input_container input {
+    padding-right: 30px;
+    font-size: 24px;
+}
+
+.input_icon_email {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    height: auto;
+    width: 18px;
+}
+
+
+.input_icon_password {
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-70%);
+    cursor: pointer;
+    height: auto;
+    width: 18px;
+}
+
+#login_container h2 {
+    text-decoration: underline 3px #4589FF;
+    text-underline-offset: 16px;
+    font-size: 40px;
+    padding-bottom: 40px;
+}
+
+input {
+    border: none;
+    border-bottom: 2px solid #D3D3D3;
+    outline: none;
+    padding: 5px;
+    font-size: 16px;
+}
+
+::placeholder {
+    color: #D3D3D3;
+    opacity: 1;
+}
+
+input.error {
+    border-bottom: 2px solid rgba(255, 0, 0, 0.534);
+}
+
+#error_msg {
+    color: rgba(255, 0, 0, 0.534);
+    position: absolute;
+    bottom: -20px;
+    left: 0;
+    font-size: 12px;
+    display: none;
+}
+
+#login_buttons {
+    display: flex;
+    gap: 24px;
+}
+
+#guest_button {
+    border: 1px solid grey;
+    background-color: #FFFFFF;
+    color: gray;
+}
+
+#guest_button:hover {
+    color: #4589FF;
+    transform: translateY(-2%);
+    border: 1px solid #4589FF;
+}
+
+#bottom_bar {
+    width: 100%;
+    height: 40px;
+    padding-bottom: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    font-size: 16px;
+}
+
+.nav_link {
+    text-decoration: none;
+    color: rgb(94, 91, 91);
+}
+
+.nav_link:hover {
+    color: #4589FF;
+    cursor: pointer;
+}
+
+.edit-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    /* Beginnt ganz links */
+    width: 584px;
+    /* gleiche Breite wie dein Overlay-Design */
+    height: 100vh;
+    background: white;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    /* über dem restlichen Content */
+    overflow-y: auto;
+}
+
+/* Wird aktiv, wenn das Overlay eingeblendet werden soll */
+.edit-overlay.active {
+    transform: translateX(0);
+}
+
+/* Optional: Style für einen Close-Button im Overlay */
+.edit-overlay .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}

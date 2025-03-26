@@ -102,7 +102,7 @@ function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);
     let {completed,total,progress} = calculateSubtaskProgress(element.subtasks);
     let priority_img = togglePriority(element.priority);
-    let user_icon =generateUserIcons(element.assignedUsers);
+    let user_icon =generateUserIcons(element.assignedUsers || []);
 
     return `
     <div draggable="true" ondragstart="startDragging(${element['id']})" class="ticket" onclick="showOverlay(${element['id']})">
@@ -221,9 +221,11 @@ function calculateSubtaskProgress(subtasks) {
     }
 }
 
-
-
 function getUsersInitials(assignedUsers) {
+    if (!Array.isArray(assignedUsers)) {
+        console.error("assignedUsers nije niz ili je undefined:", assignedUsers);
+        return [];
+    }
     let usersWithInitials = [];
 
     for (let index = 0; index < assignedUsers.length; index++) {
@@ -383,17 +385,17 @@ function addTaskOverlay(){
             <div class="shell-radio-area">
                     <legend>Priority</legend>
                     <div class="shell-radio-btn">
-                        <label class="radio-btn" id="add-task-urgent" for="urgent-rad">
+                        <label class="radio-btn add-task-urgent for="urgent-rad">
                             <input type="radio" name="priority" id="urgent-rad" onclick="radioBtnChecked('urgent')">
                                 Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-medium" for="medium-rad" >
+                        <label class="radio-btn add-task-medium"  for="medium-rad" >
                             <input type="radio" name="priority" id="medium-rad" onclick="radioBtnChecked('medium')">
                                 Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                         </label>
-                        <label class="radio-btn" id="add-task-low" for="low-rad">
+                        <label class="radio-btn add-task-low"  for="low-rad">
                             <input type="radio" name="priority" id="low-rad" onclick="radioBtnChecked('low')" >
                                 Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
                                 <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
@@ -405,23 +407,28 @@ function addTaskOverlay(){
             <div class="dropdown">
             <div class="dropdown-header" onclick="toggleDropdown()">
             <span id="selected-users">Select contacts</span>
-            <img src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
+            <img  id="dropdown-arrow" src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
             </div>
-            <div id="selected-users-container" class="selected-users"></div>
+            <div id="selected-user-container"></div>
              <div class="dropdown-menu" id="dropdown-menu"></div>
             </div>
             </div>
-            <div class="category">
-            <label for="category">Category</label>
-            <select name="category" id="category"> 
-                    <option value="Select task category" selected disabled hidden>Select task category</option>
-                    <option value="Technical Task">Technical Task</option>
-                    <option value="User Story">User Story</option>
-            </select>
+          <div class="category">
+            <label>Category</label>
+          <div class="wrapper-category-select d_flex">
+          <div id="category-add-task" class="category-add-task" onclick="toggleCategoryOptions()">
+            Select task category
+            <img  id="dropdown-arrow" src="../assets/icons/arrow_drop_down.svg" alt="Dropdown Arrow">
+           </div>
+          </div>
+           <div id="options-container" class="options-container" style="display: none;">
+           <div class="option-category" onclick="selectCategory('Technical Task')">Technical Task</div>
+           <div class="option-category" onclick="selectCategory('User Story')">User Story</div>
+           </div>
             </div>
             <div class="subtask">
                      <label for="subtask">Subtasks <span>(optional)</span></label>
-            <div class="subtask-area" id="shell-subtask">
+            <div class="subtask-area" id="shell-subtask" >
                     <input type="text" id="subtask" placeholder="Add new subtask">
             <div id="subtask-icons">
                     <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
@@ -439,6 +446,16 @@ function addTaskOverlay(){
             </button>
              </div>
     </div> `
+}
+
+function toggleCategoryOptions() {
+    const optionsContainer = document.getElementById('options-container');
+    optionsContainer.style.display = optionsContainer.style.display === 'block' ? 'none' : 'block';
+}
+
+function selectCategory(category) {
+    document.getElementById('category-add-task').textContent = category;
+    document.getElementById('options-container').style.display = 'none';
 }
 
 function showSubtaskActions() {
@@ -494,27 +511,48 @@ function radioBtnChecked(priority) {
 }
 
 function toggleDropdown() {
-   let dropDownMenu = document.getElementById("dropdown-menu");
+    let dropDownMenu = document.getElementById("dropdown-menu");
+    let arrowIcon = document.getElementById("dropdown-arrow");
+    let selectedUsersContainer = document.getElementById("selected-user-container");
 
-   if (!dropDownMenu.classList.contains("show")) {
-    generateUsers();
+    if (dropDownMenu.style.display === "block") {
+        dropDownMenu.style.display = "none"; 
+        arrowIcon.src = "../assets/icons/arrow_drop_down.svg"; 
+        selectedUsersContainer.style.display = "inline-flex"; 
+    } else {
+        dropDownMenu.style.display = "block"; 
+        generateUsers();
+        arrowIcon.src = "../assets/icons/arrow_drop_down_close.svg"; 
+        selectedUsersContainer.style.display = "none"; 
     }
-    dropDownMenu.classList.toggle("show");
 }
 
 function updateSelectedUsers() {
     assignedUsers = [];
 
+    let selectedUsersContainer = document.getElementById("selected-user-container");
+    selectedUsersContainer.innerHTML = ''; 
+
     for (let i = 0; i < users.length; i++) {
         let userCheckbox = document.getElementById(`user-${users[i].id}`);
         if (userCheckbox && userCheckbox.checked) {
             assignedUsers.push(users[i].userData.name);
+
+            let userIcon = generateUserIcon(users[i]);
+            selectedUsersContainer.innerHTML += userIcon;
         }
     }
-    
-    document.getElementById("selected-users").innerText = assignedUsers.length > 0 ? assignedUsers.join(", ") : "Select contacts";
 }
 
+function generateUserIcon(user) {
+    let name = user.userData.name;
+    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    let color = getColorForUser(name); 
+
+    return `
+        <span class="user-icon" style="background-color: ${color};">${initials}</span>
+    `;
+}
 
 function generateUsers() {
     let dropDownMenu = document.getElementById("dropdown-menu");
@@ -526,7 +564,6 @@ function generateUsers() {
     }
 }
 
-
 function generateSingleUser(element) {
     let name = element.userData.name;
     let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
@@ -536,12 +573,13 @@ function generateSingleUser(element) {
         <label for="user-${element.id}" class="user-item">
             <span class="user-icon" style="background-color: ${color};">${initials}</span>
             <span class="user-name">${name}</span>
-            <input type="checkbox" id="user-${element.id}" value="${name}" onclick="updateSelectedUsers()">
+            <input type="checkbox" id="user-${element.id}" value="${name}"onclick="updateSelectedUsers()">
         </label>
     `;
 }
 
 let assignedUsers=[];
+
 
 async  function createTask() {
     await pushToUsersArray(); 
