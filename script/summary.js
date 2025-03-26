@@ -1,10 +1,14 @@
 user = []
 
+const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
-function getCurrentUser() {
+
+async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
         user.push(userData)
+        let email = user[0].email
+        postUserProfile(email, {createdAt: new Date().toISOString()})
         displayUserData()
         greetUser()
     } else {
@@ -48,4 +52,34 @@ function greetUser() {
         greeting = "Good evening,";
     }
     greetElement.textContent = greeting;
+}
+
+
+async function postUserProfile(email, data = {}) {
+    const sanitizedEmail = email.replace(/\./g, "_");
+    await fetch(BASE_URL + `/${sanitizedEmail}.json`,{
+        method: "PUT",
+        header: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+}
+
+
+async function testUserPush() {
+    let email = user[0].email;
+    let sanitizedEmail = email.replace(/\./g, "_");
+    await putUserTest(sanitizedEmail, {"task": "testtask"})
+}
+
+
+async function putUserTest(path, data) {
+    await fetch(BASE_URL + path + ".json",{
+        method: "PUT",
+        header: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
 }
