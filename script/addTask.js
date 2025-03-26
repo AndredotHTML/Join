@@ -4,8 +4,10 @@ const form = document.getElementById("form-add-task")
 
 document.addEventListener("DOMContentLoaded", function () {
     dropDownForCategory();
-    getUser(path = "/users");
-    document.getElementById("assigned-to-input").addEventListener("click", dropDownForAssigned);
+    // getUser(path = "/users");
+    displayUser();
+    document.getElementById("assigned-to-container").addEventListener("click", dropDownForAssigned);
+    document.getElementById("assigned-to-container").addEventListener("input", searchAssigned);
 });
 
 form.addEventListener("submit", function (event) {
@@ -31,19 +33,6 @@ form.addEventListener("submit", function (event) {
         creatTask()
     }
 })
-
-document.querySelectorAll("form select").forEach(select => {
-    select.addEventListener("click", () => {
-        if (select.classList.contains("open")) {
-            select.classList.remove("open");
-        } else {
-            select.classList.add("open");
-        }
-    });
-    select.addEventListener("blur", () => {
-        select.classList.remove("open");
-    });
-});
 
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
@@ -94,14 +83,14 @@ function creatTask() {
         subtasks.push(subtask.textContent.trim().replace(/\s+/g, " "))
     }
     let data = {
-            title:titleNewTaskRef.value,
-            description: descriptionNewTaskRef.value,
-            dueDate: dateNewTaskRef.value,
-            priority: priorityNewTaskRef.value,
-            category: categoryNewTaskRef.textContent,
-            assigned: assignedUserRef,
-            status: "toDo",
-            subtasks: subtasks
+        title: titleNewTaskRef.value,
+        description: descriptionNewTaskRef.value,
+        dueDate: dateNewTaskRef.value,
+        priority: priorityNewTaskRef.value,
+        category: categoryNewTaskRef.textContent,
+        assigned: assignedUserRef,
+        status: "toDo",
+        subtasks: subtasks
     };
     postTask("/tasks", data)
 }
@@ -149,15 +138,15 @@ async function getUser(path = "") {
             throw new Error("Fehler beim Empfangen der User");
         }
         const result = await response.json()
-        const userArray = result ? Object.values(result) : []
-        displayUser(userArray)
-        return result;
+        const userArray = Object.values(result)
+        return userArray;
     } catch (error) {
         console.error("Fehler:", error.message);
     }
 }
 
-function displayUser(userArray) {
+async function displayUser() {
+    let userArray = await searchAssigned()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = []
     for (let i = 0; i < userArray.length; i++) {
@@ -167,6 +156,18 @@ function displayUser(userArray) {
     }
     assignedToAreaRef.innerHTML = allContacts
     assignedToAreaRef.classList.add("d_none");
+}
+
+
+async function searchAssigned() {
+    let userArray = await getUser("/users")
+    let inputRef = document.getElementById("assigned-to-input")
+    let inputVal = inputRef.value.toLowerCase()
+    let searchingName = userArray.filter(function (nameToSearch) {
+        return nameToSearch.name.toLowerCase().includes(inputVal)
+    }
+    )
+    return searchingName
 }
 
 function dropDownForAssigned() {
@@ -180,61 +181,80 @@ function dropDownForAssigned() {
 
 function openDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
-    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    let arrowOpenRef = document.getElementById("arrow-open-assigned")
+    let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
     assignedRef.classList.remove("d_none");
-    assignetContactRef.forEach(contact => {
+    assignedContactRef.forEach(contact => {
+        contact.classList.remove("bg-white")
         contact.style.display = "flex";
         let label = contact.querySelector("label");
         if (label) {
             label.style.display = "flex";
         }
-        assignedRef.style.display = "block";
-        assignedRef.style.flexDirection = "column"
     });
+    arrowOpenRef.classList.toggle("drop-down-arrow-close")
+    assignedRef.style.display = "flex";
+    assignedRef.style.flexDirection = "column"
 }
 
 function closeDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
-    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    assignetContactRef.forEach(contact => {
+    let arrowOpenRef = document.getElementById("arrow-open-assigned")
+    let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let label = contact.querySelector("label");
         if (checkbox && checkbox.checked) {
+            contact.classList.add("bg-white")
             if (label) {
                 label.style.display = "none";
             }
-            assignedRef.style.display = "flex";
-            assignedRef.style.flexDirection = "row"
         } else {
             contact.style.display = "none";
         }
     });
+    assignedRef.style.display = "flex";
+    assignedRef.style.gap = "8px";
+    assignedRef.style.flexDirection = "row"
+    arrowOpenRef.classList.toggle("drop-down-arrow-close")
 }
 
 function dropDownForCategory() {
+    let arrowOpenRef = document.getElementById("arrow-open-category")
     let categoryInputRef = document.getElementById("category-add-task")
+    let selectRef  = document.getElementById("select-category")
     let options = document.querySelectorAll(".wrapper-category .option-category")
-    categoryInputRef.addEventListener("click", function () {
-        options.forEach(option => {
-            option.classList.toggle("d_none")
-        });
+    selectRef.addEventListener("click", function () {
+        toggleCategoryDD(options, arrowOpenRef)
     });
     options.forEach(option => {
         option.addEventListener("click", function () {
             categoryInputRef.textContent = this.textContent;
-            options.forEach(option => {
-                option.classList.add("d_none")
-            })
+            closeCategoryDD(options, arrowOpenRef)
         })
     })
 }
 
+function toggleCategoryDD(options, arrowOpenRef) {
+    options.forEach(option => {
+        option.classList.toggle("d_none")
+    });
+    arrowOpenRef.classList.toggle("drop-down-arrow-close")
+}
 
-function clearValidationArea(){
+function closeCategoryDD(options, arrowOpenRef) {
+    options.forEach(option => {
+        option.classList.add("d_none")
+        arrowOpenRef.classList.remove("drop-down-arrow-close")
+    })
+}
+
+
+function clearValidationArea() {
     let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
     for (let index = 0; index < validationAreaRef.length; index++) {
         let singValidArea = validationAreaRef[index];
-        singValidArea.innerHTML ="";
+        singValidArea.innerHTML = "";
     }
 }
 

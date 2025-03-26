@@ -129,9 +129,12 @@
                                 Assigned to <span>(optional)</span>
                             </label>
                             <div id="assigned-to-container" class="assigned-to-container">
-                                <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
-                                    placeholder="Select contacts to assign">
-                                <div class="" id="assigned-to-display">
+                                <div class="d_flex wrapper-select">
+                                    <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
+                                        placeholder="Select contacts to assign">
+                                    <div class="drop-down-arrow-open icon-form" id="arrow-open-assigned" ></div>
+                                </div>
+                                <div class="assigned-to-scroll" id="assigned-to-display">
                                 </div>
                             </div>
                         </div>
@@ -139,12 +142,11 @@
                             <label for="category-add-task">
                                 Category
                             </label>
-                            <div class="wrapper-category-select d_flex">
+                            <div class="wrapper-select d_flex" id="select-category">
                                 <div name="category-add-task" id="category-add-task" class="category-add-task">
                                     Select task category
                                 </div>
-                                <div class="drop-down-arrow-close"></div>
-                                <div class="drop-down-arrow-open"></div>
+                                <div class="drop-down-arrow-open icon-form" id="arrow-open-category"></div>
                             </div>
                             <div class="option-category d_none">Technical Task</div>
                             <div class="option-category d_none">User Story</div>
@@ -153,7 +155,7 @@
                             <label for="subtask">Subtasks <span>(optional)</span></label>
                             <div class="subtask-area">
                                 <input type="text" id="subtask" class="subtask" placeholder="Add new subtask">
-                                <div>
+                                <div class="icon-form">
                                     <img src="/assets/icons/add.png" alt="" onclick="addSubtask()">
                                 </div>
                             </div>

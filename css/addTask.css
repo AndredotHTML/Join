@@ -20,6 +20,11 @@ body {
     position: relative;
 }
 
+.bg-white{
+    background-color: white !important;
+    padding: 0 !important;
+}
+
 
 .add_task_overlay {
     width: 450px;
@@ -88,7 +93,7 @@ select {
     background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right 16px;
 }
 
-.wrapper-category-select {
+.wrapper-select {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -120,11 +125,22 @@ select {
 }
 
 .drop-down-arrow-open {
+    background: url(../assets/icons/arrow_drop_down.svg) no-repeat center;
+}
+.drop-down-arrow-close {
+    background: url(../assets/icons/arrow_drop_down_close.svg) no-repeat center ;
+}
+.icon-form{
     height: 24px;
     width: 24px;
-    background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
+.icon-form:hover{
+    background-color: #D9D9D9;
+    border-radius: 50%;
+}
 
 .header_x {
     position: absolute;
@@ -171,11 +187,6 @@ select {
     }
 }
 
-.assigned-to .category,
-.subtask {
-    /* padding-top: 30px; */
-}
-
 .button_div {
     margin-top: 20px;
     display: flex;
@@ -184,19 +195,19 @@ select {
 
 .assigned-to-input {
     width: 100%;
-    padding: 12px 16px;
     border: none;
-    border-bottom: 1px solid #D1D1D1;
     align-items: center;
     font-size: 19px;
     height: 48px;
     outline: none;
+    height: 100%;
 }
 
 .assigned-contacts>label {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    font-weight: 400;
 }
 
 .assigned-contacts {
@@ -204,21 +215,52 @@ select {
     border-radius: 10px;
     height: 56px;
     align-items: center;
+    gap: 16px;
 }
+
+.assigned-contacts:hover{
+    background-color: #D2E3FF;
+}
+
+.assigned-contacts:has(input:checked){
+    background-color: #4589FF;
+    color: var(--secondaryColor)
+}
+
+.assigned-contacts:has(input:checked:hover){
+    background-color: #005DFF;
+    color: var(--secondaryColor)
+}
+
 
 /*background-color placeholder*/
 .name-icon {
     color: white;
     height: 42px;
-    width: 42px;
+    min-width: 42px;
     font-size: 12px;
     background-color: orange;
-    border-radius: 45px;
+    border-radius: 50%;
     border: 2px solid white;
     justify-content: center;
     align-items: center;
-    gap: 12px
+    gap: 12px;
 }
+
+input[type="checkbox"]{
+    appearance: none;
+    background-image: url(../assets/icons/unchecked.png);
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 24px;
+    height: 24px;
+    border-radius: 3px;
+}
+
+input[type="checkbox"]:checked{
+    background-image: url(../assets/icons/Check_button_white.png)
+}
+
 
 
 
@@ -253,6 +295,14 @@ form {
     overflow-y: auto;
     padding-right: 24px;
     overflow-x: hidden;
+}
+
+.assigned-to-scroll{
+    overflow-y: auto;
+    max-height: 288px;
+    padding-right: 24px;
+    display: flex;
+    gap: 1px;
 }
 
 
@@ -474,10 +524,8 @@ form>input,
 .title-add-task:focus,
 select:focus,
 select:hover,
-.wrapper-category-select:hover,
-.assigned-to-input:hover
-
-/* .added-subtasks:focus */
+.wrapper-select:hover,
+.wrapper-select:focus-within
     {
     outline: none;
     border-bottom: 1px solid var(--primaryColor);
@@ -515,10 +563,6 @@ select:hover,
 form>select {
     height: 48px;
     background: url("../assets/icons/arrow_drop_down.svg") no-repeat center right 16px;
-}
-
-.open {
-    background: url("../assets/icons/arrow_drop_down_close.svg")no-repeat center right 16px;
 }
 
 label>span {
@@ -628,10 +672,10 @@ input[type="radio"] {
 
 input[type="date"]::-webkit-calendar-picker-indicator {
     background: url("/assets/icons/event.png") no-repeat center;
-    position: absolute;
+    position: relative;
     cursor: pointer;
-    right: 40px;
-    display: block;
+    left: 250px;
+    object-fit:cover
 }
 
 /* #dateInput-add-task {
