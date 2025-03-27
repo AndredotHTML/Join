@@ -132,7 +132,7 @@
                                 <div class="d_flex wrapper-select">
                                     <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
                                         placeholder="Select contacts to assign">
-                                    <div class="drop-down-arrow-open icon-form" id="arrow-open-assigned" ></div>
+                                    <div class="drop-down-arrow-open icon-form" id="arrow-open-assigned"></div>
                                 </div>
                                 <div class="assigned-to-scroll" id="assigned-to-display">
                                 </div>
@@ -153,10 +153,19 @@
                         </div>
                         <div class="wrapper-subtasks">
                             <label for="subtask">Subtasks <span>(optional)</span></label>
-                            <div class="subtask-area">
-                                <input type="text" id="subtask" class="subtask" placeholder="Add new subtask">
-                                <div class="icon-form">
-                                    <img src="/assets/icons/add.png" alt="" onclick="addSubtask()">
+                            <div class="subtask-area" id="subtask-area">
+                                <input type="text" id="subtask" class="subtask" placeholder="Add new subtask"
+                                    onclick="stopPropagation(event)">
+                                <div class="d_flex">
+                                    <div class="icon-form" id="working-icons-opener">
+                                        <img src="/assets/icons/add.png" alt="" onclick="changeSubtaskIcons()">
+                                    </div>
+                                    <div class="d_none icon-for-subtssk-work" id="input-subtask-icons" >
+                                        <img src="/assets/icons/close_cross.svg" class="icon-form" id="subtask_input_clear"
+                                            alt="" onclick="clearInputSubtask()">
+                                        <div class="separator"></div>
+                                        <img src="/assets/icons/check_blue.svg" class="icon-form" alt="" onclick="addSubtask()">
+                                    </div>
                                 </div>
                             </div>
                             <ul class="added-subtasks" id="added-subtasks">

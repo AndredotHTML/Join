@@ -1,14 +1,55 @@
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 let isDropdownOpen = false;
-const form = document.getElementById("form-add-task")
+const form = document.getElementById("form-add-task");
+let getUserCache = [];
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
-    // getUser(path = "/users");
-    displayUser();
+    await getUser(path = "/users");
+    // displayIconToclear()
     document.getElementById("assigned-to-container").addEventListener("click", dropDownForAssigned);
-    document.getElementById("assigned-to-container").addEventListener("input", searchAssigned);
+    document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
+
+function changeSubtaskIcons(){
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    creatSubtaskAreaRef.classList.toggle("d_flex");
+    creatSubtaskAreaRef.classList.toggle("d_none");
+    displaySubtaskIconRef.classList.toggle("d_none")
+}
+
+function clearInputSubtask() {
+    let inputSubtaskRef = document.getElementById("subtask")
+        inputSubtaskRef.value = ""
+        changeSubtaskIcons()
+}
+
+
+
+// function displayIconToclear() {
+//     let subtaskInput = document.getElementById("subtask")
+//     let subtaskArea = document.getElementById("subtask-area");
+//     let iconRef = document.getElementById("subtask_input_clear");
+//     subtaskArea.addEventListener("focusin", function() {
+//         iconRef.classList.remove("d_none");
+//     });
+//     if (subtaskInput.value.trim() === "")
+//     subtaskArea.addEventListener("focusout", function() {
+//         iconRef.classList.add("d_none");
+//     });
+// }
+
+// function clearSubtaskInput() {
+//     let subtaskInput = document.getElementById("subtask");
+//     console.log("subtaskInput.value");
+//     subtaskInput.value = ""
+//     console.log("subtaskInput.value");
+// }
+
+function stopPropagation(event) {
+    event.stopPropagation()
+}
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -55,6 +96,7 @@ function addSubtask() {
     let inputSubtaskVal = inputSubtaskRef.value
     displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
     inputSubtaskRef.value = ""
+    changeSubtaskIcons()
 }
 
 function clearForm() {
@@ -132,6 +174,9 @@ async function postTask(path = "", data = {}) {
 }
 
 async function getUser(path = "") {
+    if (getUserCache.length > 0) {
+        return getUserCache;
+    }
     try {
         const response = await fetch(BASE_URL + path + ".json")
         if (!response.ok) {
@@ -139,35 +184,35 @@ async function getUser(path = "") {
         }
         const result = await response.json()
         const userArray = Object.values(result)
-        return userArray;
+        getUserCache = userArray;
+        return getUserCache;
     } catch (error) {
         console.error("Fehler:", error.message);
     }
 }
 
-async function displayUser() {
-    let userArray = await searchAssigned()
-    let assignedToAreaRef = document.getElementById("assigned-to-display")
-    let allContacts = []
-    for (let i = 0; i < userArray.length; i++) {
-        let user = userArray[i];
-        let userName = user.name;
-        allContacts += templateAssignedTo(userName)
-    }
-    assignedToAreaRef.innerHTML = allContacts
-    assignedToAreaRef.classList.add("d_none");
-}
-
-
-async function searchAssigned() {
-    let userArray = await getUser("/users")
+function searchAssigned() {
+    let userArray = getUserCache
     let inputRef = document.getElementById("assigned-to-input")
     let inputVal = inputRef.value.toLowerCase()
     let searchingName = userArray.filter(function (nameToSearch) {
-        return nameToSearch.name.toLowerCase().includes(inputVal)
+        return nameToSearch.name.toLowerCase().includes(inputVal) 
     }
     )
     return searchingName
+}
+
+function displayUser() {
+    let userArray = searchAssigned()
+    let selectedUser = assignetUserToData()
+    let assignedToAreaRef = document.getElementById("assigned-to-display")
+    let allContacts = ""
+    userArray.forEach(contact => {
+        let userName = contact.name;
+        let isChecked = selectedUser.includes(userName)
+        allContacts += templateAssignedTo(userName,isChecked)
+    });
+    assignedToAreaRef.innerHTML = allContacts
 }
 
 function dropDownForAssigned() {
@@ -180,17 +225,20 @@ function dropDownForAssigned() {
 }
 
 function openDropdown() {
+    displayUser()
     let assignedRef = document.getElementById("assigned-to-display");
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+
     assignedRef.classList.remove("d_none");
     assignedContactRef.forEach(contact => {
         contact.classList.remove("bg-white")
         contact.style.display = "flex";
-        let label = contact.querySelector("label");
-        if (label) {
-            label.style.display = "flex";
-        }
+        let nameTemplate = contact.querySelector(".assigned-template-name");
+        let inputTemplate = contact.querySelector(".input-assigned");
+        nameTemplate.style.display = "flex";
+        inputTemplate.style.display = "flex";
+
     });
     arrowOpenRef.classList.toggle("drop-down-arrow-close")
     assignedRef.style.display = "flex";
@@ -203,12 +251,13 @@ function closeDropdown() {
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
     assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
-        let label = contact.querySelector("label");
+        let nameTemplate = contact.querySelector(".assigned-template-name");
+        let inputTemplate = contact.querySelector(".input-assigned");
         if (checkbox && checkbox.checked) {
             contact.classList.add("bg-white")
-            if (label) {
-                label.style.display = "none";
-            }
+            nameTemplate.style.display = "none";
+            inputTemplate.style.display = "none";
+
         } else {
             contact.style.display = "none";
         }
@@ -222,7 +271,7 @@ function closeDropdown() {
 function dropDownForCategory() {
     let arrowOpenRef = document.getElementById("arrow-open-category")
     let categoryInputRef = document.getElementById("category-add-task")
-    let selectRef  = document.getElementById("select-category")
+    let selectRef = document.getElementById("select-category")
     let options = document.querySelectorAll(".wrapper-category .option-category")
     selectRef.addEventListener("click", function () {
         toggleCategoryDD(options, arrowOpenRef)

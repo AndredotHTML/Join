@@ -1,21 +1,31 @@
 function subtaskTemplat(inputSubtaskVal) {
-    return ` <li class="addedSubtask">
-                ${inputSubtaskVal} 
-            </li>
+    return ` 
+            <div>
+                <li class="addedSubtask">
+                    ${inputSubtaskVal} 
+                </li>
+                <div class="d_none icon-for-subtssk-work" id="input-subtask-icons" >
+                    <img src="/assets/icons/close_cross.svg" class="icon-form" id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
+                    <div class="separator"></div>
+                    <img src="/assets/icons/check_blue.svg" class="icon-form" alt="" onclick="addSubtask()">
+                </div>
+            </div>
     `
 }
 
-function templateAssignedTo(userName) {
+function templateAssignedTo(userName,isChecked) {
     return `
     <div class="assigned-contacts d_flex">
-            <div class="name-icon d_flex" data-value="${userName}">
+            <label for="assigned-user-${userName}" onclick="stopPropagation(event)" class="d_flex">
+                <div class="d_flex icon-name-template">
+                    <div class="name-icon d_flex" data-value="${userName}">
                     ${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}
+                    </div>
+                    <div class="assigned-template-name">
+                        ${userName}
+                    </div>
                 </div>
-            <label for="assigned-user-${userName}" class="d_flex">
-                <div>
-                    ${userName}
-                </div>
-                <input type="checkbox" name="assigned-user-${userName}" id="assigned-user-${userName}">
+                <input type="checkbox" ${isChecked?"checked" :""} class="input-assigned" name="assigned-user-${userName}" id="assigned-user-${userName}">
             </label>  
         </div>    
     `
