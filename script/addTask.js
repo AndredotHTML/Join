@@ -118,23 +118,32 @@ function creatTask() {
     let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
     let categoryNewTaskRef = document.getElementById("category-add-task")
     let assignedUserRef = assignetUserToData()
-    let subtasksNewTaskRef = document.getElementById("added-subtasks")
-    let subtaskCollection = subtasksNewTaskRef.getElementsByTagName("li")
-    let subtasks = []
-    for (const subtask of subtaskCollection) {
-        subtasks.push(subtask.textContent.trim().replace(/\s+/g, " "))
-    }
+    let subtasks = getSubtasks();
+
     let data = {
         title: titleNewTaskRef.value,
         description: descriptionNewTaskRef.value,
         dueDate: dateNewTaskRef.value,
         priority: priorityNewTaskRef.value,
         category: categoryNewTaskRef.textContent,
-        assigned: assignedUserRef,
+        assignedUsers: assignedUserRef,
         status: "toDo",
         subtasks: subtasks
     };
     postTask("/tasks", data)
+}
+
+function getSubtasks() {
+    let subtasks = [];
+    let subtaskElements = document.querySelectorAll("#added-subtasks li");
+
+    for (let i = 0; i < subtaskElements.length; i++) {
+        subtasks.push({
+            title: subtaskElements[i].innerText, 
+            completed: false
+        });
+    }
+    return subtasks;
 }
 
 function assignetUserToData() {

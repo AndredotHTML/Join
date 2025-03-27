@@ -106,6 +106,9 @@
 }
 
 .drag_area {
+    min-height: 100vh;
+    flex-grow: 1;
+    width: 100%;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -376,12 +379,14 @@
     color: #42526e ;
 }
 
+.subtask_item {
+    margin-top: 10px; 
+}
+
 .subtask_item label {
     padding:5px 10px;
     border-radius: 20px;
     transition: background-color 0.3s ease, padding 0.3s ease;
-    font-weight: 400 !important;
-    font-size: 16px !important;
 }
   
 .subtask_item label:hover {
