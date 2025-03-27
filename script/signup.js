@@ -61,17 +61,18 @@ function validateForm() {
  * checks if the email for the signup already exists 
  */
 async function checkEmail() {
+    let emailvalue = document.getElementById("email").value;
     let email = document.getElementById("email");
     let errorMsg = document.getElementById("error_msg_email");
-    if (await checkEmailExists(email.value)) {
+    if (await checkEmailExists(emailvalue)) {
         email.classList.add("error");
         errorMsg.style.display = "block";
       } else {
         email.classList.remove("error"); 
         errorMsg.style.display = "none";
-        toggleOverlay()
-        getUserData()
-        redirectToLogin()
+        toggleOverlay();
+        getUserData();
+        redirectToLogin();
 }}
 
 
