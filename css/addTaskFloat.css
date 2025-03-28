@@ -1,0 +1,132 @@
+@keyframes slideUpMessage {
+    from {
+        bottom: -100px; 
+        opacity: 0;
+    }
+    to {
+        bottom: 50%; 
+        opacity: 1;
+    }
+}
+
+@keyframes slideRight {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+.add_task_overlay {
+    width: 450px;
+    height: auto;
+    background: white;
+    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
+    padding: 30px;
+    overflow-y: auto;
+    position: fixed;
+    top: 0;
+    right: 0;
+    border-radius: 30px 0 0 30px;
+    color: #42526e;
+}
+
+.header_x {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+}
+
+.header_x:hover {
+    background-color: #d2e2ff;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.header_x img {
+    width: 25px;
+    height: 25px;
+}
+
+.header_headline {
+    padding-bottom: 50px;
+    padding-top: 20px;
+}
+
+.slide_in {
+    transform: translateX(100%);
+    opacity: 0;
+    animation: slideRight 0.2s ease-in forwards;
+}
+
+.addTask_content {
+    max-height: 670px;
+    overflow-y: auto;
+}
+
+.addTask_content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.title_add_task{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 1px solid #D1D1D1;
+    width: 100%;
+    font-size: 24px;
+    padding-bottom: 10px;
+    padding-left:10px;
+}
+
+::placeholder{
+    color: #D1D1D1;
+}
+
+.title_add_task:focus{
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+.description {
+    display: flex;
+    flex-direction:column;
+    padding-top: 30px;
+}
+
+.description span,.date span{
+    color: #42526e;
+}
+
+textarea {
+    resize: none;
+    border: 1px solid #D1D1D1;
+    height:80px;
+    border-radius: 0 8px  8px  8px;
+    margin-top: 10px;
+    padding-left:10px;
+    padding-top:10px;
+    cursor: pointer;
+    outline: none;
+    font-size:18px;
+}
+
+textarea:focus{
+    border: 1px solid var(--primaryColor);
+}
+
+.date{
+    display: flex;
+    flex-direction:column;
+    padding-top: 30px;
+}

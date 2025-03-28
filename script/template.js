@@ -90,10 +90,29 @@ function generateTaskOverlay(element) {
         ${subtask}
     </div>
     <div class="delete_edit">
-        <button type="button" class="delete_btn"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
+        <button type="button" class="delete_btn" onclick="deleteTask('${element.id}')"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
         <button type="button" class="edit_btn"><img src="../assets/icons/edit.png" alt="edit icon">Edit</button>
     </div>
     </div>`
+}
+
+function addTaskOverlay(){
+    return `  <div  class="add_task_overlay">
+            <div class="addTask_header_overlay">
+            <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
+            <div class="header_headline"><h1> Add Task</h1></div>
+            </div>
+            <div class="addTask_content">
+            <input type="text" class="title_add_task" id="title_add_task" placeholder="Enter a title">
+            <div class="description">
+            <span><strong> Description</strong> (optional)</span>
+            <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
+            </div>
+            <div class="date">
+            <span><strong>Due date </strong></span>
+            <input type="date" id="dateInput-add-task">
+            </div>
+   </div> </div> `
 }
 
 
