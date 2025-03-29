@@ -3,8 +3,10 @@ let tasks = [];
 let currentDraggedElement;
 const predefinedColors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF"];
 
+
 async function updateHTML() {
     await pushToUsersArray(); 
+    console.log(users);
     await pushToTask();
     displayToDo();
     displayInProgress();

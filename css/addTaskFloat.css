@@ -24,7 +24,7 @@
 
 .add_task_overlay {
     width: 450px;
-    height: auto;
+    height:auto;
     background: white;
     box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
     padding: 30px;
@@ -104,7 +104,7 @@
     padding-top: 30px;
 }
 
-.description span,.date span{
+.description span,.date span, .priority span, .assigned span, .category span{
     color: #42526e;
 }
 
@@ -129,4 +129,214 @@ textarea:focus{
     display: flex;
     flex-direction:column;
     padding-top: 30px;
+}
+
+.date input{
+    margin-top:10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #D1D1D1;
+    font-size:18px;
+    color: #D1D1D1;
+    padding-bottom: 10px;
+    padding-left:10px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: url("/assets/icons/event.png") no-repeat center;
+    cursor: pointer;
+    margin-right: 15px;
+}
+
+input[type="date"]:focus {
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+
+.priority{
+    padding-top: 30px;
+}
+
+.priority_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+.radio_btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+    border: 1px solid #D1D1D1;
+    background-color: var(--secondaryColor);
+    font-size: 19px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-top:10px;
+}
+
+.add_task_urgent:hover {
+    border-bottom: 2px solid var(--urgentColor);
+}
+
+.add_task_medium:hover {
+    border-bottom: 2px solid var(--mediumColor);
+}
+
+.add_task_low:hover {
+    border-bottom: 2px solid var(--lowColor);
+}
+
+.checked_priority {
+    display: none;
+}
+
+input[type="radio"]:checked + img.checked_priority {
+    display: inline-block;
+}
+
+input[type="radio"]:not(:checked) + img.unchecked_priority {
+    display: inline-block;
+}
+
+.assigned{
+    padding-top: 30px;
+}
+
+.select_contact {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #D1D1D1;
+    padding-top: 10px;
+}
+
+.select_contact span,.cat span{
+    padding-left:10px;
+    padding-bottom:10px;
+
+}
+
+.select_contact:hover, .cat:hover,.subtask_area:hover{
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+.contact_dropdown {
+    display: none;  
+    background-color: #f4f4f4;
+    padding: 10px;
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+}
+.contact_dropdown ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.contact_dropdown li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.contact_dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+.contact_dropdown.show {
+    display: block;
+}
+
+.category {
+    padding-top: 30px;
+}
+
+.cat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #D1D1D1;
+    padding-top: 10px;
+}
+
+#arrowIconCategory {
+    transition: transform 0.2s ease;
+}
+
+
+
+.option_category {
+    cursor: pointer;
+    padding: 10px;
+
+}
+
+.option_category:hover {
+    background-color: #d2e2ff;
+    border-radius: 8px;
+}
+
+.subtasks {
+    padding-top: 30px;
+}
+
+.subtask_area {
+    padding:10px;
+    border: none;
+    border-bottom: 1px solid #D1D1D1;
+    appearance: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+}
+
+.subtask_area input{
+    font-size: 18px; 
+    border: none;
+    outline: none;
+    width: 100%;
+}
+
+.button_div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.add_task_create_btn {
+    width: 174px;
+    background-color: var(--primaryColor);
+    font-size: 23px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    color: var(--secondaryColor);
+    padding: 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+button:hover{
+    background-color:#0038ff;
+    cursor: pointer;
+}
+
+.btn_title {
+    height: 28px;
 }
