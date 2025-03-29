@@ -78,15 +78,15 @@ function generateTaskOverlay(element) {
     <div class="title_overlay"><h1>${element.title}</h1></div>
     <div class="description_overlay">${element.description}</div>
     <div class="date_overlay"><span>Due date : </span>
-    <div class="date">${element.dueDate}</div></div>
+    <div >${element.dueDate}</div></div>
     <div class="priority_overlay"><span>Priority: </span>
-    <div class="priority">${element.priority}  ${priority_img}</div></div>
+    <div>${element.priority}  ${priority_img}</div></div>
     <div class="assigned_overlay">
     <table>
     <tr><th>Assigned To:</th> </tr>
     <tr><td>${user_icon_name}</td></tr>
     </table></div>
-    <div class="subtasks"><span>Subtasks:</span>
+    <div class="subtasks_overlay"><span>Subtasks:</span>
         ${subtask}
     </div>
     <div class="delete_edit">
@@ -154,15 +154,15 @@ function addTaskOverlay(){
             </div>
             </div>
             <div class="subtasks">
-                <span><strong>Subtasks </strong>(optional)</span>
+                    <span><strong>Subtasks</strong>(optional)</span>
             <div class="subtask_area">
-                <input type="text" id="subtask" placeholder="Add new subtask">
-                <img id="subtask_add_icon" src="../assets/icons/add.png" alt="Add">
+                    <input type="text" id="subtask" placeholder="Add new subtask" disabled onclick="showWarningMessage()">
+            <div id="subtask-icons">
+                    <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
             </div>
-            <div>
-                    <ul id="added_subtasks"></ul>
             </div>
-           </div>
+                    <ul id="added-subtasks"></ul>
+            </div>
             </div>
                 <div class="button_div">
                 <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTask()">

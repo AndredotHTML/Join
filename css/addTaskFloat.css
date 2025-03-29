@@ -104,8 +104,9 @@
     padding-top: 30px;
 }
 
-.description span,.date span, .priority span, .assigned span, .category span{
+.description span,.date span, .priority span, .assigned span, .category span, .subtasks span{
     color: #42526e;
+    cursor: pointer;
 }
 
 textarea {
@@ -162,26 +163,27 @@ input[type="date"]:focus {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    gap: 16px;
 }
 
 input[type="radio"] {
     opacity: 0;
 }
 
-.radio_btn{
+.radio_btn {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
     border-radius: 10px;
-    gap: 10px;
     border: 1px solid #D1D1D1;
+    gap: 10px;
+    padding: 10px;
     background-color: var(--secondaryColor);
     font-size: 19px;
     box-sizing: border-box;
     cursor: pointer;
-    margin-top:10px;
+    margin-top: 10px;
+    min-width: 140px; 
+    height: 50px; 
 }
 
 .add_task_urgent:hover {
@@ -299,7 +301,6 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     appearance: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
     cursor: pointer;
 }
@@ -309,6 +310,7 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     border: none;
     outline: none;
     width: 100%;
+    cursor: pointer;
 }
 
 .button_div {
@@ -332,11 +334,109 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     gap: 4px;
 }
 
-button:hover{
+.add_task_create_btn:hover{
     background-color:#0038ff;
     cursor: pointer;
 }
 
 .btn_title {
     height: 28px;
+}
+
+#subtask-warning {
+    display: none;
+    color: red; 
+    font-size: 12px;
+    height: 50px;
+}
+
+#subtask-icons {
+    display: flex;
+    gap: 10px; 
+    align-items: center;
+}
+
+#subtask-delete-icon {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+input:disabled {
+    background-color: var(--secondaryColor);
+    color: var(--secondaryColor);
+}
+
+#added-subtasks{
+    padding-inline-start: 0;
+}
+
+.added_subtask {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between; 
+    padding: 10px; 
+    margin: 5px 0; 
+    border-radius: 5px; 
+}
+
+.added_subtask::before {
+    content: '\2022';
+    font-size: 20px; 
+    color: #333; 
+    margin-right: 10px;
+}
+
+.subtask_text {
+    font-size: 16px; 
+    flex-grow: 1; 
+}
+
+.subtask_actions {
+    display: flex; 
+    gap: 10px; 
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.added_subtask:hover{
+    background-color: #d2e2ff;
+    border-radius: 8px;
+}
+
+.added_subtask:hover .subtask_actions {
+    opacity: 1; 
+}
+
+.subtask_actions img {
+    cursor: pointer; 
+    transition: transform 0.2s ease; 
+}
+
+.subtask_actions img:hover{
+    transform: scale(1.1); 
+}
+
+.added_subtask.editing {
+    border-bottom: 1px solid var(--primaryColor);
+    border-radius: 0;
+}
+
+.added_subtask.editing::before {
+    content: none; 
+}
+
+.added_subtask.editing .subtask_actions {
+    opacity: 1; 
+    
+}
+.added_subtask.editing:hover {
+    background-color: transparent; 
+}
+
+.added_subtask.editing .subtask_text {
+    border: none; 
+    background-color: transparent;
+    padding: 4px 0; 
+    outline: none; 
 }
