@@ -121,6 +121,9 @@ select {
 li[contenteditable="true"]{
     outline: none;
 }
+li{
+    width: 100%;
+}
 
 .separator{
     height: 24px;
