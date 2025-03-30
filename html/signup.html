@@ -1,45 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Join signup</title>
-    <link rel="icon" href="../assets/icons/logo.png">
-    <link rel="stylesheet" href="/css/standart.css">
-    <link rel="stylesheet" href="/css/signup.css">
-    <script src="/script/signup.js"></script>
-</head>
-<body onload="pushToUsersArray()">
-    <div id="signup_msg"><p>You Signed Up succesfully</p></div>
-    <div id="signup_overlay" class="d_none"></div>
-    <div id="signup_top"><img src="/assets/icons/join_icon_white.png"> 
-    </div>
-    <div id="main">
-        <div id="signup_border">
-            <a href="http://127.0.0.1:5500/html/login.html"><div id="arrow_left"></div></a>             
-            <div id="signup_container">     
-                <h2>Sign up</h2>
-                <form id="signup_form" action="" onsubmit="checkPasswords(); return false">
-                    <div class="input_container">
-                        <input required id="name" type="text" placeholder="Name">
-                        <img class="input_icon_email" src="/assets/icons/person.png">
-                    </div>
 
-                    <div class="input_container">
-                        <input required id="email" type="email" placeholder="Email">
-                        <img class="input_icon_email" src="/assets/icons/mail.png">
-                        <p id="error_msg_email">Youre Email is already taken. Please try anotherone.</p>
-                    </div>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Join signup</title>
+        <link rel="icon" href="../assets/icons/favicon.png">
+        <link rel="stylesheet" href="/css/standart.css">
+        <link rel="stylesheet" href="/css/signup.css">
+        <script src="/script/signup.js"></script>
+    </head>
+
+    <body onload="pushToUsersArray()">
+        <div id="signup_msg">
+            <p>You Signed Up succesfully</p>
+        </div>
+        <div id="signup_overlay" class="d_none"></div>
+        <div id="signup_top"><img src="/assets/icons/join_icon_white.png">
+        </div>
+        <div id="main">
+            <div id="signup_border">
+                <a href="http://127.0.0.1:5500/html/login.html">
+                    <div id="arrow_left"></div>
+                </a>
+                <div id="signup_container">
+                    <h2>Sign up</h2>
+                    <form id="signup_form" action="" onsubmit="checkPasswords(); return false">
+                        <div class="input_container">
+                            <input required id="name" type="text" placeholder="Name">
+                            <img class="input_icon_email" src="/assets/icons/person.png">
+                        </div>
+
+                        <div class="input_container">
+                            <input required id="email" type="email" placeholder="Email">
+                            <img class="input_icon_email" src="/assets/icons/mail.png">
+                            <p id="error_msg_email">Youre Email is already taken. Please try anotherone.</p>
+                        </div>
 
                         <div class="input_container">
                             <input required id="password" type="password" placeholder="Password">
-                            <img class="input_icon_password" id="password_icon" onclick="togglePassword('password','password_icon')"
+                            <img class="input_icon_password" id="password_icon"
+                                onclick="togglePassword('password','password_icon')"
                                 src="/assets/icons/visibility_off.png">
                         </div>
 
                         <div class="input_container">
                             <input required id="confirm_password" type="password" placeholder="Confirm Password">
-                            <img class="input_icon_password" id="confirm_password_icon" onclick="togglePassword('confirm_password','confirm_password_icon')"
+                            <img class="input_icon_password" id="confirm_password_icon"
+                                onclick="togglePassword('confirm_password','confirm_password_icon')"
                                 src="/assets/icons/visibility_off.png">
                             <p id="error_msg_password">Youre Passwords don't match. Please try again.</p>
                             <p id="error_msg">Check your email and name. Please try again.</p>
@@ -50,16 +58,17 @@
                             <p>I accept the <a class="nav_link" href="">Privacy policy</a></p>
                         </div>
 
-                    <div id="signup_button">
-                        <button type="submit" onclick="validateForm()">Sign up</button>
-                    </div>
-                </form>
+                        <div id="signup_button">
+                            <button type="submit" onclick="validateForm()">Sign up</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-    <div id="bottom_bar">
-        <a class="nav_link" href="">Privacy Policy</a>
-        <a class="nav_link" href="">Legal Notice</a>
-    </div>
-</body>
+        <div id="bottom_bar">
+            <a class="nav_link" href="">Privacy Policy</a>
+            <a class="nav_link" href="">Legal Notice</a>
+        </div>
+    </body>
+
 </html>
