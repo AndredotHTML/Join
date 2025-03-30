@@ -1,13 +1,20 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
-            <div>
-                <li class="addedSubtask">
+            <div class="d_flex addedSubtask id="">
+                <li class="subtask-value" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
-                <div class="d_none icon-for-subtssk-work" id="input-subtask-icons" >
-                    <img src="/assets/icons/close_cross.svg" class="icon-form" id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
-                    <div class="separator"></div>
-                    <img src="/assets/icons/check_blue.svg" class="icon-form" alt="" onclick="addSubtask()">
+                <div class="icon-for-subtask-work" id="input-subtask-icons" >
+                    <div class="icons d_none subtask-hover-icons">
+                        <img src="/assets/icons/edit.svg" class="icon-form  edit-subtask-icon" alt="edit Subtask" onclick="editSubtasks(this.closest('.addedSubtask').querySelector('.subtask-value'))">
+                        <div class="separator"></div>
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                    </div>
+                    <div class="icons d_none subtask-edit-icons">
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                        <div class="separator "></div>
+                        <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" onclick="">
+                    </div>
                 </div>
             </div>
     `

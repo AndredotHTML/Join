@@ -99,8 +99,30 @@ select {
     font-size: 19px;
     height: 47px;
 }
-.icon-for-subtssk-work{
+.icon-for-subtask-work{
     gap: 4px ;
+    display:flex ;
+}
+
+.addedSubtask:hover .subtask-hover-icons {
+    display: flex !important;
+}
+.addedSubtask:hover{
+    background-color: #E3EEFF;
+}
+
+.disable-hover:hover .subtask-hover-icons{
+    display: none !important;
+}
+.disable-hover:hover{
+    background-color: #FFFFFF !important;
+}
+
+li[contenteditable="true"]{
+    outline: none;
+}
+li{
+    width: 100%;
 }
 
 .separator{
@@ -538,11 +560,11 @@ textarea:focus {
     border: 1px solid var(--primaryColor);
 }
 
-#added-subtasks {
+/* #added-subtasks {
     min-height: 48px;
     padding-top: 10px;
     padding-inline-start: 0;
-}
+} */
 
 .shell-radio-btn {
     display: flex;
@@ -684,13 +706,23 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     height: 28px;
 }
 
-.addedSubtask {
+.subtask-value {
     max-height: 32px;
     font-size: 16px;
     padding: 6px 16px;
     list-style-position: inside;
+    padding: 4px 16px;
 }
 
 .placeholder-container{
     height: 48px;
 }
+
+.addedSubtask{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    height: 32px;
+}
+
