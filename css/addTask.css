@@ -514,11 +514,7 @@ select:hover,
     outline: none;
 }
 
-.added-subtasks {
-    height: 32px;
-    padding: 4px 16px;
-    justify-content: space-between;
-}
+
 
 .date-input-add-task {
     border: none;

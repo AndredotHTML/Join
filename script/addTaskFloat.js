@@ -41,3 +41,78 @@ function toggleOptions() {
         arrowIcon.src = "../assets/icons/arrow_drop_down.svg"; 
     }
 }
+
+function showSubtaskActions() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskIcons = document.getElementById("subtask-icons");
+
+    subtaskInput.disabled = false;   
+    subtaskIcons.innerHTML = `
+        <img id="subtask-check-icon" src="../assets/icons/check.png" alt="Check" onclick="addSubtaskOverlay()">
+        <img id="subtask-delete-icon" src="../assets/icons/x.png" alt="Delete" onclick="resetSubtaskIcons()">
+    `;
+}
+
+function addSubtaskOverlay() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskList = document.getElementById("added-subtasks");
+
+    if (subtaskInput.value.trim() === "") {
+        return;  
+    }
+    subtaskList.innerHTML += subtaskTemplate(subtaskInput.value);
+    subtaskInput.value = "";  
+    resetSubtaskIcons();  
+}
+
+function subtaskTemplate( subtaskValue){
+    return `<li class="added_subtask">
+             <span class="subtask_text">${subtaskValue}</span>
+            <div class="subtask_actions">
+                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon"  onclick="editSubtask(this)">
+                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtask(this)">
+                <img src="../assets/icons/check.png" alt="Confirm" class="check-icon" onclick="confirmEdit(this)" style="display:none;">
+            </div></li>`
+}
+
+function resetSubtaskIcons() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskIcons = document.getElementById("subtask-icons");
+
+    subtaskInput.disabled = true;  
+    subtaskIcons.innerHTML = `<img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">`;
+    document.getElementById("subtask").value = "";  
+}
+
+function editSubtask(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    let subtaskText = subtaskItem.querySelector('.subtask_text'); 
+    let deleteIcon = subtaskItem.querySelector('.delete-icon');
+    let checkIcon = subtaskItem.querySelector('.check-icon'); 
+    let editIcon = subtaskItem.querySelector('.edit-icon');
+
+    subtaskText.contentEditable = "true";  
+    subtaskText.focus(); 
+    subtaskItem.classList.add('editing');
+    editIcon.style.display='none';
+    deleteIcon.style.display = 'inline';
+    checkIcon.style.display = 'inline'; 
+}
+
+function confirmEdit(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    let subtaskText = subtaskItem.querySelector('.subtask_text');
+    let checkIcon = subtaskItem.querySelector('.check-icon');
+    let editIcon = subtaskItem.querySelector('.edit-icon');
+
+    subtaskText.contentEditable = "false";
+    checkIcon.style.display = 'none';
+    editIcon.style.display='inline';
+    subtaskItem.classList.remove('editing');
+}
+
+function deleteSubtask(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    subtaskItem.remove();
+}
+

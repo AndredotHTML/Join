@@ -374,6 +374,11 @@
     
 }
 
+.subtasks_overlay span{
+    color: #42526e;
+    font-weight: bold;
+    padding-left: 3px;
+}
 
 
 .subtask_item {
@@ -388,6 +393,7 @@
   
 .subtask_item label:hover {
     background-color:  #d2e2ff; 
+    cursor: pointer;
 }
 
 .subtask_item label {

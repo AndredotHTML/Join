@@ -24,8 +24,9 @@
             <div class="header_right">
                 <span>Kanban Project Management Tool</span>
                 <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-                <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                    alt="User Logo">
+                <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                    <div class="icon-container" id="icon-container">G</div>
+                </div>
             </div>
             <div class="profile_menu" id="profile_menu">
                 <ul class="profile_menu_list">
@@ -73,10 +74,56 @@
                 </div>
             </section>
             <section class="main_wrapper">
+                <section class="contact_bar">
+                    <div class="btn_container">
+                        <button onclick="showaddContactOverlay()">
+                            <span>Add new contact</span>
+                            <img src="../assets/icons/person_add.svg" alt="">
+                        </button>
+                    </div>
+                    <div class="contacts_list"> </div>
+                </section>
+                <section class="contact-detail">
+                    <div class="contact-info-wrapper" id="detail">
+                        <div class="contact-header">
+                            <div class="contact-circle-detail orange">AM</div>
+                            <div class="contact-main-info">
+                                <h2 class="contact-name">Anton Mayer</h2>
+                                <div class="contact-actions">
+                                    <button class="edit-btn">
+                                        <img src="../assets/icons/edit.png" alt="Edit">
+                                        Edit
+                                    </button>
+                                    <button class="delete-btn">
+                                        <img src="../assets/icons/delete.png" alt="Delete">
+                                        Delete
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="contact-detail-section">
+                            <h3>Contact Information</h3>
 
+                            <div class="contact-field">
+                                <p class="label">Email</p>
+                                <a href="mailto:antom@gmail.com" class="email-link">antom@gmail.com</a>
+                            </div>
+
+                            <div class="contact-field">
+                                <p class="label">Phone</p>
+                                <p>+49 1111 111 11 1</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </section>
+            <div class="overlay" id="overlay" onclick="closeOverlay(event)"></div>
+            <div class="edit-overlay" id="editOverlay" onclick="closeEditOverlay"></div>
+
         </div>
+        <script src="../script/contacts.js"></script>
+        <script src="../script/contactsTemplates.js"></script>
     </body>
 
 </html>

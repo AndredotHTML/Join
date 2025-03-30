@@ -484,10 +484,6 @@ form > select {
     background: url("../assets/icons/arrow_drop_down.svg") no-repeat center right 16px;
 }
 
-.open {
-    background: url("../assets/icons/arrow_drop_down_close.svg")no-repeat center right 16px;
-}
-
 label > span {
     font-weight: 400;
 }
