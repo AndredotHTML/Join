@@ -1,6 +1,36 @@
+const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
+
+tasks = []
+
 user = []
 
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
+
+async function getAllTasks(path) {
+    let response = await fetch(BASE_URL + path + ".json");
+    return  await response.json()
+}
+
+
+async function pushToTask() {
+    let task = await getAllTasks("/tasks"); 
+    let tasksArray = Object.keys(task);
+
+    for (let index = 0; index < tasksArray.length; index++) {
+        let taskData = task[tasksArray[index]]; 
+        tasks.push({
+            id: tasksArray[index], 
+            category: taskData.category,
+            title: taskData.title,
+            description: taskData.description,
+            dueDate: taskData.dueDate,
+            priority: taskData.priority,
+            status: taskData.status,
+            subtasks: taskData.subtasks,
+            assignedUsers: taskData.assignedUsers
+        });
+    }
+    renderSummaryNumbers();
+}
 
 
 async function getCurrentUser() {
@@ -15,6 +45,7 @@ async function getCurrentUser() {
         console.log("Kein Nutzer gefunden.");
         greetUser()
     }
+    pushToTask()
 }
 
 
@@ -25,6 +56,7 @@ function displayUserData() {
     welcomeMsg.innerHTML += userName;
     generateUserIcon(userName);
 }
+
 
 function generateUserIcon(userName) {
     let iconContainer = document.getElementById('icon-container');
@@ -82,4 +114,50 @@ async function putUserTest(path, data) {
         },
         body: JSON.stringify(data)
     });
+}
+
+
+function renderSummaryNumbers() {
+    renderUrgentTasks("urgent-number");
+    renderInBoardTasks("in-board-number");
+    renderToDoTasks("to-do-number");
+    renderInProgressTasks("in-progress-number");
+    renderFeedbackTasks("feedback-number");
+    renderDoneTasks("done-number");
+}
+
+
+function renderUrgentTasks(id) {
+    let urgentCount = tasks.filter(task => task.priority === "Urgent").length;
+    document.getElementById(id).innerText = urgentCount
+}
+
+
+function renderInBoardTasks(id) {
+    let tasksCount = tasks.length;
+    document.getElementById(id).innerText = tasksCount;
+}
+
+
+function renderToDoTasks(id) {
+    let toDoCount = tasks.filter(task => task.status === "toDo").length;
+    document.getElementById(id).innerText = toDoCount;
+}
+
+
+function renderInProgressTasks(id) {
+    let inProgressCount = tasks.filter(task => task.status === "inProgress").length;
+    document.getElementById(id).innerText = inProgressCount;
+}
+
+
+function renderFeedbackTasks(id) {
+    let feedbackCount = tasks.filter(task => task.status === "awaitingFeedback").length;
+    document.getElementById(id).innerText = feedbackCount;
+}
+
+
+function renderDoneTasks(id) {
+    let doneCount = tasks.filter(task => task.status === "done").length;
+    document.getElementById(id).innerText = doneCount;
 }

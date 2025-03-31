@@ -15,7 +15,7 @@
     <script src="../script/header.js"></script>
 </head>
 
-<body>
+<body onload="getCurrentUser()">
     <header class="zeljko_head">
         <div class="logo">
             <img src="../assets/icons/logo.png" alt="Join Logo">
@@ -23,8 +23,9 @@
         <div class="header_right">
             <span>Kanban Project Management Tool</span>
             <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                alt="User Logo">
+            <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                <div class="icon-container" id="icon-container">G</div>
+            </div>
         </div>
         <div class="profile_menu" id="profile_menu">
             <ul class="profile_menu_list">
