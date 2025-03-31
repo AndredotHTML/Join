@@ -30,10 +30,19 @@ function generateUserIcon() {
 let currentDraggedElement;
 const predefinedColors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF"];
 
+
 async function updateHTML() {
     await pushToUsersArray(); 
+    console.log(users);
     await pushToTask();
     await getCurrentUser();
+    displayToDo();
+    displayInProgress();
+    displayAwaitFeedback();
+    displayDone(); 
+}
+
+function updateView(){
     displayToDo();
     displayInProgress();
     displayAwaitFeedback();
@@ -320,10 +329,7 @@ async function toggleSubtask(taskId, subtaskId) {
             subtask.completed = !subtask.completed;
             
             await updateSubtaskStatus(taskId, subtaskId, subtask.completed);
-            displayToDo();
-            displayInProgress();
-            displayAwaitFeedback();
-            displayDone();
+            updateView();
         }
     }
 }
@@ -341,3 +347,27 @@ async function updateSubtaskStatus(taskId, subtaskId, newStatus) {
         console.error("Firebase update error:", error);
     }
 }
+
+async function deleteTask(taskId) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
+
+    try {
+        await fetch(url, {
+            method : "DELETE"
+        });
+        tasks = tasks.filter(task => task.id !== taskId);
+        updateView();
+        closeOverlay();
+    } catch (error) {
+        console.error("Firebase delete error:", error);
+    }
+}
+
+function showAddTaskOverlay(){
+    let overlay = document.getElementById('overlay');
+    overlay.style.display ='flex';
+    document.body.style.overflow ='hidden';
+    overlay.innerHTML = addTaskOverlay();
+    overlay.classList.add('slide_in');
+}
+

@@ -5,11 +5,12 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Board</title>
-        <link rel="icon" href="../assets/icons/logo.png">
+        <link rel="icon" href="../assets/icons/favicon.png">
         <link rel="stylesheet" href="../css/standart.css">
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/navigation.css">
         <link rel="stylesheet" href="../css/board.css">
+        <link rel="stylesheet" href="../css/addTaskFloat.css">
     </head>
 
     <body onload="updateHTML()">
@@ -33,7 +34,7 @@
             </div>
         </header>
         <div class="content">
-            <div class="overlay" id="overlay"  onclick="closeOverlay(event)"></div>
+            <div class="overlay" id="overlay" onclick="closeOverlay(event)"></div>
             <section class="nav_wrapper">
                 <div class="nav_bar">
                     <nav>
@@ -77,7 +78,7 @@
                         <img src="../assets/icons/search.png" alt="">
                     </div>
                     <div class="add_btn">
-                        <button><span>Add Task</span>
+                        <button onclick=" showAddTaskOverlay()"><span>Add Task</span>
                             <img src="../assets/icons/plus_button_white.png" alt="">
                         </button>
                     </div>
@@ -111,7 +112,7 @@
                     <div class="awaitFeedback">
                         <div class="awaitFeedback_header">
                             <h2>Await Feedback</h2>
-                            <img  src="../assets/icons/plus_button.png" alt="">
+                            <img src="../assets/icons/plus_button.png" alt="">
                         </div>
                         <div class="awaitFeedback_content">
                             <div class="drag_area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
@@ -136,8 +137,10 @@
             </section>
         </div>
     </body>
+    <script src="../script/template.js"></script>
     <script src="../script/signup.js"></script>
     <script src="../script/board.js"></script>
-    <script src="../script/template.js"></script>
+    <script src="../script/addTaskFloat.js"></script>
     <script src="../script/header.js"></script>
+
 </html>

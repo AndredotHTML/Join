@@ -25,21 +25,6 @@ body {
     padding: 0 !important;
 }
 
-
-.add_task_overlay {
-    width: 450px;
-    height: 100vh;
-    background: white;
-    box-shadow: -5px 0 10px rgba(0, 0, 0, 0.2);
-    padding: 30px;
-    overflow-y: auto;
-    position: fixed;
-    top: 0;
-    right: 0;
-    border-radius: 30px 0 0 30px;
-    color: #42526e;
-}
-
 .title-add-task,
 .description-add-task,
 #dateInput-add-task,
@@ -51,15 +36,6 @@ body {
     cursor: pointer;
 }
 
-.addTask_content {
-    max-height: 670px;
-    overflow-y: auto;
-}
-
-.addTask_content::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
 
 label,
 legend {
@@ -123,8 +99,30 @@ select {
     font-size: 19px;
     height: 47px;
 }
-.icon-for-subtssk-work{
+.icon-for-subtask-work{
     gap: 4px ;
+    display:flex ;
+}
+
+.addedSubtask:hover .subtask-hover-icons {
+    display: flex !important;
+}
+.addedSubtask:hover{
+    background-color: #E3EEFF;
+}
+
+.disable-hover:hover .subtask-hover-icons{
+    display: none !important;
+}
+.disable-hover:hover{
+    background-color: #FFFFFF !important;
+}
+
+li[contenteditable="true"]{
+    outline: none;
+}
+li{
+    width: 100%;
 }
 
 .separator{
@@ -149,51 +147,6 @@ select {
 .icon-form:hover{
     background-color: #D9D9D9;
     border-radius: 50%;
-}
-
-.header_x {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 25px;
-    height: 25px;
-}
-
-.header_x:hover {
-    background-color: #d2e2ff;
-    cursor: pointer;
-    border-radius: 50%;
-}
-
-.header_x img {
-    width: 25px;
-    height: 25px;
-}
-
-.header_headline {
-    padding-bottom: 50px;
-    padding-top: 20px;
-}
-
-.slide_in {
-    transform: translateX(100%);
-    opacity: 0;
-    animation: slideRight 0.1s ease-in forwards;
-}
-
-@keyframes slideRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
 }
 
 .button_div {
@@ -753,13 +706,23 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     height: 28px;
 }
 
-.addedSubtask {
+.subtask-value {
     max-height: 32px;
     font-size: 16px;
     padding: 6px 16px;
     list-style-position: inside;
+    padding: 4px 16px;
 }
 
 .placeholder-container{
     height: 48px;
 }
+
+.addedSubtask{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    height: 32px;
+}
+

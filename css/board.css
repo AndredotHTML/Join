@@ -374,10 +374,12 @@
     
 }
 
-.subtasks span {
+.subtasks_overlay span{
+    color: #42526e;
     font-weight: bold;
-    color: #42526e ;
+    padding-left: 3px;
 }
+
 
 .subtask_item {
     margin-top: 10px; 
@@ -391,6 +393,7 @@
   
 .subtask_item label:hover {
     background-color:  #d2e2ff; 
+    cursor: pointer;
 }
 
 .subtask_item label {
@@ -479,224 +482,5 @@
     filter: brightness(0.9);
 }
 
-/* Floating Add Task Style */
-
-input[type="date"]::-webkit-calendar-picker-indicator {
-    background: url("/assets/icons/event.png") no-repeat center;
-    cursor: pointer;
-    display: block;
-    position: sticky !important;
-    margin-left: 330px; 
-    z-index: 10 !important;
-    overflow-x:hidden;
-}
-
- .subtask {
-    padding-top: 20px;
-}
-
-.assigned {
-    margin-top: 40px;
-}
-
-#shell-subtask {
-    display: flex;
-    align-items: center; 
-    gap: 10px; 
-}
-
-#shell-subtask input{
-     border: none;
-     outline: none;
-     width: 100%;
-     font-size: 19px;
-}
-
-#shell-subtask input:hover{
-    cursor: pointer;
-}
 
 
-
-.dropdown {
-    position: relative;
-    width: 100%;
-}
-
-
-.dropdown-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #D1D1D1;
-    cursor: pointer;
-}
-
-
-.dropdown-menu {
-    position: relative; 
-    width: 100%;
-    background: white;
-    display: flex;  
-    flex-direction: column;
-    padding: 10px;
-    z-index: 9999;
-}
-
-
-.dropdown-menu label {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    padding: 20px 10px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.dropdown-menu label:hover {
-    background:#d2e2ff;
-    border-radius: 15px;
-}
-
-.dropdown-menu input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    width: 20px;
-    height: 20px;
-    background-image: url("../assets/icons/unchecked.png");
-    background-size: cover;
-    cursor: pointer;
-    border: none;
-    margin-right: 20px;
-}
-
-.dropdown-menu input[type="checkbox"]:checked {
-    background-image: url("../assets/icons/checked.png");
-}
-
-.dropdown-menu.show {
-    visibility: visible;
-    opacity: 1;
-  }
-
-.selected-users {
-    display: none; 
-}
-
-.selected-users.visible {
-    display: inline; 
-}
-
-#task-message {
-    position: fixed;
-    bottom: -100px;  
-    left: 50%;
-    transform: translateX(-50%);
-    background-color:var(--primaryColor);
-    color: white;
-    padding: 12px 25px;  
-    font-size: 18px;  
-    border-radius: 8px;  
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);  
-    z-index: 9999;
-    visibility: hidden;  
-    opacity: 0; 
-    align-items: center;  
-    justify-content: center;  
-    gap: 15px;  
-    transition: all 0.5s ease-out;
-}
-
-#task-message p {
-    margin: 0;  
-    font-size: 20px;  
-}
-
-#task-message img {
-    width: 30px;  
-    height: 30px; 
-    object-fit: contain; 
-   filter: brightness(0) invert(1);
-}
-
-
-#task-message.show {
-    visibility: visible; 
-    opacity: 1;  
-    bottom: 50%;  
-    animation: slideUpMessage 0.5s ease-out forwards;  
-}
-
-@keyframes slideUpMessage {
-    from {
-        bottom: -100px; 
-        opacity: 0;
-    }
-    to {
-        bottom: 50%; 
-        opacity: 1;
-    }
-}
-
-.user-icon {
-    width: 30px;
-    height: 30px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 50%;
-    color: white;
-    font-weight: bold;
-    margin-right: 10px;
-    text-transform: uppercase;
-}
-
-.user-item {
-    display: flex;
-    align-items: center;
-    padding: 5px;
-}
-
-.user-name {
-    flex-grow: 1;
-}
-
-
-#selected-user-container {
-    display: none;
-    padding-top:15px;
-}
-
-.form-header {
-    height: 320px !important;
-}
-
-.form-header label{
-    padding-top: 20px;
-    margin-bottom: 10px;
-}
-
-.shell-radio-area legend {
-    padding-top: 20px;
-    margin-bottom: 15px;
-}
-
-.category-add-task {
-    display: flex;
-    align-items: center;
-    justify-content: space-between; 
-    width: 100%; 
-    cursor: pointer;
-}
-
-.wrapper-category-select {
-    padding: 10px !important;
-    font-size: 17px !important;
-}
-
-.option-category:hover{
-    background-color: #d2e2ff;
-    border-radius: 10px;
-}

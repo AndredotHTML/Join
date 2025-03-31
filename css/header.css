@@ -35,6 +35,7 @@
     line-height: 1.2;
     overflow: hidden;
     transition: height 75ms ease-in-out, padding 0.3s ease-in-out;
+    z-index: 10;
 }
 
 .profile_menu.open {

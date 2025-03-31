@@ -1,13 +1,13 @@
 @font-face {
     font-family: "Open Sans";
-    src: url("../assets/fonts/oenSans/OpenSansVariableFont.ttf");
+    src: url("../assets/fonts/openSans/OpenSansVariableFont.ttf");
     font-style: normal;
     font-weight: 300 800;
 }
 
 @font-face {
     font-family: "Open Sans";
-    src: url("../assets/fonts/oenSans/OpenSansItalicVariableFont.ttf");
+    src: url("../assets/fonts/openSans/OpenSansItalicVariableFont.ttf");
     font-style: italic;
     font-weight: 300 800;
 }
@@ -15,9 +15,10 @@
 :root {
     --primaryColor: #4589FF;
     --secondaryColor: #FFFFFF;
-    --urgentColor:#FF3D00;
-    --mediumColor:#FFA800;
-    --lowColor:#7AE229;
+    --urgentColor: #FF3D00;
+    --mediumColor: #FFA800;
+    --lowColor: #7AE229;
+    --fontSizeNormal: 16px
 }
 
 * {
@@ -31,6 +32,9 @@
 .d_none {
     display: none !important;
 }
+
 html {
     font-family: "Open Sans", sans-serif;
+    line-height: 1.2;
+    font-size: var(--fontSizeNormal);
 }

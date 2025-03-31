@@ -162,7 +162,6 @@ function creatTask() {
 function getSubtasks() {
     let subtasks = [];
     let subtaskElements = document.querySelectorAll("#added-subtasks li");
-
     for (let i = 0; i < subtaskElements.length; i++) {
         subtasks.push({
             title: subtaskElements[i].innerText, 
@@ -333,7 +332,6 @@ function closeCategoryDD(options, arrowOpenRef) {
     })
 }
 
-
 function clearValidationArea() {
     let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
     for (let index = 0; index < validationAreaRef.length; index++) {
@@ -341,6 +339,32 @@ function clearValidationArea() {
         singValidArea.innerHTML = "";
     }
 }
+
+function editSubtasks(element) {
+    element.contentEditable = "true"
+    element.style.listStyleType = "none"
+    element.focus()
+    let subtaskContainerRef = element.closest(".addedSubtask")
+    let subtaskIconContainer = subtaskContainerRef.querySelector(".icon-for-subtask-work") 
+    let editContainer =  subtaskIconContainer.querySelector(".subtask-edit-icons")
+    subtaskContainerRef.classList.add("disable-hover")
+    subtaskContainerRef.style.borderBottom = "1px solid #005DFF";
+    subtaskContainerRef.style.borderRadius ="0"
+    editContainer.classList.remove("d_none")
+    editContainer.classList.add("d_flex")
+    editContainer.style.flexDirection="row"
+    element.addEventListener("blur", function(){
+        element.contentEditable = false
+        element.style.listStyleType = ""
+        editContainer.classList.remove("d_flex")
+        editContainer.classList.add("d_none")
+        subtaskContainerRef.classList.remove("disable-hover")
+        subtaskContainerRef.style.borderBottom = "";
+        subtaskContainerRef.style.borderRadius =""
+    });
+}
+
+
 
 
 

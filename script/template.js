@@ -1,13 +1,20 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
-            <div>
-                <li class="addedSubtask">
+            <div class="d_flex addedSubtask id="">
+                <li class="subtask-value" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
-                <div class="d_none icon-for-subtssk-work" id="input-subtask-icons" >
-                    <img src="/assets/icons/close_cross.svg" class="icon-form" id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
-                    <div class="separator"></div>
-                    <img src="/assets/icons/check_blue.svg" class="icon-form" alt="" onclick="addSubtask()">
+                <div class="icon-for-subtask-work" id="input-subtask-icons" >
+                    <div class="icons d_none subtask-hover-icons">
+                        <img src="/assets/icons/edit.svg" class="icon-form  edit-subtask-icon" alt="edit Subtask" onclick="editSubtasks(this.closest('.addedSubtask').querySelector('.subtask-value'))">
+                        <div class="separator"></div>
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                    </div>
+                    <div class="icons d_none subtask-edit-icons">
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                        <div class="separator "></div>
+                        <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" onclick="">
+                    </div>
                 </div>
             </div>
     `
@@ -78,25 +85,100 @@ function generateTaskOverlay(element) {
     <div class="title_overlay"><h1>${element.title}</h1></div>
     <div class="description_overlay">${element.description}</div>
     <div class="date_overlay"><span>Due date : </span>
-    <div class="date">${element.dueDate}</div></div>
+    <div >${element.dueDate}</div></div>
     <div class="priority_overlay"><span>Priority: </span>
-    <div class="priority">${element.priority}  ${priority_img}</div></div>
+    <div>${element.priority}  ${priority_img}</div></div>
     <div class="assigned_overlay">
     <table>
     <tr><th>Assigned To:</th> </tr>
     <tr><td>${user_icon_name}</td></tr>
     </table></div>
-    <div class="subtasks"><span>Subtasks:</span>
+    <div class="subtasks_overlay"><span>Subtasks:</span>
         ${subtask}
     </div>
     <div class="delete_edit">
-        <button type="button" class="delete_btn"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
+        <button type="button" class="delete_btn" onclick="deleteTask('${element.id}')"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
         <button type="button" class="edit_btn"><img src="../assets/icons/edit.png" alt="edit icon">Edit</button>
     </div>
     </div>`
 }
 
-
+function addTaskOverlay(){
+    return `  <div  class="add_task_overlay">
+            <div class="addTask_header_overlay">
+            <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
+            <div class="header_headline"><h1> Add Task</h1></div>
+            </div>
+            <div class="addTask_content">
+            <input type="text" class="title_add_task" id="title_add_task" placeholder="Enter a title">
+            <div class="description">
+            <span><strong> Description</strong> (optional)</span>
+            <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
+            </div>
+            <div class="date">
+            <span><strong>Due date </strong></span>
+            <input type="date" id="dateInput-add-task">
+            </div>
+            <div class="priority">
+                <span><strong> Priority </strong></span>
+                <div class="priority_buttons">
+                 <label class="radio_btn add_task_urgent" for="urgent-rad" onclick="radioBtnChecked('Urgent')">
+                        <input type="radio" id="urgent-rad" value="Urgent"> Urgent 
+                         <img class="unchecked_priority" src="../assets/icons/urgent.svg" alt="">
+                        <img class="checked_priority" src="../assets/icons/urgent_white.svg" alt="">
+                 </label>
+                 <label class="radio_btn add_task_medium" for="medium-rad" onclick="radioBtnChecked('Medium')">
+                        <input type="radio" id="medium-rad" value="Medium"> Medium 
+                        <img class="unchecked_priority" src="../assets/icons/medium.svg" alt="">
+                        <img class="checked_priority" src="../assets/icons/medium_white.svg" alt="">
+                 </label>
+                 <label class="radio_btn add_task_low" for="low-rad" onclick="radioBtnChecked('Low')">
+                        <input type="radio" id="low-rad" value="Low"> Low 
+                        <img class="unchecked_priority" src="../assets/icons/low.svg" alt="">
+                         <img class="checked_priority" src="../assets/icons/low_white.svg" alt="">
+                 </label>
+                </div>
+            </div>
+           <div class="assigned">
+           <span><strong>Assigned to </strong>(optional)</span>
+           <div class="select_contact">
+                <span id="selectContactText">Select contact to assign</span>
+                <img src="/assets/icons/arrow_drop_down.svg" alt="Arrow" id="arrowIcon">
+            </div>
+            <div class="contact_dropdown" id="contactDropdown">
+                <ul id="contactList"></ul>
+            </div>
+           </div> 
+           <div class="category">
+            <span><strong>Category</strong></span>
+            <div class="cat" onclick="toggleOptions()">
+                <span id="category_add_task">Select category</span>
+                <img src="/assets/icons/arrow_drop_down.svg" alt="Arrow" id="arrowIconCategory">
+            </div>
+                <div id="options_container" class="options_container" style="display: none;">
+                <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>
+                <div class="option_category" onclick="selectCategory('User Story')">User Story</div>
+            </div>
+            </div>
+            <div class="subtasks">
+                    <span><strong>Subtasks</strong>(optional)</span>
+            <div class="subtask_area">
+                    <input type="text" id="subtask" placeholder="Add new subtask" disabled onclick="showWarningMessage()">
+            <div id="subtask-icons">
+                    <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
+            </div>
+            </div>
+                    <ul id="added-subtasks"></ul>
+            </div>
+            </div>
+                <div class="button_div">
+                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTask()">
+                    <div class="btn_title">Create Task </div>
+                    <img src="../assets/icons/check.svg" alt="">
+                </button>
+            </div> 
+   </div> `
+}
 
 
 
