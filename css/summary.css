@@ -26,6 +26,10 @@
     height: 442px;
 }
 
+#signup_button_activate {
+    pointer-events: none;
+}
+
 .urgent-tasks {
     display: flex;
     justify-content: center;

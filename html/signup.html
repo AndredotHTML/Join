@@ -54,12 +54,12 @@
                         </div>
 
                         <div class="checkbox_container">
-                            <input type="checkbox" required>
+                            <input id="signup_checkbox" onchange="toggleSignupButton('signup_button_activate')" type="checkbox" required>
                             <p>I accept the <a class="nav_link" href="">Privacy policy</a></p>
                         </div>
 
                         <div id="signup_button">
-                            <button type="submit" onclick="validateForm()">Sign up</button>
+                            <button id="signup_button_activate" disabled type="submit" onclick="validateForm()">Sign up</button>
                         </div>
                     </form>
                 </div>
