@@ -163,7 +163,7 @@ function addTaskOverlay(){
             <div class="subtasks">
                     <span><strong>Subtasks</strong>(optional)</span>
             <div class="subtask_area">
-                    <input type="text" id="subtask" placeholder="Add new subtask" disabled onclick="showWarningMessage()">
+                <input type="text" id="subtask" placeholder="Add new subtask" disabled>
             <div id="subtask-icons">
                     <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
             </div>
