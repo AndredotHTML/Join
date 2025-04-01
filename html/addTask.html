@@ -1,205 +1,212 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Add Task</title>
-        <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon">
-        <link rel="stylesheet" href="../css/standart.css">
-        <link rel="stylesheet" href="../css/header.css">
-        <link rel="stylesheet" href="../css/navigation.css">
-        <link rel="stylesheet" href="../css/addTask.css">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Task</title>
+    <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="../css/standart.css">
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/navigation.css">
+    <link rel="stylesheet" href="../css/addTask.css">
 
 
-        <script src="../script/header.js"></script>
-    </head>
+    <script src="../script/header.js"></script>
+</head>
 
-    <body>
-        <header class="zeljko_head">
-            <div class="logo">
-                <img src="../assets/icons/logo.png" alt="Join Logo">
-            </div>
-            <div class="header_right">
-                <span>Kanban Project Management Tool</span>
-                <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-                <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                    alt="User Logo">
-            </div>
-            <div class="profile_menu" id="profile_menu">
-                <ul class="profile_menu_list">
-                    <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
-                    <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
-                    <li class="profile_menu_item"><a href="login.html">Log out</a></li>
-                </ul>
-            </div>
-        </header>
-        <div class="content-wrapper">
-            <section class="add-task-content">
-                <section class="nav_wrapper">
-                    <div class="nav_bar">
-                        <nav>
-                            <ul>
-                                <li>
-                                    <a href="summary.html">
-                                        <img src="../assets/icons/summary_icon.png" alt="Join Logo">
-                                        <span>Summary</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="active" href="addTask.html">
-                                        <img src="../assets/icons/add_task_icon.png" alt="Join Logo">
-                                        <span>Add Task</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="board.html">
-                                        <img src="../assets/icons/board_icon.png" alt="Join Logo">
-                                        <span>Board</span>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="contacts.html">
-                                        <img src="../assets/icons/contacts_icon.png" alt="Join Logo">
-                                        <span>Contacts</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="legal_stuff">
-                        <a href="privacyPolicy.html"><span>Privacy Policy</span></a>
-                        <a href="legalNotice.html"><span>Legal Notice</span></a>
-                    </div>
-                </section>
+<body>
+    <header class="zeljko_head">
+        <div class="logo">
+            <img src="../assets/icons/logo.png" alt="Join Logo">
+        </div>
+        <div class="header_right">
+            <span>Kanban Project Management Tool</span>
+            <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
+            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
+                alt="User Logo">
+        </div>
+        <div class="profile_menu" id="profile_menu">
+            <ul class="profile_menu_list">
+                <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
+                <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
+                <li class="profile_menu_item"><a href="login.html">Log out</a></li>
+            </ul>
+        </div>
+    </header>
+    <div class="content-wrapper">
+        <section class="add-task-content">
+            <section class="nav_wrapper">
+                <div class="nav_bar">
+                    <nav>
+                        <ul>
+                            <li>
+                                <a href="summary.html">
+                                    <img src="../assets/icons/summary_icon.png" alt="Join Logo">
+                                    <span>Summary</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a class="active" href="addTask.html">
+                                    <img src="../assets/icons/add_task_icon.png" alt="Join Logo">
+                                    <span>Add Task</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="board.html">
+                                    <img src="../assets/icons/board_icon.png" alt="Join Logo">
+                                    <span>Board</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="contacts.html">
+                                    <img src="../assets/icons/contacts_icon.png" alt="Join Logo">
+                                    <span>Contacts</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <div class="legal_stuff">
+                    <a href="privacyPolicy.html"><span>Privacy Policy</span></a>
+                    <a href="legalNotice.html"><span>Legal Notice</span></a>
+                </div>
+            </section>
 
-                <div class="add-task-main">
-                    <div class="form-scroll-container">
-                        <form action="" id="form-add-task" method="POST">
-                            <div class="form-header">
-                                <div class="title-wrapper">
-                                    <input type="text" id="title-add-task" class="title-add-task"
-                                        placeholder="Enter a title">
-                                    <div class="validation-add-task-form" id="title-validation">
-                                    </div>
-                                </div>
-                                <div class="description-wrapper">
-                                    <label for="description-add-task">Description <span>(optional)</span>
-                                    </label>
-                                    <textarea name="description-add-task" class="custom-resize description-add-task"
-                                        id="description-add-task" placeholder="Enter a Description">
-                            </textarea>
-                                    <div class="validation-add-task-form">
-                                    </div>
-                                </div>
-                                <div class="date-wrapper">
-                                    <label for="date-input-add-task">Due date
-                                    </label>
-                                    <input type="date" name="date-input-add-task" id="date-input-add-task"
-                                        class="date-input-add-task">
-                                    <div class="validation-add-task-form" id="date-validation">
-                                    </div>
+            <div class="add-task-main">
+                <div class="form-scroll-container">
+                    <form action="" id="form-add-task" method="POST">
+                        <div class="form-header">
+                            <div class="title-wrapper">
+                                <input type="text" id="title-add-task" class="title-add-task"
+                                    placeholder="Enter a title" onfocus="resReqOnInp(this)">
+                                <div class="validation-add-task-form" id="title-validation">
                                 </div>
                             </div>
-                            <div class="shell-radio-area">
-                                <legend>Priority</legend>
-                                <div class="shell-radio-btn">
-                                    <label class="radio-btn btn add-task-urgent" id="add-task-urgent" for="urgent-rad">
-                                        <input type="radio" name="priority" id="urgent-rad" value="urgent"
-                                            onclick="radioBtnChecked('urgent')">
-                                        Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
-                                        <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
-                                    </label>
-                                    <label class="radio-btn btn add-task-medium" id="add-task-medium" for="medium-rad">
-                                        <input type="radio" name="priority" id="medium-rad" value="medium"
-                                            onclick="radioBtnChecked('medium')">
-                                        Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
-                                        <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
-                                    </label>
-                                    <label class="radio-btn btn add-task-low" id="add-task-low" for="low-rad">
-                                        <input type="radio" name="priority" id="low-rad" value="low"
-                                            onclick="radioBtnChecked('low')">
-                                        Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
-                                        <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="wrapper-assigned-to">
-                                <label for="assigned-to-input">
-                                    Assigned to <span>(optional)</span>
+                            <div class="description-wrapper">
+                                <label for="description-add-task">Description <span>(optional)</span>
                                 </label>
-                                <div id="assigned-to-container" class="assigned-to-container">
-                                    <div class="d_flex wrapper-select">
-                                        <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
-                                            placeholder="Select contacts to assign">
-                                        <div class="drop-down-arrow-open icon-form" id="arrow-open-assigned"></div>
-                                    </div>
-                                    <div class="assigned-to-scroll" id="assigned-to-display">
-                                    </div>
+                                <textarea name="description-add-task" class="custom-resize description-add-task"
+                                    id="description-add-task" placeholder="Enter a Description">
+                                </textarea>
+                                <img src="../assets/icons/Recurso.svg" alt="Resize" class="resize">
+                                <div class="validation-add-task-form">
                                 </div>
                             </div>
-                            <div class="wrapper-category">
-                                <label for="category-add-task">
-                                    Category
+                            <div class="date-wrapper">
+                                <label for="date-input-add-task">Due date
                                 </label>
-                                <div class="wrapper-select d_flex" id="select-category">
-                                    <div name="category-add-task" id="category-add-task" class="category-add-task">
-                                        Select task category
-                                    </div>
-                                    <div class="drop-down-arrow-open icon-form" id="arrow-open-category"></div>
+                                <input type="date" name="date-input-add-task" id="date-input-add-task"
+                                    class="date-input-add-task" onfocus="resReqOnInp(this)">
+                                <div class="validation-add-task-form" id="date-validation">
                                 </div>
-                                <div class="option-category d_none">Technical Task</div>
-                                <div class="option-category d_none">User Story</div>
                             </div>
-                            <div class="wrapper-subtasks">
-                                <label for="subtask">Subtasks <span>(optional)</span></label>
-                                <div class="subtask-area" id="subtask-area">
-                                    <input type="text" id="subtask" class="subtask" placeholder="Add new subtask"
-                                        onclick="stopPropagation(event)">
-                                    <div class="d_flex">
-                                        <div class="icon-form" id="working-icons-opener">
-                                            <img src="/assets/icons/add.png" alt="" onclick="changeSubtaskIcons()">
-                                        </div>
-                                        <div class="d_none icon-for-subtssk-work" id="input-subtask-icons">
-                                            <img src="/assets/icons/close_cross.svg" class="icon-form"
-                                                id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
-                                            <div class="separator"></div>
-                                            <img src="/assets/icons/check_blue.svg" class="icon-form" alt=""
-                                                onclick="addSubtask()">
-                                        </div>
-                                    </div>
-                                </div>
-                                <ul class="added-subtasks" id="added-subtasks">
-                                </ul>
-                            </div>
-                            <!-- <div class="placeholder-container">
-                        </div> -->
-                        </form>
-                    </div>
-                    <div>
-                        <div class="add-task-btns">
-                            <button class="btn clear-form-btn" onclick="clearForm()">
-                                <div class="btn-title">Clear</div>
-                                <div class="btn-icon-shell">
-                                    <img src="../assets/icons/clear.svg" alt="">
-                                </div>
-                            </button>
-                            <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task"
-                                onclick="" type="submit">
-                                <div class="btn-title">Create Task </div>
-                                <div class="btn-icon-shell">
-                                    <img src="../assets/icons/check.svg" alt="">
-                                </div>
-                            </button>
                         </div>
+                        <div class="shell-radio-area">
+                            <legend>Priority</legend>
+                            <div class="shell-radio-btn">
+                                <label class="radio-btn btn add-task-urgent" id="add-task-urgent" for="urgent-rad">
+                                    <input type="radio" name="priority" id="urgent-rad" value="urgent"
+                                        onclick="radioBtnChecked('urgent')">
+                                    Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
+                                    <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
+                                </label>
+                                <label class="radio-btn btn add-task-medium" id="add-task-medium" for="medium-rad">
+                                    <input type="radio" name="priority" id="medium-rad" value="medium"
+                                        onclick="radioBtnChecked('medium')">
+                                    Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
+                                    <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
+                                </label>
+                                <label class="radio-btn btn add-task-low" id="add-task-low" for="low-rad">
+                                    <input type="radio" name="priority" id="low-rad" value="low"
+                                        onclick="radioBtnChecked('low')">
+                                    Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
+                                    <img class="checked-priority" src="../assets/icons/low_white.svg" alt="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="wrapper-assigned-to">
+                            <label for="assigned-to-input">
+                                Assigned to <span>(optional)</span>
+                            </label>
+                            <div id="assigned-to-container" class="assigned-to-container">
+                                <div class="d_flex wrapper-select">
+                                    <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
+                                        placeholder="Select contacts to assign">
+                                    <div class="icon-form" id="arrow-open-assigned">
+                                        <img src="../assets/icons/arrow_drop_down.svg" alt="">
+                                        <img class="d_none" src="../assets/icons/arrow_drop_down_close.svg" alt="">
+                                    </div>
+                                </div>
+                                <div class="assigned-to-scroll" id="assigned-to-display">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="wrapper-category">
+                            <label for="category-add-task">
+                                Category
+                            </label>
+                            <div class="wrapper-select d_flex" id="select-category">
+                                <div name="category-add-task" id="category-add-task" class="category-add-task">
+                                    Select task category
+                                </div>
+                                <div class="icon-form" id="arrow-open-category">
+                                    <img src="../assets/icons/arrow_drop_down.svg" alt="">
+                                    <img class="d_none" src="../assets/icons/arrow_drop_down_close.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="option-category d_none">Technical Task</div>
+                            <div class="option-category d_none">User Story</div>
+                        </div>
+                        <div class="wrapper-subtasks">
+                            <label for="subtask">Subtasks <span>(optional)</span></label>
+                            <div class="subtask-area" id="subtask-area">
+                                <input type="text" id="subtask" class="subtask" placeholder="Add new subtask"
+                                    onclick="stopPropagation(event)">
+                                <div class="d_flex">
+                                    <div class="icon-form" id="working-icons-opener">
+                                        <img src="/assets/icons/add.png" alt="" onclick="changeSubtaskIcons()">
+                                    </div>
+                                    <div class="d_none icons-subtask" id="input-subtask-icons">
+                                        <img src="/assets/icons/close_cross.svg" class="icon-form"
+                                            id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
+                                        <div class="separator"></div>
+                                        <img src="/assets/icons/check_blue.svg" class="icon-form" alt=""
+                                            onclick="addSubtask()">
+                                    </div>
+                                </div>
+                            </div>
+                            <ul class="added-subtasks" id="added-subtasks">
+                            </ul>
+                        </div>
+                        <!-- <div class="placeholder-container">
+                        </div> -->
+                    </form>
+                </div>
+                <div>
+                    <div class="add-task-btns">
+                        <button class="btn clear-form-btn" onclick="clearForm()">
+                            <div class="btn-title">Clear</div>
+                            <div class="btn-icon-shell">
+                                <img src="../assets/icons/clear.svg" alt="">
+                            </div>
+                        </button>
+                        <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick=""
+                            type="submit">
+                            <div class="btn-title">Create Task </div>
+                            <div class="btn-icon-shell">
+                                <img src="../assets/icons/check.svg" alt="">
+                            </div>
+                        </button>
                     </div>
                 </div>
+            </div>
 
-            </section>
-        </div>
+        </section>
+    </div>
 
-        <script src="/script/template.js"></script>
-        <script src="/script/addTask.js"></script>
-    </body>
+    <script src="/script/template.js"></script>
+    <script src="/script/addTask.js"></script>
+</body>
 
 </html>

@@ -5,15 +5,15 @@ function subtaskTemplat(inputSubtaskVal) {
                     ${inputSubtaskVal} 
                 </li>
                 <div class="icon-for-subtask-work" id="input-subtask-icons" >
-                    <div class="icons d_none subtask-hover-icons">
+                    <div class="icons-subtask d_none subtask-hover-icons">
                         <img src="/assets/icons/edit.svg" class="icon-form  edit-subtask-icon" alt="edit Subtask" onclick="editSubtasks(this.closest('.addedSubtask').querySelector('.subtask-value'))">
                         <div class="separator"></div>
-                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="deleteSubtask(this.closest('.addedSubtask'))">
                     </div>
-                    <div class="icons d_none subtask-edit-icons">
-                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="">
+                    <div class="icons-subtask d_none subtask-edit-icons">
+                        <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onmousedown="deleteSubtask(this.closest('.addedSubtask'))">
                         <div class="separator "></div>
-                        <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" onclick="">
+                        <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" >
                     </div>
                 </div>
             </div>
@@ -37,6 +37,21 @@ function templateAssignedTo(userName,isChecked) {
         </div>    
     `
 }
+
+function tempTaskToBoardOverlay() {
+    return`<div id="task-to-board-overlay" class="d_flex">
+                <div id="task-to-board-animation" class="d_flex">
+                    <div>
+                        Task added to board
+                    </div>
+                    <div>
+                        <img src="/assets/icons/added_to_board.svg" alt="Board Icon">
+                    </div>
+                </div>
+            </div>
+        `
+}
+
 
 function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);

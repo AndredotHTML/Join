@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
-function changeSubtaskIcons(){
+function changeSubtaskIcons() {
     let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
     let displaySubtaskIconRef = document.getElementById("working-icons-opener")
     creatSubtaskAreaRef.classList.toggle("d_flex");
@@ -21,31 +21,9 @@ function changeSubtaskIcons(){
 
 function clearInputSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
-        inputSubtaskRef.value = ""
-        changeSubtaskIcons()
+    inputSubtaskRef.value = ""
+    changeSubtaskIcons()
 }
-
-
-
-// function displayIconToclear() {
-//     let subtaskInput = document.getElementById("subtask")
-//     let subtaskArea = document.getElementById("subtask-area");
-//     let iconRef = document.getElementById("subtask_input_clear");
-//     subtaskArea.addEventListener("focusin", function() {
-//         iconRef.classList.remove("d_none");
-//     });
-//     if (subtaskInput.value.trim() === "")
-//     subtaskArea.addEventListener("focusout", function() {
-//         iconRef.classList.add("d_none");
-//     });
-// }
-
-// function clearSubtaskInput() {
-//     let subtaskInput = document.getElementById("subtask");
-//     console.log("subtaskInput.value");
-//     subtaskInput.value = ""
-//     console.log("subtaskInput.value");
-// }
 
 function stopPropagation(event) {
     event.stopPropagation()
@@ -61,19 +39,30 @@ form.addEventListener("submit", function (event) {
     clearValidationArea()
     let errMsg = "This field is required"
     if (inputToValidateTitle.value === "") {
-        requerdTitleRef.innerHTML = errMsg;
-        requerdTitleRef.style.color = 'red'
-        valide = false
+        errorMsg(requerdTitleRef, inputToValidateTitle, errMsg)
     }
     if (inputToValidateDate.value === "") {
-        requerdDateRef.innerHTML = errMsg;
-        requerdDateRef.style.color = 'red'
-        valide = false
+        errorMsg(requerdDateRef, inputToValidateDate, errMsg)
     }
     if (valide === true) {
         creatTask()
     }
 })
+
+function errorMsg(requerdRef, inputToValidate, errMsg) {
+    requerdRef.innerHTML = errMsg;
+    requerdRef.style.color = "#FF8190"
+    inputToValidate.style.borderBottom = "1px solid #FF8190";
+    valide = false
+}
+
+function resReqOnInp(element) {
+    let wrapperRef = element.closest(`[class$="-wrapper"]`)
+    let validAreaRef = wrapperRef.querySelector(".validation-add-task-form")
+    validAreaRef.innerHTML = "";
+    element.style.borderBottom = "";
+}
+
 
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
@@ -131,6 +120,7 @@ function creatTask() {
         subtasks: subtasks
     };
     postTask("/tasks", data)
+    transferToBoard()
 }
 
 function getSubtasks() {
@@ -138,7 +128,7 @@ function getSubtasks() {
     let subtaskElements = document.querySelectorAll("#added-subtasks li");
     for (let i = 0; i < subtaskElements.length; i++) {
         subtasks.push({
-            title: subtaskElements[i].innerText, 
+            title: subtaskElements[i].innerText,
             completed: false
         });
     }
@@ -204,7 +194,7 @@ function searchAssigned() {
     let inputRef = document.getElementById("assigned-to-input")
     let inputVal = inputRef.value.toLowerCase()
     let searchingName = userArray.filter(function (nameToSearch) {
-        return nameToSearch.name.toLowerCase().includes(inputVal) 
+        return nameToSearch.name.toLowerCase().includes(inputVal)
     }
     )
     return searchingName
@@ -218,7 +208,7 @@ function displayUser() {
     userArray.forEach(contact => {
         let userName = contact.name;
         let isChecked = selectedUser.includes(userName)
-        allContacts += templateAssignedTo(userName,isChecked)
+        allContacts += templateAssignedTo(userName, isChecked)
     });
     assignedToAreaRef.innerHTML = allContacts
 }
@@ -237,7 +227,6 @@ function openDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-
     assignedRef.classList.remove("d_none");
     assignedContactRef.forEach(contact => {
         contact.classList.remove("bg-white")
@@ -246,9 +235,11 @@ function openDropdown() {
         let inputTemplate = contact.querySelector(".input-assigned");
         nameTemplate.style.display = "flex";
         inputTemplate.style.display = "flex";
-
     });
-    arrowOpenRef.classList.toggle("drop-down-arrow-close")
+    let imgRef = arrowOpenRef.querySelectorAll("img")
+    for (const img of imgRef) {
+        img.classList.toggle("d_none")
+    }
     assignedRef.style.display = "flex";
     assignedRef.style.flexDirection = "column"
 }
@@ -261,11 +252,10 @@ function closeDropdown() {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let nameTemplate = contact.querySelector(".assigned-template-name");
         let inputTemplate = contact.querySelector(".input-assigned");
-        if (checkbox && checkbox.checked) {
+        if (checkbox.checked) {
             contact.classList.add("bg-white")
             nameTemplate.style.display = "none";
             inputTemplate.style.display = "none";
-
         } else {
             contact.style.display = "none";
         }
@@ -273,7 +263,10 @@ function closeDropdown() {
     assignedRef.style.display = "flex";
     assignedRef.style.gap = "8px";
     assignedRef.style.flexDirection = "row"
-    arrowOpenRef.classList.toggle("drop-down-arrow-close")
+    let imgRef = arrowOpenRef.querySelectorAll("img")
+    for (const img of imgRef) {
+        img.classList.toggle("d_none")
+    }
 }
 
 function dropDownForCategory() {
@@ -296,14 +289,20 @@ function toggleCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
         option.classList.toggle("d_none")
     });
-    arrowOpenRef.classList.toggle("drop-down-arrow-close")
+    let imgRef = arrowOpenRef.querySelectorAll("img")
+    for (const img of imgRef) {
+        img.classList.toggle("d_none")
+    }
 }
 
 function closeCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
         option.classList.add("d_none")
-        arrowOpenRef.classList.remove("drop-down-arrow-close")
     })
+    let imgRef = arrowOpenRef.querySelectorAll("img")
+    for (const img of imgRef) {
+        img.classList.toggle("d_none")
+    }
 }
 
 function clearValidationArea() {
@@ -319,26 +318,35 @@ function editSubtasks(element) {
     element.style.listStyleType = "none"
     element.focus()
     let subtaskContainerRef = element.closest(".addedSubtask")
-    let subtaskIconContainer = subtaskContainerRef.querySelector(".icon-for-subtask-work") 
-    let editContainer =  subtaskIconContainer.querySelector(".subtask-edit-icons")
+    let subtaskIconContainer = subtaskContainerRef.querySelector(".icon-for-subtask-work")
+    let editContainer = subtaskIconContainer.querySelector(".subtask-edit-icons")
     subtaskContainerRef.classList.add("disable-hover")
     subtaskContainerRef.style.borderBottom = "1px solid #005DFF";
-    subtaskContainerRef.style.borderRadius ="0"
+    subtaskContainerRef.style.borderRadius = "0"
     editContainer.classList.remove("d_none")
     editContainer.classList.add("d_flex")
-    editContainer.style.flexDirection="row"
-    element.addEventListener("blur", function(){
+    editContainer.style.flexDirection = "row"
+    element.addEventListener("blur", function () {
         element.contentEditable = false
         element.style.listStyleType = ""
         editContainer.classList.remove("d_flex")
         editContainer.classList.add("d_none")
         subtaskContainerRef.classList.remove("disable-hover")
         subtaskContainerRef.style.borderBottom = "";
-        subtaskContainerRef.style.borderRadius =""
+        subtaskContainerRef.style.borderRadius = ""
     });
 }
 
+function deleteSubtask(element) {
+    element.remove();
+}
 
+function transferToBoard() {
+    document.body.innerHTML += tempTaskToBoardOverlay()
+    setTimeout(() => {
+        window.location.href = "/html/board.html";
+    },800);
+}
 
 
 
