@@ -234,30 +234,81 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
 }
 
 .contact_dropdown {
-    display: none;  
-    background-color: #f4f4f4;
-    padding: 10px;
-    position: absolute;
+    display: none; 
+    flex-direction: column;
     width: 100%;
     box-sizing: border-box;
-}
-.contact_dropdown ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
+    max-height: 200px;
+    overflow-y: auto;
 }
 
-.contact_dropdown li {
-    padding: 10px;
-    cursor: pointer;
+.user-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px;  
+    cursor: pointer;  
+    transition: background-color 0.3s ease;  
 }
 
-.contact_dropdown li:hover {
-    background-color: #f0f0f0;
+.user-item:hover {
+    background-color:#d2e2ff; 
+    border-radius: 8px;
 }
 
-.contact_dropdown.show {
+.user-icon {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 30px;
+    color: white !important;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.user-name {
+    flex-grow: 1;
+}
+
+.contact_dropdown input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: relative;
+}
+
+.contact_dropdown input[type="checkbox"] + .checkbox-custom {
+    width: 22px;
+    height: 18px;
+    background-image: url("../assets/icons/unchecked.png");
     display: block;
+    content: "";
+    float: left;
+    margin-right: 15px;
+    position: relative;
+    background-position: center;
+    cursor: pointer;
+    transition: background-image 0.3s ease;
+}
+
+.contact_dropdown input[type="checkbox"]:checked + .checkbox-custom {
+    background-image: url("../assets/icons/checked.png");
+}
+
+.contact_dropdown .user-item {
+    display: flex;
+    align-items: center;
+    position: relative;
+    padding: 10px;  
+    cursor: pointer;  
+    transition: background-color 0.3s ease;  
+}
+
+#selected_user_container {
+    padding-top: 10px;
+    padding-left: 10px;
 }
 
 .category {

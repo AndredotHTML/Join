@@ -1,3 +1,5 @@
+let assignedUsers =[];
+
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio_btn");
     labelList.forEach(radioBtn => {
@@ -116,3 +118,85 @@ function deleteSubtask(icon) {
     subtaskItem.remove();
 }
 
+function displayUsers(){
+    let contactMenu = document.getElementById('contactDropdown');
+    let selectedUsers = JSON.parse(localStorage.getItem('selectedUsers')) || [];
+    contactMenu.innerHTML = '';
+
+    for (let index = 0; index < users.length; index++) {
+       let element = users[index];
+       let isChecked = selectedUsers.includes(element.userData.name); 
+       contactMenu.innerHTML += generateSingleUser(element,isChecked); 
+    }
+}
+
+function generateSingleUser(element,isChecked) {
+    let name = element.userData.name;
+    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    let color = getColorForUser(name); 
+
+    return `
+        <label for="user-${element.id}" class="user-item">
+            <span class="user-icon" style="background-color: ${color};">${initials}</span>
+            <span class="user-name">${name}</span>
+            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''}  onclick="updateSelectedUsers()">
+             <span class="checkbox-custom"></span>
+        </label>
+    `;
+}
+
+function generateUserIcon(user) {
+    let name = user.userData.name;
+    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    let color = getColorForUser(name); 
+
+    return `
+        <span class="user-icon" style="background-color: ${color};">${initials}</span>
+    `;
+}
+
+function toggleUserDropdown() {
+    let contactMenu = document.getElementById("contactDropdown");
+    let arrowIcon = document.getElementById("arrowIcon");
+    let selectedUsersContainer = document.getElementById("selected_user_container");
+
+    toggleContactMenu(contactMenu, arrowIcon);
+    toggleSelectedUsersContainer(selectedUsersContainer);
+}
+
+function toggleContactMenu(contactMenu, arrowIcon) {
+    if (contactMenu.style.display === "flex") {
+        contactMenu.style.display = "none";
+        arrowIcon.src = "/assets/icons/arrow_drop_down.svg"; 
+    } else {
+        contactMenu.style.display = "flex";
+        displayUsers(); 
+        arrowIcon.src = "/assets/icons/arrow_drop_down_close.svg";
+    }
+}
+
+function toggleSelectedUsersContainer(selectedUsersContainer) {
+    if (selectedUsersContainer.innerHTML.trim() === "") {
+        selectedUsersContainer.style.display = "none"; 
+    } else {
+        selectedUsersContainer.style.display = "inline-flex";
+    }
+}
+
+function updateSelectedUsers() {
+    assignedUsers = [];
+
+    let selectedUsersContainer = document.getElementById("selected_user_container");
+    selectedUsersContainer.innerHTML = ''; 
+
+    for (let i = 0; i < users.length; i++) {
+        let userCheckbox = document.getElementById(`user-${users[i].id}`);
+        if (userCheckbox && userCheckbox.checked) {
+            assignedUsers.push(users[i].userData.name);
+
+            let userIcon = generateUserIcon(users[i]);
+            selectedUsersContainer.innerHTML += userIcon;
+        }
+    }
+    localStorage.setItem('selectedUsers', JSON.stringify(assignedUsers));
+}
