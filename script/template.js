@@ -156,13 +156,12 @@ function addTaskOverlay(){
             </div>
            <div class="assigned">
            <span><strong>Assigned to </strong>(optional)</span>
-           <div class="select_contact">
+           <div class="select_contact" onclick="toggleUserDropdown()">
                 <span id="selectContactText">Select contact to assign</span>
                 <img src="/assets/icons/arrow_drop_down.svg" alt="Arrow" id="arrowIcon">
             </div>
-            <div class="contact_dropdown" id="contactDropdown">
-                <ul id="contactList"></ul>
-            </div>
+            <div id="selected_user_container"></div>
+            <div class="contact_dropdown" id="contactDropdown"></div>
            </div> 
            <div class="category">
             <span><strong>Category</strong></span>
@@ -178,7 +177,7 @@ function addTaskOverlay(){
             <div class="subtasks">
                     <span><strong>Subtasks</strong>(optional)</span>
             <div class="subtask_area">
-                    <input type="text" id="subtask" placeholder="Add new subtask" disabled onclick="showWarningMessage()">
+                <input type="text" id="subtask" placeholder="Add new subtask" disabled>
             <div id="subtask-icons">
                     <img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">
             </div>

@@ -38,6 +38,18 @@ function checkPasswords() {
 }
 
 
+function toggleSignupButton(id) {
+    let checkbox = document.getElementById("signup_checkbox")
+    if (checkbox.checked) {
+        document.getElementById(id).disabled = false;
+        document.getElementById(id).style.pointerEvents = "auto";
+      } else {
+        document.getElementById(id).disabled = true;
+        document.getElementById(id).style.pointerEvents = "none";
+      }
+}
+
+
 /**
  * checks if the inputs in the form are valid and displays error messages if they are not 
  */
