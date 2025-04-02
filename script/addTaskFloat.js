@@ -200,3 +200,124 @@ function updateSelectedUsers() {
     }
     localStorage.setItem('selectedUsers', JSON.stringify(assignedUsers));
 }
+
+async function createTask() {
+    await pushToUsersArray(); 
+    let title = document.getElementById("title_add_task").value;
+    let description = document.getElementById("description_add_task").value;
+    let dueDate = document.getElementById("dateInput-add-task").value;
+    let priority = getPriority();
+    let category = document.getElementById("category_add_task").innerText;
+    let subtasks = getNewSubtasks();
+
+    if (!validateForm(title, dueDate, priority, category)) {
+        return; 
+    }
+
+    const task = {
+        title: title,
+        description: description,
+        dueDate: dueDate,
+        priority: priority,
+        assignedUsers: assignedUsers, 
+        category: category,
+        subtasks: subtasks,
+        status: "toDo"
+    };
+
+    postTask("/tasks", task);
+    updateToDo(task);
+    showTaskMessage();
+    resetFormFields(); 
+    resetSubtasks();
+}
+
+function validateForm(title, dueDate, priority, category) {
+    if (!title) {
+        showErrorMessage('Please enter a title.', 'title-error');
+        return false;
+    }
+    if (!dueDate) {
+        showErrorMessage('Please select a date.', 'date-error');
+        return false;
+    }
+    if (!priority) {
+        showErrorMessage('Please select a priority.', 'priority-error');
+        return false;
+    }
+    if (!category || category === "Select category") {
+        showErrorMessage('Please select a category.', 'category-error');
+        return false;
+    }
+    return true; 
+}
+
+function updateToDo(task){
+    let toDo = document.getElementById('toDo');
+    toDo.innerHTML +=generateTask(task);
+}
+
+function getPriority() {
+    if (document.getElementById("urgent-rad").checked) return "Urgent";
+    if (document.getElementById("medium-rad").checked) return "Medium";
+    if (document.getElementById("low-rad").checked) return "Low";
+    return null;
+}
+
+function getNewSubtasks() {
+    let subtasks = [];
+    let subtaskElements = document.querySelectorAll("#added-subtasks li");
+
+    for (let i = 0; i < subtaskElements.length; i++) {
+        subtasks.push({
+            title: subtaskElements[i].innerHTML, 
+            completed: false
+        });
+    }
+    return subtasks;
+}
+
+function showTaskMessage() {
+    let messageDiv = document.getElementById("task-message");
+    messageDiv.style.display = "flex";  
+    messageDiv.classList.add("show");  
+
+    setTimeout(() => {
+        messageDiv.classList.remove("show");
+        messageDiv.style.display = "none";  
+    }, 3000); 
+}
+
+function showErrorMessage(message, errorId) {
+    let errorContainer = document.getElementById(errorId);
+    errorContainer.innerText = message;
+    errorContainer.style.display = 'block';
+}
+
+function resetFormFields() {
+    document.getElementById("title_add_task").value;
+    document.getElementById("description_add_task").value;
+    document.getElementById("dateInput-add-task").value;
+    document.getElementById("category_add_task").innerText = "Select task category"; 
+}
+
+function resetSubtasks() {
+    document.getElementById("subtask").value = ""; 
+    document.getElementById("added-subtasks").innerHTML = "";
+}
+
+async function postTask(path = "", data = {}) {
+    try {
+        const response = await fetch(BASE_URL + path + ".json", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data)
+        })
+    } catch (error) {
+        console.error("Fehler:", error.message);
+        return null;
+    }
+}
+

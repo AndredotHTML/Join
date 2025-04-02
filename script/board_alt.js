@@ -629,7 +629,7 @@ function getSubtasks() {
 
     for (let i = 0; i < subtaskElements.length; i++) {
         subtasks.push({
-            title: subtaskElements[i].innerText, 
+            title: subtaskElements[i].innerHTML, 
             completed: false
         });
     }
