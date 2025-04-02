@@ -559,7 +559,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 
 .overlay-btns {
     display: flex;
-    padding: 35px;
+    padding: 32px 0;
     justify-content: center;
     column-gap: 25px;
 }
@@ -681,6 +681,12 @@ input.error {
     padding: 108px 46px;
     gap: 12px;
 }
+
+.overlay-header-subheadline {
+    padding: 91px 46px;
+}
+
+    {}
 
 .overlay-header-logo {
     height: 66.48px;
@@ -827,10 +833,64 @@ input.error {
     height: 24px;
 }
 
-.button-cancel {
+.button-delete {
     padding: 16px 10px;
     gap: 10px;
     min-height: 60px;
     min-width: 106px;
     border-radius: 10px;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 584px;
+    height: 100vh;
+    background: white;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    flex-direction: column;
+}
+
+.direction-column {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.sub-headline {
+    font-size: 27px;
+}
+
+.contact-circle img {
+    height: 64px;
+    width: 64px;
+}
+
+.button-cancel {
+    padding: 16px 10px;
+    gap: 10px;
+    min-height: 60px;
+    min-width: 136px;
+    border-radius: 10px;
+}
+
+.button-cancel::after {
+    content: url(../assets/icons/cancel-gray.svg);
+    width: 24px;
+    height: 24px;
+}
+
+.button-cancel:hover:after {
+    content: url(../assets/icons/cancel-light-blue.svg);
+    width: 24px;
+    height: 24px;
+}
+
+.button-cancel:active:after {
+    content: url(../assets/icons/cancel-blue.svg);
+    width: 24px;
+    height: 24px;
 }
