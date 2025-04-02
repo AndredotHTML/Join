@@ -229,21 +229,28 @@ input[type="checkbox"]:checked {
     background-image: url(../assets/icons/Check_button_white.png)
 }
 
-
-
-
-
-/* 
-.checkbox{
-    height: 24px;
-    width: 24px;
-    border: 2px solid #0038ff;
-} */
-
 .add-task-create-btn:hover {
     cursor: pointer;
     background-color: #0038ff;
 }
+
+.add-task-create-btn:active{
+    background-color: #FFFFFF;
+    color: var(--primaryColor);
+}
+
+.btn-icon-check{
+    height: 24px;
+    width: 24px;
+    background: url(../assets/icons/check.svg) no-repeat center ;
+}
+
+.add-task-create-btn:active .btn-icon-check{
+    background: url(../assets/icons/check_blue.svg)no-repeat center;
+}
+
+
+
 
 form {
     display: flex;
@@ -555,9 +562,12 @@ textarea {
 }
 
 .resize{
+    resize: both;
+    overflow: auto;
     position: absolute;
     left:calc(100% - 30px);
     top:calc(100% - 48px );
+
 }
 
 textarea:focus {
@@ -619,16 +629,16 @@ input[type="radio"] {
     padding: 18px 10px;
     border-radius: 10px;
     gap: 10px;
-    border: 1px solid #D1D1D1;
+    outline: 1px solid #D1D1D1;
     background-color: var(--secondaryColor);
     font-size: 19px;
     box-sizing: border-box;
 }
 
-/* img move have to be corrected */
-.radio-btn img {
-    position: relative;
-    z-index: 1;
+.add-task-urgent,
+.add-task-medium,
+.add-task-low{
+    border-bottom: 2px solid transparent;
 }
 
 .add-task-urgent:hover {
@@ -689,6 +699,28 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     justify-content: center;
     gap: 10px;
     height: 61px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.clear-form-btn:hover{
+    color: #4589FF;
+    border: 1px solid #4589FF;
+}
+.clear-form-btn:active{
+    color:#005DFF ;
+    border: 1px solid #005DFF;
+}
+.btn-icon-shell{
+    height: 24px;
+    width: 24px;
+    background: url(../assets/icons/clear.svg) no-repeat center ;
+}
+.clear-form-btn:hover .btn-icon-shell{
+    background: url(../assets/icons/cross_hover.svg) no-repeat center ;
+    transition: 100ms ease-in-out;
+}
+.clear-form-btn:active .btn-icon-shell{
+    background: url(../assets/icons/cross_click.svg) no-repeat center ;
 }
 
 .add-task-create-btn {
@@ -699,11 +731,12 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     border-radius: 10px;
     border: none;
     color: var(--secondaryColor);
-    padding: 16px 10px;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
+    transition: 100ms ease-in-out;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .btn-title {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,6 +12,7 @@
     <link rel="stylesheet" href="../css/addTask.css">
     <script src="../script/header.js"></script>
 </head>
+
 <body onload="getCurrentUser()">
     <header class="zeljko_head">
         <div class="logo">
@@ -19,8 +21,9 @@
         <div class="header_right">
             <span>Kanban Project Management Tool</span>
             <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
-            <img onclick="toggleProfileMenu ()" class="user_profile_icon" src="../assets/icons/user_profile.png"
-                alt="User Logo">
+            <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                <div class="icon-container" id="icon-container">G</div>
+            </div>
         </div>
         <div class="profile_menu" id="profile_menu">
             <ul class="profile_menu_list">
@@ -181,14 +184,12 @@
                         <button class="btn clear-form-btn" onclick="clearForm()">
                             <div class="btn-title">Clear</div>
                             <div class="btn-icon-shell">
-                                <img src="../assets/icons/clear.svg" alt="">
                             </div>
                         </button>
                         <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick=""
                             type="submit">
                             <div class="btn-title">Create Task </div>
-                            <div class="btn-icon-shell">
-                                <img src="../assets/icons/check.svg" alt="">
+                            <div class="btn-icon-check">
                             </div>
                         </button>
                     </div>

@@ -119,13 +119,18 @@ function generateTaskOverlay(element) {
 }
 
 function addTaskOverlay(){
-    return `  <div  class="add_task_overlay">
+    return `<div id="task-message" style="display: none;">
+            <p>Task added to board</p>
+            <img src="../assets/icons/board_icon.png" alt="Board Icon">
+            </div>
+            <div  class="add_task_overlay">
             <div class="addTask_header_overlay">
             <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
             <div class="header_headline"><h1> Add Task</h1></div>
             </div>
             <div class="addTask_content">
             <input type="text" class="title_add_task" id="title_add_task" placeholder="Enter a title">
+            <div id="title-error" style="color: red; display: none;"></div>
             <div class="description">
             <span><strong> Description</strong> (optional)</span>
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
@@ -133,6 +138,7 @@ function addTaskOverlay(){
             <div class="date">
             <span><strong>Due date </strong></span>
             <input type="date" id="dateInput-add-task">
+            <div id="date-error" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
                 <span><strong> Priority </strong></span>
@@ -152,6 +158,7 @@ function addTaskOverlay(){
                         <img class="unchecked_priority" src="../assets/icons/low.svg" alt="">
                          <img class="checked_priority" src="../assets/icons/low_white.svg" alt="">
                  </label>
+                 <div id="priority-error" style="color: red; display: none;"></div>
                 </div>
             </div>
            <div class="assigned">
@@ -173,6 +180,7 @@ function addTaskOverlay(){
                 <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>
                 <div class="option_category" onclick="selectCategory('User Story')">User Story</div>
             </div>
+            <div id="category-error" style="color: red; display: none;"></div>
             </div>
             <div class="subtasks">
                     <span><strong>Subtasks</strong>(optional)</span>

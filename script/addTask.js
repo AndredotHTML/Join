@@ -176,7 +176,6 @@ function assignetUserToData() {
     return selectedUser
 }
 
-
 async function postTask(path = "", data = {}) {
     try {
         const response = await fetch(BASE_URL + path + ".json", {
@@ -254,45 +253,46 @@ function openDropdown() {
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
     assignedRef.classList.remove("d_none");
+    assignedRef.style.display = "flex";
+    assignedRef.style.flexDirection = "column"
+    arrowImgToggle(arrowOpenRef)
+    styAssignedContOpen(assignedContactRef)
+}
+function styAssignedContOpen(assignedContactRef){
     assignedContactRef.forEach(contact => {
-        contact.classList.remove("bg-white")
         contact.style.display = "flex";
         let nameTemplate = contact.querySelector(".assigned-template-name");
         let inputTemplate = contact.querySelector(".input-assigned");
         nameTemplate.style.display = "flex";
         inputTemplate.style.display = "flex";
     });
-    let imgRef = arrowOpenRef.querySelectorAll("img")
-    for (const img of imgRef) {
-        img.classList.toggle("d_none")
-    }
-    assignedRef.style.display = "flex";
-    assignedRef.style.flexDirection = "column"
 }
 
 function closeDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    assignedRef.style.gap = "8px";
+    assignedRef.style.flexDirection = "row"
+    styAssignedContClosed(assignedContactRef)
+    arrowImgToggle(arrowOpenRef)
+}
+
+function styAssignedContClosed(assignedContactRef) {
     assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let nameTemplate = contact.querySelector(".assigned-template-name");
         let inputTemplate = contact.querySelector(".input-assigned");
+        let contactLabel = contact.querySelector("label")
         if (checkbox.checked) {
             contact.classList.add("bg-white")
             nameTemplate.style.display = "none";
             inputTemplate.style.display = "none";
+            contactLabel.style.padding = "0"
         } else {
             contact.style.display = "none";
         }
     });
-    assignedRef.style.display = "flex";
-    assignedRef.style.gap = "8px";
-    assignedRef.style.flexDirection = "row"
-    let imgRef = arrowOpenRef.querySelectorAll("img")
-    for (const img of imgRef) {
-        img.classList.toggle("d_none")
-    }
 }
 
 function dropDownForCategory() {
@@ -315,16 +315,17 @@ function toggleCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
         option.classList.toggle("d_none")
     });
-    let imgRef = arrowOpenRef.querySelectorAll("img")
-    for (const img of imgRef) {
-        img.classList.toggle("d_none")
-    }
+    arrowImgToggle(arrowOpenRef)
 }
 
 function closeCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
         option.classList.add("d_none")
     })
+    arrowImgToggle(arrowOpenRef)
+}
+
+function arrowImgToggle(arrowOpenRef) {
     let imgRef = arrowOpenRef.querySelectorAll("img")
     for (const img of imgRef) {
         img.classList.toggle("d_none")
@@ -373,6 +374,7 @@ function transferToBoard() {
         window.location.href = "/html/board.html";
     },800);
 }
+
 
 
 
