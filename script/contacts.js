@@ -47,6 +47,8 @@ function attachContactListeners () {
 // Overlay-Funktion für "Add Contact" – Animation von rechts nach links
 function showaddContactOverlay () {
     let overlay = document.getElementById( 'overlay' );
+    let overlayBackground = document.getElementById( "overlay-bg" );
+    overlayBackground.style.display = 'flex';
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     overlay.innerHTML = addContactOverlay();
@@ -54,6 +56,8 @@ function showaddContactOverlay () {
 }
 
 function showEditContactOverlay ( contactId ) {
+    let overlayBackground = document.getElementById( "overlay-bg" );
+    overlayBackground.style.display = 'flex';
     const editOverlay = document.getElementById( "editOverlay" );
     const selectedContact = contacts.find( contact => contact.id === contactId );
     if ( !selectedContact ) return;
@@ -66,6 +70,8 @@ function showEditContactOverlay ( contactId ) {
 }
 
 function closeEditOverlay ( event ) {
+    let overlayBackground = document.getElementById( "overlay-bg" );
+    overlayBackground.style.display = '';
     const editOverlay = document.getElementById( "editOverlay" );
     // Schließe, wenn der Klick auf den Hintergrund oder ein Element mit der Klasse close-btn erfolgt
     if ( !event || event.target === editOverlay || event.target.closest( ".close-btn" ) ) {
@@ -81,6 +87,8 @@ function closeEditOverlay ( event ) {
 
 
 function closeOverlay ( event ) {
+    let overlayBackground = document.getElementById( "overlay-bg" );
+    overlayBackground.style.display = '';
     let overlay = document.getElementById( 'overlay' );
     if ( !event || event.target === overlay ) {
         overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
@@ -115,6 +123,7 @@ async function pushToContactsArray () {
             contactData: response[ contactKeysArray[ index ] ]
         } );
     }
+    closeOverlay();
     renderContacts();
 }
 

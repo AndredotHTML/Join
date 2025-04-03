@@ -894,3 +894,34 @@ input.error {
     width: 24px;
     height: 24px;
 }
+
+.button-contact {
+    padding: 16px 10px;
+    gap: 10px;
+    min-height: 60px;
+    min-width: 241px;
+    border-radius: 10px;
+}
+
+.button-contact::after {
+    content: url(../assets/icons/person_add-white.svg);
+    width: 32px;
+    height: 32px;
+}
+
+.button-contact:active:after {
+    content: url(../assets/icons/person_add-blue.svg);
+    width: 32px;
+    height: 32px;
+}
+
+.overly-bg {
+    height: 100vh;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ffffff80;
+    z-index: 20;
+    display: none;
+}

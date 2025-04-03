@@ -5,7 +5,7 @@
     justify-content: space-between;
     align-items: center;
     padding: 20px 39px;
-    font-size: var(--fontSize-19);
+    font-size: var(--fontSize-6);
     position: relative;
 }
 
@@ -62,7 +62,7 @@
 }
 
 .profile_menu {
-    background-color: var(--secondaryColor);
+    background-color: lightcoral;
     width: 172px;
     height: 0px;
     position: absolute;
@@ -70,14 +70,15 @@
     right: 4px;
     text-align: right;
     padding: 0 10px;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    border-radius: 20px 0 20px 20px;
+    box-shadow: var(--boxShadowStronger);
     color: #42526e;
     font-size: 19px;
     line-height: 1.2;
     overflow: hidden;
     transition: height 75ms ease-in-out, padding 0.3s ease-in-out;
     z-index: 10;
+
 }
 
 .profile_menu.open {
@@ -100,9 +101,8 @@
     border-radius: 8px;
 }
 
-.profile_menu_item:hover,
-.profile_menu_item:active {
-    background-color: #d2e2ff;
+.profile_menu_item:hover {
+    background-color: var(--menuHoverColor);
 }
 
 .profile_menu_item > a {
@@ -112,17 +112,4 @@
     padding: 8px 16px;
 }
 
-.icon-container {
-    width: 46px;
-    height: 46px;
-    background-color: white;
-    border-radius: 50%;
-    border: 2px solid #4589FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: #005DFF;
-}
+.

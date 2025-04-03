@@ -23,6 +23,7 @@
     --fontSizeLable: 13px;
     --primaryColor: #4589FF;
     --secondaryColor: #FFFFFF;
+    --menuHoverColor: #D2E3FF;
     --lightBlue: #005DFF;
     --addTaskClickColor: #091931;
     --menuTextColor: #42526E;
@@ -47,6 +48,7 @@
     --variant14: #FC71FF;
     --variant15: #FF4646;
     --boxShadowNuevo: 0px 0px 4px 0px #00000029;
+    --boxShadowStronger: 0px 4px 8px 0px #00000033;
 
 
 

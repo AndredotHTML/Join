@@ -49,11 +49,11 @@
 }
 
 .nav_bar nav li a:hover {
-    background-color: #d2e2ff;
+    background-color: var(--menuHoverColor);
 }
 
 .active {
-    background-color: #d2e2ff;
+    background-color: var(--menuHoverColor);
 }
 
 .nav_bar nav li a img {

@@ -43,25 +43,25 @@
                         <ul>
                             <li>
                                 <a href="summary.html">
-                                    <img src="../assets/icons/summary_icon.png" alt="Join Logo">
+                                    <img src="../assets/icons/summary_icon_gray.svg" alt="summary">
                                     <span>Summary</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="addTask.html">
-                                    <img src="../assets/icons/add_task_icon.png" alt="Join Logo">
+                                    <img src="../assets/icons/add_task_icon_gray.svg" alt="add task">
                                     <span>Add Task</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="board.html">
-                                    <img src="../assets/icons/board_icon.png" alt="Join Logo">
+                                    <img src="../assets/icons/board_icon_gray.svg" alt="Board">
                                     <span>Board</span>
                                 </a>
                             </li>
                             <li>
                                 <a class="active" href="contacts.html">
-                                    <img src="../assets/icons/contacts_icon.png" alt="Join Logo">
+                                    <img src="../assets/icons/contact_icon_gray.svg" alt="Contact">
                                     <span>Contacts</span>
                                 </a>
                             </li>
@@ -76,9 +76,8 @@
             <section class="main_wrapper">
                 <section class="contact_bar">
                     <div class="btn_container">
-                        <button onclick="showaddContactOverlay()">
-                            <span>Add new contact</span>
-                            <img src="../assets/icons/person_add.svg" alt="">
+                        <button class="button button-primary button-contact" onclick="showaddContactOverlay()">
+                            <span>add new Contact</span>
                         </button>
                     </div>
                     <div class="contacts_list"> </div>
@@ -118,6 +117,7 @@
                     </div>
                 </section>
             </section>
+            <div id="overlay-bg" class="overly-bg"></div>
             <div class="overlay" id="overlay" onclick="closeOverlay(event)"></div>
             <div class="edit-overlay" id="editOverlay" onclick="closeEditOverlay"></div>
 
