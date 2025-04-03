@@ -225,11 +225,15 @@ async function createTask() {
         status: "toDo"
     };
 
-    postTask("/tasks", task);
+    await postTask("/tasks", task);
     updateToDo(task);
     showTaskMessage();
     resetFormFields(); 
     resetSubtasks();
+    localStorage.removeItem('selectedUsers');
+    setTimeout(() => {
+        closeOverlay();
+    }, 1000); 
 }
 
 function validateForm(title, dueDate, priority, category) {
