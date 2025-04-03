@@ -13,12 +13,43 @@
 }
 
 :root {
+    --fontSize-1: 48px;
+    --fontSize-2: 40px;
+    --fontSize-3: 33px;
+    --fontSize-4: 28px;
+    --fontSize-5: 23px;
+    --fontSize-6: 19px;
+    --fontSizeNormal: 16px;
+    --fontSizeLable: 13px;
     --primaryColor: #4589FF;
     --secondaryColor: #FFFFFF;
+    --lightBlue: #005DFF;
+    --addTaskClickColor: #091931;
+    --menuTextColor: #42526E;
+    --secondaryBtnTextColor: #647188;
+    --placeholderColor: #d1d1d1;
     --urgentColor: #FF3D00;
     --mediumColor: #FFA800;
     --lowColor: #7AE229;
-    --fontSizeNormal: 16px
+    --variant1: #6E52FF;
+    --variant2: #FFA35E;
+    --variant3: #FFE62B;
+    --variant4: #00BEE8;
+    --variant5: #FF5EB3;
+    --variant6: #FFBB2B;
+    --variant7: #FF745E;
+    --variant8: #C3FF2B;
+    --variant9: #FF7A00;
+    --variant10: #1FD7C1;
+    --variant11: #0038FF;
+    --variant12: #FFC701;
+    --variant13: #9327FF;
+    --variant14: #FC71FF;
+    --variant15: #FF4646;
+    --boxShadowNuevo: 0px 0px 4px 0px #00000029;
+
+
+
 }
 
 * {

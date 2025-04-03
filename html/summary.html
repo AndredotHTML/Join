@@ -20,13 +20,13 @@
     </head>
 
     <body onload="getCurrentUser()">
-        <header class="zeljko_head">
-            <div class="logo">
-                <img src="../assets/icons/logo.png" alt="Join Logo">
+        <header class="header">
+            <div class="logo-container">
+                <img src="../assets/icons/logo.svg" alt="Logo">
             </div>
-            <div class="header_right">
+            <div class="header-right">
                 <span>Kanban Project Management Tool</span>
-                <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
+                <a class="help-link" href="help.html"><img src="../assets/icons/help.svg" alt="Help"></a>
                 <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
                     <div class="icon-container" id="icon-container">G</div>
                 </div>
@@ -98,17 +98,45 @@
                                 </div>
                             </div>
                             <div class="task-card" id="in-board">
-                                <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/in-board_icon.png"> <h3 id="in-board-number">5</h3> </div> <p>Task in Board</p>
+                                <div class="task-card-head"> <img class="summary_icon"
+                                        src="/assets/icons/in-board_icon.png">
+                                    <h3 id="in-board-number">5</h3>
+                                </div>
+                                <p>Task in Board</p>
                             </div>
                         </div>
                         <div class="task-overview-bottom">
                             <div class="task-overview-left">
-                            <div class="task-card to-do"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/to-do_icon.png"> <h3 id="to-do-number">1</h3></div> <p>Tasks To-do</p> </div>
-                            <div class="task-card progress"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/progress_icon.png"> <h3 id="in-progress-number">2</h3> </div> <p>Task in <br> Progress</p> </div>
+                                <div class="task-card to-do">
+                                    <div class="task-card-head"> <img class="summary_icon"
+                                            src="/assets/icons/to-do_icon.png">
+                                        <h3 id="to-do-number">1</h3>
+                                    </div>
+                                    <p>Tasks To-do</p>
+                                </div>
+                                <div class="task-card progress">
+                                    <div class="task-card-head"> <img class="summary_icon"
+                                            src="/assets/icons/progress_icon.png">
+                                        <h3 id="in-progress-number">2</h3>
+                                    </div>
+                                    <p>Task in <br> Progress</p>
+                                </div>
                             </div>
                             <div class="task-overview-right">
-                            <div class="task-card feedback"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/feedback_icon.png"> <h3 id="feedback-number">2</h3> </div> <p>Awaiting <br> Feedback</p> </div>
-                            <div class="task-card done"> <div class="task-card-head"> <img class="summary_icon" src="/assets/icons/done_icon.png"> <h3 id="done-number">1</h3> </div> <p>Tasks Done</p> </div>
+                                <div class="task-card feedback">
+                                    <div class="task-card-head"> <img class="summary_icon"
+                                            src="/assets/icons/feedback_icon.png">
+                                        <h3 id="feedback-number">2</h3>
+                                    </div>
+                                    <p>Awaiting <br> Feedback</p>
+                                </div>
+                                <div class="task-card done">
+                                    <div class="task-card-head"> <img class="summary_icon"
+                                            src="/assets/icons/done_icon.png">
+                                        <h3 id="done-number">1</h3>
+                                    </div>
+                                    <p>Tasks Done</p>
+                                </div>
                             </div>
                         </div>
                     </div>

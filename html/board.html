@@ -11,16 +11,18 @@
         <link rel="stylesheet" href="../css/navigation.css">
         <link rel="stylesheet" href="../css/board.css">
         <link rel="stylesheet" href="../css/addTaskFloat.css">
+
+        <script src="../script/header.js"></script>
     </head>
 
     <body onload="updateHTML()">
-        <header class="zeljko_head">
-            <div class="logo">
-                <img src="../assets/icons/logo.png" alt="Join Logo">
+        <header class="header">
+            <div class="logo-container">
+                <img src="../assets/icons/logo.svg" alt="Logo">
             </div>
-            <div class="header_right">
+            <div class="header-right">
                 <span>Kanban Project Management Tool</span>
-                <a href="help.html"><img src="../assets/icons/help.png" alt="Help Logo"></a>
+                <a class="help-link" href="help.html"><img src="../assets/icons/help.svg" alt="Help"></a>
                 <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
                     <div class="icon-container" id="icon-container">G</div>
                 </div>

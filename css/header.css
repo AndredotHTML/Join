@@ -1,22 +1,64 @@
-/* Header Style  which i used for my board.html */
-.zeljko_head {
-    height: 96px;
+.header {
     background-color: var(--primaryColor);
+    color: var(--secondaryColor);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding: 20px 39px;
+    font-size: var(--fontSize-19);
     position: relative;
 }
 
-.header_right {
+.logo-container {
+    height: 56px;
+}
+
+.logo-container > img {
+    height: 100%;
+    width: auto;
+}
+
+.header-right {
     display: flex;
     align-items: center;
-    gap: 20px;
-    color: var(--secondaryColor);
-    line-height: 1.2;
-    font-size: 19px;
+}
+
+.help-link {
+    margin-left: 26px;
+    user-select: none;
+}
+
+.help-link > img {
+    height: 32px;
+    width: 32px;
+}
+
+.icon-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 56px;
+    height: 56px;
+    background-color: var(--secondaryColor);
+    border-radius: 50%;
+    margin-left: 18px;
+    user-select: none;
+    cursor: pointer;
+}
+
+.icon-container {
+    width: 46px;
+    height: 46px;
+    background-color: white;
+    border-radius: 50%;
+    border: 2px solid #4589FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, sans-serif;
+    font-size: 23px;
+    font-weight: 600;
+    color: #005DFF;
 }
 
 .profile_menu {
@@ -70,14 +112,6 @@
     padding: 8px 16px;
 }
 
-.user_profile_icon {
-    user-select: none;
-}
-
-.user_profile_icon:hover {
-    cursor: pointer;
-}
-
 .icon-container {
     width: 46px;
     height: 46px;
@@ -92,19 +126,3 @@
     font-weight: 600;
     color: #005DFF;
 }
-
-.icon-wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 56px;
-    height: 56px;
-    background-color: white;
-    border-radius: 50%;
-}
-
-.icon-wrapper:hover {
-    cursor: pointer;
-}
-
-/*End of Style */
