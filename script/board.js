@@ -7,13 +7,13 @@ async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
         user.push(userData);
-        generateUserIcon();
+        generateUserIconHeader() 
     } else {
         console.log("Kein Nutzer gefunden.");
     }
 }
 
-function generateUserIcon() {
+function generateUserIconHeader() {
     let userName = user[0].name;
     let iconContainer = document.getElementById('icon-container');
     let iconWrapper = document.getElementById('icon-wrapper');
@@ -278,6 +278,7 @@ function closeOverlay(event) {
         overlay.classList.remove('slide_in'); 
         overlay.style.display = 'none';
         document.body.style.overflow = 'auto'; 
+        localStorage.removeItem('selectedUsers');
     }
 }
 

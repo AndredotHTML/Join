@@ -26,7 +26,8 @@ function toggleIcons(radioBtn, action) {
 }
 
 function selectCategory(category) {
-    document.getElementById('category_add_task').innerHTML = category;
+    console.log("Category selected:", category);  
+    document.getElementById('category_add_task').innerText = category;
     document.getElementById('options_container').style.display = 'none';
     document.getElementById('arrowIconCategory').src = "/assets/icons/arrow_drop_down.svg"; 
 }
@@ -139,7 +140,7 @@ function generateSingleUser(element,isChecked) {
         <label for="user-${element.id}" class="user-item">
             <span class="user-icon" style="background-color: ${color};">${initials}</span>
             <span class="user-name">${name}</span>
-            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''}  onclick="updateSelectedUsers()">
+            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''}  onchange="updateSelectedUsers()">
              <span class="checkbox-custom"></span>
         </label>
     `;
@@ -180,6 +181,8 @@ function toggleSelectedUsersContainer(selectedUsersContainer) {
         selectedUsersContainer.style.display = "none"; 
     } else {
         selectedUsersContainer.style.display = "inline-flex";
+        selectedUsersContainer.style.paddingLeft = "10px";
+        selectedUsersContainer.style.paddingTop = "10px";
     }
 }
 
@@ -203,37 +206,38 @@ function updateSelectedUsers() {
 
 async function createTask() {
     await pushToUsersArray(); 
-    let title = document.getElementById("title_add_task").value;
-    let description = document.getElementById("description_add_task").value;
-    let dueDate = document.getElementById("dateInput-add-task").value;
-    let priority = getPriority();
-    let category = document.getElementById("category_add_task").innerText;
-    let subtasks = getNewSubtasks();
+    const task =taskObject();
 
-    if (!validateForm(title, dueDate, priority, category)) {
-        return; 
+    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
+
+    let newId= await postTask("/tasks", task);
+    if (newId) {
+        task.id = newId; 
+        tasks.push(task);
+        updateToDo(task);
     }
+    createTaskFinale();
+}
 
-    const task = {
-        title: title,
-        description: description,
-        dueDate: dueDate,
-        priority: priority,
-        assignedUsers: assignedUsers, 
-        category: category,
-        subtasks: subtasks,
+function taskObject() {
+    return {
+        title: document.getElementById("title_add_task").value,
+        description: document.getElementById("description_add_task").value,
+        dueDate: document.getElementById("dateInput-add-task").value,
+        priority: getPriority(),
+        assignedUsers: assignedUsers,
+        category: document.getElementById("category_add_task").innerText, 
+        subtasks: getNewSubtasks(),
         status: "toDo"
     };
+}
 
-    await postTask("/tasks", task);
-    updateToDo(task);
+function createTaskFinale() {
     showTaskMessage();
-    resetFormFields(); 
+    resetFormFields();
     resetSubtasks();
     localStorage.removeItem('selectedUsers');
-    setTimeout(() => {
-        closeOverlay();
-    }, 1000); 
+    setTimeout(closeOverlay, 1000);
 }
 
 function validateForm(title, dueDate, priority, category) {
@@ -312,13 +316,15 @@ function resetSubtasks() {
 
 async function postTask(path = "", data = {}) {
     try {
-        const response = await fetch(BASE_URL + path + ".json", {
+           const response= await fetch(BASE_URL + path + ".json", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data)
-        })
+        });
+        const result = await response.json();
+        return result.name;
     } catch (error) {
         console.error("Fehler:", error.message);
         return null;

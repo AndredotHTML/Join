@@ -306,11 +306,6 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     transition: background-color 0.3s ease;  
 }
 
-#selected_user_container {
-    padding-top: 10px;
-    padding-left: 10px;
-}
-
 .category {
     padding-top: 30px;
 }
