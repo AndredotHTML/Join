@@ -33,19 +33,23 @@ async function pushToTask() {
 }
 
 
-async function getCurrentUser() {
+async function init() {
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
-        user.push(userData)
-        let email = user[0].email
-        postUserProfile(email, {createdAt: new Date().toISOString()})
-        displayUserData()
-        greetUser()
+        let email = user[0].email;
+        postUserProfile(email, {createdAt: new Date().toISOString()});
+        displayUserData();
+        greetUser();
     } else {
-        console.log("Kein Nutzer gefunden.");
-        greetUser()
+        handleGuestLogin();
+        greetGuest();
     }
-    pushToTask()
+    pushToTask();
+}
+
+
+function handleGuestLogin() {
+    document.getElementById("greet").classList.add("font_weight_bold")
 }
 
 
@@ -69,6 +73,21 @@ function generateUserIcon(userName) {
         iconContainer.textContent = initials;
         iconWrapper.style.display = 'flex'; 
     }
+}
+
+
+function greetGuest() {
+    let greetElement = document.getElementById("greet");
+    let currentHour = new Date().getHours();
+    let greeting;
+    if (currentHour >= 5 && currentHour < 12) {
+        greeting = "Good morning";
+    } else if (currentHour >= 12 && currentHour < 18) {
+        greeting = "Good afternoon";
+    } else {
+        greeting = "Good evening";
+    }
+    greetElement.textContent = greeting;
 }
 
 
@@ -99,22 +118,22 @@ async function postUserProfile(email, data = {}) {
 }
 
 
-async function testUserPush() {
-    let email = user[0].email;
-    let sanitizedEmail = email.replace(/\./g, "_");
-    await putUserTest(sanitizedEmail, {"task": "testtask"})
-}
+//async function testUserPush() {
+  //  let email = user[0].email;
+   // let sanitizedEmail = email.replace(/\./g, "_");
+  //  await putUserTest(sanitizedEmail, {"task": "testtask"})
+//}
 
 
-async function putUserTest(path, data) {
-    await fetch(BASE_URL + path + ".json",{
-        method: "PUT",
-        header: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    });
-}
+//async function putUserTest(path, data) {
+//    await fetch(BASE_URL + path + ".json",{
+//        method: "PUT",
+ //       header: {
+ //           "Content-Type": "application/json"
+ //       },
+ //       body: JSON.stringify(data)
+ //   });
+//}
 
 
 function renderSummaryNumbers() {
@@ -152,7 +171,7 @@ function renderInProgressTasks(id) {
 
 
 function renderFeedbackTasks(id) {
-    let feedbackCount = tasks.filter(task => task.status === "awaitingFeedback").length;
+    let feedbackCount = tasks.filter(task => task.status === "awaitFeedback").length;
     document.getElementById(id).innerText = feedbackCount;
 }
 

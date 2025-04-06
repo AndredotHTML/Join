@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="../css/standart.css">
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/navigation.css">
-        <link rel="stylesheet" href="../css/contacts.css">
         <link rel="stylesheet" href="../css/summary.css">
 
         <script src="../script/header.js"></script>
@@ -19,7 +18,7 @@
         <title>Summary</title>
     </head>
 
-    <body onload="getCurrentUser()">
+    <body onload="init()">
         <header class="header">
             <div class="logo-container">
                 <img src="../assets/icons/logo.svg" alt="Logo">
@@ -78,10 +77,10 @@
             </section>
             <section class="main_wrapper">
                 <div class="dashboard">
-                    <h2><span id="greet">Good morning,</span><span class="user-name" id="user_name">Guest</span></h2>
+                    <h2><span class="greet" id="greet">Good morning,</span><span class="user-name" id="user_name"></span></h2>
                     <div class="stats">
                         <div class="task-overview-top">
-                            <div class="urgent-tasks" onclick="testUserPush()">
+                            <div class="urgent-tasks">
                                 <div class="urgent-tasks-left">
                                     <div class="task-card-head">
                                         <img class="summary_icon" src="/assets/icons/urgent_icon.png">

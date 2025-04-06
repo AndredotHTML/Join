@@ -1,6 +1,8 @@
 .main_wrapper {
     justify-content: center;
     align-items: center;
+    width: 100%;
+    display: flex;
 }
 
 .dashboard {
@@ -228,21 +230,6 @@
     cursor: pointer;
 }
 
-.icon-container {
-    width: 46px;
-    height: 46px;
-    background-color: white;
-    border-radius: 50%;
-    border: 2px solid #4589FF;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: Arial, sans-serif;
-    font-size: 20px;
-    font-weight: 600;
-    color: #005DFF;
-}
-
 .task-overview-left {
     display: flex;
     position: relative;
@@ -269,4 +256,14 @@
     right: 0;
 }
 
+.content {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+    height: calc(100vh - 96px);
+}
+
+.greet {
+    font-weight: 300;
+}
 

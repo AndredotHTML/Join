@@ -71,3 +71,7 @@ html {
     line-height: 1.2;
     font-size: var(--fontSizeNormal);
 }
+
+.font_weight_bold {
+    font-weight: bold !important;
+}
