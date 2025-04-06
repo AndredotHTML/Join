@@ -66,6 +66,7 @@
     flex-direction: column;
     align-items: center;
     width: 186px;
+    gap: 16px;
 }
 
 .legal_stuff > a {

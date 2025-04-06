@@ -95,12 +95,13 @@
                                 <label for="date-input-add-task">Due date
                                 </label>
                                 <input type="date" name="nativ-date-input" id="nativ-date-input" class=""
-                                    onfocus="resValidOnInp(this)" onchange="transferFromPicker()">
-                                <div class="custom-date-input d_flex">
-                                    <input type="text" name="date-input-add-task" id="date-input-add-task"
-                                        maxlength="10" placeholder="dd/mm/yyyy" oninput="customDateInput()">
+                                     onchange="transferFromPicker()">
+                                <div class="d_flex custom-date-input" id="custom-date-input"  onfocus="resValidOnInp(this)">
+                                    <input type="text" name="date-input-add-task" id="date-input-add-task" class="date-input-add-task"
+                                        maxlength="10" placeholder="dd/mm/yyyy" oninput="customDateInput()" onfocus="resValidOnInp(this)">
                                     <label for="nativ-date-input" onclick="showPicker()">
-                                        <img class="date-picker-icon" src="/assets/icons/event.png" alt=""></label>
+                                        <img class="date-picker-icon" src="/assets/icons/event.png" alt="">
+                                    </label>
                                 </div>
                                 <div class="validation-add-task-form" id="date-validation">
                                 </div>

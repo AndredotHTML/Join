@@ -89,7 +89,6 @@ function resValidOnInp(element) {
     element.style.borderBottom = "";
 }
 
-
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
     let priorityRef = priority
@@ -374,7 +373,6 @@ function transferToBoard() {
         window.location.href = "/html/board.html";
     }, 800);
 }
-
 
 function customDateInput() {
     let dateInputRef = document.getElementById("date-input-add-task");
