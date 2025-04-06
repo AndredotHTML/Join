@@ -21,11 +21,11 @@ function generateUserIcon() {
     let iconWrapper = document.getElementById('icon-wrapper');
     if (userName) {
         let initials = userName.split(' ')
-                                 .map(word => word.charAt(0).toUpperCase())
-                                 .slice(0, 2)
-                                 .join('');
+            .map(word => word.charAt(0).toUpperCase())
+            .slice(0, 2)
+            .join('');
         iconContainer.textContent = initials;
-        iconWrapper.style.display = 'flex'; 
+        iconWrapper.style.display = 'flex';
     }
 }
 
@@ -82,7 +82,7 @@ function errorMsg(requerdRef, inputToValidate, errMsg) {
     valide = false
 }
 
-function resReqOnInp(element) {
+function resValidOnInp(element) {
     let wrapperRef = element.closest(`[class$="-wrapper"]`)
     let validAreaRef = wrapperRef.querySelector(".validation-add-task-form")
     validAreaRef.innerHTML = "";
@@ -258,7 +258,7 @@ function openDropdown() {
     arrowImgToggle(arrowOpenRef)
     styAssignedContOpen(assignedContactRef)
 }
-function styAssignedContOpen(assignedContactRef){
+function styAssignedContOpen(assignedContactRef) {
     assignedContactRef.forEach(contact => {
         contact.style.display = "flex";
         let nameTemplate = contact.querySelector(".assigned-template-name");
@@ -372,33 +372,43 @@ function transferToBoard() {
     document.body.innerHTML += tempTaskToBoardOverlay()
     setTimeout(() => {
         window.location.href = "/html/board.html";
-    },800);
+    }, 800);
 }
 
 
+function customDateInput() {
+    let dateInputRef = document.getElementById("date-input-add-task");
+    let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
+    let displaydDate = ""
+    if (dateInputVal.length >= 1 ) {
+        if (dateInputVal.slice(0,2) > 31 ) {
+            displaydDate = 31
+        }else{
+        displaydDate = dateInputVal.slice(0,2)
+        }
+    }
+    if (dateInputVal.length >= 3 ) {
+        
+        if (dateInputVal.slice(2,4) > 12 ) {
+            displaydDate += "/" + 12
+        }else{
+            displaydDate += "/" + dateInputVal.slice(2,4)
+        }
+    }
+    if (dateInputVal.length >= 5 ) {
+        displaydDate += "/" + dateInputVal.slice(4,8)
+    }
+    dateInputRef.value = displaydDate
+}
 
+function showPicker() {
+    let pickerRef = document.getElementById("nativ-date-input")
+    pickerRef.showPicker()
+}
 
-
-
-
-
-
-
-
-
-
-
-// date form problem.
-// const placeholderArr = ["d","d","/","m","m","/","y","y","y","y"]
-
-
-
-// function placeholderDate() {
-//     let placeholderDateRef = document.getElementById("dateInput-add-task").value;
-//     let placeholderText = []
-//     for (let iPlaceholder = 0; iPlaceholder < placeholderArr.length; iPlaceholder++) {
-//         placeholderDisplay += placeholderArr[iPlaceholder];
-//     }
-//     console.log(placeholderDisplay);
-//     placeholderDateRef.value = placeholderDisplay
-// }
+function transferFromPicker(){
+    let pickerRef = document.getElementById("nativ-date-input")
+    let dateInputRef = document.getElementById("date-input-add-task")
+    let reversDate = pickerRef.value.split("-").reverse().join("/")
+    dateInputRef.value = reversDate
+}

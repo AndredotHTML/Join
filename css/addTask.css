@@ -451,7 +451,7 @@ form {
     opacity: 0.8;
 }
 
-.date-wrapper>input,
+.date-wrapper>.custom-date-input,
 .title-wrapper>input,
 .form-header>input,
 form>input,
@@ -467,6 +467,12 @@ form>input,
     font-size: 19px;
     width: 100%;
     outline: none;
+}
+
+#nativ-date-input{
+    opacity: 0;
+    position: absolute;
+    right: 200px;
 }
 
 .title-wrapper {
@@ -492,14 +498,13 @@ form>input,
     gap: 4px;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
-.form-header>div>input:focus,
+.custom-date-input:focus-within,
 .subtask-area:focus-within,
 .subtask-area:hover,
 .title-add-task:focus,
-select:focus,
-select:hover,
 .wrapper-select:hover,
 .wrapper-select:focus-within {
     border-bottom: 1px solid var(--primaryColor);
@@ -530,6 +535,20 @@ select:hover,
 
 .date-input-add-task:focus {
     outline: none;
+}
+
+.date-display{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none; /* Damit der Klick zum Input durchgeht */
+    z-index: 2;
+    color: #000;
 }
 
 
@@ -653,12 +672,25 @@ input[type="radio"] {
     border-bottom: 2px solid var(--lowColor);
 }
 
-input[type="date"]::-webkit-calendar-picker-indicator {
+/* input[type="date"]::-webkit-calendar-picker-indicator {
     background: url("/assets/icons/event.png") no-repeat center;
     position: relative;
     cursor: pointer;
     left: 250px;
     object-fit: cover
+} */
+
+.date-picker-icon{
+        position: relative;
+        cursor: pointer;
+        object-fit:contain
+}
+
+#date-input-add-task{
+    outline: none;
+    border: none;
+    width: 100%;
+    font-size: 19px;
 }
 
 /* #dateInput-add-task {
@@ -705,6 +737,7 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
 .clear-form-btn:hover{
     color: #4589FF;
     border: 1px solid #4589FF;
+    transition: 100ms ease-in-out;
 }
 .clear-form-btn:active{
     color:#005DFF ;
@@ -791,7 +824,6 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     gap: 4px;
     display: flex;
 }
-
 
 @keyframes slideOutBottom{
     0%{
