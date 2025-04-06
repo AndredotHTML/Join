@@ -1,3 +1,20 @@
+function init() {
+  startAnimation()
+  pushToUsersArray()
+  deleteLocalUser()
+}
+
+
+function startAnimation() {
+  const logo = document.getElementById("animated_logo");
+
+  setTimeout(() => {
+      logo.classList.add("join_logo");
+      logo.classList.remove("join_logo_start")
+      }, 1500);
+}
+
+
 /**
  * checks if the inputs in the form are valid and displays error messages if they are not 
  */

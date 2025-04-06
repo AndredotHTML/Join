@@ -147,8 +147,9 @@ function renderSummaryNumbers() {
 
 
 function renderUrgentTasks(id) {
-    let urgentCount = tasks.filter(task => task.priority === "Urgent").length;
+    let urgentCount = tasks.filter(task => task.priority === "urgent").length;
     document.getElementById(id).innerText = urgentCount
+    renderUrgentDate()
 }
 
 
@@ -179,4 +180,18 @@ function renderFeedbackTasks(id) {
 function renderDoneTasks(id) {
     let doneCount = tasks.filter(task => task.status === "done").length;
     document.getElementById(id).innerText = doneCount;
+}
+
+
+function renderUrgentDate() {
+    const urgentTasks = tasks.filter(task => task.priority === "urgent");
+    const date = new Date(urgentTasks[0].dueDate);
+
+    const options = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    };
+  
+    document.getElementById("dueDate").innerText = date.toLocaleDateString('en-US', options);
 }
