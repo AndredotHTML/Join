@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
     await getUser(path = "/users");
     // displayIconToclear()
-    document.getElementById("assigned-to-container").addEventListener("click", dropDownForAssigned);
+    // document.getElementById("assigned-to-container").addEventListener("click", dropDownForAssigned);
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
@@ -242,9 +242,18 @@ function dropDownForAssigned() {
         openDropdown();
     } else {
         closeDropdown();
+        blurAssig()
+        
     }
     isDropdownOpen = !isDropdownOpen;
 }
+
+function blurAssig() {
+    let assignRef = document.getElementById("assigned-to-input")
+    assignRef.blur()
+}
+
+
 
 function openDropdown() {
     displayUser()
