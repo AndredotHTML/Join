@@ -109,10 +109,9 @@ function generateTaskOverlay(element) {
     <tr><th>Assigned To:</th> </tr>
     <tr><td>${user_icon_name}</td></tr>
     </table></div>
-     ${element.subtasks && element.subtasks.length > 0 ? `
         <div class="subtasks_overlay"><span>Subtasks:</span>
             ${subtask}
-        </div>` : ''}
+        </div>
     <div class="delete_edit">
         <button type="button" class="delete_btn" onclick="deleteTask('${element.id}')"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
         <button type="button" class="edit_btn"><img src="../assets/icons/edit.png" alt="edit icon" onclick="editTask('${element.id}')">Edit</button>
@@ -244,8 +243,8 @@ function addTaskInProgressOverlay(){
                         <img class="unchecked_priority" src="../assets/icons/low.svg" alt="">
                          <img class="checked_priority" src="../assets/icons/low_white.svg" alt="">
                  </label>
-                 <div id="priority-error" class="error-message" style="color: red; display: none;"></div>
                 </div>
+                 <div id="priority-error"  class="error-message" style="color: red; display: none;"></div>
             </div>
            <div class="assigned">
            <span><strong>Assigned to </strong>(optional)</span>
@@ -266,7 +265,7 @@ function addTaskInProgressOverlay(){
                 <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>
                 <div class="option_category" onclick="selectCategory('User Story')">User Story</div>
             </div>
-            <div id="category-error"  style="color: red; display: none;"></div>
+            <div id="category-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="subtasks">
                     <span><strong>Subtasks</strong>(optional)</span>
@@ -300,7 +299,7 @@ function addTaskAwaitFeedbackOverlay(){
             </div>
             <div class="addTask_content">
             <input type="text" class="title_add_task" id="title_add_task" placeholder="Enter a title">
-            <div id="title-error" style="color: red; display: none;"></div>
+            <div id="title-error" class="error-message" style="color: red; display: none;"></div>
             <div class="description">
             <span><strong> Description</strong> (optional)</span>
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
@@ -308,7 +307,7 @@ function addTaskAwaitFeedbackOverlay(){
             <div class="date">
             <span><strong>Due date </strong></span>
             <input type="date" id="dateInput-add-task">
-            <div id="date-error" style="color: red; display: none;"></div>
+            <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
                 <span><strong> Priority </strong></span>
@@ -328,8 +327,8 @@ function addTaskAwaitFeedbackOverlay(){
                         <img class="unchecked_priority" src="../assets/icons/low.svg" alt="">
                          <img class="checked_priority" src="../assets/icons/low_white.svg" alt="">
                  </label>
-                 <div id="priority-error" style="color: red; display: none;"></div>
                 </div>
+                 <div id="priority-error"  class="error-message" style="color: red; display: none;"></div>
             </div>
            <div class="assigned">
            <span><strong>Assigned to </strong>(optional)</span>
@@ -350,7 +349,7 @@ function addTaskAwaitFeedbackOverlay(){
                 <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>
                 <div class="option_category" onclick="selectCategory('User Story')">User Story</div>
             </div>
-            <div id="category-error" style="color: red; display: none;"></div>
+            <div id="category-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="subtasks">
                     <span><strong>Subtasks</strong>(optional)</span>
