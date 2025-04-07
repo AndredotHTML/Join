@@ -21,7 +21,6 @@
     }
 }
 
-
 .add_task_overlay {
     width: 450px;
     height:auto;
@@ -154,6 +153,10 @@ input[type="date"]:focus {
     border-bottom: 1px solid var(--primaryColor);
 }
 
+#priority-error {
+    margin-top: 10px;
+    text-align: left;
+}
 
 .priority{
     padding-top: 30px;
@@ -221,6 +224,11 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     cursor: pointer;
     border-bottom: 1px solid #D1D1D1;
     padding-top: 10px;
+}
+
+.select_contact img:hover,.category img:hover,#subtask-add-icon:hover,#subtask-delete-icon:hover,#subtask-check-icon:hover{
+    background-color:#d2e2ff;
+    border-radius: 10px;
 }
 
 .select_contact span,.cat span{
@@ -323,8 +331,6 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     transition: transform 0.2s ease;
 }
 
-
-
 .option_category {
     cursor: pointer;
     padding: 10px;
@@ -341,7 +347,7 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
 }
 
 .subtask_area {
-    padding:10px;
+    padding:10px 0 10px 10px;
     border: none;
     border-bottom: 1px solid #D1D1D1;
     appearance: none;
@@ -408,6 +414,13 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     cursor: pointer;
 }
 
+#subtask-add-icon{
+    padding: 5px;
+}
+
+#subtask-check-icon{
+    padding: 5px;
+}
 input:disabled {
     background-color: var(--secondaryColor);
     color: var(--secondaryColor);
@@ -485,4 +498,18 @@ input:disabled {
     background-color: transparent;
     padding: 4px 0; 
     outline: none; 
+}
+
+#task-message {
+    background-color:var(--primaryColor); 
+    padding: 16px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-radius: 8px;
+}
+
+#task-message img{
+    filter: brightness(0) invert(1);
 }

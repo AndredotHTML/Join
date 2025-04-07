@@ -219,6 +219,36 @@ async function createTask() {
     createTaskFinale();
 }
 
+async function createTaskInProgress() {
+    await pushToUsersArray(); 
+    const task =taskObjectInProgress();
+
+    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
+
+    let newId= await postTask("/tasks", task);
+    if (newId) {
+        task.id = newId; 
+        tasks.push(task);
+        updateInProgress(task);
+    }
+    createTaskFinale();
+}
+
+async function createTaskAwaitFeedback() {
+    await pushToUsersArray(); 
+    const task =taskObjectAwaitFeedback();
+
+    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
+
+    let newId= await postTask("/tasks", task);
+    if (newId) {
+        task.id = newId; 
+        tasks.push(task);
+        updateAwaitFeedback(task);
+    }
+    createTaskFinale();
+}
+
 function taskObject() {
     return {
         title: document.getElementById("title_add_task").value,
@@ -229,6 +259,32 @@ function taskObject() {
         category: document.getElementById("category_add_task").innerText, 
         subtasks: getNewSubtasks(),
         status: "toDo"
+    };
+}
+
+function taskObjectInProgress() {
+    return {
+        title: document.getElementById("title_add_task").value,
+        description: document.getElementById("description_add_task").value,
+        dueDate: document.getElementById("dateInput-add-task").value,
+        priority: getPriority(),
+        assignedUsers: assignedUsers,
+        category: document.getElementById("category_add_task").innerText, 
+        subtasks: getNewSubtasks(),
+        status: "inProgress"
+    };
+}
+
+function taskObjectAwaitFeedback() {
+    return {
+        title: document.getElementById("title_add_task").value,
+        description: document.getElementById("description_add_task").value,
+        dueDate: document.getElementById("dateInput-add-task").value,
+        priority: getPriority(),
+        assignedUsers: assignedUsers,
+        category: document.getElementById("category_add_task").innerText, 
+        subtasks: getNewSubtasks(),
+        status: "awaitFeedback"
     };
 }
 
@@ -265,6 +321,16 @@ function updateToDo(task){
     toDo.innerHTML +=generateTask(task);
 }
 
+function updateInProgress(task){
+    let inProgress = document.getElementById('inProgress');
+    inProgress.innerHTML +=generateTask(task);
+}
+
+function updateAwaitFeedback(task){
+    let awaitFeedback = document.getElementById('awaitFeedback');
+    awaitFeedback.innerHTML +=generateTask(task);
+}
+
 function getPriority() {
     if (document.getElementById("urgent-rad").checked) return "Urgent";
     if (document.getElementById("medium-rad").checked) return "Medium";
@@ -297,6 +363,12 @@ function showTaskMessage() {
 }
 
 function showErrorMessage(message, errorId) {
+    let allErrorContainers = document.querySelectorAll('.error-message');
+    
+    for (let i = 0; i < allErrorContainers.length; i++) {
+        allErrorContainers[i].style.display = 'none';
+    }
+
     let errorContainer = document.getElementById(errorId);
     errorContainer.innerText = message;
     errorContainer.style.display = 'block';
