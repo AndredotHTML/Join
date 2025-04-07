@@ -3,6 +3,12 @@ let users = [];
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
+function signupInit() {
+    pushToUsersArray()
+    toggleSignupButton("signup_button_activate")
+}
+
+
 /**
  * toggles the visibility for the password input
  * @param {*} id - the ID of the element which will be toggled 

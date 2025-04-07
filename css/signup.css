@@ -248,3 +248,43 @@ input.error {
     color: #1c57bd;
     cursor: pointer;
 }
+
+@media (max-width: 900px) {
+    #signup_top {
+        padding: 32px;
+    }
+}
+
+@media (max-width: 540px) {
+    #signup_container {
+        padding: 16px 32px;
+    }
+
+    #bottom_bar {
+        padding-bottom: 16px;
+    }
+
+    .input_container input {
+        padding-right: 0;
+        font-size: 18px;
+    }
+
+    .checkbox_container {
+        font-size: 16px;
+    }
+
+    .join_logo {
+        width: 64px;
+        height: 78.03px;
+    }
+
+    #arrow_left {
+        top: 5%;
+    }
+
+    #signup_msg {
+        width: 240px;
+    }
+
+}
+

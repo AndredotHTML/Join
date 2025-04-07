@@ -202,3 +202,53 @@ input.error {
     color: #4589FF;
     cursor: pointer;
 }
+
+@media (max-width: 900px) {
+    #to_signup {
+        top: unset;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        justify-content: center;
+    }
+
+    #login_buttons {
+        flex-direction: column;
+    }
+
+    #login_top {
+        padding: 40px;
+    }
+}
+
+@media (max-width: 520px) {
+    #login_container {
+        padding: 16px 32px;
+    }
+
+    .input_container input {
+        padding-right: 0;
+        font-size: 18px;
+    }    
+
+    #bottom_bar {
+        padding-bottom: 16px;
+    }
+
+    .join_logo {
+        width: 64px;
+        height: 78.03px;
+        background-size: contain;
+        top: 32px;
+        left: 32px;
+    }
+
+    #to_signup {
+        font-size: 16px;
+    }
+
+    button {
+        font-size: 16px;
+    }
+} 

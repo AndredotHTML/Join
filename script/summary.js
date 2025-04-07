@@ -185,13 +185,15 @@ function renderDoneTasks(id) {
 
 function renderUrgentDate() {
     const urgentTasks = tasks.filter(task => task.priority === "urgent");
+    if (urgentTasks.length > 0) { 
     const date = new Date(urgentTasks[0].dueDate);
-
     const options = {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     };
-  
     document.getElementById("dueDate").innerText = date.toLocaleDateString('en-US', options);
+    } else {
+    return
+    }
 }
