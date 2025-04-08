@@ -1,7 +1,7 @@
 let tasks = [];
 
 let currentDraggedElement;
-const predefinedColors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF"];
+const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
 
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
@@ -180,7 +180,15 @@ function toggleCategoryColor(category) {
     }
 }
 
+function isSubtasksEmpty(subtasks) {
+    return !subtasks || Object.keys(subtasks).length === 0;
+}
+
 function calculateSubtaskProgress(subtasks) {
+    if (isSubtasksEmpty(subtasks)) {
+        return { completed: 0, total: 0, progress: 0 };
+    }
+
     let total = Object.keys(subtasks).length;
     let completed = Object.values(subtasks).filter(st => st.completed).length;
     let progress = (completed / total) * 100 ;
@@ -205,14 +213,19 @@ function togglePriority(priority){
 }
 
 function getUsersInitials(assignedUsers) {
+    if (!assignedUsers || assignedUsers.length === 0) return [];
     let usersWithInitials = [];
 
     for (let index = 0; index < assignedUsers.length; index++) {
         let name = assignedUsers[index];
-        let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+        let nameParts = name.trim().split(' ');
+        let initials = nameParts.length >= 2
+            ? `${nameParts[0][0]}${nameParts[1][0]}`
+            : `${nameParts[0][0]}`;
+
         usersWithInitials.push({
-            'initials': initials,
-            'name': name
+            initials: initials.toUpperCase(),
+            name: name
         });
     }
     return usersWithInitials;
@@ -220,6 +233,7 @@ function getUsersInitials(assignedUsers) {
 
 function generateUserIcons(assignedUsers){
     let usersData = getUsersInitials(assignedUsers);
+    if (usersData.length === 0) return ''
     let userIcon = '';
     let overlapDistance = 30;
 
