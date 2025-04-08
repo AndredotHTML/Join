@@ -1,5 +1,11 @@
 let assignedUsers =[];
 
+function openCalendar() {
+    const dateInput = document.getElementById("dateInput-add-task");
+        flatpickr(dateInput, {
+            dateFormat: "d/m/Y", 
+        }).open();
+}
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio_btn");
     labelList.forEach(radioBtn => {

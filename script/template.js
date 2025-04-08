@@ -141,8 +141,11 @@ function addTaskOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
@@ -225,8 +228,11 @@ function addTaskInProgressOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
@@ -309,8 +315,11 @@ function addTaskAwaitFeedbackOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">

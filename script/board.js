@@ -3,6 +3,7 @@ let tasks = [];
 let currentDraggedElement;
 const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
 
+
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
@@ -49,10 +50,9 @@ async function getAllTasks(path) {
     return  await response.json()
 }
 
-
 async function pushToTask() {
     let task = await getAllTasks("/tasks"); 
-    let tasksArray = Object.keys(task);
+    let tasksArray = task ? Object.keys(task) : [];
 
     for (let index = 0; index < tasksArray.length; index++) {
         let taskData = task[tasksArray[index]]; 
@@ -69,6 +69,7 @@ async function pushToTask() {
         });
     }
     console.log(tasks);
+    updateView()
 }
 
 function handleSearch() {
