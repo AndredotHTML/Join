@@ -298,10 +298,10 @@ function createTaskFinale() {
     showTaskMessage();
     resetFormFields();
     resetSubtasks();
-    setTimeout(closeOverlay, 1000);
     setTimeout(() => {
         location.reload();
     }, 1000);
+    setTimeout(closeOverlay, 1000);
 }
 
 function validateForm(title, dueDate, priority, category) {
