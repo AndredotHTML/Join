@@ -1,7 +1,8 @@
 let tasks = [];
 
 let currentDraggedElement;
-const predefinedColors = ["#FF5733", "#33FF57", "#3357FF", "#FF33A1", "#A133FF"];
+const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
+
 
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
@@ -49,10 +50,9 @@ async function getAllTasks(path) {
     return  await response.json()
 }
 
-
 async function pushToTask() {
     let task = await getAllTasks("/tasks"); 
-    let tasksArray = Object.keys(task);
+    let tasksArray = task ? Object.keys(task) : [];
 
     for (let index = 0; index < tasksArray.length; index++) {
         let taskData = task[tasksArray[index]]; 
@@ -69,6 +69,48 @@ async function pushToTask() {
         });
     }
     console.log(tasks);
+    updateView()
+}
+
+function handleSearch() {
+    let searchTerm = document.querySelector('.search_container input').value.toLowerCase();
+    hideAllSections();
+    let isAnyTaskFound = false;
+
+    isAnyTaskFound != filterAndDisplayTasks('toDo', searchTerm);
+    isAnyTaskFound != filterAndDisplayTasks('inProgress', searchTerm);
+    isAnyTaskFound != filterAndDisplayTasks('awaitFeedback', searchTerm);
+    isAnyTaskFound != filterAndDisplayTasks('done', searchTerm);
+
+     if (!isAnyTaskFound) {
+        showAllSections();
+    }
+}
+
+function filterAndDisplayTasks(status, searchTerm) {
+    let filteredTasks = tasks.filter(t => t['status'] === status && 
+        (t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm))
+    );
+    let container = document.getElementById(status);
+    container.innerHTML = '';
+    for (let i = 0; i < filteredTasks.length; i++) {
+            let element = filteredTasks[i];
+            container.innerHTML += generateTask(element);
+    }
+}
+
+function hideAllSections() {
+    let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+    for (let i = 0; i < sections.length; i++) {
+        document.getElementById(sections[i]).style.display = "none";
+    }
+}
+
+function showAllSections() {
+    let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+    for (let i = 0; i < sections.length; i++) {
+        document.getElementById(sections[i]).style.display = "block";
+    }
 }
 
 function displayToDo() {
@@ -139,7 +181,15 @@ function toggleCategoryColor(category) {
     }
 }
 
+function isSubtasksEmpty(subtasks) {
+    return !subtasks || Object.keys(subtasks).length === 0;
+}
+
 function calculateSubtaskProgress(subtasks) {
+    if (isSubtasksEmpty(subtasks)) {
+        return { completed: 0, total: 0, progress: 0 };
+    }
+
     let total = Object.keys(subtasks).length;
     let completed = Object.values(subtasks).filter(st => st.completed).length;
     let progress = (completed / total) * 100 ;
@@ -164,14 +214,19 @@ function togglePriority(priority){
 }
 
 function getUsersInitials(assignedUsers) {
+    if (!assignedUsers || assignedUsers.length === 0) return [];
     let usersWithInitials = [];
 
     for (let index = 0; index < assignedUsers.length; index++) {
         let name = assignedUsers[index];
-        let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+        let nameParts = name.trim().split(' ');
+        let initials = nameParts.length >= 2
+            ? `${nameParts[0][0]}${nameParts[1][0]}`
+            : `${nameParts[0][0]}`;
+
         usersWithInitials.push({
-            'initials': initials,
-            'name': name
+            initials: initials.toUpperCase(),
+            name: name
         });
     }
     return usersWithInitials;
@@ -179,6 +234,7 @@ function getUsersInitials(assignedUsers) {
 
 function generateUserIcons(assignedUsers){
     let usersData = getUsersInitials(assignedUsers);
+    if (usersData.length === 0) return ''
     let userIcon = '';
     let overlapDistance = 30;
 

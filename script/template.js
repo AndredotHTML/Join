@@ -64,15 +64,15 @@ function generateTask(element) {
     <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
-    ${element.subtasks && element.subtasks.length > 0 ? `
-        <div class="ticket_subtasks">
-            <div class="progress_bar">
-                <div class="progress" style="width: ${progress}%;"></div>
-            </div>
-            <div class="completed"><span>${completed}/${total} Subtasks</span></div>
-        </div>` : ''}
-    <div class="ticket_footer">
-    <div class="ticket_users">${user_icon}</div>
+    ${element.subtasks ? `
+    <div class="ticket_subtasks">
+    <div class="progress_bar">
+    <div class="progress" style="width: ${progress}%;"></div>
+    </div>
+    <div class="completed"><span>${completed}/${total} Subtasks</span></div>
+    </div>` : ''}
+    <div class="ticket_footer ${!user_icon ? 'no_users' : ''}">
+    <div class="ticket_users">${user_icon || ''}</div>
     <div class="ticket_priority">${priority_img}</div>
     </div>
     </div>`
@@ -90,7 +90,7 @@ function generateTaskOverlay(element) {
     let bg_color = toggleCategoryColor(element.category);
     let priority_img = togglePriority(element.priority);
     let user_icon_name =generateOverlayUserIcons(element.assignedUsers);
-    let subtask = generateSubtasks(element.subtasks, element.id);
+    let subtask = element.subtasks ? generateSubtasks(element.subtasks, element.id) : '';
 
     return `
     <div  class="ticket_overlay">
@@ -104,14 +104,18 @@ function generateTaskOverlay(element) {
     <div >${element.dueDate}</div></div>
     <div class="priority_overlay"><span>Priority: </span>
     <div>${element.priority}  ${priority_img}</div></div>
-    <div class="assigned_overlay">
-    <table>
-    <tr><th>Assigned To:</th> </tr>
-    <tr><td>${user_icon_name}</td></tr>
-    </table></div>
-        <div class="subtasks_overlay"><span>Subtasks:</span>
-            ${subtask}
+    ${user_icon_name ? `
+        <div class="assigned_overlay">
+            <table>
+                <tr><th>Assigned To:</th></tr>
+                <tr><td>${user_icon_name}</td></tr>
+            </table>
         </div>
+        ` : ''}
+         ${subtask ? `
+            <div class="subtasks_overlay"><span>Subtasks:</span>
+                ${subtask}
+            </div>` : ''}
     <div class="delete_edit">
         <button type="button" class="delete_btn" onclick="deleteTask('${element.id}')"><img src="../assets/icons/delete.png" alt="delete icon">Delete</button>
         <button type="button" class="edit_btn"><img src="../assets/icons/edit.png" alt="edit icon" onclick="editTask('${element.id}')">Edit</button>
@@ -137,8 +141,11 @@ function addTaskOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
@@ -221,8 +228,11 @@ function addTaskInProgressOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">
@@ -305,8 +315,11 @@ function addTaskAwaitFeedbackOverlay(){
             <textarea  id="description_add_task" placeholder="Enter a Description"></textarea>
             </div>
             <div class="date">
-            <span><strong>Due date </strong></span>
-            <input type="date" id="dateInput-add-task">
+            <span><strong>Due date</strong></span>
+            <div class="date-picker-wrapper">
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
+            </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
             </div>
             <div class="priority">

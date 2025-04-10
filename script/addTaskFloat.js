@@ -1,5 +1,11 @@
 let assignedUsers =[];
 
+function openCalendar() {
+    const dateInput = document.getElementById("dateInput-add-task");
+        flatpickr(dateInput, {
+            dateFormat: "d/m/Y", 
+        }).open();
+}
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio_btn");
     labelList.forEach(radioBtn => {
@@ -292,7 +298,9 @@ function createTaskFinale() {
     showTaskMessage();
     resetFormFields();
     resetSubtasks();
-    localStorage.removeItem('selectedUsers');
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
     setTimeout(closeOverlay, 1000);
 }
 
@@ -343,10 +351,13 @@ function getNewSubtasks() {
     let subtaskElements = document.querySelectorAll("#added-subtasks li");
 
     for (let i = 0; i < subtaskElements.length; i++) {
-        subtasks.push({
-            title: subtaskElements[i].innerHTML, 
-            completed: false
-        });
+        let subtaskTextElement = subtaskElements[i].querySelector('.subtask_text');
+        if (subtaskTextElement) {
+            subtasks.push({
+                title: subtaskTextElement.textContent.trim(),
+                completed: false
+            });
+        }
     }
     return subtasks;
 }

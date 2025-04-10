@@ -173,6 +173,7 @@
 .ticket_description{
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 20px;
     color: #a8a8a8;
 }
 
@@ -180,7 +181,8 @@
     display: flex;
     align-items: center;
     gap: 10px; 
-    padding:20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .progress_bar {
@@ -207,9 +209,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-left: 20px; 
-    padding-right: 20px; 
-    padding-bottom: 20px; 
+    padding:20px; 
+}
+
+.ticket_footer.no_users{
+    padding: 0 20px  20px  20px;
 }
 
 
