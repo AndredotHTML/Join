@@ -3,7 +3,7 @@ let isDropdownOpen = false;
 const form = document.getElementById("form-add-task");
 let getUserCache = [];
 user = []
-
+let lastCursPosDisc = 0
 
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
@@ -31,9 +31,8 @@ function generateUserIcon() {
 
 document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
+    enabledCreatBtn()
     await getUser(path = "/users");
-    // displayIconToclear()
-    // document.getElementById("assigned-to-container").addEventListener("click", dropDownForAssigned);
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
@@ -114,9 +113,14 @@ function addSubtask() {
 }
 
 function clearForm() {
-    document.forms[0].reset()
     let displaydSubtaskRef = document.getElementById("added-subtasks")
+    let categoryRef = document.getElementById("category-add-task")
+    let assignedToAreaRef = document.getElementById("assigned-to-display")
+    document.forms[0].reset()
+    assignedToAreaRef.innerHTML = ""
+    categoryRef.innerHTML = "Select task category"
     displaydSubtaskRef.innerHTML = ""
+    enabledCreatBtn()
     let labelList = document.querySelectorAll(".radio-btn")
     labelList.forEach(radioBtn => {
         radioBtn.style.backgroundColor = `var(--secondaryColor)`;
@@ -133,7 +137,6 @@ function creatTask() {
     let categoryNewTaskRef = document.getElementById("category-add-task")
     let assignedUserRef = assignetUserToData()
     let subtasks = getSubtasks();
-
     let data = {
         title: titleNewTaskRef.value,
         description: descriptionNewTaskRef.value,
@@ -146,6 +149,21 @@ function creatTask() {
     };
     postTask("/tasks", data)
     transferToBoard()
+
+}
+
+function enabledCreatBtn() {
+    let titleNewTaskRef = document.getElementById("title-add-task")
+    let dateNewTaskRef = document.getElementById("date-input-add-task")
+    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
+    let categoryNewTaskRef = document.getElementById("category-add-task")
+    let btn = document.getElementById("add-task-create-btn")
+    if (titleNewTaskRef.value !== "" && dateNewTaskRef.value !== "" && priorityNewTaskRef !== null && categoryNewTaskRef.innerText !== "Select task category") {
+        btn.disabled = false
+    }
+    else {
+        btn.disabled = true
+    }
 }
 
 function getSubtasks() {
@@ -243,13 +261,13 @@ function dropDownForAssigned() {
     } else {
         closeDropdown();
         blurAssig()
-        
     }
     isDropdownOpen = !isDropdownOpen;
 }
 
 function blurAssig() {
     let assignRef = document.getElementById("assigned-to-input")
+    assignRef.value = ""
     assignRef.blur()
 }
 
@@ -378,6 +396,10 @@ function deleteSubtask(element) {
 
 function transferToBoard() {
     document.body.innerHTML += tempTaskToBoardOverlay()
+    let createTaskBtn = document.getElementById("add-task-create-btn")
+    let createTaskIcon = document.getElementById("btn-icon-check")
+    createTaskBtn.classList.add("activCreatBtn")
+    createTaskIcon.classList.add("checktIcon")  
     setTimeout(() => {
         window.location.href = "/html/board.html";
     }, 800);
@@ -387,23 +409,22 @@ function customDateInput() {
     let dateInputRef = document.getElementById("date-input-add-task");
     let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
     let displaydDate = ""
-    if (dateInputVal.length >= 1 ) {
-        if (dateInputVal.slice(0,2) > 31 ) {
+    if (dateInputVal.length >= 1) {
+        if (dateInputVal.slice(0, 2) > 31) {
             displaydDate = 31
-        }else{
-        displaydDate = dateInputVal.slice(0,2)
-        }
-    }
-    if (dateInputVal.length >= 3 ) {
-        
-        if (dateInputVal.slice(2,4) > 12 ) {
+        } else {
+            displaydDate = dateInputVal.slice(0, 2)
+        }    
+    }   
+    if (dateInputVal.length >= 3) {
+        if (dateInputVal.slice(2, 4) > 12) {
             displaydDate += "/" + 12
-        }else{
-            displaydDate += "/" + dateInputVal.slice(2,4)
+        } else {
+            displaydDate += "/" + dateInputVal.slice(2, 4)
         }
     }
-    if (dateInputVal.length >= 5 ) {
-        displaydDate += "/" + dateInputVal.slice(4,8)
+    if (dateInputVal.length >= 5) {
+        displaydDate += "/" + dateInputVal.slice(4, 8)
     }
     dateInputRef.value = displaydDate
 }
@@ -413,9 +434,31 @@ function showPicker() {
     pickerRef.showPicker()
 }
 
-function transferFromPicker(){
+function transferFromPicker() {
     let pickerRef = document.getElementById("nativ-date-input")
     let dateInputRef = document.getElementById("date-input-add-task")
     let reversDate = pickerRef.value.split("-").reverse().join("/")
     dateInputRef.value = reversDate
 }
+
+function textareaCursPos() {
+    let textarea = document.querySelector("textarea")
+    if (textarea.value.trim() == "") {
+        textarea.setSelectionRange(0,0)
+    }else{
+        textarea.setSelectionRange(lastCursPosDisc,lastCursPosDisc)
+    }
+}
+
+function lastCurserposition() {
+    let textarea = document.querySelector("textarea")
+    lastCursPosDisc = textarea.selectionStart;
+}
+
+
+function resizeTextarea(e) {
+    const minHeight = 160;
+    let textarea = document.querySelector("textarea")
+    let newHeight = Math.max(e.clientY - textarea.getBoundingClientRect().top, minHeight);
+    textarea.style.height = newHeight + 'px';
+  }

@@ -2,10 +2,6 @@
     box-sizing: border-box;
 }
 
-body {
-    line-height: 120%;
-}
-
 .add-task-content {
     display: flex;
     margin: 0;
@@ -32,19 +28,16 @@ body {
 .assigned-to,
 .category,
 .subtask-area,
-.subtask {
+.subtask,
+.btn {
     cursor: pointer;
 }
-
 
 label,
 legend {
     height: 23px;
     font-size: 19px;
     font-weight: 700;
-}
-
-label span {
     color: #42526e;
 }
 
@@ -54,7 +47,7 @@ label span {
     justify-content: end;
 }
 
-select {
+/* select {
     width: 100%;
     padding: 12px 16px;
     border: none;
@@ -67,7 +60,7 @@ select {
     font-size: 19px;
     height: 48px;
     background: url(../assets/icons/arrow_drop_down.svg) no-repeat center right 16px;
-}
+} */
 
 .wrapper-select {
     width: 100%;
@@ -126,10 +119,6 @@ li[contenteditable="true"] {
     outline: none;
 }
 
-/* .profile_menu_item:hover{
-    background-color:#d2e2ff;
-} */
-
 .separator {
     height: 24px;
     width: 1px;
@@ -137,8 +126,6 @@ li[contenteditable="true"] {
 }
 
 .icon-form {
-    height: 24px;
-    width: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -165,6 +152,10 @@ li[contenteditable="true"] {
     height: 100%;
 }
 
+.assigned-to-input::placeholder{
+    color: #000;
+}
+
 .assigned-contacts>label {
     justify-content: space-between;
     align-items: center;
@@ -172,13 +163,14 @@ li[contenteditable="true"] {
     height: 100%;
     font-weight: 400;
     padding: 7px 16px;
+    color: #000;
 }
 
 .assigned-contacts {
     border-radius: 10px;
     height: 56px;
-    align-items: center;
     gap: 16px;
+
 }
 
 .icon-name-template {
@@ -192,15 +184,15 @@ li[contenteditable="true"] {
 
 .assigned-contacts:has(input:checked) {
     background-color: #4589FF;
+}
+
+.assigned-contacts label:has(input:checked) {
     color: var(--secondaryColor)
 }
 
 .assigned-contacts:has(input:checked):hover {
     background-color: #005DFF;
-    color: var(--secondaryColor)
 }
-
-
 /*background-color placeholder*/
 .name-icon {
     color: white;
@@ -217,11 +209,7 @@ li[contenteditable="true"] {
 
 input[type="checkbox"] {
     appearance: none;
-    background-image: url(../assets/icons/unchecked.png);
-    background-repeat: no-repeat;
-    background-position: center;
-    width: 24px;
-    height: 24px;
+    background: url(../assets/icons/unchecked.png) no-repeat center;
     border-radius: 3px;
 }
 
@@ -229,28 +217,28 @@ input[type="checkbox"]:checked {
     background-image: url(../assets/icons/Check_button_white.png)
 }
 
-.add-task-create-btn:hover {
+.add-task-create-btn:enabled:hover {
     cursor: pointer;
     background-color: #0038ff;
 }
 
-.add-task-create-btn:active{
-    background-color: #FFFFFF;
-    color: var(--primaryColor);
+.activCreatBtn{
+    background-color: #FFFFFF !important;
+    color: var(--primaryColor) !important;
 }
 
 .btn-icon-check{
-    height: 24px;
-    width: 24px;
     background: url(../assets/icons/check.svg) no-repeat center ;
 }
 
-.add-task-create-btn:active .btn-icon-check{
-    background: url(../assets/icons/check_blue.svg)no-repeat center;
+.checktIcon{
+    background: url(../assets/icons/check_blue.svg)no-repeat center !important;
 }
 
-
-
+.icon-24{
+    height: 24px;
+    width: 24px;
+}
 
 form {
     display: flex;
@@ -259,7 +247,6 @@ form {
     padding: 64px 24px 0px;
     gap: 24px;
     height: 928px;
-    box-sizing: border-box;
 }
 
 .form-scroll-container {
@@ -268,7 +255,6 @@ form {
     height: calc(100vh - 96px);
     width: 488px;
     overflow-y: auto;
-    padding-right: 24px;
     overflow-x: hidden;
 }
 
@@ -280,15 +266,10 @@ form {
     gap: 1px;
 }
 
-
 .validation-add-task-form {
     height: 16px;
     font-size: 13px;
     font-family: inter;
-}
-
-.btn {
-    cursor: pointer;
 }
 
 #subtask-icons {
@@ -590,12 +571,11 @@ textarea {
 }
 
 .resize{
-    resize: both;
+    cursor: ns-resize;
     overflow: auto;
     position: absolute;
     left:calc(100% - 30px);
     top:calc(100% - 48px );
-
 }
 
 textarea:focus {
@@ -620,7 +600,6 @@ textarea:focus {
     flex-direction: column;
     display: flex;
     gap: 8px;
-
 }
 
 .shell-radio-btn>label>input~.unchecked-priority {
@@ -681,14 +660,6 @@ input[type="radio"] {
     border-bottom: 2px solid var(--lowColor);
 }
 
-/* input[type="date"]::-webkit-calendar-picker-indicator {
-    background: url("/assets/icons/event.png") no-repeat center;
-    position: relative;
-    cursor: pointer;
-    left: 250px;
-    object-fit: cover
-} */
-
 .date-picker-icon{
         position: relative;
         cursor: pointer;
@@ -745,8 +716,6 @@ input[type="date"]::-webkit-datetime-edit-fields-wrapper {
     border: 1px solid #005DFF;
 }
 .btn-icon-shell{
-    height: 24px;
-    width: 24px;
     background: url(../assets/icons/clear.svg) no-repeat center ;
 }
 .clear-form-btn:hover .btn-icon-shell{

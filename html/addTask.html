@@ -73,7 +73,7 @@
             </section>
             <div class="add-task-main">
                 <div class="form-scroll-container">
-                    <form action="" id="form-add-task" method="POST">
+                    <form action="" id="form-add-task" method="POST" onmouseout="enabledCreatBtn()">
                         <div class="form-header">
                             <div class="title-wrapper">
                                 <input type="text" id="title-add-task" class="title-add-task"
@@ -84,10 +84,14 @@
                             <div class="description-wrapper">
                                 <label for="description-add-task">Description <span>(optional)</span>
                                 </label>
-                                <textarea name="description-add-task" class="custom-resize description-add-task"
+                                <textarea onclick="textareaCursPos()" oninput="lastCurserposition()"
+                                    name="description-add-task" class="custom-resize description-add-task"
                                     id="description-add-task" placeholder="Enter a Description">
                                 </textarea>
-                                <img src="../assets/icons/Recurso.svg" alt="Resize" class="resize">
+                                <div class="resize" onmousedown="resizeTextarea(event)">
+                                    <img src="../assets/icons/Recurso.svg" draggable="false" alt="Resize"
+                                        >
+                                </div>
                                 <div class="validation-add-task-form">
                                 </div>
                             </div>
@@ -95,10 +99,12 @@
                                 <label for="date-input-add-task">Due date
                                 </label>
                                 <input type="date" name="nativ-date-input" id="nativ-date-input" class=""
-                                     onchange="transferFromPicker()">
-                                <div class="d_flex custom-date-input" id="custom-date-input"  onfocus="resValidOnInp(this)">
-                                    <input type="text" name="date-input-add-task" id="date-input-add-task" class="date-input-add-task"
-                                        maxlength="10" placeholder="dd/mm/yyyy" oninput="customDateInput()" onfocus="resValidOnInp(this)">
+                                    onchange="transferFromPicker()">
+                                <div class="d_flex custom-date-input" id="custom-date-input"
+                                    onfocus="resValidOnInp(this)">
+                                    <input type="text" name="date-input-add-task" id="date-input-add-task"
+                                        class="date-input-add-task" maxlength="10" placeholder="dd/mm/yyyy"
+                                        oninput="customDateInput()" onfocus="resValidOnInp(this)">
                                     <label for="nativ-date-input" onclick="showPicker()">
                                         <img class="date-picker-icon" src="/assets/icons/event.png" alt="">
                                     </label>
@@ -134,11 +140,12 @@
                             <label for="assigned-to-input">
                                 Assigned to <span>(optional)</span>
                             </label>
-                            <div id="assigned-to-container" class="assigned-to-container" onclick="dropDownForAssigned()">
+                            <div id="assigned-to-container" class="assigned-to-container"
+                                onclick="dropDownForAssigned()">
                                 <div class="d_flex wrapper-select">
                                     <input type="text" type="text" id="assigned-to-input" class="assigned-to-input"
                                         placeholder="Select contacts to assign">
-                                    <div class="icon-form" id="arrow-open-assigned">
+                                    <div class="icon-form icon-24" id="arrow-open-assigned">
                                         <img src="../assets/icons/arrow_drop_down.svg" alt="">
                                         <img class="d_none" src="../assets/icons/arrow_drop_down_close.svg" alt="">
                                     </div>
@@ -155,13 +162,13 @@
                                 <div name="category-add-task" id="category-add-task" class="category-add-task">
                                     Select task category
                                 </div>
-                                <div class="icon-form" id="arrow-open-category">
+                                <div class="icon-form icon-24" id="arrow-open-category">
                                     <img src="../assets/icons/arrow_drop_down.svg" alt="">
                                     <img class="d_none" src="../assets/icons/arrow_drop_down_close.svg" alt="">
                                 </div>
                             </div>
-                            <div class="option-category d_none">Technical Task</div>
-                            <div class="option-category d_none">User Story</div>
+                            <div class="option-category d_none" data-value="Technical Task">Technical Task</div>
+                            <div class="option-category d_none" data-value="User Story">User Story</div>
                         </div>
                         <div class="wrapper-subtasks">
                             <label for="subtask">Subtasks <span>(optional)</span></label>
@@ -169,14 +176,14 @@
                                 <input type="text" id="subtask" class="subtask" placeholder="Add new subtask"
                                     onclick="stopPropagation(event)">
                                 <div class="d_flex">
-                                    <div class="icon-form" id="working-icons-opener">
+                                    <div class="icon-form icon-24" id="working-icons-opener">
                                         <img src="/assets/icons/add.png" alt="" onclick="changeSubtaskIcons()">
                                     </div>
                                     <div class="d_none icons-subtask" id="input-subtask-icons">
-                                        <img src="/assets/icons/close_cross.svg" class="icon-form"
+                                        <img src="/assets/icons/close_cross.svg" class="icon-form icon-24"
                                             id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
                                         <div class="separator"></div>
-                                        <img src="/assets/icons/check_blue.svg" class="icon-form" alt=""
+                                        <img src="/assets/icons/check_blue.svg" class="icon-form icon-24" alt=""
                                             onclick="addSubtask()">
                                     </div>
                                 </div>
@@ -190,13 +197,13 @@
                     <div class="add-task-btns">
                         <button class="btn clear-form-btn" onclick="clearForm()">
                             <div class="btn-title">Clear</div>
-                            <div class="btn-icon-shell">
+                            <div class="btn-icon-shell icon-24">
                             </div>
                         </button>
-                        <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task" onclick=""
+                        <button id="add-task-create-btn" class="btn add-task-create-btn" form="form-add-task"
                             type="submit">
                             <div class="btn-title">Create Task </div>
-                            <div class="btn-icon-check">
+                            <div class="btn-icon-check icon-24" id="btn-icon-check">
                             </div>
                         </button>
                     </div>

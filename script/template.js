@@ -32,7 +32,7 @@ function templateAssignedTo(userName,isChecked) {
                         ${userName}
                     </div>
                 </div>
-                <input type="checkbox" ${isChecked?"checked" :""} class="input-assigned" name="assigned-user-${userName}" id="assigned-user-${userName}">
+                <input type="checkbox" ${isChecked?"checked" :""} class="input-assigned icon-24" name="assigned-user-${userName}" id="assigned-user-${userName}">
             </label>  
         </div>    
     `
