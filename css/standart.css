@@ -49,9 +49,6 @@
     --variant15: #FF4646;
     --boxShadowNuevo: 0px 0px 4px 0px #00000029;
     --boxShadowStronger: 0px 4px 8px 0px #00000033;
-
-
-
 }
 
 * {
@@ -64,6 +61,23 @@
 
 .d_none {
     display: none !important;
+}
+
+.center-center{
+    justify-content: center;
+    align-items: center;
+}
+
+.d-f-row{
+    flex-direction: row;
+}
+
+.d-f-column{
+    flex-direction: column;
+}
+
+.poiner{
+    cursor: pointer;
 }
 
 html {

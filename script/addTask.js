@@ -5,6 +5,8 @@ let getUserCache = [];
 user = []
 let lastCursPosDisc = 0
 
+
+
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
@@ -29,6 +31,10 @@ function generateUserIcon() {
     }
 }
 
+function stopPropagation(event) {
+    event.stopPropagation()
+}
+
 document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
     enabledCreatBtn()
@@ -36,23 +42,77 @@ document.addEventListener("DOMContentLoaded", async function () {
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
-function changeSubtaskIcons() {
-    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
-    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
-    creatSubtaskAreaRef.classList.toggle("d_flex");
-    creatSubtaskAreaRef.classList.toggle("d_none");
-    displaySubtaskIconRef.classList.toggle("d_none")
+/** changes the date format and limits the days and months
+ * @example 10/04/2025
+  */
+
+function customDateInput() {
+    let dateInputRef = document.getElementById("date-input-add-task");
+    let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
+    let displaydDate = ""
+    if (dateInputVal.length >= 1) {
+        if (dateInputVal.slice(0, 2) > 31) {
+            displaydDate = 31
+        } else {
+            displaydDate = dateInputVal.slice(0, 2)
+        }
+    }
+    if (dateInputVal.length >= 3) {
+        if (dateInputVal.slice(2, 4) > 12) {
+            displaydDate += "/" + 12
+        } else {
+            displaydDate += "/" + dateInputVal.slice(2, 4)
+        }
+    }
+    if (dateInputVal.length >= 5) {
+        displaydDate += "/" + dateInputVal.slice(4, 8)
+    }
+    dateInputRef.value = displaydDate
 }
 
-function clearInputSubtask() {
-    let inputSubtaskRef = document.getElementById("subtask")
-    inputSubtaskRef.value = ""
-    changeSubtaskIcons()
+function showPicker() {
+    let pickerRef = document.getElementById("nativ-date-input")
+    pickerRef.showPicker()
 }
 
-function stopPropagation(event) {
-    event.stopPropagation()
+function transferFromPicker() {
+    let pickerRef = document.getElementById("nativ-date-input")
+    let dateInputRef = document.getElementById("date-input-add-task")
+    let reversDate = pickerRef.value.split("-").reverse().join("/")
+    dateInputRef.value = reversDate
 }
+
+function textareaCursPos() {
+    let textarea = document.querySelector("textarea")
+    if (textarea.value.trim() == "") {
+        textarea.setSelectionRange(0, 0)
+    } else {
+        textarea.setSelectionRange(lastCursPosDisc, lastCursPosDisc)
+    }
+}
+
+function lastCurserposition() {
+    let textarea = document.querySelector("textarea")
+    lastCursPosDisc = textarea.selectionStart;
+}
+
+function resizeTextarea(e) {
+    const minHeight = 160;
+    let textarea = document.querySelector("textarea")
+    let newHeight = Math.max(e.clientY - textarea.getBoundingClientRect().top, minHeight);
+    textarea.style.height = newHeight + 'px';
+}
+
+document.addEventListener("click", function (e) {
+    let wrapper = document.querySelector(".wrapper-assigned-to")
+    if (!wrapper.contains(e.target)) {
+        if (isDropdownOpen) {
+            closeDropdown();
+            blurAssig()
+            isDropdownOpen = false
+        }
+    }
+})
 
 form.addEventListener("submit", function (event) {
     event.preventDefault();
@@ -112,6 +172,20 @@ function addSubtask() {
     changeSubtaskIcons()
 }
 
+function changeSubtaskIcons() {
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    creatSubtaskAreaRef.classList.toggle("d_flex");
+    creatSubtaskAreaRef.classList.toggle("d_none");
+    displaySubtaskIconRef.classList.toggle("d_none")
+}
+
+function clearInputSubtask() {
+    let inputSubtaskRef = document.getElementById("subtask")
+    inputSubtaskRef.value = ""
+    changeSubtaskIcons()
+}
+
 function clearForm() {
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let categoryRef = document.getElementById("category-add-task")
@@ -120,7 +194,6 @@ function clearForm() {
     assignedToAreaRef.innerHTML = ""
     categoryRef.innerHTML = "Select task category"
     displaydSubtaskRef.innerHTML = ""
-    enabledCreatBtn()
     let labelList = document.querySelectorAll(".radio-btn")
     labelList.forEach(radioBtn => {
         radioBtn.style.backgroundColor = `var(--secondaryColor)`;
@@ -129,27 +202,36 @@ function clearForm() {
     clearValidationArea()
 }
 
-function creatTask() {
-    let titleNewTaskRef = document.getElementById("title-add-task")
-    let descriptionNewTaskRef = document.getElementById("description-add-task")
-    let dateNewTaskRef = document.getElementById("date-input-add-task")
-    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
-    let categoryNewTaskRef = document.getElementById("category-add-task")
+
+function getTaskInputs() {
+    let titleNewTaskRef = document.getElementById("title-add-task").value
+    let descriptionNewTaskRef = document.getElementById("description-add-task").value
+    let dateNewTaskRef = document.getElementById("date-input-add-task").value
+    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked').value
+    let categoryNewTaskRef = document.getElementById("category-add-task").textContent
     let assignedUserRef = assignetUserToData()
     let subtasks = getSubtasks();
-    let data = {
-        title: titleNewTaskRef.value,
-        description: descriptionNewTaskRef.value,
-        dueDate: dateNewTaskRef.value,
-        priority: priorityNewTaskRef.value,
-        category: categoryNewTaskRef.textContent,
-        assignedUsers: assignedUserRef,
+    return {titleNewTaskRef,descriptionNewTaskRef,dateNewTaskRef,priorityNewTaskRef,categoryNewTaskRef,assignedUserRef,subtasks}
+}
+
+function creatTaskData(inputData) {
+    return {
+        title: inputData.titleNewTaskRef,
+        description: inputData.descriptionNewTaskRef,
+        dueDate: inputData.dateNewTaskRef,
+        priority: inputData.priorityNewTaskRef,
+        category: inputData.categoryNewTaskRef,
+        assignedUsers: inputData.assignedUserRef,
         status: "toDo",
-        subtasks: subtasks
+        subtasks: inputData.subtasks,
     };
+}
+
+function creatTask() {
+    let inputs= getTaskInputs()
+    let data = creatTaskData(inputs)
     postTask("/tasks", data)
     transferToBoard()
-
 }
 
 function enabledCreatBtn() {
@@ -265,13 +347,13 @@ function dropDownForAssigned() {
     isDropdownOpen = !isDropdownOpen;
 }
 
+
+
 function blurAssig() {
     let assignRef = document.getElementById("assigned-to-input")
     assignRef.value = ""
     assignRef.blur()
 }
-
-
 
 function openDropdown() {
     displayUser()
@@ -308,17 +390,20 @@ function styAssignedContClosed(assignedContactRef) {
     assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let nameTemplate = contact.querySelector(".assigned-template-name");
-        let inputTemplate = contact.querySelector(".input-assigned");
         let contactLabel = contact.querySelector("label")
         if (checkbox.checked) {
-            contact.classList.add("bg-white")
-            nameTemplate.style.display = "none";
-            inputTemplate.style.display = "none";
-            contactLabel.style.padding = "0"
+            styleForCheckedCont(contact,nameTemplate,checkbox,contactLabel)
         } else {
             contact.style.display = "none";
         }
     });
+}
+
+function styleForCheckedCont(contact,name,checkbox,contactLabel) {
+    contact.classList.add("bg-white")
+    name.style.display = "none";
+    checkbox.style.display = "none";
+    contactLabel.style.padding = "0"
 }
 
 function dropDownForCategory() {
@@ -398,67 +483,11 @@ function transferToBoard() {
     document.body.innerHTML += tempTaskToBoardOverlay()
     let createTaskBtn = document.getElementById("add-task-create-btn")
     let createTaskIcon = document.getElementById("btn-icon-check")
-    createTaskBtn.classList.add("activCreatBtn")
-    createTaskIcon.classList.add("checktIcon")  
+    createTaskBtn.classList.add("activ-creat-btn")
+    createTaskIcon.classList.add("checkt-icon")
     setTimeout(() => {
         window.location.href = "/html/board.html";
     }, 800);
 }
 
-function customDateInput() {
-    let dateInputRef = document.getElementById("date-input-add-task");
-    let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
-    let displaydDate = ""
-    if (dateInputVal.length >= 1) {
-        if (dateInputVal.slice(0, 2) > 31) {
-            displaydDate = 31
-        } else {
-            displaydDate = dateInputVal.slice(0, 2)
-        }    
-    }   
-    if (dateInputVal.length >= 3) {
-        if (dateInputVal.slice(2, 4) > 12) {
-            displaydDate += "/" + 12
-        } else {
-            displaydDate += "/" + dateInputVal.slice(2, 4)
-        }
-    }
-    if (dateInputVal.length >= 5) {
-        displaydDate += "/" + dateInputVal.slice(4, 8)
-    }
-    dateInputRef.value = displaydDate
-}
 
-function showPicker() {
-    let pickerRef = document.getElementById("nativ-date-input")
-    pickerRef.showPicker()
-}
-
-function transferFromPicker() {
-    let pickerRef = document.getElementById("nativ-date-input")
-    let dateInputRef = document.getElementById("date-input-add-task")
-    let reversDate = pickerRef.value.split("-").reverse().join("/")
-    dateInputRef.value = reversDate
-}
-
-function textareaCursPos() {
-    let textarea = document.querySelector("textarea")
-    if (textarea.value.trim() == "") {
-        textarea.setSelectionRange(0,0)
-    }else{
-        textarea.setSelectionRange(lastCursPosDisc,lastCursPosDisc)
-    }
-}
-
-function lastCurserposition() {
-    let textarea = document.querySelector("textarea")
-    lastCursPosDisc = textarea.selectionStart;
-}
-
-
-function resizeTextarea(e) {
-    const minHeight = 160;
-    let textarea = document.querySelector("textarea")
-    let newHeight = Math.max(e.clientY - textarea.getBoundingClientRect().top, minHeight);
-    textarea.style.height = newHeight + 'px';
-  }

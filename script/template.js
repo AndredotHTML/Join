@@ -1,16 +1,16 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
             <div class="d_flex addedSubtask id="">
-                <li class="subtask-value" ondblclick="editSubtasks(this)">
+                <li class="subtask-value poiner" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
-                <div class="icon-for-subtask-work" id="input-subtask-icons" >
+                <div class="icon-for-subtask-work poiner" id="input-subtask-icons" >
                     <div class="icons-subtask d_none subtask-hover-icons">
                         <img src="/assets/icons/edit.svg" class="icon-form  edit-subtask-icon" alt="edit Subtask" onclick="editSubtasks(this.closest('.addedSubtask').querySelector('.subtask-value'))">
                         <div class="separator"></div>
                         <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="deleteSubtask(this.closest('.addedSubtask'))">
                     </div>
-                    <div class="icons-subtask d_none subtask-edit-icons">
+                    <div class="icons-subtask d_none subtask-edit-icons poiner">
                         <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onmousedown="deleteSubtask(this.closest('.addedSubtask'))">
                         <div class="separator "></div>
                         <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" >
@@ -39,8 +39,8 @@ function templateAssignedTo(userName,isChecked) {
 }
 
 function tempTaskToBoardOverlay() {
-    return`<div id="task-to-board-overlay" class="d_flex">
-                <div id="task-to-board-animation" class="d_flex">
+    return`<div id="task-to-board-overlay" class="d_flex center-center">
+                <div id="task-to-board-animation" class="d_flex center-center">
                     <div>
                         Task added to board
                     </div>
