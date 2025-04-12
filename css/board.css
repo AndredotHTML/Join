@@ -216,7 +216,6 @@
     padding: 0 20px  20px  20px;
 }
 
-
 .ticket_users {
     position: relative;  
     width: 100%;  
@@ -224,7 +223,6 @@
     white-space: nowrap;  
     overflow: hidden;  
 }
-
 
 .user_icon {
     position: absolute; 
@@ -263,7 +261,6 @@
     padding: 20px;
     border: 1px solid #f7f7f7;
 }
-
 
 @keyframes slideUp {
     from {
@@ -486,5 +483,38 @@
     filter: brightness(0.9);
 }
 
+.ticketEdit_overlay {
+    position: relative; 
+    background-color:var(--secondaryColor);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border-radius: 30px;
+    padding: 20px;
+    border: 1px solid #f7f7f7;
+}
 
+.priorityEdit_buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.ok_btn:hover{
+    background-color:#0038ff;
+    cursor: pointer;
+}
+
+.ok_btn {
+    background-color: var(--primaryColor);
+    font-size: 23px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    color: var(--secondaryColor);
+    padding: 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
 

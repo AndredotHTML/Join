@@ -84,6 +84,16 @@ function subtaskTemplate( subtaskValue){
             </div></li>`
 }
 
+function generateSubtasksHtml(subtasks) {
+    let subtasksHtml = ''; 
+    if (subtasks && subtasks.length > 0) {
+        for (let i = 0; i < subtasks.length; i++) {
+            subtasksHtml += subtaskTemplate(subtasks[i].title);
+        }
+    }
+    return subtasksHtml; 
+}
+
 function resetSubtaskIcons() {
     let subtaskInput = document.getElementById("subtask");
     let subtaskIcons = document.getElementById("subtask-icons");
@@ -208,6 +218,27 @@ function updateSelectedUsers() {
         }
     }
     localStorage.setItem('selectedUsers', JSON.stringify(assignedUsers));
+}
+
+function showSelectedUsersFromTask(task) {
+    let selectedUsersContainer = document.getElementById("selected_user_container");
+    selectedUsersContainer.innerHTML = '';  
+
+    for (let i = 0; i < task.assignedUsers.length; i++) {
+            let userName = task.assignedUsers[i];
+            if (userName) {
+                let userIcon =  generateUserIconFromName(userName);  
+                selectedUsersContainer.innerHTML += userIcon;
+            }
+    }
+}
+
+function generateUserIconFromName(userName) {
+    let initials = `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`; 
+    let color = getColorForUser(userName); 
+    return `
+        <span class="user-icon" style="background-color: ${color};">${initials}</span>
+    `;
 }
 
 async function createTask() {

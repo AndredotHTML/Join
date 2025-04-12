@@ -438,3 +438,14 @@ function showAddTaskAwaitFeedbackOverlay(){
     overlay.innerHTML = addTaskAwaitFeedbackOverlay();
     overlay.classList.add('slide_in');
 }
+
+function showEditOverlay(id) {
+    let task = tasks.find(t => t.id === id);
+    let overlay = document.getElementById('overlay');
+
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    overlay.innerHTML = generateEditOverlay(task);
+    showSelectedUsersFromTask(task);
+    radioBtnChecked(task.priority);
+}
