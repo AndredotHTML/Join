@@ -1,4 +1,4 @@
-.content-legal-notice {
+.content-legal-and-privacy {
     width: calc(1440px - 232px);
     overflow: auto;
     scrollbar-width: none;
@@ -6,7 +6,6 @@
 
 .title-wrapper {
     height: 73px;
-    width: 377px;
     position: relative;
     left: calc(320px - 232px);
     top: calc(168px - 96px);
@@ -29,6 +28,7 @@ h3 {
     color: var(--lightBlue)
 }
 
+.privacy-policy-info,
 .legal-notice-info {
     width: 1032px;
     height: 1028px;
@@ -37,7 +37,18 @@ h3 {
     top: calc(289px - 168px);
     display: flex;
     flex-direction: column;
+}
+
+.legal-notice-info{
     gap: 24px;
+}
+
+.privacy-policy-info{
+    gap: 35px;
+}
+
+.privacy-containa{
+    gap:10px ;
 }
 
 .imprint-wrapper {
@@ -63,7 +74,3 @@ h3 {
     color: white !important;
     font-weight: 700;
 }
-/* 
-#current-page > span{
-    width: 97px;
-} */
