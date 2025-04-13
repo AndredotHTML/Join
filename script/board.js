@@ -442,10 +442,25 @@ function showAddTaskAwaitFeedbackOverlay(){
 function showEditOverlay(id) {
     let task = tasks.find(t => t.id === id);
     let overlay = document.getElementById('overlay');
-
+    assignedUsers = task.assignedUsers || [];
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     overlay.innerHTML = generateEditOverlay(task);
+    localStorage.setItem('selectedUsers', JSON.stringify(task.assignedUsers || []));
     showSelectedUsersFromTask(task);
     radioBtnChecked(task.priority);
+}
+
+async function updateTaskInFirebase(taskId, updatedTask) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
+
+    try {
+        await fetch(url, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedTask)
+        });
+    } catch (error) {
+        console.error("Firebase update error:", error);
+    }
 }

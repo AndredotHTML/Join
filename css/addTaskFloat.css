@@ -519,8 +519,19 @@ input:disabled {
     align-items: center;
     gap: 12px;
     border-radius: 8px;
+    animation: slideUpMessage 0.5s ease-out forwards;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: -100px; 
+    z-index: 999;
+
 }
 
 #task-message img{
     filter: brightness(0) invert(1);
+}
+
+.addTask_header_overlay {
+    padding-bottom: 50px;
 }

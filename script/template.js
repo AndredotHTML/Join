@@ -387,11 +387,13 @@ function addTaskAwaitFeedbackOverlay(){
 function generateEditOverlay(task) {
     let allSubtasks = generateSubtasksHtml(task.subtasks)
 
-    return `
-    <div class="ticketEdit_overlay ">
-       <div class="addTask_header_overlay">
+    return `<div id="task-message" style="display: none;">
+            <p>Task added to board</p>
+            <img src="../assets/icons/board_icon.png" alt="Board Icon">
+            </div>
+            <div class="ticketEdit_overlay ">
+            <div class="addTask_header_overlay">
             <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
-            <div class="header_headline"><h1> Edit Task</h1></div>
             </div>
             <div class="addTask_content">
              <input type="text" class="title_add_task" id="title_add_task" value="${task.title}">
@@ -462,7 +464,7 @@ function generateEditOverlay(task) {
             </div> 
             </div>
                 <div class="button_div">
-                <button class="ok_btn" id="ok" >
+                <button class="ok_btn"  onclick="saveEditedTask('${task.id}')">
                     <div class="btn_title">Ok</div>
                     <img src="../assets/icons/check.svg" alt="">
                 </button>

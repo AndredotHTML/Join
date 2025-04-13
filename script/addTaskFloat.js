@@ -1,4 +1,5 @@
 let assignedUsers =[];
+let updatedPriority = ''; 
 
 function openCalendar() {
     const dateInput = document.getElementById("dateInput-add-task");
@@ -6,7 +7,10 @@ function openCalendar() {
             dateFormat: "d/m/Y", 
         }).open();
 }
+
 function radioBtnChecked(priority) {
+    updatedPriority = priority;
+
     let labelList = document.querySelectorAll(".radio_btn");
     labelList.forEach(radioBtn => {
         radioBtn.style.backgroundColor = `var(--secondaryColor)`;
@@ -223,6 +227,10 @@ function updateSelectedUsers() {
 function showSelectedUsersFromTask(task) {
     let selectedUsersContainer = document.getElementById("selected_user_container");
     selectedUsersContainer.innerHTML = '';  
+
+    if (!task.assignedUsers) {
+        task.assignedUsers = [];
+    }
 
     for (let i = 0; i < task.assignedUsers.length; i++) {
             let userName = task.assignedUsers[i];
@@ -443,5 +451,23 @@ async function postTask(path = "", data = {}) {
         console.error("Fehler:", error.message);
         return null;
     }
+}
+
+async function saveEditedTask(taskId) {
+    const updatedTask = {
+        title: document.getElementById("title_add_task").value,
+        description: document.getElementById("description_add_task").value,
+        dueDate: document.getElementById("dateInput-add-task").value,
+        priority: updatedPriority,
+        assignedUsers: assignedUsers,
+        category: document.getElementById("category_add_task").innerText, 
+        subtasks: getNewSubtasks(),
+    }
+    await updateTaskInFirebase(taskId,updatedTask);
+    showTaskMessage();
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+    setTimeout(closeOverlay, 1000);
 }
 
