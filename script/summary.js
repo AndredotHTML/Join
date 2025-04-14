@@ -147,7 +147,7 @@ function renderSummaryNumbers() {
 
 
 function renderUrgentTasks(id) {
-    let urgentCount = tasks.filter(task => task.priority === "urgent").length;
+    let urgentCount = tasks.filter(task => task.priority === "Urgent").length;
     document.getElementById(id).innerText = urgentCount
     renderUrgentDate()
 }
@@ -184,7 +184,7 @@ function renderDoneTasks(id) {
 
 
 function renderUrgentDate() {
-    const urgentTasks = tasks.filter(task => task.priority === "urgent");
+    const urgentTasks = tasks.filter(task => task.priority === "Urgent");
     if (urgentTasks.length > 0) { 
     const date = new Date(urgentTasks[0].dueDate);
     const options = {

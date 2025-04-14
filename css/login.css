@@ -17,10 +17,11 @@ body {
 .join_logo {
     background-image: url(/assets/icons/favicon.png);
     background-repeat: no-repeat;
+    background-color: white;
     background-position: center;
     width: 100.03px;
     height: 121.97px;
-    transition: all 0.8s ease-in-out, background-color 1ms;
+    transition: all 0.8s ease-in-out;
     position: absolute;
     z-index: 999;
     left: 64px;

@@ -81,3 +81,57 @@
 .legal_stuff > a:hover {
     color: var(--primaryColor);
 }
+
+@media (max-width: 1200px) {
+    .content {
+        flex-direction: column-reverse;
+        height: auto !important;
+    }
+
+    .nav_wrapper {
+        z-index: 999;
+        background-color: white;
+        bottom: 0;
+        left: 0;
+        position: fixed;
+        width: 100%; 
+        flex-direction: row;
+        padding: 0;
+        box-shadow: none;
+        height: 70px;
+        border: 1px solid rgb(156, 155, 155);
+   } 
+
+    .nav_bar nav ul { 
+        display: flex;
+        flex-direction: row;
+   }
+
+   .legal_stuff {
+        display: none;
+   }
+
+   .nav_bar nav li a {
+        flex-direction: column;
+        gap: 8px;
+   }
+   
+   .active {
+        background-color: transparent;
+        color: #4589FF !important;
+   }
+
+   .nav_bar nav li a:hover {
+        background-color: transparent;
+        color: #4589FF !important;
+   }
+}
+
+@media (max-width: 500px) {
+    .nav_wrapper {
+        height: 80px;
+    }
+    .nav_bar nav li a {
+        padding: 0;
+    }
+}

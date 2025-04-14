@@ -11,7 +11,7 @@ function startAnimation() {
   setTimeout(() => {
       logo.classList.add("join_logo");
       logo.classList.remove("join_logo_start")
-      }, 1500);
+      }, 100);
 }
 
 

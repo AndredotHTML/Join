@@ -14,6 +14,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 100%;
 }
 
 .dashboard h2 {
@@ -109,13 +110,7 @@ a {
 }
 
 .task-overview-top {
-    display: flex;
-    gap: 20px;
     min-height: 192px;
-    max-height: 192px;
-    width: 912px;
-    justify-content: space-between;
-    align-items: center;
     position: relative;
 }
 
@@ -136,7 +131,6 @@ a {
     display: flex;
     justify-content: space-between;
     min-height: 216px;
-    max-height: 216px;
 }
 
 .task-card {
@@ -208,7 +202,7 @@ a {
 .to-do {
     background-color: #D2E2FF;
     position: absolute;
-    z-index: 999;
+    z-index: 900;
 }
 
 .to-do:hover {
@@ -272,3 +266,219 @@ a {
     font-weight: 300;
 }
 
+@media (max-width: 910px) {
+    .user-greeting {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+    }
+
+    .task-overview-top {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .task-overview-bottom {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+    }
+
+    .task-overview-left {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+        justify-content: center;
+    }
+
+    .task-overview-right {
+        width: 100%;
+        position: absolute;
+        height: 100%;
+    }
+
+    .divider {
+        height: 124px;
+    }
+
+    .stats {
+        position: relative;
+        height: 632px;
+        width: 100%;
+        margin-bottom: 80px;
+    }
+
+    .urgent-tasks {
+        width: 96%;
+        top: 0%;
+        height: 150px;
+        left: 50%;
+        transform: translate(-50%);
+        z-index: 998;
+    }
+
+    .to-do {
+        top: 26%;
+        width: 96%;
+        flex-direction: unset;
+        height: 106px !important;
+        z-index: 998;
+    }
+
+    #in-board {
+        top: 45%;
+        left: 2%;
+        height: 152px;
+        width: 45%;
+        z-index: 998;
+    }
+
+    .progress {
+        top: 45%;
+        right: 2%;
+        width: 45%;
+        z-index: 998;
+    }
+
+    .feedback {
+        top: 72%;
+        left: 2%;
+        width: 45%;
+        z-index: 998;
+    }
+
+    .done {
+        top: 72%;
+        right: 2%;
+        width: 45%;
+        z-index: 998;
+    }
+
+    .task-card {
+        height: 152px;
+    }
+
+    .task-card h3 {
+        font-size: 40px;
+    }
+
+    .task-card p {
+        font-size: 19px;
+    }
+
+    .urgent-tasks:hover {
+        width: 96%;
+        height: 150px;
+        font-size: 23px;
+    }
+
+    .urgent-tasks:hover h3 {
+        font-size: 48px;
+    }
+
+    .urgent-tasks:hover h4 {
+        font-size: 33px;
+    }
+
+    .to-do:hover {
+        width: 96% !important;
+        height: 106px !important;
+    }
+
+    .task-card:hover {
+        height: 152px;
+        width: 45%;
+    }
+    
+    .task-card:hover p {
+        font-size: 19px;
+    }
+
+    .task-card:hover h3 {
+        font-size: 40px
+    }
+
+    .task-card:hover .summary_icon {
+        width: 68px;
+        height: 68px;
+    }
+
+    #in-board:hover {
+        width: 45%;
+        height: 152px;
+    }
+}
+
+@media (max-width: 700px) {
+    .dashboard h2 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+  
+}
+
+@media (max-width: 550px) {
+    .urgent-tasks {
+        font-size: 16px;
+        gap: 24px;
+    }
+
+    .urgent-tasks-left {
+        font-size: 19px;
+    }
+
+    .urgent-tasks h3 {
+        font-size: 40px;
+    }
+
+    .urgent-tasks h4 {
+        font-size: 23px;
+    }
+
+    .urgent-tasks:hover h3 {
+        font-size: 40px;
+    }
+
+    .urgent-tasks:hover h4 {
+        font-size: 23px;
+    }
+
+    .urgent-tasks:hover {
+        font-size: 16px;
+    }
+
+    .summary_icon {
+        width: 68px;
+        height: 68px;
+    }
+}
+
+@media (max-width: 400px) {
+    .summary_icon {
+        width: 54px;
+        height: 54px;
+    }
+
+    .urgent-tasks-left {
+        font-size: 16px;
+    }
+
+    .urgent-tasks {
+        gap: 8px;
+    }
+
+    .dashboard h2 {
+        font-size: 38px;
+    }
+
+    .urgent-tasks-right {
+        width: 50%;
+    }
+}
+ 
