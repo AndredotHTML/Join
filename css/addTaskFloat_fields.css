@@ -1,0 +1,189 @@
+.title_add_task{
+    border: none;
+    cursor: pointer;
+    outline: none;
+    border-bottom: 1px solid #D1D1D1;
+    width: 100%;
+    font-size: 24px;
+    padding-bottom: 10px;
+    padding-left:10px;
+}
+
+::placeholder{
+    color: #D1D1D1;
+}
+
+.title_add_task:focus{
+    border-bottom: 1px solid var(--primaryColor);
+}
+
+.description,.date {
+    display: flex;
+    flex-direction:column;
+    padding-top: 30px;
+}
+
+.priority,.assigned,.category,.subtasks{
+    padding-top: 30px;
+}
+
+.description span,.date span, .priority span, .assigned span, .category span, .subtasks span{
+    color: #42526e;
+    cursor: pointer;
+}
+
+textarea {
+    resize: none;
+    border: 1px solid #D1D1D1;
+    height:80px;
+    border-radius: 0 8px  8px  8px;
+    margin-top: 10px;
+    padding-left:10px;
+    padding-top:10px;
+    cursor: pointer;
+    outline: none;
+    font-size:18px;
+}
+
+textarea:focus{
+    border: 1px solid var(--primaryColor);
+}
+
+.date input{
+    margin-top:10px;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid #D1D1D1;
+    font-size:18px;
+    color: #D1D1D1;
+    padding-bottom: 10px;
+    padding-left:10px;
+}
+
+.date-picker-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+#dateInput-add-task {
+    width: 100%;
+    padding-right: 35px; 
+    cursor: pointer;
+    color: black;
+}
+
+.calendar-icon {
+    position: absolute;
+    right: 10px;
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+
+#priority-error {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.priority_buttons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.radio_btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    gap: 10px;
+    padding: 10px;
+    background-color: var(--secondaryColor);
+    font-size: 19px;
+    box-sizing: border-box;
+    cursor: pointer;
+    margin-top: 10px;
+    min-width: 140px; 
+    height: 50px; 
+}
+
+input[type="radio"] {
+    opacity: 0;
+}
+
+.add_task_urgent:hover {
+    border-bottom: 2px solid var(--urgentColor);
+}
+
+.add_task_medium:hover {
+    border-bottom: 2px solid var(--mediumColor);
+}
+
+.add_task_low:hover {
+    border-bottom: 2px solid var(--lowColor);
+}
+
+.checked_priority {
+    display: none;
+}
+
+input[type="radio"]:checked + img.checked_priority {
+    display: inline-block;
+}
+
+input[type="radio"]:not(:checked) + img.unchecked_priority {
+    display: inline-block;
+}
+
+.cat{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    border-bottom: 1px solid #D1D1D1;
+    padding-top: 10px;
+}
+
+.option_category {
+    cursor: pointer;
+    padding: 10px;
+
+}
+
+.option_category:hover {
+    background-color: #d2e2ff;
+    border-radius: 8px;
+}
+
+.button_div {
+    margin-top: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.add_task_create_btn {
+    width: 174px;
+    background-color: var(--primaryColor);
+    font-size: 23px;
+    height: 60px;
+    border-radius: 10px;
+    border: none;
+    color: var(--secondaryColor);
+    padding: 16px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.add_task_create_btn:hover{
+    background-color:#0038ff;
+    cursor: pointer;
+}
+
+.btn_title {
+    height: 28px;
+}
