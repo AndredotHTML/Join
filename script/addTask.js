@@ -4,6 +4,7 @@ const form = document.getElementById("form-add-task");
 let getUserCache = [];
 user = []
 let lastCursPosDisc = 0
+let openDD = false
 
 
 
@@ -96,11 +97,20 @@ function lastCurserposition() {
     lastCursPosDisc = textarea.selectionStart;
 }
 
-function resizeTextarea(e) {
-    const minHeight = 160;
-    let textarea = document.querySelector("textarea")
-    let newHeight = Math.max(e.clientY - textarea.getBoundingClientRect().top, minHeight);
-    textarea.style.height = newHeight + 'px';
+function resizeTextarea(event) {
+    let textareaRef = document.getElementById("description-add-task")
+    let mousePos = event.clientY
+    let textareaHeight = textareaRef.offsetHeight
+    document.addEventListener('mousemove', newHeightTA)
+    function newHeightTA(e) {
+        let mouseMovePos = e.clientY - mousePos
+        textareaRef.style.height = `${textareaHeight + mouseMovePos}px`
+    }
+    document.addEventListener('mouseup', stopResize)
+    function stopResize() {
+        document.removeEventListener('mousemove', newHeightTA)
+        document.removeEventListener('mouseup', stopResize)
+    }
 }
 
 document.addEventListener("click", function (e) {
@@ -167,6 +177,9 @@ function addSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let inputSubtaskVal = inputSubtaskRef.value
+    if (inputSubtaskVal === "") {
+        return
+    }
     displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
     inputSubtaskRef.value = ""
     changeSubtaskIcons()
@@ -211,7 +224,7 @@ function getTaskInputs() {
     let categoryNewTaskRef = document.getElementById("category-add-task").textContent
     let assignedUserRef = assignetUserToData()
     let subtasks = getSubtasks();
-    return {titleNewTaskRef,descriptionNewTaskRef,dateNewTaskRef,priorityNewTaskRef,categoryNewTaskRef,assignedUserRef,subtasks}
+    return { titleNewTaskRef, descriptionNewTaskRef, dateNewTaskRef, priorityNewTaskRef, categoryNewTaskRef, assignedUserRef, subtasks }
 }
 
 function creatTaskData(inputData) {
@@ -228,7 +241,7 @@ function creatTaskData(inputData) {
 }
 
 function creatTask() {
-    let inputs= getTaskInputs()
+    let inputs = getTaskInputs()
     let data = creatTaskData(inputs)
     postTask("/tasks", data)
     transferToBoard()
@@ -392,14 +405,14 @@ function styAssignedContClosed(assignedContactRef) {
         let nameTemplate = contact.querySelector(".assigned-template-name");
         let contactLabel = contact.querySelector("label")
         if (checkbox.checked) {
-            styleForCheckedCont(contact,nameTemplate,checkbox,contactLabel)
+            styleForCheckedCont(contact, nameTemplate, checkbox, contactLabel)
         } else {
             contact.style.display = "none";
         }
     });
 }
 
-function styleForCheckedCont(contact,name,checkbox,contactLabel) {
+function styleForCheckedCont(contact, name, checkbox, contactLabel) {
     contact.classList.add("bg-white")
     name.style.display = "none";
     checkbox.style.display = "none";
@@ -408,30 +421,41 @@ function styleForCheckedCont(contact,name,checkbox,contactLabel) {
 
 function dropDownForCategory() {
     let arrowOpenRef = document.getElementById("arrow-open-category")
-    let categoryInputRef = document.getElementById("category-add-task")
     let selectRef = document.getElementById("select-category")
     let options = document.querySelectorAll(".wrapper-category .option-category")
     selectRef.addEventListener("click", function () {
-        toggleCategoryDD(options, arrowOpenRef)
+        if (openDD === false) {
+            showCategoryDD(options, arrowOpenRef);
+            openDD = true;
+        } else {
+            closeCategoryDD(options, arrowOpenRef);
+            openDD = false;
+        }
     });
+    changeCategory(options, arrowOpenRef)
+}
+
+function changeCategory(options, arrowOpenRef) {
+    let categoryInputRef = document.getElementById("category-add-task")
     options.forEach(option => {
         option.addEventListener("click", function () {
             categoryInputRef.textContent = this.textContent;
             closeCategoryDD(options, arrowOpenRef)
+            openDD = false;
         })
     })
 }
 
-function toggleCategoryDD(options, arrowOpenRef) {
+function showCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
-        option.classList.toggle("d_none")
+        option.classList.add("visible")
     });
     arrowImgToggle(arrowOpenRef)
 }
 
 function closeCategoryDD(options, arrowOpenRef) {
     options.forEach(option => {
-        option.classList.add("d_none")
+        option.classList.remove("visible")
     })
     arrowImgToggle(arrowOpenRef)
 }
@@ -489,5 +513,3 @@ function transferToBoard() {
         window.location.href = "/html/board.html";
     }, 800);
 }
-
-

@@ -73,7 +73,8 @@
             </section>
             <div class="add-task-main">
                 <div class="form-scroll-container">
-                    <form action="" id="form-add-task" class="d_flex d-f-column" method="POST" onmouseout="enabledCreatBtn()">
+                    <form action="" id="form-add-task" class="d_flex d-f-column" method="POST"
+                        onmouseout="enabledCreatBtn()">
                         <div class="form-header d_flex d-f-column">
                             <div class="title-wrapper d_flex d-f-column">
                                 <input type="text" id="title-add-task" class="title-add-task poiner"
@@ -89,7 +90,7 @@
                                     id="description-add-task" placeholder="Enter a Description">
                                 </textarea>
                                 <div class="resize" onmousedown="resizeTextarea(event)">
-                                    <img src="../assets/icons/Recurso.svg" draggable="false" alt="Resize">
+                                    <!-- <img src="" draggable="false" alt="Resize"> -->
                                 </div>
                                 <div class="validation-add-task-form">
                                 </div>
@@ -115,19 +116,22 @@
                         <div class="shell-radio-area d_flex d-f-column">
                             <legend>Priority</legend>
                             <div class="shell-radio-btn d_flex">
-                                <label class="radio-btn center-center d_flex btn add-task-urgent poiner" id="add-task-urgent" for="urgent-rad">
+                                <label class="radio-btn center-center d_flex btn add-task-urgent poiner"
+                                    id="add-task-urgent" for="urgent-rad">
                                     <input type="radio" name="priority" id="urgent-rad" value="urgent"
                                         onclick="radioBtnChecked('urgent')">
                                     Urgent <img class="unchecked-priority" src="../assets/icons/urgent.svg" alt="">
                                     <img class="checked-priority" src="../assets/icons/urgent_white.svg" alt="">
                                 </label>
-                                <label class="radio-btn center-center d_flex btn add-task-medium poiner" id="add-task-medium" for="medium-rad">
+                                <label class="radio-btn center-center d_flex btn add-task-medium poiner"
+                                    id="add-task-medium" for="medium-rad">
                                     <input type="radio" name="priority" id="medium-rad" value="medium"
                                         onclick="radioBtnChecked('medium')">
                                     Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
                                     <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                                 </label>
-                                <label class="radio-btn center-center d_flex btn add-task-low poiner" id="add-task-low" for="low-rad">
+                                <label class="radio-btn center-center d_flex btn add-task-low poiner" id="add-task-low"
+                                    for="low-rad">
                                     <input type="radio" name="priority" id="low-rad" value="low"
                                         onclick="radioBtnChecked('low')">
                                     Low <img class="unchecked-priority" src="../assets/icons/low.svg" alt="">
@@ -142,11 +146,12 @@
                             <div id="assigned-to-container" class="assigned-to-container"
                                 onclick="dropDownForAssigned()">
                                 <div class="d_flex wrapper-select">
-                                    <input type="text" type="text" id="assigned-to-input" class="assigned-to-input poiner"
-                                        placeholder="Select contacts to assign">
+                                    <input type="text" type="text" id="assigned-to-input"
+                                        class="assigned-to-input poiner" placeholder="Select contacts to assign">
                                     <div class="icon-form icon-24" id="arrow-open-assigned">
                                         <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
-                                        <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg" alt="">
+                                        <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg"
+                                            alt="">
                                     </div>
                                 </div>
                                 <div class="assigned-to-scroll" id="assigned-to-display">
@@ -166,8 +171,8 @@
                                     <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg" alt="">
                                 </div>
                             </div>
-                            <div class="option-category d_none poiner" data-value="Technical Task">Technical Task</div>
-                            <div class="option-category d_none poiner" data-value="User Story">User Story</div>
+                            <div class="option-category poiner" data-value="Technical Task">Technical Task</div>
+                            <div class="option-category poiner" data-value="User Story">User Story</div>
                         </div>
                         <div class="wrapper-subtasks">
                             <label for="subtask">Subtasks <span>(optional)</span></label>
@@ -176,7 +181,8 @@
                                     onclick="stopPropagation(event)">
                                 <div class="d_flex">
                                     <div class="icon-form icon-24" id="working-icons-opener">
-                                        <img src="/assets/icons/add.png" alt="" class="poiner" onclick="changeSubtaskIcons()">
+                                        <img src="/assets/icons/add.png" alt="" class="poiner"
+                                            onclick="changeSubtaskIcons()">
                                     </div>
                                     <div class="d_none icons-subtask" id="input-subtask-icons">
                                         <img src="/assets/icons/close_cross.svg" class="icon-form icon-24"
@@ -192,20 +198,18 @@
                         </div>
                     </form>
                 </div>
-                <div>
-                    <div class="add-task-btns d_flex">
-                        <button class="btn clear-form-btn center-center d_flex" onclick="clearForm()">
-                            <div class="btn-title">Clear</div>
-                            <div class="btn-icon-shell icon-24">
-                            </div>
-                        </button>
-                        <button id="add-task-create-btn" class="btn add-task-create-btn center-center d_flex" form="form-add-task"
-                            type="submit">
-                            <div class="btn-title">Create Task </div>
-                            <div class="btn-icon-check icon-24" id="btn-icon-check">
-                            </div>
-                        </button>
-                    </div>
+                <div class="add-task-btns d_flex">
+                    <button class="btn clear-form-btn center-center d_flex" onclick="clearForm()">
+                        <div class="btn-title">Clear</div>
+                        <div class="btn-icon-shell icon-24">
+                        </div>
+                    </button>
+                    <button id="add-task-create-btn" class="btn add-task-create-btn center-center d_flex"
+                        form="form-add-task" type="submit">
+                        <div class="btn-title">Create Task </div>
+                        <div class="btn-icon-check icon-24" id="btn-icon-check">
+                        </div>
+                    </button>
                 </div>
             </div>
         </section>
