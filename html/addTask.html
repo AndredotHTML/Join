@@ -146,7 +146,7 @@
                             <div id="assigned-to-container" class="assigned-to-container"
                                 onclick="dropDownForAssigned()">
                                 <div class="d_flex wrapper-select">
-                                    <input type="text" type="text" id="assigned-to-input"
+                                    <input oninput="displayUser()" type="text" type="text" id="assigned-to-input"
                                         class="assigned-to-input poiner" placeholder="Select contacts to assign">
                                     <div class="icon-form icon-24" id="arrow-open-assigned">
                                         <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
@@ -174,7 +174,7 @@
                             <div class="option-category poiner" data-value="Technical Task">Technical Task</div>
                             <div class="option-category poiner" data-value="User Story">User Story</div>
                         </div>
-                        <div class="wrapper-subtasks">
+                        <div class="wrapper-subtasks d_flex d-f-column">
                             <label for="subtask">Subtasks <span>(optional)</span></label>
                             <div class="subtask-area" id="subtask-area">
                                 <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"

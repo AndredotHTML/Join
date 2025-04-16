@@ -22,7 +22,7 @@ function subtaskTemplat(inputSubtaskVal) {
 
 function templateAssignedTo(userName,isChecked) {
     return `
-    <div class="assigned-contacts d_flex">
+    <div class="assigned-contacts visible-assigned d_flex">
             <label for="assigned-user-${userName}" onclick="stopPropagation(event)" class="d_flex">
                 <div class="d_flex icon-name-template">
                     <div class="name-icon d_flex" data-value="${userName}">

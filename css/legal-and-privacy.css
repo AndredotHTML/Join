@@ -1,14 +1,15 @@
 .content-legal-and-privacy {
-    width: calc(1440px - 232px);
+    width: 100%;
     overflow: auto;
     scrollbar-width: none;
+    padding: 64px 26px 0 88px;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
 }
 
 .title-wrapper {
     height: 73px;
-    position: relative;
-    left: calc(320px - 232px);
-    top: calc(168px - 96px);
 }
 
 h1 {
@@ -29,12 +30,9 @@ h3 {
 }
 
 .privacy-policy-info,
-.legal-notice-info {
-    width: 1032px;
-    height: 1028px;
-    position: relative;
-    left: calc(320px - 232px);
-    top: calc(289px - 168px);
+.legal-notice-info 
+{
+    max-width: 1020px;
     display: flex;
     flex-direction: column;
 }
@@ -57,10 +55,6 @@ h3 {
     flex-direction: column;
 }
 
-.info-container{
-    width: 986px;
-}
-
 .span-legal-notice{
     color:var(--primaryColor) ;
 }
@@ -73,4 +67,37 @@ h3 {
     background-color: var(--primaryColor);
     color: white !important;
     font-weight: 700;
+}
+
+
+@media(max-width: 1000px){
+    .title-wrapper {
+        height: 56px;
+    }
+    
+    h1 {
+        font-size: 47px;
+    }
+    
+    h2 {
+        font-size: 23px;
+    }
+    
+    h3 {
+        font-size: 19px;
+    }
+    p{
+        font-size: 16px;
+    }
+    .content-legal-and-privacy {
+        padding: 64px 18px 20px;
+    }
+}
+
+
+@media(max-width: 380px){
+    h1 {
+        font-size: 36px;
+        
+    }
 }

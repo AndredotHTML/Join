@@ -42,7 +42,9 @@ legend {
 }
 
 .wrapper-subtasks,
-.added-subtasks {
+.added-subtasks,
+.wrapper-subtasks
+ {
     gap: 8px;
 }
 
@@ -54,10 +56,10 @@ legend {
     opacity: 0;
     max-height: 0;
     pointer-events: none;
-    transition:max-height 100ms ease-out, opacity 100ms ease-out ;
+    transition: max-height 100ms ease-out, opacity 100ms ease-out;
 }
 
-.option-category.visible{
+.option-category.visible {
     opacity: 1;
     width: 100%;
     padding: 12px 16px;
@@ -113,6 +115,13 @@ li[contenteditable="true"] {
     justify-content: end;
 }
 
+.wrapper-category,
+.wrapper-assigned-to{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .assigned-to-input {
     width: 100%;
     border: none;
@@ -139,8 +148,17 @@ li[contenteditable="true"] {
 
 .assigned-contacts {
     border-radius: 10px;
-    height: 56px;
+    max-height: 0px;
     gap: 16px;
+    opacity: 0;
+    max-width: 0;
+    transition: max-height 10000ms ease-out, opacity 0ms ease-out;
+}
+
+.assigned-contacts.visible-assigned {
+    opacity: 1;
+    max-height: 56px;
+    max-width: 100%;
 }
 
 .icon-name-template {
@@ -149,7 +167,7 @@ li[contenteditable="true"] {
 }
 
 .assigned-contacts:hover,
-.option-category:hover{
+.option-category:hover {
     background-color: #D2E3FF;
 }
 
@@ -214,18 +232,18 @@ input[type="checkbox"]:checked {
 }
 
 form {
-    width: 100%;          
-    max-width: 488px;      
-    padding: 64px 24px 0px;
+    width: 100%;
+    max-width: 488px;
+    padding: 64px 2px 0 24px;
     gap: 24px;
-    height: 928px;         
+    height: 928px;
 }
 
 .form-scroll-container {
     position: fixed;
     top: 96px;
     height: calc(100vh - 96px);
-    width: 100%;           
+    width: 100%;
     max-width: 488px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -233,10 +251,25 @@ form {
 
 .assigned-to-scroll {
     overflow-y: auto;
-    max-height: 288px;
+    max-height: 0px;
     padding-right: 24px;
     display: flex;
+    flex-direction: column;
     gap: 1px;
+    opacity: 0;
+    transition: max-height 100ms ease-out, opacity 100ms ease-out;
+}
+
+.assigned-to-scroll.visible-assigned {
+    opacity: 1;
+    max-height: 288px;
+    display: flex;
+    flex-direction: column;
+}
+
+.assigned-to-scroll.visible-assigned-min {
+    opacity: 1;
+    max-height: 50px;
 }
 
 .validation-add-task-form {
@@ -327,7 +360,7 @@ label>span {
 }
 
 textarea {
-    resize:none;
+    resize: none;
     height: 103px;
     border-radius: 0px 10px 10px 10px;
     border: 1px solid #D1D1D1;
@@ -352,7 +385,7 @@ textarea {
     height: 24px;
     background-color: #FFFFFF;
     background-size: contain;
-    background: url(/assets/icons/Recurso.svg) no-repeat center center ;
+    background: url(/assets/icons/Recurso.svg) no-repeat center center;
 }
 
 textarea:focus {
@@ -366,7 +399,7 @@ textarea:focus {
 }
 
 .shell-radio-btn {
-    justify-content: space-between;
+    gap: 16px;
 }
 
 .shell-radio-area {
@@ -382,8 +415,6 @@ textarea:focus {
 
 .shell-radio-btn>label>input~.checked-priority {
     display: none;
-    width: 20px;
-    height: 15px;
 }
 
 .shell-radio-btn>label>input:checked~.unchecked-priority {
@@ -495,10 +526,6 @@ input[type="radio"] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn-title {
-    height: 28px;
-}
-
 .subtask-value {
     max-height: 32px;
     font-size: 16px;
@@ -553,31 +580,86 @@ input[type="radio"] {
     }
 }
 
-@media (max-width :1100px){
+@media (max-width :1200px) {
     .add-task-btns {
-        left: 309px;
-        bottom: 60px;
+        bottom: 120px;
     }
     form {
-        height: 828px;         
+        height: 828px;
     }
     .form-scroll-container {
-        height: calc(100vh - 240px);
+        height: calc(100vh - 164px);
     }
 }
 
-@media (max-width :736px){
+@media (max-width :850px) {
     .add-task-btns {
-        left: 309px;
-        bottom: 140px;
-    }
-    form {
-        height: 748px;         
+        left: 69px;
     }
     .form-scroll-container {
         height: calc(100vh - 300px);
     }
-    /* .add-task-content{
-        
-    } */
+}
+
+@media (max-width :490px) {
+    .form-header {
+        gap: 8px;
+    }
+    .add-task-btns {
+        left: 10px;
+        transform: translateX(10%);
+    }
+
+    .clear-form-btn {
+        height: 48px;
+        font-size: 19px;
+    }
+
+    .add-task-create-btn {
+        height: 48px;
+        font-size: 19px;
+    }
+
+    .radio-btn {
+        max-width: 30%;
+        margin: 0 auto;
+    }
+}
+
+@media (max-width :440px){
+    form{
+        padding: 64px 2px 0 16px;
+        gap: 16px;
+    }
+}
+@media (max-width :400px){
+    .add-task-btns {
+        left: 0px;
+    }
+    .radio-btn {
+        font-size: 16px;
+        gap: 4px;
+    }
+    .shell-radio-btn>label>input~.unchecked-priority {
+        width: 16px;
+        height: 12px;
+    }
+    
+    .shell-radio-btn>label>input~.checked-priority {
+        width: 16px;
+        height: 12px;
+    }
+    .shell-radio-btn {
+        gap: 6px;
+    }
+}
+
+@media (max-width :350px){
+    .add-task-btns {
+        transform: translateX(6%);
+        gap: 8px;
+    }
+    .radio-btn {
+        max-width: 33%;
+    }
 }

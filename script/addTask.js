@@ -5,6 +5,7 @@ let getUserCache = [];
 user = []
 let lastCursPosDisc = 0
 let openDD = false
+let placeForCheckedIcon = false
 
 
 
@@ -40,6 +41,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
     enabledCreatBtn()
     await getUser(path = "/users");
+    // displayUser()
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
@@ -334,6 +336,7 @@ function searchAssigned() {
         return nameToSearch.name.toLowerCase().includes(inputVal)
     }
     )
+
     return searchingName
 }
 
@@ -373,7 +376,8 @@ function openDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    assignedRef.classList.remove("d_none");
+    assignedRef.classList.add("visible-assigned");
+    assignedRef.classList.remove("visible-assigned-min")
     assignedRef.style.display = "flex";
     assignedRef.style.flexDirection = "column"
     arrowImgToggle(arrowOpenRef)
@@ -393,30 +397,37 @@ function closeDropdown() {
     let assignedRef = document.getElementById("assigned-to-display");
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    assignedRef.style.gap = "8px";
     assignedRef.style.flexDirection = "row"
-    styAssignedContClosed(assignedContactRef)
+    styAssignedContClosed(assignedContactRef,assignedRef)
     arrowImgToggle(arrowOpenRef)
 }
 
-function styAssignedContClosed(assignedContactRef) {
+function styAssignedContClosed(assignedContactRef,assignedRef) {
     assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let nameTemplate = contact.querySelector(".assigned-template-name");
         let contactLabel = contact.querySelector("label")
         if (checkbox.checked) {
             styleForCheckedCont(contact, nameTemplate, checkbox, contactLabel)
+            placeForCheckedIcon = true
         } else {
-            contact.style.display = "none";
+            contact.classList.remove("visible-assigned");
         }
     });
+    if (placeForCheckedIcon) {
+        assignedRef.classList.remove("visible-assigned")
+        assignedRef.classList.add("visible-assigned-min")
+    }else{
+        assignedRef.classList.remove("visible-assigned", "visible-assigned-min")
+    }
 }
 
 function styleForCheckedCont(contact, name, checkbox, contactLabel) {
+
     contact.classList.add("bg-white")
     name.style.display = "none";
     checkbox.style.display = "none";
-    contactLabel.style.padding = "0"
+    contactLabel.style.padding = "8px 0 0 0"
 }
 
 function dropDownForCategory() {
