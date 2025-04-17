@@ -14,16 +14,19 @@
 
     <script src="../script/header.js"></script>
 
-    <title>Contacts</title>
+    <title>Privacy Policy</title>
 </head>
 
-<body>
+<body onload="getCurrentUser()">
     <header class="header">
         <div class="logo-container">
             <img src="../assets/icons/logo.svg" alt="Logo">
         </div>
         <div class="header-right">
             <span>Kanban Project Management Tool</span>
+            <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                <div class="icon-container" id="icon-container">G</div>
+            </div>
         </div>
         <div class="profile_menu" id="profile_menu">
             <ul class="profile_menu_list">

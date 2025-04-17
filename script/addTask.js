@@ -41,7 +41,6 @@ document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory();
     enabledCreatBtn()
     await getUser(path = "/users");
-    // displayUser()
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
 });
 
@@ -398,11 +397,11 @@ function closeDropdown() {
     let arrowOpenRef = document.getElementById("arrow-open-assigned")
     let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
     assignedRef.style.flexDirection = "row"
-    styAssignedContClosed(assignedContactRef,assignedRef)
+    styAssignedContClosed(assignedContactRef, assignedRef)
     arrowImgToggle(arrowOpenRef)
 }
 
-function styAssignedContClosed(assignedContactRef,assignedRef) {
+function styAssignedContClosed(assignedContactRef, assignedRef) {
     assignedContactRef.forEach(contact => {
         let checkbox = contact.querySelector("input[type='checkbox']");
         let nameTemplate = contact.querySelector(".assigned-template-name");
@@ -417,13 +416,12 @@ function styAssignedContClosed(assignedContactRef,assignedRef) {
     if (placeForCheckedIcon) {
         assignedRef.classList.remove("visible-assigned")
         assignedRef.classList.add("visible-assigned-min")
-    }else{
+    } else {
         assignedRef.classList.remove("visible-assigned", "visible-assigned-min")
     }
 }
 
 function styleForCheckedCont(contact, name, checkbox, contactLabel) {
-
     contact.classList.add("bg-white")
     name.style.display = "none";
     checkbox.style.display = "none";
@@ -493,26 +491,34 @@ function editSubtasks(element) {
     let subtaskContainerRef = element.closest(".addedSubtask")
     let subtaskIconContainer = subtaskContainerRef.querySelector(".icon-for-subtask-work")
     let editContainer = subtaskIconContainer.querySelector(".subtask-edit-icons")
+    styleSubtaskOnEditing(subtaskContainerRef, editContainer)
+    element.addEventListener("blur", function () {
+        styleSubtaskBlur(element,subtaskContainerRef, editContainer)
+    });
+}
+
+function styleSubtaskOnEditing(subtaskContainerRef, editContainer) {
     subtaskContainerRef.classList.add("disable-hover")
     subtaskContainerRef.style.borderBottom = "1px solid #005DFF";
     subtaskContainerRef.style.borderRadius = "0"
     editContainer.classList.remove("d_none")
-    editContainer.classList.add("d_flex")
-    editContainer.style.flexDirection = "row"
-    element.addEventListener("blur", function () {
-        element.contentEditable = false
-        element.style.listStyleType = ""
-        editContainer.classList.remove("d_flex")
-        editContainer.classList.add("d_none")
-        subtaskContainerRef.classList.remove("disable-hover")
-        subtaskContainerRef.style.borderBottom = "";
-        subtaskContainerRef.style.borderRadius = ""
-    });
+    editContainer.classList.add("d_flex", "d-f-row")
+}
+
+function styleSubtaskBlur(element,subtaskContainerRef, editContainer) {
+    element.contentEditable = false
+    element.style.listStyleType = ""
+    editContainer.classList.remove("d_flex", "d-f-row")
+    editContainer.classList.add("d_none")
+    subtaskContainerRef.classList.remove("disable-hover")
+    subtaskContainerRef.style.borderBottom = "";
+    subtaskContainerRef.style.borderRadius = ""
 }
 
 function deleteSubtask(element) {
     element.remove();
 }
+
 
 function transferToBoard() {
     document.body.innerHTML += tempTaskToBoardOverlay()

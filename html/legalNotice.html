@@ -13,16 +13,20 @@
     <link rel="stylesheet" href="../css/legal-and-privacy.css">
     <script src="../script/header.js"></script>
 
-    <title>Contacts</title>
+    <title>Legal Notice</title>
 </head>
 
-<body>
+<body onload="getCurrentUser()">
     <header class="header">
         <div class="logo-container">
             <img src="../assets/icons/logo.svg" alt="Logo">
         </div>
         <div class="header-right">
             <span>Kanban Project Management Tool</span>
+            <a class="help-link" href="help.html"><img src="../assets/icons/help.svg" alt="Help"></a>
+            <div onclick="toggleProfileMenu ()" class="icon-wrapper" id="icon-wrapper">
+                <div class="icon-container" id="icon-container">G</div>
+            </div>
         </div>
         <div class="profile_menu" id="profile_menu">
             <ul class="profile_menu_list">

@@ -588,7 +588,8 @@ input[type="radio"] {
         height: 828px;
     }
     .form-scroll-container {
-        height: calc(100vh - 164px);
+        height: calc(100vh - 172px);
+        top: 96px;
     }
 }
 
@@ -597,11 +598,14 @@ input[type="radio"] {
         left: 69px;
     }
     .form-scroll-container {
-        height: calc(100vh - 300px);
+        height: calc(100vh - 280px);
     }
 }
 
 @media (max-width :490px) {
+    .resize{
+        display: none;
+    }
     .form-header {
         gap: 8px;
     }
