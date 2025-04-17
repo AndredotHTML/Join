@@ -1,5 +1,6 @@
 .board_content {
     display: flex;
+    align-items: center;
     justify-content: space-between;
     padding-left: 50px;
     padding-right: 50px;
@@ -7,7 +8,6 @@
 }
 
 .toDo, .inProgress, .awaitFeedback, .done {
-    width: 300px;
     height: 100%;
 }
 
@@ -191,6 +191,123 @@
     line-height: 40px;
     font-weight: bold;
     
+}
+
+@media(max-width:1560px){
+    .board_header {
+        padding-left: 30px !important
+    }
+
+    .board_content {
+        padding-left: 30px;
+        padding-right: 30px;
+      
+    }
+}
+
+@media(max-width:1520px){
+    .ticket {
+        width: 250px;
+    }
+}
+
+@media(max-width:1350px){
+    .ticket {
+        width: 230px;
+    }
+}
+
+@media(max-width:1260px){
+    .ticket {
+        width: 220px;
+    }
+}
+
+@media(max-width:1220px){
+    .ticket {
+        width: 200px;
+    }
+
+    .toDo_header h2, .inProgress_header h2, .awaitFeedback_header h2, .done_header h2{
+        font-size: 20px;
+       
+    }
+}
+
+@media(max-width:1200px) {
+    .main_wrapper {
+        width: calc(100% - 0px) !important
+    }
+
+    .board_header {
+        padding-left: 50px !important
+    }
+
+    .board_content {
+        padding-left: 50px;
+        padding-right: 50px;
+      
+    }
+
+    .ticket {
+        width: 250px;
+    }
+}
+
+@media (max-width:1140px){
+    .board_header {
+        padding-left: 30px !important
+    }
+
+    .board_content {
+        padding-left: 30px;
+        padding-right: 30px;
+      
+    }
+}
+
+@media (max-width:1100px){
+    .board_header {
+        padding-left: 20px !important
+    }
+
+    .board_content {
+        padding-left: 20px;
+        padding-right: 20px;
+      
+    }
+
+    .ticket {
+        width: 230px;
+    }
+}
+
+@media(max-width:1000px){
+    .ticket {
+        width: 210px;
+    }
+}
+
+@media(max-width:920px){
+    .ticket {
+        width: 200px;
+    }
+}
+
+@media(max-width:880px){
+    .board_header {
+        padding-left: 10px !important
+    }
+
+    .board_content {
+        padding-left: 10px;
+        padding-right: 10px;
+      
+    }
+
+    .ticket {
+        width: 190px;
+    }
 }
 
 

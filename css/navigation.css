@@ -102,10 +102,10 @@
         border: 1px solid rgb(156, 155, 155);
    } 
 
-    .nav_bar nav ul { 
-        display: flex;
-        flex-direction: row;
-   }
+   .nav_bar nav ul { 
+    display: flex;
+    flex-direction: row;
+}
 
    .legal_stuff {
         display: none;
