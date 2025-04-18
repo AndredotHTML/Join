@@ -35,7 +35,7 @@ function contactDetailTemplate ( selectedContact ) {
 
 function addContactOverlay () {
   return /*html*/`
-  <div class="overlay-header overlay-header-subheadline">
+  <div class="overlay-header overlay-header-subheadline overlay-add-contact-header">
   <button class="close-btn" onclick="closeOverlay()"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
@@ -67,7 +67,7 @@ function addContactOverlay () {
     </div>
     <div class="overlay-btns">
             <button type="button" class="button button-secondary button-cancel" onclick="closeOverlay()">
-              <span class="btn-title">Delete</span>
+              <span class="btn-title">Cancel</span>
                           </button>
             <button id="edit-task-save-btn" class="button button-primary button-check" type="button" onclick="getContactData()">
               <span>Create contact</span>
@@ -144,7 +144,7 @@ function contactTemplate ( c ) {
       </div>
       <div class="contact-info">
           <div class="contact-name">${ c.contactData.name }</div>
-          <a href="mailto:${ c.contactData.email }" class="contact-email">${ c.contactData.email }</a>
+          <span class="contact-email">${ c.contactData.email }</span>
       </div>
   </div>`;
 }

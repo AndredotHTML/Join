@@ -117,9 +117,11 @@
                     </div>
                 </section>
             </section>
-            <div id="overlay-bg" class="overly-bg"></div>
-            <div class="overlay" id="overlay" onclick="closeOverlay(event)"></div>
-            <div class="edit-overlay" id="editOverlay" onclick="closeEditOverlay"></div>
+            <div id="overlay-bg" class="overly-bg" onclick="closeAll()"></div>
+            <div class="overlay overly-add-contact" id="overlay"></div>
+            <div class="edit-overlay" id="editOverlay"></div>
+            <div class="overlay-contact-successfully-created" id="contact-successfully-created">Contact successfully
+                created</div>
 
         </div>
         <script src="../script/contacts.js"></script>

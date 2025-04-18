@@ -90,7 +90,7 @@ function closeOverlay ( event ) {
     let overlayBackground = document.getElementById( "overlay-bg" );
     overlayBackground.style.display = '';
     let overlay = document.getElementById( 'overlay' );
-    if ( !event || event.target === overlay ) {
+    if ( !event || event.target === overlay || event.target.closest( ".close-btn" ) ) {
         overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
         overlay.style.display = 'none';
         document.body.style.overflow = 'auto';
@@ -102,6 +102,8 @@ function getContactData () {
     let email = document.getElementById( "email" ).value;
     let phone = document.getElementById( "phone" ).value;
     postContactData( "/contacts", { "name": name, "email": email, "phone": phone } );
+    toggleMessage();
+
 }
 
 async function postContactData ( path = "", data = {} ) {
@@ -219,6 +221,24 @@ function getColorForContact ( name ) {
     return colors[ index ];
 }
 
+function showMessage () {
+    let messageElem = document.getElementById( "contact-successfully-created" );
+    messageElem?.classList.add( "overly-move-up" );
+}
 
+function hideMessage () {
+    let messageElem = document.getElementById( "contact-successfully-created" );
+    messageElem?.classList.remove( "overly-move-up" );
+}
+
+function toggleMessage () {
+    showMessage();
+    setTimeout( hideMessage, 800 );
+}
+
+function closeAll () {
+    closeOverlay();
+    closeEditOverlay();
+}
 
 pushToContactsArray();
