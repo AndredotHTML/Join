@@ -5,6 +5,7 @@ tasks = []
 user = []
 
 
+
 async function getAllTasks(path) {
     let response = await fetch(BASE_URL + path + ".json");
     return  await response.json()
@@ -186,7 +187,9 @@ function renderDoneTasks(id) {
 function renderUrgentDate() {
     const urgentTasks = tasks.filter(task => task.priority === "Urgent");
     if (urgentTasks.length > 0) { 
-    const date = new Date(urgentTasks[0].dueDate);
+    const [day, month, year] = urgentTasks[0].dueDate.split("/");
+    const formatted = `${year}-${month}-${day}`;
+    const date = new Date(formatted);
     const options = {
       year: 'numeric',
       month: 'long',

@@ -212,11 +212,13 @@ async function updateTaskStatus(taskId, newStatus) {
     const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
 
     try {
-           await fetch(url, {
+
+            await fetch(url, {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ status: newStatus })
         });
+
     } catch (error) {
         console.error("Firebase update error:", error);
     }
