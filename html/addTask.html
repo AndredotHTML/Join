@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/navigation.css">
     <link rel="stylesheet" href="../css/addTask.css">
+    <link rel="stylesheet" href="../css/addTask_input_components.css">
     <script src="../script/header.js"></script>
+
 </head>
 
 <body onload="getCurrentUser()">
@@ -90,7 +92,6 @@
                                     id="description-add-task" placeholder="Enter a Description">
                                 </textarea>
                                 <div class="resize" onmousedown="resizeTextarea(event)">
-                                    <!-- <img src="" draggable="false" alt="Resize"> -->
                                 </div>
                                 <div class="validation-add-task-form">
                                 </div>
@@ -98,7 +99,7 @@
                             <div class="date-wrapper d-f-column d_flex">
                                 <label for="date-input-add-task" class="poiner">Due date
                                 </label>
-                                <input type="date" name="nativ-date-input" id="nativ-date-input" class=""
+                                <input type="date" tabindex="-1" name="nativ-date-input" id="nativ-date-input" class=""
                                     onchange="transferFromPicker()">
                                 <div class="d_flex custom-date-input center-center" id="custom-date-input"
                                     onfocus="resValidOnInp(this)">
@@ -148,7 +149,7 @@
                                 <div class="d_flex wrapper-select">
                                     <input oninput="displayUser()" type="text" type="text" id="assigned-to-input"
                                         class="assigned-to-input poiner" placeholder="Select contacts to assign">
-                                    <div class="icon-form icon-24" id="arrow-open-assigned">
+                                    <div class="icon-24 icon-form d_flex center-center" id="arrow-open-assigned">
                                         <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
                                         <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg"
                                             alt="">
@@ -162,11 +163,11 @@
                             <label for="category-add-task" class="poiner">
                                 Category
                             </label>
-                            <div class="wrapper-select d_flex" id="select-category">
+                            <div class="wrapper-select d_flex" id="select-category" tabindex="0">
                                 <div name="category-add-task" id="category-add-task" class="category-add-task poiner">
                                     Select task category
                                 </div>
-                                <div class="icon-form icon-24" id="arrow-open-category">
+                                <div class="d_flex center-center icon-form icon-24" id="arrow-open-category">
                                     <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
                                     <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg" alt="">
                                 </div>
@@ -174,26 +175,28 @@
                             <div class="option-category poiner" data-value="Technical Task">Technical Task</div>
                             <div class="option-category poiner" data-value="User Story">User Story</div>
                         </div>
-                        <div class="wrapper-subtasks d_flex d-f-column">
+                        <div class="wrapper-subtasks d_flex d-f-column gap-8">
                             <label for="subtask">Subtasks <span>(optional)</span></label>
                             <div class="subtask-area" id="subtask-area">
                                 <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
                                     onclick="stopPropagation(event)">
                                 <div class="d_flex">
-                                    <div class="icon-form icon-24" id="working-icons-opener">
+                                    <div class="d_flex center-center icon-form icon-24" id="working-icons-opener">
                                         <img src="/assets/icons/add.png" alt="" class="poiner"
                                             onclick="changeSubtaskIcons()">
                                     </div>
                                     <div class="d_none icons-subtask" id="input-subtask-icons">
-                                        <img src="/assets/icons/close_cross.svg" class="icon-form icon-24"
-                                            id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
+                                        <img src="/assets/icons/close_cross.svg"
+                                            class="d_flex center-center icon-form icon-24" id="subtask_input_clear"
+                                            alt="" onclick="clearInputSubtask()">
                                         <div class="separator"></div>
-                                        <img src="/assets/icons/check_blue.svg" class="icon-form icon-24" alt=""
+                                        <img src="/assets/icons/check_blue.svg"
+                                            class="d_flex center-center icon-form icon-24" alt=""
                                             onclick="addSubtask()">
                                     </div>
                                 </div>
                             </div>
-                            <ul class="added-subtasks" id="added-subtasks">
+                            <ul class="added-subtasks gap-8" id="added-subtasks">
                             </ul>
                         </div>
                     </form>
@@ -214,6 +217,7 @@
             </div>
         </section>
     </div>
+    <script src="/script/addTask_api.js"></script>
     <script src="/script/template.js"></script>
     <script src="/script/addTask.js"></script>
 </body>

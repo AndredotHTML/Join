@@ -102,9 +102,8 @@ h3 {
 
     .content-legal-and-privacy {
         padding: 64px 18px 0px;
-    }
 }
-
+}
 @media(max-width: 700px){
 .icon-wrapper {
     display: flex !important;
@@ -114,5 +113,23 @@ h3 {
 @media(max-width: 380px) {
     h1 {
         font-size: 40px;
+    }
+}
+
+@media(max-height: 900px){
+    .content-legal-and-privacy {
+        height: 700px;
+    }
+}
+
+@media(max-height: 810px){
+    .content-legal-and-privacy {
+        height: 600px;
+    }
+}
+
+@media(max-height: 720px){
+    .content-legal-and-privacy {
+        height: 500px;
     }
 }

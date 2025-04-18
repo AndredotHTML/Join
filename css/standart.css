@@ -80,6 +80,10 @@
     cursor: pointer;
 }
 
+.gap-8{
+    gap: 8px;
+}
+
 html {
     font-family: "Open Sans", sans-serif;
     line-height: 1.2;

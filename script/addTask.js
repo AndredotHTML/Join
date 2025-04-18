@@ -1,48 +1,12 @@
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 let isDropdownOpen = false;
 const form = document.getElementById("form-add-task");
-let getUserCache = [];
-user = []
 let lastCursPosDisc = 0
 let openDD = false
 let placeForCheckedIcon = false
 
-
-
-async function getCurrentUser() {
-    let userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-        user.push(userData);
-        generateUserIcon();
-    } else {
-        console.log("Kein Nutzer gefunden.");
-    }
-}
-
-function generateUserIcon() {
-    let userName = user[0].name;
-    let iconContainer = document.getElementById('icon-container');
-    let iconWrapper = document.getElementById('icon-wrapper');
-    if (userName) {
-        let initials = userName.split(' ')
-            .map(word => word.charAt(0).toUpperCase())
-            .slice(0, 2)
-            .join('');
-        iconContainer.textContent = initials;
-        iconWrapper.style.display = 'flex';
-    }
-}
-
 function stopPropagation(event) {
     event.stopPropagation()
 }
-
-document.addEventListener("DOMContentLoaded", async function () {
-    dropDownForCategory();
-    enabledCreatBtn()
-    await getUser(path = "/users");
-    document.getElementById("assigned-to-input").addEventListener("input", displayUser);
-});
 
 /** changes the date format and limits the days and months
  * @example 10/04/2025
@@ -51,25 +15,41 @@ document.addEventListener("DOMContentLoaded", async function () {
 function customDateInput() {
     let dateInputRef = document.getElementById("date-input-add-task");
     let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
-    let displaydDate = ""
+    let dayInput = day(dateInputVal)
+    let monthInput = month(dateInputVal)
+    let yearInput = year(dateInputVal)
+    let customDateInput = `${dayInput}`+ `${monthInput}`+`${yearInput}`
+    dateInputRef.value = customDateInput
+}
+
+function day(dateInputVal) {
     if (dateInputVal.length >= 1) {
-        if (dateInputVal.slice(0, 2) > 31) {
-            displaydDate = 31
-        } else {
-            displaydDate = dateInputVal.slice(0, 2)
-        }
+        let day = dateInputVal.slice(0, 2) 
+        if (day > 31) {
+            day = 31
+        } 
+        return day 
     }
+    return ""
+}
+
+function month(dateInputVal) {
     if (dateInputVal.length >= 3) {
-        if (dateInputVal.slice(2, 4) > 12) {
-            displaydDate += "/" + 12
-        } else {
-            displaydDate += "/" + dateInputVal.slice(2, 4)
-        }
+        let month = dateInputVal.slice(2, 4)
+        if (month > 12) {
+            month =12
+        } 
+        return "/" + month
     }
+    return ""
+}
+
+function year(dateInputVal){
     if (dateInputVal.length >= 5) {
-        displaydDate += "/" + dateInputVal.slice(4, 8)
+        let year = dateInputVal.slice(4, 8)
+        return "/"+ year
     }
-    dateInputRef.value = displaydDate
+    return ""
 }
 
 function showPicker() {
@@ -82,6 +62,14 @@ function transferFromPicker() {
     let dateInputRef = document.getElementById("date-input-add-task")
     let reversDate = pickerRef.value.split("-").reverse().join("/")
     dateInputRef.value = reversDate
+}
+
+function clearValidationArea() {
+    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
+    for (let index = 0; index < validationAreaRef.length; index++) {
+        let singValidArea = validationAreaRef[index];
+        singValidArea.innerHTML = "";
+    }
 }
 
 function textareaCursPos() {
@@ -107,11 +95,9 @@ function resizeTextarea(event) {
         let mouseMovePos = e.clientY - mousePos
         textareaRef.style.height = `${textareaHeight + mouseMovePos}px`
     }
-    document.addEventListener('mouseup', stopResize)
-    function stopResize() {
+    document.addEventListener('mouseup', () =>{
         document.removeEventListener('mousemove', newHeightTA)
-        document.removeEventListener('mouseup', stopResize)
-    }
+    },{once:true});
 }
 
 document.addEventListener("click", function (e) {
@@ -133,23 +119,27 @@ form.addEventListener("submit", function (event) {
     let inputToValidateDate = document.getElementById("date-input-add-task");
     let requerdDateRef = document.getElementById("date-validation");
     clearValidationArea()
-    let errMsg = "This field is required"
-    if (inputToValidateTitle.value === "") {
-        errorMsg(requerdTitleRef, inputToValidateTitle, errMsg)
-    }
-    if (inputToValidateDate.value === "") {
-        errorMsg(requerdDateRef, inputToValidateDate, errMsg)
-    }
+    errMsgAreaControl(inputToValidateTitle,requerdTitleRef,inputToValidateDate,requerdDateRef) 
     if (valide === true) {
         creatTask()
     }
 })
 
-function errorMsg(requerdRef, inputToValidate, errMsg) {
+function errorMsg(requerdRef, inputToValidate) {
+    let errMsg = "This field is required"
     requerdRef.innerHTML = errMsg;
     requerdRef.style.color = "#FF8190"
     inputToValidate.style.borderBottom = "1px solid #FF8190";
     valide = false
+}
+
+function errMsgAreaControl(inputToValidateTitle,requerdTitleRef,inputToValidateDate,requerdDateRef)  {
+    if (inputToValidateTitle.value === "") {
+        errorMsg(requerdTitleRef, inputToValidateTitle)
+    }
+    if (inputToValidateDate.value === "") {
+        errorMsg(requerdDateRef, inputToValidateDate)
+    }
 }
 
 function resValidOnInp(element) {
@@ -216,38 +206,6 @@ function clearForm() {
     clearValidationArea()
 }
 
-
-function getTaskInputs() {
-    let titleNewTaskRef = document.getElementById("title-add-task").value
-    let descriptionNewTaskRef = document.getElementById("description-add-task").value
-    let dateNewTaskRef = document.getElementById("date-input-add-task").value
-    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked').value
-    let categoryNewTaskRef = document.getElementById("category-add-task").textContent
-    let assignedUserRef = assignetUserToData()
-    let subtasks = getSubtasks();
-    return { titleNewTaskRef, descriptionNewTaskRef, dateNewTaskRef, priorityNewTaskRef, categoryNewTaskRef, assignedUserRef, subtasks }
-}
-
-function creatTaskData(inputData) {
-    return {
-        title: inputData.titleNewTaskRef,
-        description: inputData.descriptionNewTaskRef,
-        dueDate: inputData.dateNewTaskRef,
-        priority: inputData.priorityNewTaskRef,
-        category: inputData.categoryNewTaskRef,
-        assignedUsers: inputData.assignedUserRef,
-        status: "toDo",
-        subtasks: inputData.subtasks,
-    };
-}
-
-function creatTask() {
-    let inputs = getTaskInputs()
-    let data = creatTaskData(inputs)
-    postTask("/tasks", data)
-    transferToBoard()
-}
-
 function enabledCreatBtn() {
     let titleNewTaskRef = document.getElementById("title-add-task")
     let dateNewTaskRef = document.getElementById("date-input-add-task")
@@ -260,83 +218,6 @@ function enabledCreatBtn() {
     else {
         btn.disabled = true
     }
-}
-
-function getSubtasks() {
-    let subtasks = [];
-    let subtaskElements = document.querySelectorAll("#added-subtasks li");
-    for (let i = 0; i < subtaskElements.length; i++) {
-        subtasks.push({
-            title: subtaskElements[i].innerText,
-            completed: false
-        });
-    }
-    return subtasks;
-}
-
-function assignetUserToData() {
-    let assignedRef = document.getElementById("assigned-to-display");
-    let assignetContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    let selectedUser = [];
-    assignetContactRef.forEach(contact => {
-        let nameIcon = contact.querySelector(".name-icon");
-        let checkbox = contact.querySelector("input[type='checkbox']");
-        if (checkbox && checkbox.checked) {
-            let assignetData = nameIcon.dataset.value;
-            selectedUser.push(assignetData)
-        }
-    })
-    return selectedUser
-}
-
-async function postTask(path = "", data = {}) {
-    try {
-        const response = await fetch(BASE_URL + path + ".json", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        })
-        if (!response.ok) {
-            throw new Error("Fehler beim Senden der Daten");
-        }
-        const result = await response.json()
-        return result;
-    } catch (error) {
-        console.error("Fehler:", error.message);
-        return null;
-    }
-}
-
-async function getUser(path = "") {
-    if (getUserCache.length > 0) {
-        return getUserCache;
-    }
-    try {
-        const response = await fetch(BASE_URL + path + ".json")
-        if (!response.ok) {
-            throw new Error("Fehler beim Empfangen der User");
-        }
-        const result = await response.json()
-        const userArray = Object.values(result)
-        getUserCache = userArray;
-        return getUserCache;
-    } catch (error) {
-        console.error("Fehler:", error.message);
-    }
-}
-
-function searchAssigned() {
-    let userArray = getUserCache
-    let inputRef = document.getElementById("assigned-to-input")
-    let inputVal = inputRef.value.toLowerCase()
-    let searchingName = userArray.filter(function (nameToSearch) {
-        return nameToSearch.name.toLowerCase().includes(inputVal)
-    }
-    )
-
-    return searchingName
 }
 
 function displayUser() {
@@ -362,8 +243,6 @@ function dropDownForAssigned() {
     isDropdownOpen = !isDropdownOpen;
 }
 
-
-
 function blurAssig() {
     let assignRef = document.getElementById("assigned-to-input")
     assignRef.value = ""
@@ -382,6 +261,7 @@ function openDropdown() {
     arrowImgToggle(arrowOpenRef)
     styAssignedContOpen(assignedContactRef)
 }
+
 function styAssignedContOpen(assignedContactRef) {
     assignedContactRef.forEach(contact => {
         contact.style.display = "flex";
@@ -413,6 +293,10 @@ function styAssignedContClosed(assignedContactRef, assignedRef) {
             contact.classList.remove("visible-assigned");
         }
     });
+    styAssignedAreaClose(assignedRef) 
+}
+
+function styAssignedAreaClose(assignedRef) {
     if (placeForCheckedIcon) {
         assignedRef.classList.remove("visible-assigned")
         assignedRef.classList.add("visible-assigned-min")
@@ -476,14 +360,6 @@ function arrowImgToggle(arrowOpenRef) {
     }
 }
 
-function clearValidationArea() {
-    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
-    for (let index = 0; index < validationAreaRef.length; index++) {
-        let singValidArea = validationAreaRef[index];
-        singValidArea.innerHTML = "";
-    }
-}
-
 function editSubtasks(element) {
     element.contentEditable = "true"
     element.style.listStyleType = "none"
@@ -493,7 +369,7 @@ function editSubtasks(element) {
     let editContainer = subtaskIconContainer.querySelector(".subtask-edit-icons")
     styleSubtaskOnEditing(subtaskContainerRef, editContainer)
     element.addEventListener("blur", function () {
-        styleSubtaskBlur(element,subtaskContainerRef, editContainer)
+        styleSubtaskBlur(element, subtaskContainerRef, editContainer)
     });
 }
 
@@ -505,7 +381,7 @@ function styleSubtaskOnEditing(subtaskContainerRef, editContainer) {
     editContainer.classList.add("d_flex", "d-f-row")
 }
 
-function styleSubtaskBlur(element,subtaskContainerRef, editContainer) {
+function styleSubtaskBlur(element, subtaskContainerRef, editContainer) {
     element.contentEditable = false
     element.style.listStyleType = ""
     editContainer.classList.remove("d_flex", "d-f-row")
@@ -517,16 +393,4 @@ function styleSubtaskBlur(element,subtaskContainerRef, editContainer) {
 
 function deleteSubtask(element) {
     element.remove();
-}
-
-
-function transferToBoard() {
-    document.body.innerHTML += tempTaskToBoardOverlay()
-    let createTaskBtn = document.getElementById("add-task-create-btn")
-    let createTaskIcon = document.getElementById("btn-icon-check")
-    createTaskBtn.classList.add("activ-creat-btn")
-    createTaskIcon.classList.add("checkt-icon")
-    setTimeout(() => {
-        window.location.href = "/html/board.html";
-    }, 800);
 }
