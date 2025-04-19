@@ -115,6 +115,7 @@ input[type="radio"] {
     outline: 1px solid #D1D1D1;
     background-color: var(--secondaryColor);
     font-size: 19px;
+    font-weight: 400;
 }
 
 .shell-radio-btn {
@@ -255,6 +256,10 @@ input[type="radio"] {
     gap: 16px;
 }
 
+.assigned-template-name{
+    gap: 6px;
+}
+
 .assigned-contacts:hover,
 .option-category:hover {
     background-color: #D2E3FF;
@@ -271,6 +276,7 @@ input[type="radio"] {
 .assigned-contacts:has(input:checked):hover {
     background-color: #005DFF;
 }
+
 
 /*background-color placeholder*/
 .name-icon {
@@ -319,7 +325,13 @@ input[type="checkbox"]:checked {
     max-height: 50px;
 }
 
-@media (max-width :490px) {
+@media (max-width :700px) {
+    .title-wrapper {
+        height: 64px
+    }
+    .title-add-task {
+        font-size: 28px !important;
+    }
     .resize{
         display: none;
     }
@@ -329,7 +341,15 @@ input[type="checkbox"]:checked {
     .radio-btn {
         max-width: 30%;
         margin: 0 auto;
+        height: 48px;
     }
+    .assigned-contacts:has(input:checked):hover {
+        background-color: #4589FF;
+    }
+    .assigned-contacts:hover,
+    .option-category:hover {
+    background-color: transparent;
+}
 }
 
 @media (max-width :400px){

@@ -17,7 +17,7 @@ form {
     max-width: 488px;
     padding: 64px 2px 0 24px;
     gap: 24px;
-    height: 928px;
+    height: calc(100vh - 96px);
 }
 
 .form-scroll-container {
@@ -247,9 +247,9 @@ li[contenteditable="true"] {
     }
 }
 
-@media (max-width :490px) {
+@media (max-width :700px) {
     .add-task-btns {
-        left: 10px;
+        left: 28px;
         transform: translateX(10%);
     }
     .clear-form-btn {
@@ -259,6 +259,12 @@ li[contenteditable="true"] {
     .add-task-create-btn {
         height: 48px;
         font-size: 19px;
+    }
+    .subtask-hover-icons {
+        display: flex !important;
+    }
+    #task-to-board-overlay {
+        background-color: rgba(255, 255, 255, 0.226);
     }
 }
 

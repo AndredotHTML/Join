@@ -20,7 +20,7 @@ function subtaskTemplat(inputSubtaskVal) {
     `
 }
 
-function templateAssignedTo(userName,isChecked) {
+function templateAssignedTo(userName, isChecked,isCurrentUser) {
     return `
     <div class="assigned-contacts visible-assigned d_flex">
             <label for="assigned-user-${userName}" onclick="stopPropagation(event)" class="d_flex">
@@ -29,7 +29,8 @@ function templateAssignedTo(userName,isChecked) {
                     ${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}
                     </div>
                     <div class="assigned-template-name">
-                        ${userName}
+                        <div>${userName}</div>
+                        ${isCurrentUser?'<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>
                 <input type="checkbox" ${isChecked?"checked" :""} class="input-assigned icon-24" name="assigned-user-${userName}" id="assigned-user-${userName}">

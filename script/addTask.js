@@ -221,6 +221,7 @@ function enabledCreatBtn() {
 }
 
 function displayUser() {
+    let currentUser = user[0].name;
     let userArray = searchAssigned()
     let selectedUser = assignetUserToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
@@ -228,7 +229,8 @@ function displayUser() {
     userArray.forEach(contact => {
         let userName = contact.name;
         let isChecked = selectedUser.includes(userName)
-        allContacts += templateAssignedTo(userName, isChecked)
+        let isCurrentUser = userName === currentUser
+        allContacts += templateAssignedTo(userName, isChecked,isCurrentUser)
     });
     assignedToAreaRef.innerHTML = allContacts
 }
