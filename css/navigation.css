@@ -94,43 +94,45 @@
         bottom: 0;
         left: 0;
         position: fixed;
-        width: 100%; 
+        width: 100%;
         flex-direction: row;
         padding: 0;
         box-shadow: none;
-        height: 70px;
+        max-height: 76px;
         border: 1px solid rgb(156, 155, 155);
-   } 
+    }
 
-   .nav_bar nav ul { 
-    display: flex;
-    flex-direction: row;
-}
+    .nav_bar nav ul {
+        display: flex;
+        flex-direction: row;
+    }
 
-   .legal_stuff {
+    .legal_stuff {
         display: none;
-   }
+    }
 
-   .nav_bar nav li a {
+    .nav_bar nav li a {
         flex-direction: column;
-        gap: 8px;
-   }
-   
-   .active {
-        background-color: transparent;
-        color: #4589FF !important;
-   }
+        gap: 4px;
+        padding: 15px 0;
+    }
 
-   .nav_bar nav li a:hover {
+    .active {
         background-color: transparent;
         color: #4589FF !important;
-   }
+    }
+
+    .nav_bar nav li a:hover {
+        background-color: transparent;
+        color: #4589FF !important;
+    }
 }
 
 @media (max-width: 520px) {
     .nav_wrapper {
         height: 80px;
     }
+
     .nav_bar nav li a {
         padding: 0;
     }
