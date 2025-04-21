@@ -50,20 +50,20 @@
 .icon-container {
     width: 46px;
     height: 46px;
-    background-color: white;
+    background-color: var(--secondaryColor);
     border-radius: 50%;
-    border: 2px solid #4589FF;
+    border: 2px solid var(--primaryColor);
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
     font-size: 23px;
     font-weight: 600;
-    color: #005DFF;
+    color: var(--lightBlue);
 }
 
 .profile_menu {
-    background-color: lightcoral;
+    background-color: var(--secondaryColor);
     width: 172px;
     height: 0px;
     position: absolute;
