@@ -70,3 +70,25 @@ li {
     color: var(--lightBlue);
     font-weight: 700;
 }
+
+.marked {
+    color: var(--primaryColor);
+}
+
+.arrow-left {
+    display: flex;
+    height: 32px;
+    width: 32px;
+}
+
+.arrow-left::after {
+    content: url("../assets/icons/arrow_left.svg");
+    width: 32px;
+    height: 32px;
+}
+
+.arrow-left:hover::after {
+    content: url("../assets/icons/arrow_left_hover.svg");
+    width: 32px;
+    height: 32px;
+}
