@@ -1,3 +1,6 @@
+loggedin = false;
+
+
 function init() {
   startAnimation()
   pushToUsersArray()
@@ -34,12 +37,9 @@ function validateLoginForm() {
 }
 
 
-/**
- * redirects the user to the summary page 
- * @param {*} user - userdata to give over information as parameter
- */
 function redirectToSummary() {
-  window.location.href = "http://127.0.0.1:5500/html/summary.html"  
+  localStorage.setItem("isLoggedIn", "true");
+  window.location.href = "http://127.0.0.1:5500/html/summary.html";
 }
 
 
@@ -85,6 +85,7 @@ function handleSuccessfulLogin(userData) {
 
 function deleteLocalUser() {
   localStorage.removeItem('user');
+  localStorage.removeItem('isLoggedIn');
 }
 
 

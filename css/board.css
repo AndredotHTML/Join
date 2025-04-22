@@ -234,7 +234,17 @@
     }
 }
 
+
 @media(max-width:1200px) {
+    .active::before {
+        background-color: transparent;
+        color: #4589FF !important;
+        content: url("/assets/icons/board_icon_blue.png");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .main_wrapper {
         width: calc(100% - 0px) !important
     }

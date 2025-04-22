@@ -221,6 +221,10 @@ input.error {
     #login_top {
         padding: 40px;
     }
+
+    #login_border {
+        margin-top: 10%;
+    }
 }
 
 @media (max-width: 520px) {

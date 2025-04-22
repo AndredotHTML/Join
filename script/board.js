@@ -3,7 +3,14 @@ let tasks = [];
 let currentDraggedElement;
 const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
 
+function authLogIn() {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+      }
+}
+
 async function updateHTML() {
+    authLogIn()
     await pushToUsersArray(); 
     await pushToTask();
     await getCurrentUser();

@@ -3,6 +3,12 @@ const DETAIL_ELEM = document.getElementById( 'detail' );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
+function authLogIn() {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+      }
+}
+
 // Aktualisiert das Detail-Panel mit den Daten des ausgewählten Kontakts
 function updateDetailPanel ( contactId ) {
     const selectedContact = contacts.find( contact => contact.id === contactId );

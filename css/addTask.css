@@ -226,6 +226,14 @@ li[contenteditable="true"] {
 }
 
 @media (max-width :1200px) {
+    .active::before {
+        background-color: transparent;
+        color: #4589FF !important;
+        content: url("/assets/icons/add_task_icon_blue.png");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .add-task-btns {
         bottom: 120px;
     }

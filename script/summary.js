@@ -1,9 +1,15 @@
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
-tasks = []
+tasks = [];
 
-user = []
+user = [];
 
+
+function authLogIn() {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+      }
+}
 
 
 async function getAllTasks(path) {
@@ -34,7 +40,17 @@ async function pushToTask() {
 }
 
 
+function greetTransition() {
+    const greeting = document.getElementById("user-greeting")
+    if (window.innerWidth <= 910)
+        setTimeout(() => {
+            greeting.classList.add("greet_transition");
+            }, 2000);
+}
+
+
 async function init() {
+    authLogIn()
     let userData = JSON.parse(localStorage.getItem('user'));
     if (userData) {
         let email = user[0].email;
@@ -46,6 +62,7 @@ async function init() {
         greetGuest();
     }
     pushToTask();
+    greetTransition()
 }
 
 

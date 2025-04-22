@@ -4,6 +4,12 @@ let lastCursPosDisc = 0
 let openDD = false
 let placeForCheckedIcon = false
 
+function authLogIn() {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+      }
+}
+
 function stopPropagation(event) {
     event.stopPropagation()
 }
