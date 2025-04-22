@@ -230,7 +230,6 @@
 
     .toDo_header h2, .inProgress_header h2, .awaitFeedback_header h2, .done_header h2{
         font-size: 20px;
-       
     }
 }
 
@@ -317,6 +316,35 @@
 
     .ticket {
         width: 190px;
+    }
+}
+
+@media(max-width:820px){
+    .board_content{
+        display: unset;
+    }
+
+    .ticket {
+       margin-left: 10px;
+    }
+   
+    .drag_area {
+       min-height: unset;
+       flex-direction: unset;
+       align-items: unset;
+       gap: 0;
+    }
+
+    .toDo_header h2, .inProgress_header h2, .awaitFeedback_header h2, .done_header h2{
+    padding-left: 15px;
+    }
+
+    .toDo_header img, .inProgress_header img, .awaitFeedback_header img, .done_header img{
+        padding-right: 15px;
+    }
+
+    .ticket {
+        width: 250px;
     }
 }
 
