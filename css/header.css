@@ -61,6 +61,7 @@
     font-size: 23px;
     font-weight: 600;
     color: var(--lightBlue);
+    box-sizing: content-box;
 }
 
 .profile_menu {
