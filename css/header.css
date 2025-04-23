@@ -116,7 +116,7 @@
 }
 
 @media (max-width: 700px) {
-    .header span {
+    .header span, .help-link {
         display: none;
     }
 }
