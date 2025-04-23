@@ -220,6 +220,21 @@ li[contenteditable="true"] {
     display: flex;
 }
 
+.active_span:before {
+    content: url("/assets/icons/add_task_icon.png");
+    background-color: var(--menuHoverColor);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    align-items: center;
+    gap: 8px;
+}
+
+.active_span {
+    display: flex;
+    align-items: center;
+}
+
 @keyframes slideOutBottom {
     0% {
         transform: translateY(100vh);
@@ -230,13 +245,15 @@ li[contenteditable="true"] {
 }
 
 @media (max-width :1200px) {
-    .active::before {
+    .active_span::before {
         background-color: transparent;
         color: #4589FF !important;
         content: url("/assets/icons/add_task_icon_blue.png");
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        margin-right: 0;
+    }
+    
+    .active_span {   
+        flex-direction: column; 
     }
     .add-task-btns {
         bottom: 120px;
