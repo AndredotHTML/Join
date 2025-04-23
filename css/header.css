@@ -115,8 +115,19 @@
     padding: 8px 16px;
 }
 
+.help-item {
+    display: none;
+}
+
 @media (max-width: 700px) {
     .header span, .help-link {
         display: none;
     }
+
+    .help-item {
+        display: block;
+    }
+}
+
+
 }
