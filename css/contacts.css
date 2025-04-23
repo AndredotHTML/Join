@@ -954,13 +954,31 @@ input.error {
     transform: translate(-50%, 50%);
     bottom: 50%;
 }
+
+.active_span:before {
+    content: url("/assets/icons/contacts_icon.png");
+    background-color: var(--menuHoverColor);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 8px;
+    align-items: center;
+    gap: 8px;
+}
+
+.active_span {
+    display: flex;
+    align-items: center;
+}
+
 @media(max-width:1200px) {
-    .active::before {
+    .active_span::before {
         background-color: transparent;
         color: #4589FF !important;
-        content: url("/assets/icons/summary_icon_blue.svg");
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        content: url("/assets/icons/contacts_icon_blue.png");
+        margin-right: 0;
+    }
+    
+    .active_span {   
+        flex-direction: column; 
     }
 }
