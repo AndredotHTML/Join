@@ -178,7 +178,7 @@
                             <label for="subtask">Subtasks <span>(optional)</span></label>
                             <div class="subtask-area" id="subtask-area">
                                 <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
-                                    onclick="stopPropagation(event)">
+                                    onclick="stopPropagation(event)" onkeydown="subtaskEnter(event)">
                                 <div class="d_flex">
                                     <div class="d_flex center-center icon-form icon-24" id="working-icons-opener">
                                         <img src="/assets/icons/add.png" alt="" class="poiner"
