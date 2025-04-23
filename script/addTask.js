@@ -198,11 +198,7 @@ function clearForm() {
     assignedToAreaRef.innerHTML = ""
     categoryRef.innerHTML = "Select task category"
     displaydSubtaskRef.innerHTML = ""
-    let labelList = document.querySelectorAll(".radio-btn")
-    labelList.forEach(radioBtn => {
-        radioBtn.style.backgroundColor = `var(--secondaryColor)`;
-        radioBtn.style.color = `black`;
-    });
+    radioBtnChecked("medium")
     clearValidationArea()
 }
 
@@ -221,7 +217,7 @@ function enabledCreatBtn() {
 }
 
 function displayUser() {
-    let currentUser = user[0].name;
+    let currentUser = user?.[0]?.name || 'guest';
     let userArray = searchAssigned()
     let selectedUser = assignetUserToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
@@ -316,8 +312,8 @@ function styleForCheckedCont(contact, name, checkbox, contactLabel) {
 
 function dropDownForCategory() {
     let arrowOpenRef = document.getElementById("arrow-open-category")
-    let selectRef = document.getElementById("select-category")
-    let options = document.querySelectorAll(".wrapper-category .option-category")
+    let selectRef = document.getElementById("wrapper-category")
+    let options = document.querySelectorAll(".option-category")
     selectRef.addEventListener("click", function () {
         if (openDD === false) {
             showCategoryDD(options, arrowOpenRef);
@@ -353,6 +349,7 @@ function closeCategoryDD(options, arrowOpenRef) {
         option.classList.remove("visible")
     })
     arrowImgToggle(arrowOpenRef)
+    return
 }
 
 function arrowImgToggle(arrowOpenRef) {

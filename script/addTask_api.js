@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     enabledCreatBtn()
     await getUser(path = "/users");
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
+    radioBtnChecked("medium")
 });
 
 async function getCurrentUser() {

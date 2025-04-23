@@ -12,6 +12,10 @@
     font-weight: 300 800;
 }
 
+/* *{
+    box-sizing: border-box;
+} */
+
 :root {
     --fontSize-1: 48px;
     --fontSize-2: 40px;

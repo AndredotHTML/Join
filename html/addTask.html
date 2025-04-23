@@ -127,7 +127,7 @@
                                 <label class="radio-btn center-center d_flex btn add-task-medium poiner"
                                     id="add-task-medium" for="medium-rad">
                                     <input type="radio" name="priority" id="medium-rad" value="medium"
-                                        onclick="radioBtnChecked('medium')">
+                                        onclick="radioBtnChecked('medium')" checked>
                                     Medium <img class="unchecked-priority" src="../assets/icons/medium.svg" alt="">
                                     <img class="checked-priority" src="../assets/icons/medium_white.svg" alt="">
                                 </label>
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="wrapper-category">
+                        <div class="wrapper-category" id="wrapper-category">
                             <label for="category-add-task" class="poiner">
                                 Category
                             </label>
@@ -172,8 +172,8 @@
                                     <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg" alt="">
                                 </div>
                             </div>
-                            <div class="option-category poiner" data-value="Technical Task">Technical Task</div>
-                            <div class="option-category poiner" data-value="User Story">User Story</div>
+                            <div class="option-category poiner" onclick="stopPropagation(event)" data-value="Technical Task">Technical Task</div>
+                            <div class="option-category poiner" onclick="stopPropagation(event)" data-value="User Story">User Story</div>
                         </div>
                         <div class="wrapper-subtasks d_flex d-f-column gap-8">
                             <label for="subtask">Subtasks <span>(optional)</span></label>

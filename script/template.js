@@ -20,27 +20,27 @@ function subtaskTemplat(inputSubtaskVal) {
     `
 }
 
-function templateAssignedTo(userName, isChecked,isCurrentUser) {
+function templateAssignedTo(userName, isChecked, isCurrentUser) {
     return `
     <div class="assigned-contacts visible-assigned d_flex">
             <label for="assigned-user-${userName}" onclick="stopPropagation(event)" class="d_flex">
                 <div class="d_flex icon-name-template">
                     <div class="name-icon d_flex" data-value="${userName}">
-                    ${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}
+                    ${userName.split(' ').length > 1 ? userName.split(' ')[0][0].toUpperCase() + userName.split(' ')[1][0].toUpperCase() : userName.split(' ')[0][0].toUpperCase() + userName.split(' ')[0][1].toUpperCase()}
                     </div>
                     <div class="assigned-template-name">
                         <div>${userName}</div>
-                        ${isCurrentUser?'<span class="you-label"> (You)</span>' : ''}
+                        ${isCurrentUser ? '<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>
-                <input type="checkbox" ${isChecked?"checked" :""} class="input-assigned icon-24" name="assigned-user-${userName}" id="assigned-user-${userName}">
+                <input type="checkbox" ${isChecked ? "checked" : ""} class="input-assigned icon-24" name="assigned-user-${userName}" id="assigned-user-${userName}">
             </label>  
         </div>    
     `
 }
 
 function tempTaskToBoardOverlay() {
-    return`<div id="task-to-board-overlay" class="d_flex center-center">
+    return `<div id="task-to-board-overlay" class="d_flex center-center">
                 <div id="task-to-board-animation" class="d_flex center-center">
                     <div>
                         Task added to board
@@ -56,9 +56,9 @@ function tempTaskToBoardOverlay() {
 
 function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);
-    let {completed,total,progress} = calculateSubtaskProgress(element.subtasks);
+    let { completed, total, progress } = calculateSubtaskProgress(element.subtasks);
     let priority_img = togglePriority(element.priority);
-    let user_icon =generateUserIcons(element.assignedUsers);
+    let user_icon = generateUserIcons(element.assignedUsers);
 
     return `
     <div draggable="true"  ondragstart="startDragging('${element.id}')" class="ticket" onclick="showOverlay('${element.id}')">
@@ -79,7 +79,7 @@ function generateTask(element) {
     </div>`
 }
 
-function generateNoTask(status){
+function generateNoTask(status) {
     return `
         <div class="noTask_msg">
         <span>No task ${status} </span>
@@ -90,7 +90,7 @@ function generateNoTask(status){
 function generateTaskOverlay(element) {
     let bg_color = toggleCategoryColor(element.category);
     let priority_img = togglePriority(element.priority);
-    let user_icon_name =generateOverlayUserIcons(element.assignedUsers);
+    let user_icon_name = generateOverlayUserIcons(element.assignedUsers);
     let subtask = element.subtasks ? generateSubtasks(element.subtasks, element.id) : '';
 
     return `
