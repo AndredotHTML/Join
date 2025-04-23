@@ -45,6 +45,7 @@
     margin-left: 18px;
     user-select: none;
     cursor: pointer;
+    box-sizing: unset !important;
 }
 
 .icon-container {

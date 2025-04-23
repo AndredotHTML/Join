@@ -12,11 +12,12 @@
     <link rel="stylesheet" href="../css/contacts.css">
     <link rel="stylesheet" href="../css/legal-and-privacy.css">
     <script src="../script/header.js"></script>
+    <script src="../script/legal-and-privacy.js"></script>
 
     <title>Legal Notice</title>
 </head>
 
-<body onload="getCurrentUser()">
+<body onload="init()">
     <header class="header">
         <div class="logo-container">
             <img src="../assets/icons/logo.svg" alt="Logo">
@@ -38,7 +39,7 @@
     </header>
     <div class="content">
         <section class="nav_wrapper">
-            <div class="nav_bar">
+            <div class="nav_bar" id="standart_nav_bar">
                 <nav>
                     <ul>
                         <li>
@@ -68,7 +69,20 @@
                     </ul>
                 </nav>
             </div>
-            <div class="legal_stuff">
+            <div class="nav_bar d_none" id="alt_nav_bar">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="login.html">
+                                <img src="../assets/icons/logout.png" alt="Join Logo">
+                                <span>Log In</span>
+                            </a>
+                        </li>
+                        
+                    </ul>
+                </nav>
+            </div>
+            <div class="legal_stuff" id="legal_stuff">
                 <a href="privacyPolicy.html"><span>Privacy Policy</span></a>
                 <a  href="legalNotice.html"><span class="current-page">Legal Notice</span></a>
             </div>

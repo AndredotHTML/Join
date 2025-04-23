@@ -18,7 +18,7 @@ function addTaskOverlay(){
             <div class="date">
             <span><strong>Due date</strong></span>
             <div class="date-picker-wrapper">
-            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy"  onclick="openCalendar()" readonly>
             <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
             </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
@@ -105,7 +105,7 @@ function addTaskInProgressOverlay(){
             <div class="date">
             <span><strong>Due date</strong></span>
             <div class="date-picker-wrapper">
-            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy"  onclick="openCalendar()" readonly>
             <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
             </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>
@@ -192,7 +192,7 @@ function addTaskAwaitFeedbackOverlay(){
             <div class="date">
             <span><strong>Due date</strong></span>
             <div class="date-picker-wrapper">
-            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy" readonly>
+            <input type="text" id="dateInput-add-task" placeholder="dd/mm/yyyy"  onclick="openCalendar()" readonly>
             <img src="../assets/icons/event.png" alt="Calendar" id="calendarIcon" class="calendar-icon" onclick="openCalendar()">
             </div>
             <div id="date-error" class="error-message" style="color: red; display: none;"></div>

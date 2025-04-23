@@ -266,6 +266,25 @@ a {
     font-weight: 300;
 }
 
+.user-greeting {
+    transition: all 2s;
+}
+
+.greet_transition {
+    height: 0 !important;
+}
+
+@media (max-width: 1200px) {
+    .active::before {
+        background-color: transparent;
+        color: #4589FF !important;
+        content: url("/assets/icons/summary_icon_blue.svg");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
 @media (max-width: 910px) {
     .user-greeting {
         display: flex;
@@ -310,6 +329,8 @@ a {
         height: 632px;
         width: 100%;
         margin-bottom: 80px;
+        padding-top: 60px;
+        padding-bottom: 80px;
     }
 
     .urgent-tasks {
@@ -345,14 +366,14 @@ a {
     }
 
     .feedback {
-        top: 72%;
+        top: 70%;
         left: 2%;
         width: 45%;
         z-index: 998;
     }
 
     .done {
-        top: 72%;
+        top: 70%;
         right: 2%;
         width: 45%;
         z-index: 998;

@@ -74,10 +74,21 @@ h3 {
     display: none !important;
 }
 
-.icon-wrapper {
-    display: none !important;
-}
+@media (max-width: 1200px) {
+    .legal_stuff {
+        display: flex;
+        flex-direction: row;
+        width: 60%;
+        gap: unset;
+    } 
 
+    .current-page {
+        padding: 0;
+        background-color: transparent;
+        color:  var(--primaryColor) !important;
+        font-weight: unset;
+    }
+}
 
 @media(max-width: 900px) {
     .title-wrapper {

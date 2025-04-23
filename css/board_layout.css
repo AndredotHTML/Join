@@ -77,3 +77,28 @@
     background-color: #0038ff;
     transform: scale(1.1);
 }
+
+@media(max-width:820px){
+    .main_wrapper {
+        overflow-x: unset;
+    }
+
+    .search_container {
+        width: 500px;
+    }
+
+    .board_header{
+        padding-right: 10px;
+    }
+
+}
+
+@media(max-width:705px){
+    .add_btn{
+        display: none;
+    }
+
+    .search_container {
+        width: 100%;
+    }
+}

@@ -954,3 +954,13 @@ input.error {
     transform: translate(-50%, 50%);
     bottom: 50%;
 }
+@media(max-width:1200px) {
+    .active::before {
+        background-color: transparent;
+        color: #4589FF !important;
+        content: url("/assets/icons/summary_icon_blue.svg");
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
