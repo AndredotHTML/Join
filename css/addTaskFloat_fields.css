@@ -9,6 +9,10 @@
     padding-left:10px;
 }
 
+.addTask_header_overlay{
+    height: 50px;
+}
+
 ::placeholder{
     color: #D1D1D1;
 }

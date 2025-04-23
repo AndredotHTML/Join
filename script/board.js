@@ -50,7 +50,6 @@ async function pushToTask() {
             assignedUsers: taskData.assignedUsers
         });
     }
-    console.log(tasks);
     updateView()
 }
 
