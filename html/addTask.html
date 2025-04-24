@@ -4,6 +4,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="ScreenOrientation" content="autoRotate:disabled">
         <title>Add Task</title>
         <link rel="shortcut icon" href="../assets/icons/favicon.png" type="image/x-icon">
         <link rel="stylesheet" href="../css/standart.css">
@@ -183,11 +184,11 @@
                                 <label for="subtask">Subtasks <span>(optional)</span></label>
                                 <div class="subtask-area" id="subtask-area">
                                     <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
-                                        onclick="stopPropagation(event)" onkeydown="subtaskEnter(event)">
+                                        onclick="changeSubtaskIcons()" onkeydown="subtaskEnter(event)">
                                     <div class="d_flex">
                                         <div class="d_flex center-center icon-form icon-24" id="working-icons-opener">
                                             <img src="/assets/icons/add.png" alt="" class="poiner"
-                                                onclick="changeSubtaskIcons()">
+                                                onclick="fokusSubtaskInp()">
                                         </div>
                                         <div class="d_none icons-subtask" id="input-subtask-icons">
                                             <img src="/assets/icons/close_cross.svg"
@@ -212,7 +213,7 @@
                             </div>
                         </button>
                         <button id="add-task-create-btn" class="btn add-task-create-btn center-center d_flex"
-                            form="form-add-task" type="submit">
+                            form="form-add-task" type="submit" onclick="enabledCreatBtn()">
                             <div class="btn-title">Create Task </div>
                             <div class="btn-icon-check icon-24" id="btn-icon-check">
                             </div>

@@ -197,6 +197,12 @@ function changeSubtaskIcons() {
     displaySubtaskIconRef.classList.toggle("d_none")
 }
 
+function fokusSubtaskInp(){
+    let subtaskInput = document.getElementById("subtask")
+    subtaskInput.focus()
+    changeSubtaskIcons()
+}
+
 function clearInputSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     inputSubtaskRef.value = ""

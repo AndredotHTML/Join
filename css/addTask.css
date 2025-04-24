@@ -45,6 +45,7 @@ form {
 
 .addedSubtask:hover .subtask-hover-icons {
     display: flex !important;
+    padding-right: 14px;
 }
 
 .addedSubtask:hover {
@@ -61,6 +62,10 @@ form {
 
 li[contenteditable="true"] {
     outline: none;
+}
+
+.subtask-edit-icons{
+    padding-right: 14px;
 }
 
 .separator {
@@ -276,6 +281,13 @@ li[contenteditable="true"] {
     }
 }
 
+@media (hover: none) {
+    .subtask-hover-icons {
+      display: flex !important;
+      padding-right: 16px;
+    }
+  }
+
 @media (max-width :700px) {
     .add-task-btns {
         left: 28px;
@@ -289,9 +301,15 @@ li[contenteditable="true"] {
         height: 48px;
         font-size: 19px;
     }
-    .subtask-hover-icons {
+    /* .subtask-hover-icons {
         display: flex !important;
-    }
+        padding-right: 14px;
+    } */
+
+    /* .addedSubtask:hover .subtask-hover-icons {
+        display: flex !important;
+    } */
+    
     #task-to-board-overlay {
         background-color: rgba(255, 255, 255, 0.5);
     }

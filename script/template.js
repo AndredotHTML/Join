@@ -1,6 +1,6 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
-            <div class="d_flex addedSubtask id="">
+            <div class="d_flex addedSubtask" id="">
                 <li class="subtask-value poiner" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
