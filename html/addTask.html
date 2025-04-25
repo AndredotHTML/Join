@@ -182,9 +182,9 @@
                             </div>
                             <div class="wrapper-subtasks d_flex d-f-column gap-8">
                                 <label for="subtask">Subtasks <span>(optional)</span></label>
-                                <div class="subtask-area" id="subtask-area">
+                                <div class="subtask-area" id="subtask-area" onfocusout="hideSubtaskIcons(event)" tabindex="1">
                                     <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
-                                        onclick="changeSubtaskIcons()" onkeydown="subtaskEnter(event)">
+                                        onclick="showSubtaskIcons()" onkeydown="subtaskEnter(event)" maxlength="16" >
                                     <div class="d_flex">
                                         <div class="d_flex center-center icon-form icon-24" id="working-icons-opener">
                                             <img src="/assets/icons/add.png" alt="" class="poiner"
@@ -193,7 +193,7 @@
                                         <div class="d_none icons-subtask" id="input-subtask-icons">
                                             <img src="/assets/icons/close_cross.svg"
                                                 class="d_flex center-center icon-form icon-24" id="subtask_input_clear"
-                                                alt="" onclick="clearInputSubtask()">
+                                                alt="" onclick="clearInputSubtask()" >
                                             <div class="separator"></div>
                                             <img src="/assets/icons/check_blue.svg"
                                                 class="d_flex center-center icon-form icon-24" alt=""
@@ -201,7 +201,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <ul class="added-subtasks gap-8" id="added-subtasks">
+                                <ul class="added-subtasks gap-8 custom-list" id="added-subtasks">
                                 </ul>
                             </div>
                         </form>

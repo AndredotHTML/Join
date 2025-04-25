@@ -203,6 +203,26 @@ function fokusSubtaskInp(){
     changeSubtaskIcons()
 }
 
+function hideSubtaskIcons(event) {
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    let subtaskAreaRef = document.getElementById("subtask-area")
+    if (subtaskAreaRef.contains(event.relatedTarget)) {
+        return
+    }
+    creatSubtaskAreaRef.classList.remove("d_flex");
+    creatSubtaskAreaRef.classList.add("d_none");
+    displaySubtaskIconRef.classList.remove("d_none")
+}
+
+function showSubtaskIcons() {
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    creatSubtaskAreaRef.classList.add("d_flex");
+    creatSubtaskAreaRef.classList.remove("d_none");
+    displaySubtaskIconRef.classList.add("d_none")
+}
+
 function clearInputSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     inputSubtaskRef.value = ""

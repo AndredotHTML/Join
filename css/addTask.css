@@ -43,23 +43,6 @@ form {
     padding: 0 !important;
 }
 
-.addedSubtask:hover .subtask-hover-icons {
-    display: flex !important;
-    padding-right: 14px;
-}
-
-.addedSubtask:hover {
-    background-color: #E3EEFF;
-}
-
-.disable-hover:hover .subtask-hover-icons {
-    display: none !important;
-}
-
-.disable-hover:hover {
-    background-color: #FFFFFF !important;
-}
-
 li[contenteditable="true"] {
     outline: none;
 }
@@ -181,11 +164,15 @@ li[contenteditable="true"] {
 }
 
 .subtask-value {
-    max-height: 32px;
+    min-height: 32px;
     font-size: 16px;
     padding: 6px 16px;
     list-style-position: inside;
     width: 100%;
+    /* word-break: break-word; */
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 .placeholder-container {
@@ -194,10 +181,11 @@ li[contenteditable="true"] {
 
 .addedSubtask {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
     border-radius: 10px;
-    height: 32px;
+    min-height: 32px;
+    column-gap: 8px;
 }
 
 #task-to-board-overlay {
@@ -281,14 +269,41 @@ li[contenteditable="true"] {
     }
 }
 
-@media (hover: none) {
-    .subtask-hover-icons {
-      display: flex !important;
-      padding-right: 16px;
+@media (min-width : 700px){
+    .addedSubtask:hover .subtask-hover-icons {
+        display: flex !important;
+        padding-right: 16px;
     }
-  }
+    
+    .addedSubtask:hover {
+        background-color: #E3EEFF;
+    }
+    
+    .disable-hover:hover .subtask-hover-icons {
+        display: none !important;
+    }
+    
+    .disable-hover:hover {
+        background-color: #FFFFFF !important;
+    }
+}
 
-@media (max-width :700px) {
+@media (max-width :699px) {
+    .addedSubtask.disable-hover .subtask-hover-icons {
+        display: none !important;
+      }
+      
+      .addedSubtask.disable-hover .subtask-edit-icons {
+        display: flex !important;
+      }
+    .subtask-hover-icons {
+        display: flex !important;
+        padding-right: 14px;
+        background-color: #FFFFFF;
+      }
+        .addedSubtask:hover {
+          background-color: #FFFFFF;
+      }
     .add-task-btns {
         left: 28px;
         transform: translateX(10%);
@@ -301,15 +316,6 @@ li[contenteditable="true"] {
         height: 48px;
         font-size: 19px;
     }
-    /* .subtask-hover-icons {
-        display: flex !important;
-        padding-right: 14px;
-    } */
-
-    /* .addedSubtask:hover .subtask-hover-icons {
-        display: flex !important;
-    } */
-    
     #task-to-board-overlay {
         background-color: rgba(255, 255, 255, 0.5);
     }
