@@ -947,7 +947,7 @@ input.error {
     font-size: var(--fontSize-5);
     transition: all 125ms ease-in-out;
     z-index: 1000;
-    bottom: -74px;
+    bottom: -50%;
 }
 
 .overly-move-up {
@@ -977,8 +977,8 @@ input.error {
         content: url("/assets/icons/contacts_icon_blue.png");
         margin-right: 0;
     }
-    
-    .active_span {   
-        flex-direction: column; 
+
+    .active_span {
+        flex-direction: column;
     }
 }
