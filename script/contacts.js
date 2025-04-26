@@ -3,10 +3,10 @@ const DETAIL_ELEM = document.getElementById( 'detail' );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
-function authLogIn() {
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
-      }
+function authLogIn () {
+    if ( localStorage.getItem( "isLoggedIn" ) !== "true" ) {
+        window.location.href = "http://127.0.0.1:5500/html/login.html";
+    }
 }
 
 // Aktualisiert das Detail-Panel mit den Daten des ausgewählten Kontakts
@@ -15,7 +15,7 @@ function updateDetailPanel ( contactId ) {
     if ( !selectedContact ) return;
     DETAIL_ELEM.innerHTML = contactDetailTemplate( selectedContact );
     // Delete-Button-Listener hinzufügen
-    const deleteBtn = DETAIL_ELEM.querySelector( '.delete-btn' );
+    const deleteBtn = DETAIL_ELEM.querySelector( '#btn-delete' );
     if ( deleteBtn ) {
         deleteBtn.addEventListener( 'click', function () {
             deleteContact( contactId );
@@ -56,8 +56,7 @@ function showaddContactOverlay () {
     let overlayBackground = document.getElementById( "overlay-bg" );
     overlayBackground.style.display = 'flex';
     overlay.style.display = 'flex';
-    document.body.style.overflow = 'hidden';
-    overlay.innerHTML = addContactOverlay();
+    overlay.innerHTML = createAddContactTemplate();
     overlay.classList.add( 'slide_in' );
 }
 
@@ -67,11 +66,7 @@ function showEditContactOverlay ( contactId ) {
     const editOverlay = document.getElementById( "editOverlay" );
     const selectedContact = contacts.find( contact => contact.id === contactId );
     if ( !selectedContact ) return;
-    // Fülle das Overlay mit dem HTML-Inhalt, der über deine editContactOverlay-Funktion erzeugt wird
-    editOverlay.innerHTML = editContactOverlay( selectedContact );
-    // Verhindere, dass der Body scrollt, solange das Overlay sichtbar ist
-    document.body.style.overflow = "hidden";
-    // Füge die Klasse "active" hinzu, damit das Overlay von links hereinschiebt
+    editOverlay.innerHTML = createEditContactTemplate( selectedContact );
     editOverlay.classList.add( "active" );
 }
 
@@ -79,11 +74,8 @@ function closeEditOverlay ( event ) {
     let overlayBackground = document.getElementById( "overlay-bg" );
     overlayBackground.style.display = '';
     const editOverlay = document.getElementById( "editOverlay" );
-    // Schließe, wenn der Klick auf den Hintergrund oder ein Element mit der Klasse close-btn erfolgt
-    if ( !event || event.target === editOverlay || event.target.closest( ".close-btn" ) ) {
+    if ( !event || event.target === editOverlay || event.target.closest( ".btn-close" ) ) {
         editOverlay.classList.remove( "active" );
-        document.body.style.overflow = "auto";
-        // Optional: Nach Übergangsende den Inhalt löschen
         setTimeout( () => {
             editOverlay.innerHTML = "";
         }, 300 );
@@ -99,7 +91,6 @@ function closeOverlay ( event ) {
     if ( !event || event.target === overlay || event.target.closest( ".close-btn" ) ) {
         overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
         overlay.style.display = 'none';
-        document.body.style.overflow = 'auto';
     }
 }
 
@@ -108,7 +99,7 @@ function getContactData () {
     let email = document.getElementById( "email" ).value;
     let phone = document.getElementById( "phone" ).value;
     let avatarColor = getColorForContact( name );
-    postContactData( "/contacts", { "name": name, "email": email, "phone": phone, "avatarColor":avatarColor } );
+    postContactData( "/contacts", { "name": name, "email": email, "phone": phone, "avatarColor": avatarColor } );
     toggleMessage();
 
 }
@@ -222,7 +213,7 @@ async function deleteContact ( contactId ) {
 
 function getColorForContact ( name ) {
     // const colors = [ '#f57c00', '#8e24aa', '#5c6bc0', '#f48fb1', '#ffb300', '#26a69a' ];
-    const colors = [ '#6E52FF', '#FFA35E', '#FFE62B', '#00BEE8', '#FF5EB3','#FFBB2B','#FF745E','#C3FF2B','#FF7A00','#1FD7C1','#0038FF','#FFC701','#9327FF','#FC71FF','#FF4646' ];
+    const colors = [ '#6E52FF', '#FFA35E', '#FFE62B', '#00BEE8', '#FF5EB3', '#FFBB2B', '#FF745E', '#C3FF2B', '#FF7A00', '#1FD7C1', '#0038FF', '#FFC701', '#9327FF', '#FC71FF', '#FF4646' ];
     // Hier wird der erste Buchstabe herangezogen – so wie in alten, guten Zeiten
     let firstLetter = name.charAt( 0 ).toUpperCase();
     let index = firstLetter.charCodeAt( 0 ) % colors.length;

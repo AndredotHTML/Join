@@ -2,19 +2,20 @@ function contactDetailTemplate ( selectedContact ) {
   // const avatarColor = getColorForContact( selectedContact.contactData.name );
   return `
     <div class="contact-header">
-      <div class="contact-circle" style="background-color: ${ selectedContact.contactData.avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
-      ${ getAvatarFromName( selectedContact.contactData.name ) }
-    </div>
+        <div class="circle-wrapper">
+  <div class="outer-circle"></div>
+  <div class="inner-circle">
+       ${ getAvatarFromName( selectedContact.contactData.name ) }
+  </div>
+  </div>
       <div class="contact-main-info">
         <h2 class="contact-name">${ selectedContact.contactData.name }</h2>
         <div class="contact-actions">
-          <button class="edit-btn" onclick="showEditContactOverlay('${ selectedContact.id }')">
-            <img src="../assets/icons/edit.png" alt="Edit">
-            Edit
+          <button class="contact-action" onclick="showEditContactOverlay('${ selectedContact.id }')">
+            <span class="btn-edit">Edit</span>
           </button>
-          <button class="delete-btn">
-            <img src="../assets/icons/delete.png" alt="Delete">
-            Delete
+          <button class="contact-action" id="btn-delete">
+            <span class="btn-delete">Delete</span>
           </button>
         </div>
       </div>
@@ -33,10 +34,10 @@ function contactDetailTemplate ( selectedContact ) {
   `;
 }
 
-function addContactOverlay () {
-  return /*html*/`
-  <div class="overlay-header overlay-header-subheadline overlay-add-contact-header">
-  <button class="close-btn" onclick="closeOverlay()"></button>
+function createAddContactTemplate () {
+  return ( /*html*/ ` 
+<div class="overlay-header overlay-add-contact-header">
+  <button class="btn-close" onclick="closeOverlay()"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
@@ -48,7 +49,7 @@ function addContactOverlay () {
 <div class="overlay-content">
   <div class="overlay-profile-sec">
     <div class="contact-circle" style="display: flex; align-items: center; justify-content: center; color: white;">
-     <img src="../assets/icons/person-white.svg" alt="person">
+      <img src="../assets/icons/person-white.svg" alt="person">
     </div>
   </div>
   <form id="edit_form" action="" onsubmit="updateContact(); return false">
@@ -65,28 +66,26 @@ function addContactOverlay () {
       <img class="input_icon" src="../assets/icons/call_gray.svg">
       <p id="error_msg">Check your email and password. Please try again.</p>
     </div>
-    <div class="overlay-btns">
-            <button type="button" class="button button-secondary button-cancel" onclick="closeOverlay()">
-              <span class="btn-title">Cancel</span>
-                          </button>
-            <button id="edit-task-save-btn" class="button button-primary button-check" type="button" onclick="getContactData()">
-              <span>Create contact</span>
-              
-               
-              
-            </button>
-          </div>
-  </form>
-</div>
-    
-  `;
+    <div class="overlay-footer">
+      <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay()">
+        <span>Cancel</span>
+      </button>
+      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="button" onclick="getContactData()">
+        <span>Create contact</span>
+      </button>
+    </div>
+  </form
+>
+</div>`
+  );
 }
 
-function editContactOverlay ( selectedContact ) {
+
+function createEditContactTemplate ( selectedContact ) {
   // const avatarColor = getColorForContact( selectedContact.contactData.name );
-  return /*html*/`
+  return ( /*html*/`
 <div class="overlay-header">
-  <button class="close-btn" onclick="closeEditOverlay(event)"></button>
+  <button class="btn-close" onclick="closeEditOverlay(event)"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
@@ -96,7 +95,7 @@ function editContactOverlay ( selectedContact ) {
 </div>
 <div class="overlay-content">
   <div class="overlay-profile-sec">
-    <div class="contact-circle" style="background-color: ${ selectedContact.contactData.avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
+    <div class="contact-circle">
       ${ getAvatarFromName( selectedContact.contactData.name ) }
     </div>
   </div>
@@ -114,22 +113,17 @@ function editContactOverlay ( selectedContact ) {
       <img class="input_icon" src="../assets/icons/call_gray.svg">
       <p id="error_msg">Check your email and password. Please try again.</p>
     </div>
-    <div class="overlay-btns">
-            <button type="button" class="button button-secondary button-delete" onclick="closeEditOverlay(event)">
-              <span class="btn-title">Delete</span>
-                          </button>
-            <button id="edit-task-save-btn" class="button button-primary button-check" type="button" onclick="updateContact('${ selectedContact.id }')">
-              <span>Save</span>
-              
-               
-              
-            </button>
-          </div>
+    <div class="overlay-footer">
+      <button type="button" class="btn btn-secondary btn-delete" onclick="closeEditOverlay(event)">
+        <span>Delete</span>
+      </button>
+      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="button" onclick="updateContact('${ selectedContact.id }')">
+        <span>Save</span>
+      </button>
+    </div>
   </form>
-</div>
-
-   
-  `;
+</div>`
+  );
 }
 
 function headerTemplate ( letter ) {
