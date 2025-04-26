@@ -1,8 +1,8 @@
 function contactDetailTemplate ( selectedContact ) {
-  const avatarColor = getColorForContact( selectedContact.contactData.name );
+  // const avatarColor = getColorForContact( selectedContact.contactData.name );
   return `
     <div class="contact-header">
-      <div class="contact-circle" style="background-color: ${ avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
+      <div class="contact-circle" style="background-color: ${ selectedContact.contactData.avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
       ${ getAvatarFromName( selectedContact.contactData.name ) }
     </div>
       <div class="contact-main-info">
@@ -83,7 +83,7 @@ function addContactOverlay () {
 }
 
 function editContactOverlay ( selectedContact ) {
-  const avatarColor = getColorForContact( selectedContact.contactData.name );
+  // const avatarColor = getColorForContact( selectedContact.contactData.name );
   return /*html*/`
 <div class="overlay-header">
   <button class="close-btn" onclick="closeEditOverlay(event)"></button>
@@ -96,7 +96,7 @@ function editContactOverlay ( selectedContact ) {
 </div>
 <div class="overlay-content">
   <div class="overlay-profile-sec">
-    <div class="contact-circle" style="background-color: ${ avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
+    <div class="contact-circle" style="background-color: ${ selectedContact.contactData.avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
       ${ getAvatarFromName( selectedContact.contactData.name ) }
     </div>
   </div>
@@ -137,9 +137,9 @@ function headerTemplate ( letter ) {
 }
 
 function contactTemplate ( c ) {
-  const avatarColor = getColorForContact( c.contactData.name );
+  // const avatarColor = getColorForContact( c.contactData.name );
   return `<div class="contact" id="${ c.id }">
-      <div class="avatar" style="background-color: ${ avatarColor };">
+      <div class="avatar" style="background-color: ${ c.contactData.avatarColor };">
           ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
       </div>
       <div class="contact-info">

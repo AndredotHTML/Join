@@ -107,7 +107,11 @@ function getContactData () {
     let name = document.getElementById( "name" ).value;
     let email = document.getElementById( "email" ).value;
     let phone = document.getElementById( "phone" ).value;
-    postContactData( "/contacts", { "name": name, "email": email, "phone": phone } );
+    let avatarColor = getColorForContact( name );
+    console.log(avatarColor);
+    
+    postContactData( "/contacts", { "name": name, "email": email, "phone": phone, "avatarColor":avatarColor } );
+    console.log(avatarColor);
     toggleMessage();
 
 }
@@ -123,7 +127,11 @@ async function postContactData ( path = "", data = {} ) {
 
 async function pushToContactsArray () {
     let response = await getAllContacts( "/contacts" );
+    console.log(response);
+    
     let contactKeysArray = Object.keys( response || {} );
+    console.log(contactKeysArray);
+    
     contacts = [];
     for ( let index = 0; index < contactKeysArray.length; index++ ) {
         contacts.push( {
@@ -220,7 +228,8 @@ async function deleteContact ( contactId ) {
 }
 
 function getColorForContact ( name ) {
-    const colors = [ '#f57c00', '#8e24aa', '#5c6bc0', '#f48fb1', '#ffb300', '#26a69a' ];
+    // const colors = [ '#f57c00', '#8e24aa', '#5c6bc0', '#f48fb1', '#ffb300', '#26a69a' ];
+    const colors = [ '#6E52FF', '#FFA35E', '#FFE62B', '#00BEE8', '#FF5EB3','#FFBB2B','#FF745E','#C3FF2B','#FF7A00','#1FD7C1','#0038FF','#FFC701','#9327FF','#FC71FF','#FF4646' ];
     // Hier wird der erste Buchstabe herangezogen – so wie in alten, guten Zeiten
     let firstLetter = name.charAt( 0 ).toUpperCase();
     let index = firstLetter.charCodeAt( 0 ) % colors.length;
