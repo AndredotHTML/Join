@@ -108,10 +108,7 @@ function getContactData () {
     let email = document.getElementById( "email" ).value;
     let phone = document.getElementById( "phone" ).value;
     let avatarColor = getColorForContact( name );
-    console.log(avatarColor);
-    
     postContactData( "/contacts", { "name": name, "email": email, "phone": phone, "avatarColor":avatarColor } );
-    console.log(avatarColor);
     toggleMessage();
 
 }
@@ -127,11 +124,7 @@ async function postContactData ( path = "", data = {} ) {
 
 async function pushToContactsArray () {
     let response = await getAllContacts( "/contacts" );
-    console.log(response);
-    
     let contactKeysArray = Object.keys( response || {} );
-    console.log(contactKeysArray);
-    
     contacts = [];
     for ( let index = 0; index < contactKeysArray.length; index++ ) {
         contacts.push( {
