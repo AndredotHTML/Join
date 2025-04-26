@@ -338,6 +338,10 @@ async function deleteTask(taskId) {
 }
 
 function showAddTaskOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';
@@ -346,6 +350,10 @@ function showAddTaskOverlay(){
 }
 
 function showAddTaskInProgressOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';
@@ -354,6 +362,10 @@ function showAddTaskInProgressOverlay(){
 }
 
 function showAddTaskAwaitFeedbackOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';

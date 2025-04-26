@@ -3,11 +3,15 @@
     justify-content: space-between;
     padding-left: 50px;
     padding-right: 50px;
-    height: 100%;
+    padding-bottom: 50px;
+    overflow-y: auto;
+    flex: 1;
+
 }
 
 .toDo, .inProgress, .awaitFeedback, .done {
     height: 100%;
+    width: 300px;
 }
 
 .toDo_header, .inProgress_header, .awaitFeedback_header, .done_header {
@@ -24,7 +28,6 @@
 }
 
 .drag_area {
-    min-height: 100vh;
     flex-grow: 1;
     width: 100%;
     background-color: white;
@@ -38,7 +41,7 @@
 
 .noTask_msg {
     height: 40px;
-    width: 90%;
+    width: 100%;
     background-color: #e7e7e7;
     border: 1px dotted #a8a8a8;
     color: #a8a8a8;
@@ -205,162 +208,3 @@
     display: flex;
     align-items: center;
 }
-
-@media(max-width:1560px){
-    .board_header {
-        padding-left: 30px !important
-    }
-
-    .board_content {
-        padding-left: 30px;
-        padding-right: 30px;
-      
-    }
-}
-
-@media(max-width:1520px){
-    .ticket {
-        width: 250px;
-    }
-}
-
-@media(max-width:1350px){
-    .ticket {
-        width: 230px;
-    }
-}
-
-@media(max-width:1260px){
-    .ticket {
-        width: 220px;
-    }
-}
-
-@media(max-width:1220px){
-    .ticket {
-        width: 200px;
-    }
-
-    .toDo_header h2, .inProgress_header h2, .awaitFeedback_header h2, .done_header h2{
-        font-size: 20px;
-    }
-}
-
-
-@media(max-width:1200px) {
-    .active_span::before {
-        background-color: transparent;
-        color: #4589FF !important;
-        content: url("/assets/icons/board_icon_blue.png");
-        margin-right: 0;
-    }
-    
-    .active_span {   
-        flex-direction: column; 
-    }
-
-    .main_wrapper {
-        width: calc(100% - 0px) !important
-    }
-
-    .board_header {
-        padding-left: 50px !important
-    }
-
-    .board_content {
-        padding-left: 50px;
-        padding-right: 50px;
-      
-    }
-
-    .ticket {
-        width: 250px;
-    }
-}
-
-@media (max-width:1140px){
-    .board_header {
-        padding-left: 30px !important
-    }
-
-    .board_content {
-        padding-left: 30px;
-        padding-right: 30px;
-      
-    }
-}
-
-@media (max-width:1100px){
-    .board_header {
-        padding-left: 20px !important
-    }
-
-    .board_content {
-        padding-left: 20px;
-        padding-right: 20px;
-      
-    }
-
-    .ticket {
-        width: 230px;
-    }
-}
-
-@media(max-width:1000px){
-    .ticket {
-        width: 210px;
-    }
-}
-
-@media(max-width:920px){
-    .ticket {
-        width: 200px;
-    }
-}
-
-@media(max-width:880px){
-    .board_header {
-        padding-left: 10px !important
-    }
-
-    .board_content {
-        padding-left: 10px;
-        padding-right: 10px;
-      
-    }
-
-    .ticket {
-        width: 190px;
-    }
-}
-
-@media(max-width:820px){
-    .board_content{
-        display: unset;
-    }
-
-    .ticket {
-       margin-left: 10px;
-    }
-   
-    .drag_area {
-       min-height: unset;
-       flex-direction: unset;
-       align-items: unset;
-       gap: 0;
-    }
-
-    .toDo_header h2, .inProgress_header h2, .awaitFeedback_header h2, .done_header h2{
-    padding-left: 15px;
-    }
-
-    .toDo_header img, .inProgress_header img, .awaitFeedback_header img, .done_header img{
-        padding-right: 15px;
-    }
-
-    .ticket {
-        width: 250px;
-    }
-}
-
-
