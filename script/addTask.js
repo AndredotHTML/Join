@@ -262,10 +262,9 @@ function displayUser() {
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = ""
     userArray.forEach(contact => {
-        let userName = contact.name;
-        let isChecked = selectedUser.includes(userName)
-        let isCurrentUser = userName === currentUser
-        allContacts += templateAssignedTo(userName, isChecked, isCurrentUser)
+        let isChecked = selectedUser.includes(contact.name)
+        let isCurrentUser = contact.name === currentUser
+        allContacts += templateAssignedTo(contact, isChecked, isCurrentUser)
     });
     assignedToAreaRef.innerHTML = allContacts
 }
