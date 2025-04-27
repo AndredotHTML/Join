@@ -35,7 +35,7 @@ function contactDetailTemplate ( selectedContact ) {
 }
 
 function createAddContactTemplate () {
-  return ( /*html*/ ` 
+  return ( /*html*/ `
 <div class="overlay-header overlay-add-contact-header">
   <button class="btn-close" onclick="closeOverlay()"></button>
   <div class="overlay-header-row overlay-header-row-center">
@@ -52,7 +52,7 @@ function createAddContactTemplate () {
       <img src="../assets/icons/person-white.svg" alt="person">
     </div>
   </div>
-  <form id="edit_form" action="" onsubmit="updateContact(); return false">
+  <form id="add_contact_form" onsubmit="return getContactData(event)">
     <div class="input_container">
       <input required id="name" type="text" placeholder="Name" class="input-person" maxlength="50">
     </div>
@@ -60,13 +60,13 @@ function createAddContactTemplate () {
       <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">    
+      <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay()">
         <span>Cancel</span>
       </button>
-      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="button" onclick="getContactData()">
+      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="submit">
         <span>Create contact</span>
       </button>
     </div>
@@ -124,7 +124,7 @@ function headerTemplate ( letter ) {
 
 function contactTemplate ( c ) {
   // const avatarColor = getColorForContact( c.contactData.name );
-  return `<div class="contact" id="${ c.id }">
+  return `<div class="contact" id="${ c.id }" onclick="handleContactClick(event)">
       <div class="avatar" style="background-color: ${ c.contactData.avatarColor };">
           ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
       </div>

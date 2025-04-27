@@ -3,61 +3,90 @@ const DETAIL_ELEM = document.getElementById( 'detail' );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
+
+/**
+ * checks whether user is logged in or not and redirects to login
+ */
 function authLogIn () {
     if ( localStorage.getItem( "isLoggedIn" ) !== "true" ) {
-        window.location.href = "http://127.0.0.1:5500/html/login.html";
+        redirectToLogin();
     }
+}
+
+
+/**
+ * redirects user to login
+ */
+function redirectToLogin () {
+    location.href = "/html/login.html";
+}
+
+
+function findContactById ( contactId ) {
+    return contacts.find( contact => contact.id === contactId );
+}
+
+function renderDetailPanel ( selectedContact ) {
+    DETAIL_ELEM.innerHTML = contactDetailTemplate( selectedContact );
+}
+
+function addDeleteListener ( contactId ) {
+    const btn = DETAIL_ELEM.querySelector( '#btn-delete' );
+    if ( btn ) btn.addEventListener( 'click', () => deleteContact( contactId ) );
 }
 
 // Aktualisiert das Detail-Panel mit den Daten des ausgewählten Kontakts
 function updateDetailPanel ( contactId ) {
-    const selectedContact = contacts.find( contact => contact.id === contactId );
+    const selectedContact = findContactById( contactId );
     if ( !selectedContact ) return;
-    DETAIL_ELEM.innerHTML = contactDetailTemplate( selectedContact );
-    // Delete-Button-Listener hinzufügen
-    const deleteBtn = DETAIL_ELEM.querySelector( '#btn-delete' );
-    if ( deleteBtn ) {
-        deleteBtn.addEventListener( 'click', function () {
-            deleteContact( contactId );
-        } );
-    }
+    renderDetailPanel( selectedContact );
+    addDeleteListener( selectedContact.id );
 }
 
-// Schaltet das Detail-Panel um
 function toggleDetailPanel () {
-    if ( DETAIL_ELEM.classList.contains( 'open' ) ) {
-        DETAIL_ELEM.classList.remove( 'open', 'slide_in' );
+    DETAIL_ELEM.classList.toggle( 'open' );
+    DETAIL_ELEM.classList.toggle( 'slide_in' );
+}
+
+function isContactSelected ( elem ) {
+    return elem.classList.contains( 'selected' );
+}
+
+function selectContact ( elem ) {
+    elem.classList.add( 'selected' );
+}
+
+function deselectContact ( elem ) {
+    elem.classList.remove( 'selected' );
+}
+
+function deselectAllContacts () {
+    document.querySelectorAll( '.contact' ).forEach( deselectContact );
+}
+
+function ensureDetailPanelOpen () {
+    if ( !DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
+}
+function ensureDetailPanelClosed () {
+    if ( DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
+}
+
+
+function handleContactClick ( event ) {
+    const elem = event.currentTarget;
+    if ( isContactSelected( elem ) ) {
+        deselectContact( elem );
+        ensureDetailPanelClosed();
     } else {
-        DETAIL_ELEM.classList.add( 'open', 'slide_in' );
+        deselectAllContacts();
+        selectContact( elem );
+        updateDetailPanel( elem.id );
+        ensureDetailPanelOpen();
     }
 }
 
-function handleContactClick () {
-    if ( this.classList.contains( 'selected' ) ) {
-        this.classList.remove( 'selected' );
-        if ( DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
-    } else {
-        document.querySelectorAll( '.contact' ).forEach( c => c.classList.remove( 'selected' ) );
-        this.classList.add( 'selected' );
-        updateDetailPanel( this.id );
-        if ( !DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
-    }
-}
-
-function attachContactListeners () {
-    document.querySelectorAll( '.contact' ).forEach( contact =>
-        contact.addEventListener( 'click', handleContactClick )
-    );
-}
-
-// Overlay-Funktion für "Add Contact" – Animation von rechts nach links
-function showaddContactOverlay () {
-    let overlay = document.getElementById( 'overlay' );
-    let overlayBackground = document.getElementById( "overlay-bg" );
-    overlayBackground.style.display = 'flex';
-    overlay.style.display = 'flex';
-    overlay.innerHTML = createAddContactTemplate();
-    overlay.classList.add( 'slide_in' );
+function getOverlay ( id ) {
+    return document.getElementById( id );
 }
 
 function showEditContactOverlay ( contactId ) {
@@ -68,6 +97,22 @@ function showEditContactOverlay ( contactId ) {
     if ( !selectedContact ) return;
     editOverlay.innerHTML = createEditContactTemplate( selectedContact );
     editOverlay.classList.add( "active" );
+}
+
+function showOverlay ( elem, html ) {
+    elem.innerHTML = html;
+    elem.style.display = 'flex';
+    elem.classList.add( 'slide_in' );
+}
+function hideOverlay ( elem, resetId = false ) {
+    elem.style.display = '';
+    elem.classList.remove( 'slide_in', 'show', 'slide_in_left' );
+    if ( resetId ) elem.innerHTML = '';
+}
+
+function showAddContactOverlay () {
+    showOverlay( getOverlay( 'overlay-bg' ), '' );
+    showOverlay( getOverlay( 'overlay-add-contact' ), createAddContactTemplate() );
 }
 
 function closeEditOverlay ( event ) {
@@ -83,26 +128,53 @@ function closeEditOverlay ( event ) {
 }
 
 
-
 function closeOverlay ( event ) {
     let overlayBackground = document.getElementById( "overlay-bg" );
     overlayBackground.style.display = '';
-    let overlay = document.getElementById( 'overlay' );
+    let overlay = document.getElementById( 'overlay-add-contact' );
     if ( !event || event.target === overlay || event.target.closest( ".close-btn" ) ) {
         overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
         overlay.style.display = 'none';
     }
 }
 
-function getContactData () {
-    let name = document.getElementById( "name" ).value;
-    let email = document.getElementById( "email" ).value;
-    let phone = document.getElementById( "phone" ).value;
-    let avatarColor = getColorForContact( name );
-    postContactData( "/contacts", { "name": name, "email": email, "phone": phone, "avatarColor": avatarColor } );
+
+/**
+ * Liest das Formular aus, validiert nativ und legt den Kontakt an.
+ * @param {Event} event
+ * @returns {boolean} false verhindert Reload
+ */
+function getContactData ( event ) {
+    // 1) Verhindere, dass das Formular direkt abgesendet wird
+    event.preventDefault();
+
+    // 2) Native HTML5-Validation
+    const form = document.getElementById( 'add_contact_form' );
+    if ( !form.checkValidity() ) {
+        form.reportValidity();  // zeigt die roten Fehlermeldungen
+        return false;           // Abbruch
+    }
+
+    // 3) Alles valid – Kontakt anlegen
+    const { name, email, phone } = getContactFormData();
+    const avatarColor = getColorForContact( name );
+    postContactData( '/contacts', { name, email, phone, avatarColor } );
     toggleMessage();
 
+    return false; // verhindert Seitenreload
 }
+
+/**
+ * Liest Namen, E-Mail und Telefon vom Add-Form aus und gibt ein Objekt zurück.
+ * @returns {{name: string, email: string, phone: string}}
+ */
+function getContactFormData () {
+    const name = document.getElementById( 'name' ).value.trim();
+    const email = document.getElementById( 'email' ).value.trim();
+    const phone = document.getElementById( 'phone' ).value.trim();
+    return { name, email, phone };
+}
+
 
 async function postContactData ( path = "", data = {} ) {
     await fetch( BASE_URL + path + ".json", {
@@ -112,6 +184,7 @@ async function postContactData ( path = "", data = {} ) {
     } );
     pushToContactsArray();
 }
+
 
 async function pushToContactsArray () {
     let response = await getAllContacts( "/contacts" );
@@ -127,10 +200,12 @@ async function pushToContactsArray () {
     renderContacts();
 }
 
+
 async function getAllContacts ( path ) {
     let response = await fetch( BASE_URL + path + ".json" );
     return await response.json();
 }
+
 
 function clearContactsList () {
     const contactsListElement = document.querySelector( '.contacts_list' );
@@ -143,6 +218,7 @@ function sortContacts ( contactArray ) {
         contactA.contactData.name.localeCompare( contactB.contactData.name )
     );
 }
+
 
 function groupContacts ( contactArray ) {
     const groups = {};
@@ -164,6 +240,7 @@ function renderGroup ( letter, contactsInGroup ) {
     return groupElement;
 }
 
+
 function renderContacts () {
     const contactsListElement = clearContactsList();
     const sortedContacts = sortContacts( contacts );
@@ -171,7 +248,6 @@ function renderContacts () {
     Object.keys( groupedContacts ).sort().forEach( letter => {
         contactsListElement.appendChild( renderGroup( letter, groupedContacts[ letter ] ) );
     } );
-    attachContactListeners();
 }
 
 function getAvatarFromName ( name ) {
