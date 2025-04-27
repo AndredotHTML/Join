@@ -152,6 +152,13 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     padding-top: 10px;
 }
 
+.cat_edit{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+}
+
 .option_category {
     cursor: pointer;
     padding: 10px;

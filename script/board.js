@@ -90,7 +90,7 @@ function hideAllSections() {
 function showAllSections() {
     let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
     for (let i = 0; i < sections.length; i++) {
-        document.getElementById(sections[i]).style.display = "block";
+        document.getElementById(sections[i]).style.display = "flex";
     }
 }
 

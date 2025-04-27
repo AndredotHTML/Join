@@ -182,9 +182,8 @@ function generateEditOverlay(task) {
            </div> 
            <div class="category">
             <span><strong>Category</strong></span>
-            <div class="cat" onclick="toggleOptions()">
-                <span id="category_add_task">${task.category || 'Select category'}</span>
-                <img src="/assets/icons/arrow_drop_down.svg" alt="Arrow" id="arrowIconCategory">
+            <div class="cat_edit">
+                <span id="category_add_task">${task.category}</span>
             </div>
                 <div id="options_container" class="options_container" style="display: none;">
                 <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>

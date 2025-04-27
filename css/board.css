@@ -9,6 +9,29 @@
 
 }
 
+.board_content::-webkit-scrollbar {
+    width:  8px;
+    background-color:#e0e0e0;
+    border-radius: 10px;
+}
+
+.board_content::-webkit-scrollbar-thumb{
+    background-color:#4589ff; 
+    border-radius: 4px;
+}
+
+.board_content::-webkit-scrollbar-thumb:hover {
+    cursor: grab;
+}
+
+.board_content::-webkit-scrollbar-thumb:hover:active {
+    cursor: grabbing;
+}
+
+.board_content::-webkit-scrollbar-thumb:hover{
+    background-color: #005DFF;
+}
+
 .toDo, .inProgress, .awaitFeedback, .done {
     height: 100%;
     width: 300px;
