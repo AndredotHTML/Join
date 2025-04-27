@@ -77,8 +77,6 @@ async function getContacts(path = "") {
         const response = await fetch(BASE_URL + path + ".json")
         const result = await handleResponse(response)
         const userArray = Object.values(result)
-        console.log(userArray);
-        
         getContactCache = userArray;
         return getContactCache;
     } catch (error) {
@@ -96,7 +94,7 @@ function handleResponse(response) {
 }
 
 function searchAssigned() {
-    let userArray = getContactCache
+    let userArray = getContactCache.sort((a,b)=> a.name.localeCompare(b.name))
     let inputRef = document.getElementById("assigned-to-input")
     let inputVal = inputRef.value.toLowerCase()
     let searchingName = userArray.filter(function (nameToSearch) {

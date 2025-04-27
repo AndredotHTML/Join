@@ -277,6 +277,7 @@ li[contenteditable="true"] {
     
     .addedSubtask:hover {
         background-color: #E3EEFF;
+        align-items: center;
     }
     
     .disable-hover:hover .subtask-hover-icons {

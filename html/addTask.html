@@ -184,20 +184,20 @@
                                 <label for="subtask">Subtasks <span>(optional)</span></label>
                                 <div class="subtask-area" id="subtask-area" onfocusout="hideSubtaskIcons(event)" tabindex="1">
                                     <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
-                                        onclick="showSubtaskIcons()" onkeydown="subtaskEnter(event)" maxlength="16" >
+                                        onclick="showSubtaskIcons()" onkeydown="subtaskEnter(event)" maxlength="28" >
                                     <div class="d_flex">
                                         <div class="d_flex center-center icon-form icon-24" id="working-icons-opener">
                                             <img src="/assets/icons/add.png" alt="" class="poiner"
                                                 onclick="fokusSubtaskInp()">
                                         </div>
-                                        <div class="d_none icons-subtask" id="input-subtask-icons">
+                                        <div class="d_none icons-subtask center-center" id="input-subtask-icons">
                                             <img src="/assets/icons/close_cross.svg"
-                                                class="d_flex center-center icon-form icon-24" id="subtask_input_clear"
+                                                class="d_flex center-center icon-form icon-24 poiner" id="subtask_input_clear"
                                                 alt="" onclick="clearInputSubtask()" >
                                             <div class="separator"></div>
                                             <img src="/assets/icons/check_blue.svg"
-                                                class="d_flex center-center icon-form icon-24" alt=""
-                                                onclick="addSubtask()">
+                                                class="d_flex center-center icon-form icon-24 poiner" alt=""
+                                                onclick="subtaskInputCheck()">
                                         </div>
                                     </div>
                                 </div>

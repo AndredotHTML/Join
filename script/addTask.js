@@ -177,9 +177,12 @@ function addSubtask() {
     if (inputSubtaskVal !== "") {
         displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
         inputSubtaskRef.value = ""
-        changeSubtaskIcons()
     }
+}
 
+function subtaskInputCheck(){
+    addSubtask()
+    changeSubtaskIcons()
 }
 
 function subtaskEnter(event) {
@@ -256,14 +259,23 @@ function enabledCreatBtn() {
 }
 
 function displayUser() {
-    let currentUser = user?.[0]?.name || 'guest';
+    let currentUser = user[0]|| 'guest';
+    currentUser.name = currentUser.name.slice(0,1).toUpperCase() + currentUser.name.slice(1)
+    console.log(currentUser.name);
+    
     let userArray = searchAssigned()
+    userArray.splice(0,0,currentUser)
     let selectedUser = assignetUserToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = ""
+    
     userArray.forEach(contact => {
         let isChecked = selectedUser.includes(contact.name)
-        let isCurrentUser = contact.name === currentUser
+        console.log(contact.name);
+        
+        let isCurrentUser = contact.name === currentUser.name
+        console.log(isCurrentUser ,"nicht der current user ");
+        
         allContacts += templateAssignedTo(contact, isChecked, isCurrentUser)
     });
     assignedToAreaRef.innerHTML = allContacts
