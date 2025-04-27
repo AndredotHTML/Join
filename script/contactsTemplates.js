@@ -1,13 +1,15 @@
 function contactDetailTemplate ( selectedContact ) {
-  // const avatarColor = getColorForContact( selectedContact.contactData.name );
+  const initials = getAvatarFromName( selectedContact.contactData.name );
+  const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
+
   return `
     <div class="contact-header">
-        <div class="circle-wrapper">
-  <div class="outer-circle"></div>
-  <div class="inner-circle">
-       ${ getAvatarFromName( selectedContact.contactData.name ) }
-  </div>
-  </div>
+      <div class="circle-wrapper">
+        <div class="outer-circle"></div>
+        <div class="inner-circle ${ cls }">
+          ${ initials }
+        </div>
+      </div>
       <div class="contact-main-info">
         <h2 class="contact-name">${ selectedContact.contactData.name }</h2>
         <div class="contact-actions">
@@ -30,9 +32,9 @@ function contactDetailTemplate ( selectedContact ) {
         <p class="label">Phone</p>
         <p>${ selectedContact.contactData.phone }</p>
       </div>
-    </div>
-  `;
+    </div>`;
 }
+
 
 function createAddContactTemplate () {
   return ( /*html*/ `
@@ -76,10 +78,10 @@ function createAddContactTemplate () {
   );
 }
 
-
 function createEditContactTemplate ( selectedContact ) {
-  // const avatarColor = getColorForContact( selectedContact.contactData.name );
-  return ( /*html*/`
+  const initials = getAvatarFromName( selectedContact.contactData.name );
+  const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
+  return /*html*/ `
 <div class="overlay-header">
   <button class="btn-close" onclick="closeEditOverlay(event)"></button>
   <div class="overlay-header-row overlay-header-row-center">
@@ -91,46 +93,62 @@ function createEditContactTemplate ( selectedContact ) {
 </div>
 <div class="overlay-content">
   <div class="overlay-profile-sec">
-    <div class="contact-circle">
-      ${ getAvatarFromName( selectedContact.contactData.name ) }
+    <!-- Hier wird jetzt die Farb-Klasse angewendet -->
+    <div class="contact-circle ${ cls }">
+      ${ initials }
     </div>
   </div>
-  <form id="edit_form" action="" onsubmit="updateContact(); return false">
+  <form id="edit_form" onsubmit="updateContact('${ selectedContact.id }'); return false">
     <div class="input_container">
-      <input required id="edit_name" type="text" placeholder="Name" value="${ selectedContact.contactData.name }" class="input-person" maxlength="50">
+      <input required id="edit_name" type="text" placeholder="Name"
+             value="${ selectedContact.contactData.name }"
+             class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="edit_email" type="email" placeholder="Email" value="${ selectedContact.contactData.email }" class="input-email" maxlength="255">
+      <input required id="edit_email" type="email" placeholder="Email"
+             value="${ selectedContact.contactData.email }"
+             class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="edit_phone" type="tel" placeholder="Phone" value="${ selectedContact.contactData.phone }" class="input-call" maxlength="20">
+      <input required id="edit_phone" type="tel" placeholder="Phone"
+             value="${ selectedContact.contactData.phone }"
+             class="input-call" maxlength="20">
     </div>
     <div class="overlay-footer">
-      <button type="button" class="btn btn-secondary btn-delete" onclick="closeEditOverlay(event)">
+      <button type="button" class="btn btn-secondary btn-delete"
+              onclick="deleteContact('${ selectedContact.id }')">
         <span>Delete</span>
       </button>
-      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="button" onclick="updateContact('${ selectedContact.id }')">
+      <button type="button" class="btn btn-primary btn-check"
+              onclick="updateContact('${ selectedContact.id }')">
         <span>Save</span>
       </button>
     </div>
   </form>
-</div>`
-  );
+</div>`;
 }
+
 
 function headerTemplate ( letter ) {
   return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
 
 function contactTemplate ( c ) {
-  // const avatarColor = getColorForContact( c.contactData.name );
-  return `<div class="contact" id="${ c.id }" onclick="handleContactClick(event)">
-      <div class="avatar" style="background-color: ${ c.contactData.avatarColor };">
-          ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
+  const initials = c.contactData.name
+    .split( ' ' )
+    .map( w => w.charAt( 0 ).toUpperCase() )
+    .join( '' );
+  const cls = c.contactData.avatarColorClass; // z.B. "avatar-color-7"
+
+  return `
+    <div class="contact" id="${ c.id }" onclick="handleContactClick(event)">
+      <div class="avatar ${ cls }">
+        ${ initials }
       </div>
       <div class="contact-info">
-          <div class="contact-name">${ c.contactData.name }</div>
-          <span class="contact-email">${ c.contactData.email }</span>
+        <div class="contact-name">${ c.contactData.name }</div>
+        <span class="contact-email">${ c.contactData.email }</span>
       </div>
-  </div>`;
+    </div>`;
 }
+

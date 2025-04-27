@@ -144,24 +144,41 @@ function closeOverlay ( event ) {
  * @param {Event} event
  * @returns {boolean} false verhindert Reload
  */
+/**
+ * Erfasst und validiert das Add-Form, weist eine zufällige Farbe zu und speichert den Kontakt.
+ * @param {SubmitEvent} event
+ * @returns {boolean} false verhindert Reload
+ */
 function getContactData ( event ) {
-    // 1) Verhindere, dass das Formular direkt abgesendet wird
+    // 1. Standard-Submit unterbinden
     event.preventDefault();
 
-    // 2) Native HTML5-Validation
+    // 2. Native HTML5-Validation
     const form = document.getElementById( 'add_contact_form' );
     if ( !form.checkValidity() ) {
-        form.reportValidity();  // zeigt die roten Fehlermeldungen
-        return false;           // Abbruch
+        form.reportValidity();
+        return false;  // Abbruch: Formular ungültig
     }
 
-    // 3) Alles valid – Kontakt anlegen
+    // 3. Felddaten auslesen
     const { name, email, phone } = getContactFormData();
-    const avatarColor = getColorForContact( name );
-    postContactData( '/contacts', { name, email, phone, avatarColor } );
+
+    // 4. Zufällige Farb-Klasse ermitteln
+    const avatarColorClass = getRandomColorClass();
+
+    // 5. POST in Firebase (inkl. avatarColorClass)
+    postContactData( '/contacts', {
+        name,
+        email,
+        phone,
+        avatarColorClass
+    } );
+
+    // 6. Kurze Erfolgsmeldung anzeigen
     toggleMessage();
 
-    return false; // verhindert Seitenreload
+    // 7. Kein Reload
+    return false;
 }
 
 /**
@@ -176,14 +193,27 @@ function getContactFormData () {
 }
 
 
+/**
+ * Fügt einen neuen Eintrag unter dem angegebenen Pfad hinzu
+ * und lädt anschließend die Kontaktliste neu.
+ *
+ * @param {string} path - Der Endpunkt in deiner Realtime-DB (z.B. "/contacts")
+ * @param {object} data - Ein Objekt mit name, email, phone und avatarColorClass
+ */
 async function postContactData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    pushToContactsArray();
+    try {
+        await fetch( BASE_URL + path + ".json", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify( data )
+        } );
+        // Nach dem Schreiben direkt die lokale Liste updaten
+        await pushToContactsArray();
+    } catch ( err ) {
+        console.error( "Fehler beim Speichern des Kontakts:", err );
+    }
 }
+
 
 
 async function pushToContactsArray () {
@@ -317,3 +347,12 @@ function closeAll () {
 }
 
 pushToContactsArray();
+
+function getRandomColorClass () {
+    // Math.random() liefert 0 ≤ x < 1
+    // Multipliziert mit 15 → 0 ≤ x < 15
+    // floor + 1 → Ganzzahl 1…15
+    const number = Math.floor( Math.random() * 15 ) + 1;
+    return `avatar-color-${ number }`;
+}
+

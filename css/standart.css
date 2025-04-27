@@ -67,24 +67,24 @@
     display: none !important;
 }
 
-.center-center{
+.center-center {
     justify-content: center;
     align-items: center;
 }
 
-.d-f-row{
+.d-f-row {
     flex-direction: row;
 }
 
-.d-f-column{
+.d-f-column {
     flex-direction: column;
 }
 
-.poiner{
+.poiner {
     cursor: pointer;
 }
 
-.gap-8{
+.gap-8 {
     gap: 8px;
 }
 
@@ -96,4 +96,64 @@ html {
 
 .font_weight_bold {
     font-weight: bold !important;
+}
+
+.avatar-color-1 {
+    background-color: #6E52FF;
+}
+
+.avatar-color-2 {
+    background-color: #FFA35E;
+}
+
+.avatar-color-3 {
+    background-color: #FFE62B;
+}
+
+.avatar-color-4 {
+    background-color: #00BEE8;
+}
+
+.avatar-color-5 {
+    background-color: #FF5EB3;
+}
+
+.avatar-color-6 {
+    background-color: #FFBB2B;
+}
+
+.avatar-color-7 {
+    background-color: #FF745E;
+}
+
+.avatar-color-8 {
+    background-color: #C3FF2B;
+}
+
+.avatar-color-9 {
+    background-color: #FF7A00;
+}
+
+.avatar-color-10 {
+    background-color: #1FD7C1;
+}
+
+.avatar-color-11 {
+    background-color: #0038FF;
+}
+
+.avatar-color-12 {
+    background-color: #FFC701;
+}
+
+.avatar-color-13 {
+    background-color: #9327FF;
+}
+
+.avatar-color-14 {
+    background-color: #FC71FF;
+}
+
+.avatar-color-15 {
+    background-color: #FF4646;
 }
