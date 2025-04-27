@@ -54,17 +54,13 @@ function createAddContactTemplate () {
   </div>
   <form id="edit_form" action="" onsubmit="updateContact(); return false">
     <div class="input_container">
-      <input required id="name" type="text" placeholder="Name" value="">
-      <img class="input-icon" src="../assets/icons/person_gray.svg" alt="person">
+      <input required id="name" type="text" placeholder="Name" class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="email" type="email" placeholder="Email" value="">
-      <img class="input_icon" src="../assets/icons/mail_gray.svg">
+      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="phone" type="tel" placeholder="Phone" value="">
-      <img class="input_icon" src="../assets/icons/call_gray.svg">
-      <p id="error_msg">Check your email and password. Please try again.</p>
+      <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">    
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay()">
@@ -101,17 +97,13 @@ function createEditContactTemplate ( selectedContact ) {
   </div>
   <form id="edit_form" action="" onsubmit="updateContact(); return false">
     <div class="input_container">
-      <input required id="edit_name" type="text" placeholder="Name" value="${ selectedContact.contactData.name }">
-      <img class="input-icon" src="../assets/icons/person_gray.svg" alt="person">
+      <input required id="edit_name" type="text" placeholder="Name" value="${ selectedContact.contactData.name }" class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="edit_email" type="email" placeholder="Email" value="${ selectedContact.contactData.email }">
-      <img class="input_icon" src="../assets/icons/mail_gray.svg">
+      <input required id="edit_email" type="email" placeholder="Email" value="${ selectedContact.contactData.email }" class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="edit_phone" type="tel" placeholder="Phone" value="${ selectedContact.contactData.phone }">
-      <img class="input_icon" src="../assets/icons/call_gray.svg">
-      <p id="error_msg">Check your email and password. Please try again.</p>
+      <input required id="edit_phone" type="tel" placeholder="Phone" value="${ selectedContact.contactData.phone }" class="input-call" maxlength="20">
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-delete" onclick="closeEditOverlay(event)">

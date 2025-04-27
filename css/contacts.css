@@ -305,16 +305,46 @@ label > span {
 }
 
 .input_container {
-    border-bottom: 1px solid #D1D1D1;
-    padding: 12px 21px;
-    min-height: 48px;
     display: flex;
     justify-content: space-between;
+    position: relative;
 }
 
 .input_container input {
     width: 100%;
+    padding: 12px 45px 12px 21px;
     font-size: 19px;
+    border-bottom: 1px solid #D1D1D1;
+    max-height: 48px;
+}
+
+.input_container input:focus {
+    border-color: var(--lightBlue);
+}
+
+.input-person {
+    background-image: url("../assets/icons/person_gray.svg");
+    background-position: right 21px center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+}
+
+.input-email {
+    background-image: url("../assets/icons/mail_gray.svg");
+    background-position: right 21px center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+}
+
+.input-call {
+    background-image: url("../assets/icons/call_gray.svg");
+    background-position: right 21px center;
+    background-size: 24px 24px;
+    background-repeat: no-repeat;
+}
+
+.input_container input::placeholder {
+    color: #D1D1D1;
 }
 
 input {
@@ -322,7 +352,7 @@ input {
     outline: none;
     font-size: 19px;
     font-family: "Open Sans", sans-serif;
-    max-height: 24px;
+    /* max-height: 24px; */
 }
 
 input::placeholder {
@@ -403,11 +433,6 @@ input.error {
 
 .overlay-content-row {
     display: flex;
-}
-
-.input-icon {
-    height: 24px;
-    width: 24px;
 }
 
 .overlay {
