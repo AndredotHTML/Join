@@ -1,6 +1,9 @@
 loggedin = false;
 
 
+/**
+ * init runs all function which are aquired to run onload of the html
+ */
 function init() {
   startAnimation()
   pushToUsersArray()
@@ -8,6 +11,9 @@ function init() {
 }
 
 
+/**
+ * Starts the Animation for the Login page Join Logo
+ */
 function startAnimation() {
   const logo = document.getElementById("animated_logo");
 
@@ -36,7 +42,9 @@ function validateLoginForm() {
       }
 }
 
-
+/**
+ * redirects the user to the summary.html after succesful login
+ */
 function redirectToSummary() {
   localStorage.setItem("isLoggedIn", "true");
   window.location.href = "http://127.0.0.1:5500/html/summary.html";
@@ -63,6 +71,9 @@ function login() {
 }
 
 
+/**
+ * Displays the errors for wrong inputs like email or password
+ */
 function displayError() {
   let email = document.getElementById("email");
   let password = document.getElementById("password");
@@ -83,6 +94,9 @@ function handleSuccessfulLogin(userData) {
   redirectToSummary()
 }
 
+/**
+ * clears the localStorage if the user was already logged in and loged out 
+ */
 function deleteLocalUser() {
   localStorage.removeItem('user');
   localStorage.removeItem('isLoggedIn');

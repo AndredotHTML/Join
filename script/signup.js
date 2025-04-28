@@ -4,7 +4,7 @@ let users = [];
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
- * Initialisierung beim Laden der Signup-Seite
+ * init runs all function which are aquired to run onload of the html
  */
 function signupInit () {
     pushToUsersArray();
@@ -13,8 +13,8 @@ function signupInit () {
 
 /**
  * toggles the visibility for the password input
- * @param {string} id - ID des Password-Felds
- * @param {string} icon - ID des Toggle-Icons
+ * @param {string} id - id of the password input
+ * @param {string} icon - id of the toggle icon
  */
 function togglePassword ( id, icon ) {
     const passwordInput = document.getElementById( id );
@@ -29,7 +29,7 @@ function togglePassword ( id, icon ) {
 }
 
 /**
- * vergleicht Passwort und Confirm-Passwort auf Gleichheit
+ * checks if the password and the confirmed password are equal
  */
 function checkPasswords () {
     const password = document.getElementById( "password" );
@@ -49,8 +49,8 @@ function checkPasswords () {
 }
 
 /**
- * aktiviert/deaktiviert Signup-Button je nach Checkbox
- * @param {string} id - ID des Buttons
+ * enable or disables the button to signup dependig on if the user accepted the privacy policy
+ * @param {string} id - id of the button
  */
 function toggleSignupButton ( id ) {
     const checkbox = document.getElementById( "signup_checkbox" );
@@ -65,7 +65,7 @@ function toggleSignupButton ( id ) {
 }
 
 /**
- * Validiert Name und E-Mail im Signup-Form
+ * validates the input for name and email and displays error if the input is wrong
  */
 function validateForm () {
     const name = document.getElementById( "name" );
@@ -84,7 +84,7 @@ function validateForm () {
 }
 
 /**
- * prüft, ob E-Mail schon registriert ist
+ * checks if e-mail already exists
  */
 async function checkEmail () {
     const emailValue = document.getElementById( "email" ).value;
@@ -104,14 +104,14 @@ async function checkEmail () {
 }
 
 /**
- * durchsucht das lokale users-Array nach E-Mail
+ * checks the user array if the email already exists
  */
 async function checkEmailExists ( inputMail ) {
     return users.some( u => u.userData.email === inputMail );
 }
 
 /**
- * zeigt Overlay „Erfolgreich registriert“ für 3s
+ * shows the overlay for a succesfull signup for 3 seconds
  */
 function toggleOverlay () {
     const overlay = document.getElementById( "signup_overlay" );
@@ -125,14 +125,14 @@ function toggleOverlay () {
 }
 
 /**
- * animiert das Overlay
+ * animation for the Overlay
  */
 function fadeInDiv ( div ) {
     div.classList.add( "show" );
 }
 
 /**
- * holt Werte aus dem Signup-Form
+ * gets the data from the user inputs in the sigup form
  */
 function getUserData () {
     const name = document.getElementById( "name" ).value;
@@ -142,7 +142,7 @@ function getUserData () {
 }
 
 /**
- * speichert neuen User und synchronisiert anschließend mit Contacts
+ * saves new users in the API and merges them with the contacts after
  */
 async function postUserData ( path = "", data = {} ) {
     await fetch( BASE_URL + path + ".json", {
@@ -155,7 +155,7 @@ async function postUserData ( path = "", data = {} ) {
 }
 
 /**
- * holt alle User aus Firebase
+ * gets all users from the API
  */
 async function getAllUsers ( path ) {
     const res = await fetch( BASE_URL + path + ".json" );
@@ -163,7 +163,7 @@ async function getAllUsers ( path ) {
 }
 
 /**
- * füllt das lokale users-Array neu
+ * pushes all users to the local user-array
  */
 async function pushToUsersArray () {
     const userResponse = await getAllUsers( "/users" );
@@ -177,7 +177,7 @@ async function pushToUsersArray () {
 }
 
 /**
- * holt alle bestehenden Kontakte aus Firebase
+ * gets all current Contacts
  */
 async function getAllContacts () {
     const res = await fetch( BASE_URL + "/contacts.json" );
@@ -185,8 +185,7 @@ async function getAllContacts () {
 }
 
 /**
- * synchronisiert jeden User, der noch kein Kontakt ist,
- * legt fehlende User als neue Kontakte an
+ * adds all users to contacts
  */
 async function mergeUsersToContacts () {
     const contactsObj = await getAllContacts();
@@ -213,7 +212,7 @@ async function mergeUsersToContacts () {
 }
 
 /**
- * leitet nach erfolgreichem Signup zum Login weiter
+ * redirects after sucessfull signup back to login
  */
 function redirectToLogin () {
     setTimeout( () => {
@@ -222,7 +221,7 @@ function redirectToLogin () {
 }
 
 /**
- * erzeugt eine zufällige Zahl 1–15 und gibt die CSS-Klasse zurück
+ * generates a random  number between 1 and 15 and adds a css class
  */
 function getRandomColorClass () {
     const idx = Math.floor( Math.random() * 15 ) + 1;

@@ -5,6 +5,9 @@ tasks = [];
 user = [];
 
 
+/**
+ * Checks if the user is loggend in and redirects back to login if user is not logged in
+ */
 function authLogIn() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
         window.location.href = "http://127.0.0.1:5500/html/index.html"; 
@@ -12,12 +15,20 @@ function authLogIn() {
 }
 
 
+/**
+ * Fetches all Tasks for the Summary Dashboard from the API
+ * @param {string} path The Firebase API URL 
+ * @returns 
+ */
 async function getAllTasks(path) {
     let response = await fetch(BASE_URL + path + ".json");
     return  await response.json()
 }
 
 
+/**
+ * Pushes all Tasks fetched from the API to the local tasks array
+ */
 async function pushToTask() {
     let task = await getAllTasks("/tasks"); 
     let tasksArray = Object.keys(task);
@@ -40,6 +51,9 @@ async function pushToTask() {
 }
 
 
+/**
+ * Transition for the greeting on mobile version 
+ */
 function greetTransition() {
     const greeting = document.getElementById("user-greeting")
     if (window.innerWidth <= 910)
@@ -49,6 +63,9 @@ function greetTransition() {
 }
 
 
+/**
+ * init runs all function which are aquired to run onload of the html
+ */
 async function init() {
     authLogIn()
     let userData = JSON.parse(localStorage.getItem('user'));
@@ -66,11 +83,17 @@ async function init() {
 }
 
 
+/**
+ * greeting for the guest login 
+ */
 function handleGuestLogin() {
     document.getElementById("greet").classList.add("font_weight_bold")
 }
 
 
+/**
+ * displays the username in the greeting welcome message 
+ */
 function displayUserData() {
     let userName = user[0].name;
     welcomeMsg = document.getElementById("user_name");
@@ -79,7 +102,10 @@ function displayUserData() {
     generateUserIcon(userName);
 }
 
-
+/**
+ * genarates the usericon in the header
+ * @param {string} userName the username input by the user at the registration
+ */
 function generateUserIcon(userName) {
     let iconContainer = document.getElementById('icon-container');
     let iconWrapper = document.getElementById('icon-wrapper');
@@ -93,7 +119,9 @@ function generateUserIcon(userName) {
     }
 }
 
-
+/**
+ * greeting generation for the guest login
+ */
 function greetGuest() {
     let greetElement = document.getElementById("greet");
     let currentHour = new Date().getHours();
@@ -108,7 +136,9 @@ function greetGuest() {
     greetElement.textContent = greeting;
 }
 
-
+/**
+ * greeting generation for the user login 
+ */
 function greetUser() {
     let greetElement = document.getElementById("greet");
     let currentHour = new Date().getHours();
@@ -123,7 +153,11 @@ function greetUser() {
     greetElement.textContent = greeting;
 }
 
-
+/**
+ * puts a profile for the user on the API
+ * @param {string} email user email
+ * @param {string} data Data for the API
+ */
 async function postUserProfile(email, data = {}) {
     const sanitizedEmail = email.replace(/\./g, "_");
     await fetch(BASE_URL + `/${sanitizedEmail}.json`,{
@@ -135,25 +169,9 @@ async function postUserProfile(email, data = {}) {
     });
 }
 
-
-//async function testUserPush() {
-  //  let email = user[0].email;
-   // let sanitizedEmail = email.replace(/\./g, "_");
-  //  await putUserTest(sanitizedEmail, {"task": "testtask"})
-//}
-
-
-//async function putUserTest(path, data) {
-//    await fetch(BASE_URL + path + ".json",{
-//        method: "PUT",
- //       header: {
- //           "Content-Type": "application/json"
- //       },
- //       body: JSON.stringify(data)
- //   });
-//}
-
-
+/**
+ * render the Numbers of tasks for the different categorys in the summary dashboard
+ */
 function renderSummaryNumbers() {
     renderUrgentTasks("urgent-number");
     renderInBoardTasks("in-board-number");
@@ -163,44 +181,65 @@ function renderSummaryNumbers() {
     renderDoneTasks("done-number");
 }
 
-
+/**
+ * Renders the Values needed for Urgent tasks card
+ * @param {string} id urgenttask string ID
+ */
 function renderUrgentTasks(id) {
     let urgentCount = tasks.filter(task => task.priority === "Urgent").length;
     document.getElementById(id).innerText = urgentCount
     renderUrgentDate()
 }
 
-
+/**
+ * Renders the Values needed for in Board tasks card
+ * @param {string} id in Board string ID
+ */
 function renderInBoardTasks(id) {
     let tasksCount = tasks.length;
     document.getElementById(id).innerText = tasksCount;
 }
 
-
+/**
+ * Renders the Values needed for to do tasks card
+ * @param {string} id to do string ID
+ */
 function renderToDoTasks(id) {
     let toDoCount = tasks.filter(task => task.status === "toDo").length;
     document.getElementById(id).innerText = toDoCount;
 }
 
-
+/**
+ * Renders the Values needed for in progress tasks card
+ * @param {string} id urgenttask string ID
+ */
 function renderInProgressTasks(id) {
     let inProgressCount = tasks.filter(task => task.status === "inProgress").length;
     document.getElementById(id).innerText = inProgressCount;
 }
 
-
+/**
+ * Renders the Values needed for in progress tasks card
+ * @param {string} id urgenttask string ID
+ */
 function renderFeedbackTasks(id) {
     let feedbackCount = tasks.filter(task => task.status === "awaitFeedback").length;
     document.getElementById(id).innerText = feedbackCount;
 }
 
-
+/**
+ * Renders the Values needed for done tasks card
+ * @param {string} id done string ID
+ */
 function renderDoneTasks(id) {
     let doneCount = tasks.filter(task => task.status === "done").length;
     document.getElementById(id).innerText = doneCount;
 }
 
-
+/**
+ * Renders the Date of the next due date for the urgent tasks
+ * @returns 
+ */
 function renderUrgentDate() {
     const urgentTasks = tasks.filter(task => task.priority === "Urgent");
     if (urgentTasks.length === 0) {
