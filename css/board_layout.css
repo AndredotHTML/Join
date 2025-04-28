@@ -54,6 +54,20 @@
     cursor: pointer;
 }
 
+.no_tasks_found {
+    height: 40px;
+    width: 100%;
+    background-color: #e7e7e7;
+    border: 1px dotted #a8a8a8;
+    color: #a8a8a8;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+    margin-top: 5px;
+}
+
 .add_btn {
     margin-left: 40px;
 }

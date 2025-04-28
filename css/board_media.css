@@ -1,4 +1,14 @@
+@media(max-width:1605px){
+    .no_tasks_found{
+        width: 90%;
+    }
+}
 
+@media(max-width:1575px){
+    .noTask_msg{
+        width: 90%;
+    }
+}
 
 @media(max-width:1560px){
     .board_header {
@@ -44,6 +54,10 @@
 @media(max-width:1260px){
     .ticket {
         width: 220px;
+    }
+
+    .no_tasks_found{
+        width: 80%;
     }
 }
 
@@ -144,6 +158,12 @@
     }
 }
 
+@media(max-width:900px) {
+    .noTask_msg{
+        width: 80%;
+    }
+}
+
 @media(max-width:820px){
     .board_content{
         display: flex;
@@ -151,10 +171,6 @@
         justify-content: space-between;
         padding-left: 20px;
         padding-right: 20px;
-    }
-
-    .toDo_header img, .inProgress_header img, .awaitFeedback_header img, .done_header img{
-        padding-right: 15px;
     }
 
     .toDo, .inProgress, .awaitFeedback, .done {
@@ -204,6 +220,21 @@
 
     .drag_area::-webkit-scrollbar-thumb:hover{
         background-color: #005DFF;
+    }
+
+    .noTask_msg{
+        width: 100%;
+    }
+
+    .no_tasks_found{
+        width:100%;
+    }
+
+}
+
+@media(max-width:705px) {
+    .board_header {
+        padding-left: 20px !important;
     }
 }
 

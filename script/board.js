@@ -53,47 +53,6 @@ async function pushToTask() {
     updateView()
 }
 
-function handleSearch() {
-    let searchTerm = document.querySelector('.search_container input').value.toLowerCase();
-    hideAllSections();
-    let isAnyTaskFound = false;
-
-    isAnyTaskFound != filterAndDisplayTasks('toDo', searchTerm);
-    isAnyTaskFound != filterAndDisplayTasks('inProgress', searchTerm);
-    isAnyTaskFound != filterAndDisplayTasks('awaitFeedback', searchTerm);
-    isAnyTaskFound != filterAndDisplayTasks('done', searchTerm);
-
-     if (!isAnyTaskFound) {
-        showAllSections();
-    }
-}
-
-function filterAndDisplayTasks(status, searchTerm) {
-    let filteredTasks = tasks.filter(t => t['status'] === status && 
-        (t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm))
-    );
-    let container = document.getElementById(status);
-    container.innerHTML = '';
-    for (let i = 0; i < filteredTasks.length; i++) {
-            let element = filteredTasks[i];
-            container.innerHTML += generateTask(element);
-    }
-}
-
-function hideAllSections() {
-    let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
-    for (let i = 0; i < sections.length; i++) {
-        document.getElementById(sections[i]).style.display = "none";
-    }
-}
-
-function showAllSections() {
-    let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
-    for (let i = 0; i < sections.length; i++) {
-        document.getElementById(sections[i]).style.display = "flex";
-    }
-}
-
 function displayToDo() {
     let toDo = tasks.filter(t => t['status'] == 'toDo');
     let toDoContainer = document.getElementById('toDo');

@@ -82,3 +82,80 @@ function getColorForUser(name) {
     let index = firstLetter.charCodeAt(0) % predefinedColors.length; 
     return predefinedColors[index]; 
 }
+
+const sectionIds = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+
+function handleSearch() {
+    let searchTerm = document.querySelector('.search_container input').value.toLowerCase();
+    hideAllSections();
+    let isAnyTaskFound = false;
+
+    if (filterAndDisplayTasks('toDo', searchTerm)) isAnyTaskFound = true;
+    if (filterAndDisplayTasks('inProgress', searchTerm)) isAnyTaskFound = true;
+    if (filterAndDisplayTasks('awaitFeedback', searchTerm)) isAnyTaskFound = true;
+    if (filterAndDisplayTasks('done', searchTerm)) isAnyTaskFound = true;
+
+    if (!isAnyTaskFound) {
+        showNoTasksFoundMessage();
+    }
+}
+
+function filterTasksByStatusAndSearch(status, searchTerm) {
+    return tasks.filter(t => 
+        t['status'] === status &&
+        (t.title.toLowerCase().includes(searchTerm) || t.description.toLowerCase().includes(searchTerm))
+    );
+}
+
+function displayTasks(container, filteredTasks) {
+    container.innerHTML = ''; 
+
+    if (filteredTasks.length > 0) {
+        for (let i = 0; i < filteredTasks.length; i++) {
+            let element = filteredTasks[i];
+            container.innerHTML += generateTask(element); 
+        }
+        container.style.display = 'flex'; 
+    } else {
+        container.innerHTML = `<div class="no_tasks_found">No task found</div>`; 
+        container.style.display = 'flex'; 
+    }
+}
+
+function filterAndDisplayTasks(status, searchTerm) {
+    let container = document.getElementById(status);
+    if (!container) return false;
+
+    let filteredTasks = filterTasksByStatusAndSearch(status, searchTerm);
+    displayTasks(container, filteredTasks);
+    
+    return filteredTasks.length > 0; 
+}
+
+
+function toggleSections(displayStyle) {
+    for (let i = 0; i < sectionIds.length; i++) {
+        let section = document.getElementById(sectionIds[i]);
+        if (section) {
+            section.style.display = displayStyle;
+        }
+    }
+}
+
+function hideAllSections() {
+    toggleSections("none");
+}
+
+function showAllSections() {
+    toggleSections("flex");
+}
+
+function showNoTasksFoundMessage() {
+    for (let i = 0; i < sectionIds.length; i++) {
+        let container = document.getElementById(sectionIds[i]);
+        if (container) {
+            container.innerHTML = `<div class="no_tasks_found">No task found</div>`;
+            container.style.display = 'flex';
+        }
+    }
+}
