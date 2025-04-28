@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Join login</title>
+        <link rel="icon" href="../assets/icons/favicon.png">
+        <link rel="stylesheet" href="/css/standart.css">
+        <link rel="stylesheet" href="/css/login.css">
+        <script src="/script/login.js"></script>
+        <script src="/script/signup.js"></script>
+        <script src="/script/summary.js"></script>
+    </head>
+
+    <body onload="init()">
+        <div id="login_top"> 
+            <div id="animated_logo" class="join_logo_start"></div>
+            <div id="to_signup">
+                <p>Not a Join user?</p> <a href="http://127.0.0.1:5500/html/signup.html"><button>Sign up</button></a>
+            </div>
+        </div>
+        <div id="main">
+            <div id="login_border">
+                <div id="login_container">
+                    <h2>Log in</h2>
+                    <form id="login_form" action="" onsubmit="login(); return false">
+                        <div class="input_container">
+                            <input required id="email" type="email" placeholder="Email">
+                            <img class="input_icon_email" src="/assets/icons/mail.png">
+                        </div>
+                        <div class="input_container">
+                            <input required id="password" type="password" placeholder="Password">
+                            <img class="input_icon_password" onclick="togglePassword('password')"
+                                src="/assets/icons/visibility_off.png">
+                            <p id="error_msg">Check your email and password. Please try again.</p>
+                        </div>
+                        <div id="login_buttons">
+                            <button type="submit">Log in</button>
+                            <button type="button" onclick="redirectToSummary('guest')" id="guest_button"> Guest log
+                                in</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="bottom_bar">
+            <a class="nav_link" href="privacyPolicy.html">Privacy Policy</a>
+            <a class="nav_link" href="legalNotice.html">Legal Notice</a>
+        </div>
+    </body>
+
+</html>

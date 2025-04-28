@@ -5,7 +5,7 @@ const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF",
 
 function authLogIn() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+        window.location.href = "http://127.0.0.1:5500/html/index.html"; 
       }
 }
 
