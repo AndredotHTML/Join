@@ -7,7 +7,7 @@ user = [];
 
 function authLogIn() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "http://127.0.0.1:5500/html/login.html"; 
+        window.location.href = "http://127.0.0.1:5500/html/index.html"; 
       }
 }
 
@@ -203,17 +203,18 @@ function renderDoneTasks(id) {
 
 function renderUrgentDate() {
     const urgentTasks = tasks.filter(task => task.priority === "Urgent");
-    if (urgentTasks.length > 0) { 
-    const [day, month, year] = urgentTasks[0].dueDate.split("/");
-    const formatted = `${year}-${month}-${day}`;
-    const date = new Date(formatted);
-    const options = {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric'
-    };
-    document.getElementById("dueDate").innerText = date.toLocaleDateString('en-US', options);
-    } else {
-    return
+    if (urgentTasks.length === 0) {
+        return;
     }
+    const urgentDates = urgentTasks.map(task => {
+        const [day, month, year] = task.dueDate.split("/");
+        return new Date(`${year}-${month}-${day}`);
+    });
+    const nextUrgentDate = new Date(Math.min(...urgentDates));
+    const options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    };
+    document.getElementById("dueDate").innerText = nextUrgentDate.toLocaleDateString('en-US', options);
 }

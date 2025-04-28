@@ -94,6 +94,10 @@ li {
     height: 32px;
 }
 
+.help-link {
+    display: none;
+}
+
 @media screen and (max-width: 1200px) {
     .content {
         margin-bottom: 76px;
@@ -104,4 +108,7 @@ li {
         margin-top: 64px;
     }
 
+    .nav_wrapper {
+        display: none;
+    }
 }

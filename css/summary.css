@@ -287,6 +287,8 @@ a {
 
 .greet_transition {
     height: 0 !important;
+    position: relative;
+    top: -120px;
 }
 
 @media (max-width: 1200px) {

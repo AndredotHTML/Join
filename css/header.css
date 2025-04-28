@@ -7,7 +7,7 @@
     padding: 20px 39px;
     font-size: var(--fontSize-6);
     position: relative;
-    z-index: 1;
+    z-index: 999;
 }
 
 .logo-container {
@@ -115,8 +115,22 @@
     padding: 8px 16px;
 }
 
+.help_menu_item {
+    display: none;
+}
+
 @media (max-width: 700px) {
     .header span {
         display: none;
+    }
+}
+
+@media (max-width: 500px) {
+    .help-link {
+        display: none;
+    }
+    
+    .help_menu_item {
+        display: block !important;
     }
 }
