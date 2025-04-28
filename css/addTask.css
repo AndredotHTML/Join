@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
 }
 
@@ -12,7 +12,7 @@
     position: relative;
 }
 
-#icon-wrapper{
+#icon-wrapper {
     box-sizing: unset;
 }
 
@@ -47,7 +47,7 @@ li[contenteditable="true"] {
     outline: none;
 }
 
-.subtask-edit-icons{
+.subtask-edit-icons {
     padding-right: 14px;
 }
 
@@ -166,13 +166,11 @@ li[contenteditable="true"] {
 .subtask-value {
     min-height: 32px;
     font-size: 16px;
-    padding: 6px 16px;
-    list-style-position: inside;
-    width: 100%;
-    /* word-break: break-word; */
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    padding: 6px 16px 6px 0px;
+    width: 80%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
 }
 
 .placeholder-container {
@@ -186,6 +184,7 @@ li[contenteditable="true"] {
     border-radius: 10px;
     min-height: 32px;
     column-gap: 8px;
+    padding-left: 42px;
 }
 
 #task-to-board-overlay {
@@ -232,6 +231,7 @@ li[contenteditable="true"] {
     0% {
         transform: translateY(100vh);
     }
+
     100% {
         transform: translateY(0);
     }
@@ -244,16 +244,19 @@ li[contenteditable="true"] {
         content: url("/assets/icons/add_task_icon_blue.png");
         margin-right: 0;
     }
-    
-    .active_span {   
-        flex-direction: column; 
+
+    .active_span {
+        flex-direction: column;
     }
+
     .add-task-btns {
         bottom: 120px;
     }
+
     form {
         height: 828px;
     }
+
     .form-scroll-container {
         height: calc(100vh - 172px);
         top: 96px;
@@ -264,26 +267,27 @@ li[contenteditable="true"] {
     .add-task-btns {
         left: 69px;
     }
+
     .form-scroll-container {
         height: calc(100vh - 280px);
     }
 }
 
-@media (min-width : 700px){
+@media (min-width : 700px) {
     .addedSubtask:hover .subtask-hover-icons {
         display: flex !important;
         padding-right: 16px;
     }
-    
+
     .addedSubtask:hover {
         background-color: #E3EEFF;
         align-items: center;
     }
-    
+
     .disable-hover:hover .subtask-hover-icons {
         display: none !important;
     }
-    
+
     .disable-hover:hover {
         background-color: #FFFFFF !important;
     }
@@ -292,50 +296,56 @@ li[contenteditable="true"] {
 @media (max-width :699px) {
     .addedSubtask.disable-hover .subtask-hover-icons {
         display: none !important;
-      }
-      
-      .addedSubtask.disable-hover .subtask-edit-icons {
+    }
+
+    .addedSubtask.disable-hover .subtask-edit-icons {
         display: flex !important;
-      }
+    }
+
     .subtask-hover-icons {
         display: flex !important;
         padding-right: 14px;
         background-color: #FFFFFF;
-      }
-        .addedSubtask:hover {
-          background-color: #FFFFFF;
-      }
+    }
+
+    .addedSubtask:hover {
+        background-color: #FFFFFF;
+    }
+
     .add-task-btns {
         left: 28px;
         transform: translateX(10%);
     }
+
     .clear-form-btn {
         height: 48px;
         font-size: 19px;
     }
+
     .add-task-create-btn {
         height: 48px;
         font-size: 19px;
     }
+
     #task-to-board-overlay {
         background-color: rgba(255, 255, 255, 0.5);
     }
 }
 
-@media (max-width :440px){
-    form{
+@media (max-width :440px) {
+    form {
         padding: 64px 2px 0 16px;
         gap: 16px;
     }
 }
 
-@media (max-width :400px){
+@media (max-width :400px) {
     .add-task-btns {
         left: 0px;
     }
 }
 
-@media (max-width :350px){
+@media (max-width :350px) {
     .add-task-btns {
         transform: translateX(6%);
         gap: 8px;
