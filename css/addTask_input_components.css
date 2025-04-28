@@ -289,6 +289,10 @@ input[type="radio"] {
     gap: 12px;
 }
 
+.avatar-color-user{
+    background-color: #00BEE8;
+}
+
 input[type="checkbox"] {
     appearance: none;
     background: url(../assets/icons/unchecked.png) no-repeat center;

@@ -25,7 +25,7 @@ function templateAssignedTo(contact, isChecked, isCurrentUser) {
     <div class="assigned-contacts visible-assigned d_flex">
             <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex">
                 <div class="d_flex icon-name-template">
-                    <div class="name-icon d_flex" data-value="${contact.name}" style="background-color:${contact.avatarColor? contact.avatarColor: `#00BEE8` }">
+                    <div class="name-icon d_flex ${contact.avatarColorClass? contact.avatarColorClass: `avatar-color-user` }" data-value="${contact.name}">
                     ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
                     </div>
                     <div class="assigned-template-name">
