@@ -8,7 +8,9 @@
 .main_wrapper {
     width: calc(100% - 200px);
     box-shadow: 0 4px 6px 0 rgba(0, 0, 0, 0.1);
-    overflow-x: hidden;
+    overflow: hidden;
+    flex-direction: column;
+    display: flex;
 }
 
 .board_header {
@@ -78,6 +80,14 @@
     transform: scale(1.1);
 }
 
+
+@media (max-width: 1200px) {
+    .main_wrapper {
+        width: 100% !important;
+        height: calc(100vh - 173px); /
+    }
+}
+
 @media(max-width:820px){
     .main_wrapper {
         overflow-x: unset;
@@ -86,9 +96,9 @@
     .search_container {
         width: 500px;
     }
-
-    .board_header{
-        padding-right: 10px;
+    
+    .board_header {
+        padding-left: 20px !important;
     }
 
 }
@@ -98,6 +108,9 @@
         display: none;
     }
 
+    .board_header {
+        padding-right: 20px;
+    }
     .search_container {
         width: 100%;
     }

@@ -115,22 +115,16 @@
     padding: 8px 16px;
 }
 
-.help_menu_item {
+.help-item {
     display: none;
 }
 
-@media (max-width: 700px) {
-    .header span {
+@media (max-width: 705px) {
+    .header span, .help-link {
         display: none;
     }
-}
 
-@media (max-width: 500px) {
-    .help-link {
-        display: none;
-    }
-    
-    .help_menu_item {
-        display: block !important;
+    .help-item {
+        display: block;
     }
 }

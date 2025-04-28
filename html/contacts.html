@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="../css/header.css">
         <link rel="stylesheet" href="../css/navigation.css">
         <link rel="stylesheet" href="../css/contacts.css">
+        <link rel="stylesheet" href="../css/buttons.css">
 
         <script src="../script/header.js"></script>
 
@@ -30,6 +31,7 @@
             </div>
             <div class="profile_menu" id="profile_menu">
                 <ul class="profile_menu_list">
+                    <li class="profile_menu_item help-item"><a href="help.html">Help</a></li>
                     <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
                     <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
                     <li class="profile_menu_item"><a href="index.html">Log out</a></li>
@@ -73,59 +75,28 @@
                     <a href="legalNotice.html"><span>Legal Notice</span></a>
                 </div>
             </section>
-            <section class="main_wrapper">
-                <section class="contact_bar">
-                    <div class="btn_container">
-                        <button class="button button-primary button-contact" onclick="showaddContactOverlay()">
+            <div class="main_wrapper">
+                <div class="contact_bar">
+                    <div class="btn-container">
+                        <button class="btn btn-primary btn-add-contact" onclick="showAddContactOverlay()">
                             <span>add new Contact</span>
                         </button>
                     </div>
                     <div class="contacts_list"> </div>
-                </section>
-                <section class="contact-detail">
-                    <div class="contact-info-wrapper" id="detail">
-                        <div class="contact-header">
-                            <div class="contact-circle-detail orange">AM</div>
-                            <div class="contact-main-info">
-                                <h2 class="contact-name">Anton Mayer</h2>
-                                <div class="contact-actions">
-                                    <button class="edit-btn">
-                                        <img src="../assets/icons/edit.png" alt="Edit">
-                                        Edit
-                                    </button>
-                                    <button class="delete-btn">
-                                        <img src="../assets/icons/delete.png" alt="Delete">
-                                        Delete
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
+                </div>
+                <div class="contact-detail">
+                    <div class="contact-info-wrapper" id="detail"></div>
+                </div>
+                </d>
+                <div id="overlay-bg" class="overly-bg" onclick="closeAll()"></div>
+                <div class="overlay overly-add-contact" id="overlay-add-contact"></div>
+                <div class="edit-overlay" id="editOverlay"></div>
+                <div class="overlay-contact-successfully-created" id="contact-successfully-created">Contact successfully
+                    created</div>
 
-                        <div class="contact-detail-section">
-                            <h3>Contact Information</h3>
-
-                            <div class="contact-field">
-                                <p class="label">Email</p>
-                                <a href="mailto:antom@gmail.com" class="email-link">antom@gmail.com</a>
-                            </div>
-
-                            <div class="contact-field">
-                                <p class="label">Phone</p>
-                                <p>+49 1111 111 11 1</p>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            </section>
-            <div id="overlay-bg" class="overly-bg" onclick="closeAll()"></div>
-            <div class="overlay overly-add-contact" id="overlay"></div>
-            <div class="edit-overlay" id="editOverlay"></div>
-            <div class="overlay-contact-successfully-created" id="contact-successfully-created">Contact successfully
-                created</div>
-
-        </div>
-        <script src="../script/contacts.js"></script>
-        <script src="../script/contactsTemplates.js"></script>
+            </div>
+            <script src="../script/contacts.js"></script>
+            <script src="../script/contactsTemplates.js"></script>
     </body>
 
 </html>

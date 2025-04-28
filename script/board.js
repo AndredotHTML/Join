@@ -50,7 +50,6 @@ async function pushToTask() {
             assignedUsers: taskData.assignedUsers
         });
     }
-    console.log(tasks);
     updateView()
 }
 
@@ -91,7 +90,7 @@ function hideAllSections() {
 function showAllSections() {
     let sections = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
     for (let i = 0; i < sections.length; i++) {
-        document.getElementById(sections[i]).style.display = "block";
+        document.getElementById(sections[i]).style.display = "flex";
     }
 }
 
@@ -339,6 +338,10 @@ async function deleteTask(taskId) {
 }
 
 function showAddTaskOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';
@@ -347,6 +350,10 @@ function showAddTaskOverlay(){
 }
 
 function showAddTaskInProgressOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';
@@ -355,6 +362,10 @@ function showAddTaskInProgressOverlay(){
 }
 
 function showAddTaskAwaitFeedbackOverlay(){
+    if (window.innerWidth <= 705) {
+        window.location.href = 'addTask.html'; 
+        return;
+    }
     let overlay = document.getElementById('overlay');
     overlay.style.display ='flex';
     document.body.style.overflow ='hidden';

@@ -12,10 +12,11 @@
         <link rel="stylesheet" href="../css/board.css">
         <link rel="stylesheet" href="../css/board_layout.css">
         <link rel="stylesheet" href="../css/board_overlay.css">
+        <link rel="stylesheet" href="../css/board_media.css">
         <link rel="stylesheet" href="../css/addTaskFloat.css">
         <link rel="stylesheet" href="../css/addTaskFloat_fields.css">
         <link rel="stylesheet" href="../css/addTaskFloat_assigned_subtasks.css">
-       <!-- Flatpickr CSS -->
+        <!-- Flatpickr CSS -->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
         <!-- Flatpickr JS -->
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -38,6 +39,7 @@
             </div>
             <div class="profile_menu" id="profile_menu">
                 <ul class="profile_menu_list">
+                    <li class="profile_menu_item help-item"><a href="help.html">Help</a></li>
                     <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
                     <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
                     <li class="profile_menu_item"><a href="index.html">Log out</a></li>
@@ -123,7 +125,8 @@
                     <div class="awaitFeedback">
                         <div class="awaitFeedback_header">
                             <h2>Await Feedback</h2>
-                            <img src="../assets/icons/plus_button.png" alt="" onclick="showAddTaskAwaitFeedbackOverlay()">
+                            <img src="../assets/icons/plus_button.png" alt=""
+                                onclick="showAddTaskAwaitFeedbackOverlay()">
                         </div>
                         <div class="awaitFeedback_content">
                             <div class="drag_area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"

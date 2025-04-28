@@ -1,197 +1,230 @@
-let users = [];
+// signup.js
 
+let users = [];
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
-
-function signupInit() {
-    pushToUsersArray()
-    toggleSignupButton("signup_button_activate")
+/**
+ * Initialisierung beim Laden der Signup-Seite
+ */
+function signupInit () {
+    pushToUsersArray();
+    toggleSignupButton( "signup_button_activate" );
 }
-
 
 /**
  * toggles the visibility for the password input
- * @param {*} id - the ID of the element which will be toggled 
+ * @param {string} id - ID des Password-Felds
+ * @param {string} icon - ID des Toggle-Icons
  */
-function togglePassword(id, icon) {
-    const passwordInput = document.getElementById(id);
-    const passwordIcon = document.getElementById(icon);
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      passwordIcon.src = "/assets/icons/visibility.png"
+function togglePassword ( id, icon ) {
+    const passwordInput = document.getElementById( id );
+    const passwordIcon = document.getElementById( icon );
+    if ( passwordInput.type === "password" ) {
+        passwordInput.type = "text";
+        passwordIcon.src = "/assets/icons/visibility.png";
     } else {
-      passwordInput.type = "password";
-      passwordIcon.src = "/assets/icons/visibility_off.png"
+        passwordInput.type = "password";
+        passwordIcon.src = "/assets/icons/visibility_off.png";
     }
-  }
-
+}
 
 /**
- * checks if the passwords are the same and if the inputs are empty 
+ * vergleicht Passwort und Confirm-Passwort auf Gleichheit
  */
-function checkPasswords() {
-    let password = document.getElementById("password");
-    let confirmPassword = document.getElementById("confirm_password");
-    let errorMsg = document.getElementById("error_msg_password");
-    if (password.value == confirmPassword.value && password.value !== "" && confirmPassword.value !== "") {
+function checkPasswords () {
+    const password = document.getElementById( "password" );
+    const confirmPassword = document.getElementById( "confirm_password" );
+    const errorMsg = document.getElementById( "error_msg_password" );
+
+    if ( password.value === confirmPassword.value &&
+        password.value !== "" &&
+        confirmPassword.value !== "" ) {
         errorMsg.style.display = "none";
-        confirmPassword.classList.remove("error")
-        checkEmail()
+        confirmPassword.classList.remove( "error" );
+        checkEmail();
     } else {
-        confirmPassword.classList.add("error")
+        confirmPassword.classList.add( "error" );
         errorMsg.style.display = "block";
     }
 }
 
-
-function toggleSignupButton(id) {
-    let checkbox = document.getElementById("signup_checkbox")
-    if (checkbox.checked) {
-        document.getElementById(id).disabled = false;
-        document.getElementById(id).style.pointerEvents = "auto";
-      } else {
-        document.getElementById(id).disabled = true;
-        document.getElementById(id).style.pointerEvents = "none";
-      }
+/**
+ * aktiviert/deaktiviert Signup-Button je nach Checkbox
+ * @param {string} id - ID des Buttons
+ */
+function toggleSignupButton ( id ) {
+    const checkbox = document.getElementById( "signup_checkbox" );
+    const btn = document.getElementById( id );
+    if ( checkbox.checked ) {
+        btn.disabled = false;
+        btn.style.pointerEvents = "auto";
+    } else {
+        btn.disabled = true;
+        btn.style.pointerEvents = "none";
+    }
 }
 
-
 /**
- * checks if the inputs in the form are valid and displays error messages if they are not 
+ * Validiert Name und E-Mail im Signup-Form
  */
-function validateForm() {
-    let name = document.getElementById("name")
-    let email = document.getElementById("email");
-    let errorMsg = document.getElementById("error_msg");
-    if (!email.validity.valid || !name.validity.valid) {
-        email.classList.add("error"); 
-        name.classList.add("error"); 
+function validateForm () {
+    const name = document.getElementById( "name" );
+    const email = document.getElementById( "email" );
+    const errorMsg = document.getElementById( "error_msg" );
+
+    if ( !email.validity.valid || !name.validity.valid ) {
+        email.classList.add( "error" );
+        name.classList.add( "error" );
         errorMsg.style.display = "block";
     } else {
-        email.classList.remove("error"); 
-        name.classList.remove("error");
+        email.classList.remove( "error" );
+        name.classList.remove( "error" );
         errorMsg.style.display = "none";
     }
 }
 
-
 /**
- * checks if the email for the signup already exists 
+ * prüft, ob E-Mail schon registriert ist
  */
-async function checkEmail() {
-    let emailvalue = document.getElementById("email").value;
-    let email = document.getElementById("email");
-    let errorMsg = document.getElementById("error_msg_email");
-    if (await checkEmailExists(emailvalue)) {
-        email.classList.add("error");
+async function checkEmail () {
+    const emailValue = document.getElementById( "email" ).value;
+    const emailElem = document.getElementById( "email" );
+    const errorMsg = document.getElementById( "error_msg_email" );
+
+    if ( await checkEmailExists( emailValue ) ) {
+        emailElem.classList.add( "error" );
         errorMsg.style.display = "block";
-      } else {
-        email.classList.remove("error"); 
+    } else {
+        emailElem.classList.remove( "error" );
         errorMsg.style.display = "none";
         toggleOverlay();
         getUserData();
         redirectToLogin();
-}}
-
-
-/**
- * searches for the input email in the users array
- * @param {*} inputMail - is the value of the email input
- */
-async function checkEmailExists(inputMail) {
-    for (let index = 0; index < users.length; index++) {
-        if (users[index].userData.email === inputMail) {
-            return true
-        }
-    } return false
-}
-
-
-/**
- * toggles a 3 second overlay with a message that tells the user that he signup up 
- */
-function toggleOverlay() {
-    let overlay = document.getElementById("signup_overlay"); 
-    let div = document.getElementById("signup_msg");
-    overlay.classList.remove("d_none"); 
-    fadeInDiv(div)
-
-    setTimeout(() => {
-        overlay.classList.add("d_none");
-        div.classList.remove("show")
-    }, 3000); 
-}
-
-
-/**
- * makes the div to fade in from the bottom of the screen
- * @param {*} div - is the element that fades in 
- */
-function fadeInDiv(div) {
-    div.classList.add("show"); 
-}
-
-
-/**
- * gets the data from the input values 
- */
-function getUserData() {
-    let name = document.getElementById("name").value
-    let email = document.getElementById("email").value
-    let password = document.getElementById("password").value
-    postUserData("/users", {"name": name, "email": email, "password": password})
-}
-
-
-/**
- * posts the userdata into the Storage API 
- * @param {*} path - is the path where the data will be safed
- * @param {*} data - is the userdata input by the user
- */
-async function postUserData(path = "", data = {}) {
-    await fetch(BASE_URL + path + ".json",{
-        method: "POST",
-        header: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify(data)
-    });
-    pushToUsersArray()  
-}
-
-
-/**
- * fetches the userData from the storage API
- * @param {*} path - is the path from where it fetches the data
- */
-async function getAllUsers(path) {
-    let response = await fetch(BASE_URL + path + ".json");
-    return responseToJson = await response.json()
-}
-
-
-/**
- * pushes the users from the Storage API into a local array [users]
- */
-async function pushToUsersArray() {
-    let userResponse = await getAllUsers("/users")
-    let userKeysArray = Object.keys(userResponse)
-    for (let index = 0; index < userKeysArray.length; index++) {
-        users.push(
-            {
-                id : userKeysArray[index],
-                userData : userResponse[userKeysArray[index]],
-            }
-        ) 
     }
 }
 
+/**
+ * durchsucht das lokale users-Array nach E-Mail
+ */
+async function checkEmailExists ( inputMail ) {
+    return users.some( u => u.userData.email === inputMail );
+}
 
 /**
- * redirects back to the login 
+ * zeigt Overlay „Erfolgreich registriert“ für 3s
  */
-function redirectToLogin() {
-    setTimeout(() => {
-        window.location.href = "http://127.0.0.1:5500/html/login.html";
-    }, 3000);
+function toggleOverlay () {
+    const overlay = document.getElementById( "signup_overlay" );
+    const div = document.getElementById( "signup_msg" );
+    overlay.classList.remove( "d_none" );
+    fadeInDiv( div );
+    setTimeout( () => {
+        overlay.classList.add( "d_none" );
+        div.classList.remove( "show" );
+    }, 3000 );
+}
+
+/**
+ * animiert das Overlay
+ */
+function fadeInDiv ( div ) {
+    div.classList.add( "show" );
+}
+
+/**
+ * holt Werte aus dem Signup-Form
+ */
+function getUserData () {
+    const name = document.getElementById( "name" ).value;
+    const email = document.getElementById( "email" ).value;
+    const password = document.getElementById( "password" ).value;
+    postUserData( "/users", { name, email, password } );
+}
+
+/**
+ * speichert neuen User und synchronisiert anschließend mit Contacts
+ */
+async function postUserData ( path = "", data = {} ) {
+    await fetch( BASE_URL + path + ".json", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify( data )
+    } );
+    await pushToUsersArray();
+    await mergeUsersToContacts();
+}
+
+/**
+ * holt alle User aus Firebase
+ */
+async function getAllUsers ( path ) {
+    const res = await fetch( BASE_URL + path + ".json" );
+    return ( await res.json() ) || {};
+}
+
+/**
+ * füllt das lokale users-Array neu
+ */
+async function pushToUsersArray () {
+    const userResponse = await getAllUsers( "/users" );
+    users = [];
+    for ( const key of Object.keys( userResponse ) ) {
+        users.push( {
+            id: key,
+            userData: userResponse[ key ]
+        } );
+    }
+}
+
+/**
+ * holt alle bestehenden Kontakte aus Firebase
+ */
+async function getAllContacts () {
+    const res = await fetch( BASE_URL + "/contacts.json" );
+    return ( await res.json() ) || {};
+}
+
+/**
+ * synchronisiert jeden User, der noch kein Kontakt ist,
+ * legt fehlende User als neue Kontakte an
+ */
+async function mergeUsersToContacts () {
+    const contactsObj = await getAllContacts();
+    const existingEmails = new Set(
+        Object.values( contactsObj ).map( c => c.email )
+    );
+
+    for ( const { userData } of users ) {
+        const { name, email } = userData;
+        if ( !existingEmails.has( email ) ) {
+            const avatarColorClass = getRandomColorClass();
+            await fetch( BASE_URL + "/contacts.json", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify( {
+                    name,
+                    email,
+                    phone: "",  // beim Signup kein Telefon vorhanden
+                    avatarColorClass
+                } )
+            } );
+        }
+    }
+}
+
+/**
+ * leitet nach erfolgreichem Signup zum Login weiter
+ */
+function redirectToLogin () {
+    setTimeout( () => {
+        window.location.href = "/html/login.html";
+    }, 3000 );
+}
+
+/**
+ * erzeugt eine zufällige Zahl 1–15 und gibt die CSS-Klasse zurück
+ */
+function getRandomColorClass () {
+    const idx = Math.floor( Math.random() * 15 ) + 1;
+    return `avatar-color-${ idx }`;
 }

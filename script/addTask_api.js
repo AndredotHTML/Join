@@ -1,11 +1,11 @@
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 let getUserCache = [];
+let getContactCache = [];
 user = []
 
 document.addEventListener("DOMContentLoaded", async function () {
     dropDownForCategory()
-    enabledCreatBtn()
-    await getUser(path = "/users");
+    await getContacts(path = "/contacts");
     document.getElementById("assigned-to-input").addEventListener("input", displayUser);
     radioBtnChecked("medium")
 });
@@ -36,7 +36,7 @@ function generateUserIcon() {
 
 async function postTask(path = "", data = {}) {
     try {
-        const response = await fetch(BASE_URL + path + ".json",fetchOptions(data))
+        const response = await fetch(BASE_URL + path + ".json", fetchOptions(data))
         return await handleResponse(response);
     } catch (error) {
         console.error("Fehler:", error.message);
@@ -54,20 +54,37 @@ function fetchOptions(data) {
     }
 }
 
-async function getUser(path = "") {
-    if (getUserCache.length > 0) {
-        return getUserCache;
+// async function getUser(path = "") {
+//     if (getUserCache.length > 0) {
+//         return getUserCache;
+//     }
+//     try {
+//         const response = await fetch(BASE_URL + path + ".json")
+//         const result = await handleResponse(response)
+//         const userArray = Object.values(result)
+//         getUserCache = userArray;
+//         return getUserCache;
+//     } catch (error) {
+//         console.error("Fehler:", error.message);
+//     }
+// }
+
+async function getContacts(path = "") {
+    if (getContactCache.length > 0) {
+        return getContactCache;
     }
     try {
         const response = await fetch(BASE_URL + path + ".json")
         const result = await handleResponse(response)
         const userArray = Object.values(result)
-        getUserCache = userArray;
-        return getUserCache;
+        getContactCache = userArray;
+        return getContactCache;
     } catch (error) {
         console.error("Fehler:", error.message);
     }
 }
+
+
 
 function handleResponse(response) {
     if (!response.ok) {
@@ -77,7 +94,7 @@ function handleResponse(response) {
 }
 
 function searchAssigned() {
-    let userArray = getUserCache
+    let userArray = getContactCache.sort((a,b)=> a.name.localeCompare(b.name))
     let inputRef = document.getElementById("assigned-to-input")
     let inputVal = inputRef.value.toLowerCase()
     let searchingName = userArray.filter(function (nameToSearch) {

@@ -277,14 +277,11 @@ input[type="radio"] {
     background-color: #005DFF;
 }
 
-
-/*background-color placeholder*/
 .name-icon {
     color: white;
     height: 42px;
     min-width: 42px;
     font-size: 12px;
-    background-color: orange;
     border-radius: 50%;
     border: 2px solid white;
     justify-content: center;

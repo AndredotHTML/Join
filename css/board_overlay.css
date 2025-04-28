@@ -37,6 +37,10 @@
     border: 1px solid #f7f7f7;
 }
 
+.ticketEdit_overlay {
+    overflow: auto;
+}
+
 .overlay_header{
     display: flex;
     align-items: center;

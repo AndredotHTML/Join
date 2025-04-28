@@ -24,17 +24,17 @@ function customDateInput() {
     let dayInput = day(dateInputVal)
     let monthInput = month(dateInputVal)
     let yearInput = year(dateInputVal)
-    let customDateInput = `${dayInput}`+ `${monthInput}`+`${yearInput}`
+    let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
     dateInputRef.value = customDateInput
 }
 
 function day(dateInputVal) {
     if (dateInputVal.length >= 1) {
-        let day = dateInputVal.slice(0, 2) 
+        let day = dateInputVal.slice(0, 2)
         if (day > 31) {
             day = 31
-        } 
-        return day 
+        }
+        return day
     }
     return ""
 }
@@ -43,17 +43,17 @@ function month(dateInputVal) {
     if (dateInputVal.length >= 3) {
         let month = dateInputVal.slice(2, 4)
         if (month > 12) {
-            month =12
-        } 
+            month = 12
+        }
         return "/" + month
     }
     return ""
 }
 
-function year(dateInputVal){
+function year(dateInputVal) {
     if (dateInputVal.length >= 5) {
         let year = dateInputVal.slice(4, 8)
-        return "/"+ year
+        return "/" + year
     }
     return ""
 }
@@ -101,9 +101,9 @@ function resizeTextarea(event) {
         let mouseMovePos = e.clientY - mousePos
         textareaRef.style.height = `${textareaHeight + mouseMovePos}px`
     }
-    document.addEventListener('mouseup', () =>{
+    document.addEventListener('mouseup', () => {
         document.removeEventListener('mousemove', newHeightTA)
-    },{once:true});
+    }, { once: true });
 }
 
 document.addEventListener("click", function (e) {
@@ -125,7 +125,7 @@ form.addEventListener("submit", function (event) {
     let inputToValidateDate = document.getElementById("date-input-add-task");
     let requerdDateRef = document.getElementById("date-validation");
     clearValidationArea()
-    errMsgAreaControl(inputToValidateTitle,requerdTitleRef,inputToValidateDate,requerdDateRef) 
+    errMsgAreaControl(inputToValidateTitle, requerdTitleRef, inputToValidateDate, requerdDateRef)
     if (valide === true) {
         creatTask()
     }
@@ -139,7 +139,7 @@ function errorMsg(requerdRef, inputToValidate) {
     valide = false
 }
 
-function errMsgAreaControl(inputToValidateTitle,requerdTitleRef,inputToValidateDate,requerdDateRef)  {
+function errMsgAreaControl(inputToValidateTitle, requerdTitleRef, inputToValidateDate, requerdDateRef) {
     if (inputToValidateTitle.value === "") {
         errorMsg(requerdTitleRef, inputToValidateTitle)
     }
@@ -174,12 +174,22 @@ function addSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let inputSubtaskVal = inputSubtaskRef.value
-    if (inputSubtaskVal === "") {
-        return
+    if (inputSubtaskVal !== "") {
+        displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
+        inputSubtaskRef.value = ""
     }
-    displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
-    inputSubtaskRef.value = ""
+}
+
+function subtaskInputCheck(){
+    addSubtask()
     changeSubtaskIcons()
+}
+
+function subtaskEnter(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addSubtask()
+    }
 }
 
 function changeSubtaskIcons() {
@@ -188,6 +198,32 @@ function changeSubtaskIcons() {
     creatSubtaskAreaRef.classList.toggle("d_flex");
     creatSubtaskAreaRef.classList.toggle("d_none");
     displaySubtaskIconRef.classList.toggle("d_none")
+}
+
+function fokusSubtaskInp(){
+    let subtaskInput = document.getElementById("subtask")
+    subtaskInput.focus()
+    changeSubtaskIcons()
+}
+
+function hideSubtaskIcons(event) {
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    let subtaskAreaRef = document.getElementById("subtask-area")
+    if (subtaskAreaRef.contains(event.relatedTarget)) {
+        return
+    }
+    creatSubtaskAreaRef.classList.remove("d_flex");
+    creatSubtaskAreaRef.classList.add("d_none");
+    displaySubtaskIconRef.classList.remove("d_none")
+}
+
+function showSubtaskIcons() {
+    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    creatSubtaskAreaRef.classList.add("d_flex");
+    creatSubtaskAreaRef.classList.remove("d_none");
+    displaySubtaskIconRef.classList.add("d_none")
 }
 
 function clearInputSubtask() {
@@ -223,16 +259,24 @@ function enabledCreatBtn() {
 }
 
 function displayUser() {
-    let currentUser = user?.[0]?.name || 'guest';
+    let currentUser = user[0]|| 'guest';
+    currentUser.name = currentUser.name.slice(0,1).toUpperCase() + currentUser.name.slice(1)
+    console.log(currentUser.name);
+    
     let userArray = searchAssigned()
+    userArray.splice(0,0,currentUser)
     let selectedUser = assignetUserToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = ""
+    
     userArray.forEach(contact => {
-        let userName = contact.name;
-        let isChecked = selectedUser.includes(userName)
-        let isCurrentUser = userName === currentUser
-        allContacts += templateAssignedTo(userName, isChecked,isCurrentUser)
+        let isChecked = selectedUser.includes(contact.name)
+        console.log(contact.name);
+        
+        let isCurrentUser = contact.name === currentUser.name
+        console.log(isCurrentUser ,"nicht der current user ");
+        
+        allContacts += templateAssignedTo(contact, isChecked, isCurrentUser)
     });
     assignedToAreaRef.innerHTML = allContacts
 }
@@ -297,7 +341,7 @@ function styAssignedContClosed(assignedContactRef, assignedRef) {
             contact.classList.remove("visible-assigned");
         }
     });
-    styAssignedAreaClose(assignedRef) 
+    styAssignedAreaClose(assignedRef)
 }
 
 function styAssignedAreaClose(assignedRef) {

@@ -1,20 +1,23 @@
 function contactDetailTemplate ( selectedContact ) {
-  const avatarColor = getColorForContact( selectedContact.contactData.name );
+  const initials = getAvatarFromName( selectedContact.contactData.name );
+  const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
+
   return `
     <div class="contact-header">
-      <div class="contact-circle" style="background-color: ${ avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
-      ${ getAvatarFromName( selectedContact.contactData.name ) }
-    </div>
+      <div class="circle-wrapper">
+        <div class="outer-circle"></div>
+        <div class="inner-circle ${ cls }">
+          ${ initials }
+        </div>
+      </div>
       <div class="contact-main-info">
         <h2 class="contact-name">${ selectedContact.contactData.name }</h2>
         <div class="contact-actions">
-          <button class="edit-btn" onclick="showEditContactOverlay('${ selectedContact.id }')">
-            <img src="../assets/icons/edit.png" alt="Edit">
-            Edit
+          <button class="contact-action" onclick="showEditContactOverlay('${ selectedContact.id }')">
+            <span class="btn-edit">Edit</span>
           </button>
-          <button class="delete-btn">
-            <img src="../assets/icons/delete.png" alt="Delete">
-            Delete
+          <button class="contact-action" id="btn-delete">
+            <span class="btn-delete">Delete</span>
           </button>
         </div>
       </div>
@@ -29,14 +32,14 @@ function contactDetailTemplate ( selectedContact ) {
         <p class="label">Phone</p>
         <p>${ selectedContact.contactData.phone }</p>
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-function addContactOverlay () {
-  return /*html*/`
-  <div class="overlay-header overlay-header-subheadline overlay-add-contact-header">
-  <button class="close-btn" onclick="closeOverlay()"></button>
+
+function createAddContactTemplate () {
+  return ( /*html*/ `
+<div class="overlay-header overlay-add-contact-header">
+  <button class="btn-close" onclick="closeOverlay()"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
@@ -48,45 +51,39 @@ function addContactOverlay () {
 <div class="overlay-content">
   <div class="overlay-profile-sec">
     <div class="contact-circle" style="display: flex; align-items: center; justify-content: center; color: white;">
-     <img src="../assets/icons/person-white.svg" alt="person">
+      <img src="../assets/icons/person-white.svg" alt="person">
     </div>
   </div>
-  <form id="edit_form" action="" onsubmit="updateContact(); return false">
+  <form id="add_contact_form" onsubmit="return getContactData(event)">
     <div class="input_container">
-      <input required id="name" type="text" placeholder="Name" value="">
-      <img class="input-icon" src="../assets/icons/person_gray.svg" alt="person">
+      <input required id="name" type="text" placeholder="Name" class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="email" type="email" placeholder="Email" value="">
-      <img class="input_icon" src="../assets/icons/mail_gray.svg">
+      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="phone" type="tel" placeholder="Phone" value="">
-      <img class="input_icon" src="../assets/icons/call_gray.svg">
-      <p id="error_msg">Check your email and password. Please try again.</p>
+      <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
     </div>
-    <div class="overlay-btns">
-            <button type="button" class="button button-secondary button-cancel" onclick="closeOverlay()">
-              <span class="btn-title">Cancel</span>
-                          </button>
-            <button id="edit-task-save-btn" class="button button-primary button-check" type="button" onclick="getContactData()">
-              <span>Create contact</span>
-              
-               
-              
-            </button>
-          </div>
-  </form>
-</div>
-    
-  `;
+    <div class="overlay-footer">
+      <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay()">
+        <span>Cancel</span>
+      </button>
+      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="submit">
+        <span>Create contact</span>
+      </button>
+    </div>
+  </form
+>
+</div>`
+  );
 }
 
-function editContactOverlay ( selectedContact ) {
-  const avatarColor = getColorForContact( selectedContact.contactData.name );
-  return /*html*/`
+function createEditContactTemplate ( selectedContact ) {
+  const initials = getAvatarFromName( selectedContact.contactData.name );
+  const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
+  return /*html*/ `
 <div class="overlay-header">
-  <button class="close-btn" onclick="closeEditOverlay(event)"></button>
+  <button class="btn-close" onclick="closeEditOverlay(event)"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
@@ -96,55 +93,62 @@ function editContactOverlay ( selectedContact ) {
 </div>
 <div class="overlay-content">
   <div class="overlay-profile-sec">
-    <div class="contact-circle" style="background-color: ${ avatarColor }; display: flex; align-items: center; justify-content: center; color: white;">
-      ${ getAvatarFromName( selectedContact.contactData.name ) }
+    <!-- Hier wird jetzt die Farb-Klasse angewendet -->
+    <div class="contact-circle ${ cls }">
+      ${ initials }
     </div>
   </div>
-  <form id="edit_form" action="" onsubmit="updateContact(); return false">
+  <form id="edit_form" onsubmit="updateContact('${ selectedContact.id }'); return false">
     <div class="input_container">
-      <input required id="edit_name" type="text" placeholder="Name" value="${ selectedContact.contactData.name }">
-      <img class="input-icon" src="../assets/icons/person_gray.svg" alt="person">
+      <input required id="edit_name" type="text" placeholder="Name"
+             value="${ selectedContact.contactData.name }"
+             class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="edit_email" type="email" placeholder="Email" value="${ selectedContact.contactData.email }">
-      <img class="input_icon" src="../assets/icons/mail_gray.svg">
+      <input required id="edit_email" type="email" placeholder="Email"
+             value="${ selectedContact.contactData.email }"
+             class="input-email" maxlength="255">
     </div>
     <div class="input_container">
-      <input required id="edit_phone" type="tel" placeholder="Phone" value="${ selectedContact.contactData.phone }">
-      <img class="input_icon" src="../assets/icons/call_gray.svg">
-      <p id="error_msg">Check your email and password. Please try again.</p>
+      <input required id="edit_phone" type="tel" placeholder="Phone"
+             value="${ selectedContact.contactData.phone }"
+             class="input-call" maxlength="20">
     </div>
-    <div class="overlay-btns">
-            <button type="button" class="button button-secondary button-delete" onclick="closeEditOverlay(event)">
-              <span class="btn-title">Delete</span>
-                          </button>
-            <button id="edit-task-save-btn" class="button button-primary button-check" type="button" onclick="updateContact('${ selectedContact.id }')">
-              <span>Save</span>
-              
-               
-              
-            </button>
-          </div>
+    <div class="overlay-footer">
+      <button type="button" class="btn btn-secondary btn-delete"
+              onclick="deleteContact('${ selectedContact.id }')">
+        <span>Delete</span>
+      </button>
+      <button type="button" class="btn btn-primary btn-check"
+              onclick="updateContact('${ selectedContact.id }')">
+        <span>Save</span>
+      </button>
+    </div>
   </form>
-</div>
-
-   
-  `;
+</div>`;
 }
+
 
 function headerTemplate ( letter ) {
   return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
 
 function contactTemplate ( c ) {
-  const avatarColor = getColorForContact( c.contactData.name );
-  return `<div class="contact" id="${ c.id }">
-      <div class="avatar" style="background-color: ${ avatarColor };">
-          ${ c.contactData.name.split( ' ' ).map( w => w.charAt( 0 ).toUpperCase() ).join( '' ) }
+  const initials = c.contactData.name
+    .split( ' ' )
+    .map( w => w.charAt( 0 ).toUpperCase() )
+    .join( '' );
+  const cls = c.contactData.avatarColorClass; // z.B. "avatar-color-7"
+
+  return `
+    <div class="contact" id="${ c.id }" onclick="handleContactClick(event)">
+      <div class="avatar ${ cls }">
+        ${ initials }
       </div>
       <div class="contact-info">
-          <div class="contact-name">${ c.contactData.name }</div>
-          <span class="contact-email">${ c.contactData.email }</span>
+        <div class="contact-name">${ c.contactData.name }</div>
+        <span class="contact-email">${ c.contactData.email }</span>
       </div>
-  </div>`;
+    </div>`;
 }
+

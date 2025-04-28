@@ -1,6 +1,6 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
-            <div class="d_flex addedSubtask id="">
+            <div class="d_flex addedSubtask" id="">
                 <li class="subtask-value poiner" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
@@ -20,20 +20,20 @@ function subtaskTemplat(inputSubtaskVal) {
     `
 }
 
-function templateAssignedTo(userName, isChecked, isCurrentUser) {
+function templateAssignedTo(contact, isChecked, isCurrentUser) {
     return `
     <div class="assigned-contacts visible-assigned d_flex">
-            <label for="assigned-user-${userName}" onclick="stopPropagation(event)" class="d_flex">
+            <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex">
                 <div class="d_flex icon-name-template">
-                    <div class="name-icon d_flex" data-value="${userName}">
-                    ${userName.split(' ').length > 1 ? userName.split(' ')[0][0].toUpperCase() + userName.split(' ')[1][0].toUpperCase() : userName.split(' ')[0][0].toUpperCase() + userName.split(' ')[0][1].toUpperCase()}
+                    <div class="name-icon d_flex" data-value="${contact.name}" style="background-color:${contact.avatarColor? contact.avatarColor: `#00BEE8` }">
+                    ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
                     </div>
                     <div class="assigned-template-name">
-                        <div>${userName}</div>
+                        <div>${contact.name}</div>
                         ${isCurrentUser ? '<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>
-                <input type="checkbox" ${isChecked ? "checked" : ""} class="input-assigned icon-24" name="assigned-user-${userName}" id="assigned-user-${userName}">
+                <input type="checkbox" ${isChecked ? "checked" : ""} class="input-assigned icon-24" name="assigned-user-${contact.name}" id="assigned-user-${contact.name}">
             </label>  
         </div>    
     `
@@ -182,9 +182,8 @@ function generateEditOverlay(task) {
            </div> 
            <div class="category">
             <span><strong>Category</strong></span>
-            <div class="cat" onclick="toggleOptions()">
-                <span id="category_add_task">${task.category || 'Select category'}</span>
-                <img src="/assets/icons/arrow_drop_down.svg" alt="Arrow" id="arrowIconCategory">
+            <div class="cat_edit">
+                <span id="category_add_task">${task.category}</span>
             </div>
                 <div id="options_container" class="options_container" style="display: none;">
                 <div class="option_category" onclick="selectCategory('Technical Task')">Technical Task</div>
