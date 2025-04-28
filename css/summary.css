@@ -297,9 +297,12 @@ a {
         color: #4589FF !important;
         content: url("/assets/icons/summary_icon_blue.svg");
         margin-right: 0;
+        height: 24px;
+        width: 24px;
     }
 
     .active_span {   
+        gap: 4px;
         flex-direction: column; 
     }
 }
