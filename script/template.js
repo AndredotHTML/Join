@@ -29,7 +29,7 @@ function templateAssignedTo(contact, isChecked, isCurrentUser) {
                     ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
                     </div>
                     <div class="assigned-template-name">
-                        <div>${contact.name}</div>
+                        <div>${contact.name.split(' ')[0][0].toUpperCase() + contact.name.slice(1) }</div>
                         ${isCurrentUser ? '<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>

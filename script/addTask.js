@@ -14,9 +14,11 @@ function stopPropagation(event) {
     event.stopPropagation()
 }
 
-/** changes the date format and limits the days and months
+/** 
+ * 
+ * changes the date format and limits the days and months
  * @example 10/04/2025
-  */
+*/
 
 function customDateInput() {
     let dateInputRef = document.getElementById("date-input-add-task");
@@ -24,6 +26,17 @@ function customDateInput() {
     let dayInput = day(dateInputVal)
     let monthInput = month(dateInputVal)
     let yearInput = year(dateInputVal)
+    
+    // if (monthInput == "02"||"04"||"06"||"09"||"11" ) {
+    //     if (dayInput >=31) {
+    //         dayInput = 30
+    //         if (monthInput == "02") {
+    //             if (dayInput>=29) {
+    //                 dayInput = 28
+    //             }
+    //         }
+    //     }
+    // }
     let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
     dateInputRef.value = customDateInput
 }
@@ -53,6 +66,11 @@ function month(dateInputVal) {
 function year(dateInputVal) {
     if (dateInputVal.length >= 5) {
         let year = dateInputVal.slice(4, 8)
+        if (year >= 2100 ) {
+            let twoThousend = 20
+            let tenthYear = dateInputVal.slice(6, 8)
+            year = twoThousend + tenthYear
+        }
         return "/" + year
     }
     return ""
@@ -82,7 +100,7 @@ function textareaCursPos() {
     let textarea = document.querySelector("textarea")
     if (textarea.value.trim() == "") {
         textarea.setSelectionRange(0, 0)
-    }if (textarea.selectionStart > lastCursPosDisc) {
+    }if (textarea.selectionStart >= lastCursPosDisc) {
         textarea.setSelectionRange(lastCursPosDisc, lastCursPosDisc)
     }
 }
@@ -260,9 +278,15 @@ function enabledCreatBtn() {
 
 function displayUser() {
     let currentUser = user[0]|| 'guest';
-    currentUser.name = currentUser.name.slice(0,1).toUpperCase() + currentUser.name.slice(1)
     let userArray = searchAssigned()
-    userArray.splice(0,0,currentUser)
+    userArray.sort((a , b) =>{
+        if (a.name === currentUser.name) {return -1 }
+        if (b.name === currentUser.name) {return 1 }
+        console.log(userArray);
+        
+        return 0
+    
+})
     let selectedUser = assignetUserToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = ""
