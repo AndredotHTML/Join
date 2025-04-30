@@ -6,8 +6,8 @@ let placeForCheckedIcon = false
 
 function authLogIn() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "http://127.0.0.1:5500/html/index.html"; 
-      }
+        window.location.href = "http://127.0.0.1:5500/html/index.html";
+    }
 }
 
 function stopPropagation(event) {
@@ -26,7 +26,7 @@ function customDateInput() {
     let dayInput = day(dateInputVal)
     let monthInput = month(dateInputVal)
     let yearInput = year(dateInputVal)
-    
+
     // if (monthInput == "02"||"04"||"06"||"09"||"11" ) {
     //     if (dayInput >=31) {
     //         dayInput = 30
@@ -66,7 +66,7 @@ function month(dateInputVal) {
 function year(dateInputVal) {
     if (dateInputVal.length >= 5) {
         let year = dateInputVal.slice(4, 8)
-        if (year >= 2100 ) {
+        if (year >= 2100) {
             let twoThousend = 20
             let tenthYear = dateInputVal.slice(6, 8)
             year = twoThousend + tenthYear
@@ -100,7 +100,7 @@ function textareaCursPos() {
     let textarea = document.querySelector("textarea")
     if (textarea.value.trim() == "") {
         textarea.setSelectionRange(0, 0)
-    }if (textarea.selectionStart >= lastCursPosDisc) {
+    } if (textarea.selectionStart >= lastCursPosDisc) {
         textarea.setSelectionRange(lastCursPosDisc, lastCursPosDisc)
     }
 }
@@ -145,7 +145,7 @@ form.addEventListener("submit", function (event) {
     clearValidationArea()
     errMsgAreaControl(inputToValidateTitle, requerdTitleRef, inputToValidateDate, requerdDateRef)
     if (valide === true) {
-        creatTask()
+        createTask()
     }
 })
 
@@ -198,7 +198,7 @@ function addSubtask() {
     }
 }
 
-function subtaskInputCheck(){
+function subtaskInputCheck() {
     addSubtask()
     changeSubtaskIcons()
 }
@@ -218,7 +218,7 @@ function changeSubtaskIcons() {
     displaySubtaskIconRef.classList.toggle("d_none")
 }
 
-function fokusSubtaskInp(){
+function fokusSubtaskInp() {
     let subtaskInput = document.getElementById("subtask")
     subtaskInput.focus()
     changeSubtaskIcons()
@@ -277,25 +277,26 @@ function enabledCreatBtn() {
 }
 
 function displayUser() {
-    let currentUser = user[0]|| 'guest';
+    let currentUser = user[0] || 'guest';
     let userArray = searchAssigned()
-    userArray.sort((a , b) =>{
-        if (a.name === currentUser.name) {return -1 }
-        if (b.name === currentUser.name) {return 1 }
-        console.log(userArray);
-        
-        return 0
-    
-})
-    let selectedUser = assignetUserToData()
+    sortUserToTheTop(userArray, currentUser)
+    let selectedContacts = assignedContactsToData()
     let assignedToAreaRef = document.getElementById("assigned-to-display")
     let allContacts = ""
     userArray.forEach(contact => {
-        let isChecked = selectedUser.includes(contact.name)
+        let isChecked = selectedContacts.includes(contact.name)
         let isCurrentUser = contact.name === currentUser.name
         allContacts += templateAssignedTo(contact, isChecked, isCurrentUser)
     });
     assignedToAreaRef.innerHTML = allContacts
+}
+
+function sortUserToTheTop(userArray, currentUser) {
+    userArray.sort((a, b) => {
+        if (a.name === currentUser.name) { return -1 }
+        if (b.name === currentUser.name) { return 1 }
+        return 0
+    })
 }
 
 function dropDownForAssigned() {

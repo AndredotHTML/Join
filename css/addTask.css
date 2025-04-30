@@ -62,7 +62,7 @@ li[contenteditable="true"] {
     background-color: #0038ff;
 }
 
-.activ-creat-btn {
+.active-creat-btn {
     background-color: #FFFFFF !important;
     color: var(--primaryColor) !important;
 }
