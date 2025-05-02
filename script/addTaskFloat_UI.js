@@ -2,6 +2,7 @@ function openCalendar() {
     const dateInput = document.getElementById("dateInput-add-task");
         flatpickr(dateInput, {
             dateFormat: "d/m/Y", 
+              minDate: "today"
         }).open();
 }
 
@@ -70,7 +71,7 @@ async function saveEditedTask(taskId) {
         description: document.getElementById("description_add_task").value,
         dueDate: document.getElementById("dateInput-add-task").value,
         priority: updatedPriority,
-        assignedUsers: assignedUsers,
+        assignedUsers: assignedContacts,
         category: document.getElementById("category_add_task").innerText, 
         subtasks: getNewSubtasks(),
     }

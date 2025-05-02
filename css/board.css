@@ -51,8 +51,6 @@
 }
 
 .drag_area {
-    flex-grow: 1;
-    width: 100%;
     background-color: white;
     border-radius: 10px;
     display: flex;
@@ -60,6 +58,15 @@
     align-items: center;
     gap: 15px;
     padding-bottom: 20px;
+}
+
+.placeholder {
+    width: 90%;
+    height: 150px;
+    border: 2px dashed #a8a8a8;
+    border-radius: 10px;
+    background-color: blue;
+    display: none; 
 }
 
 .noTask_msg {
@@ -82,7 +89,7 @@
 }
 
 .ticket {
-    background-color:var(--secondaryColor);
+    background-color: var(--secondaryColor);
     border: 1px solid #f7f7f7;
     border-radius: 10px;
     width: 290px;

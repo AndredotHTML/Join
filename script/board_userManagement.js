@@ -3,9 +3,7 @@ async function getCurrentUser() {
     if (userData) {
         user.push(userData);
         generateUserIconHeader() 
-    } else {
-        console.log("Kein Nutzer gefunden.");
-    }
+    } 
 }
 
 function generateUserIconHeader() {
