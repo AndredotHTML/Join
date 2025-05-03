@@ -143,6 +143,14 @@ input[type="radio"]:not(:checked) + img.unchecked_priority {
     display: inline-block;
 }
 
+.more_users {
+    background-color:black;
+    font-weight: bold;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .cat{
     display: flex;
     justify-content: space-between;

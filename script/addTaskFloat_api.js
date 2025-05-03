@@ -23,5 +23,4 @@ async function pushToContactsArray() {
            phone: contactData.phone
         });
     }
-    console.log("Contacts:", contacts);
 }

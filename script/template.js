@@ -109,7 +109,8 @@ function generateTaskOverlay(element) {
         <div class="assigned_overlay">
             <table>
                 <tr><th>Assigned To:</th></tr>
-                <tr><td>${user_icon_name}</td></tr>
+                <tr><td><div class="assigned_users_scroll">${user_icon_name}</div>
+                </td></tr>
             </table>
         </div>
         ` : ''}

@@ -27,10 +27,7 @@ function getUsersInitials(assignedUsers) {
     for (let index = 0; index < assignedUsers.length; index++) {
         let name = assignedUsers[index];
         let nameParts = name.trim().split(' ');
-        let initials = nameParts.length >= 2
-            ? `${nameParts[0][0]}${nameParts[1][0]}`
-            : `${nameParts[0][0]}`;
-
+        let initials = nameParts.length >= 2? `${nameParts[0][0]}${nameParts[1][0]}` : `${nameParts[0][0]}`;
         usersWithInitials.push({
             initials: initials.toUpperCase(),
             name: name
@@ -39,19 +36,37 @@ function getUsersInitials(assignedUsers) {
     return usersWithInitials;
 }
 
-function generateUserIcons(assignedUsers){
+function generateUserIcons(assignedUsers) {
     let usersData = getUsersInitials(assignedUsers);
-    if (usersData.length === 0) return ''
-    let userIcon = '';
+    if (usersData.length === 0) return '';
     let overlapDistance = 30;
+    let maxIcons = 3;
 
-    for (let i = 0; i < usersData.length; i++) {
-        let color = getColorForUser(usersData[i].name); 
-        let leftPosition = i * overlapDistance;
-        userIcon += generateSingleUserIcon(usersData[i].initials, leftPosition, color);
+    let userIcon = createDisplayedUserIcons(usersData, maxIcons, overlapDistance);
+    let extraCount = usersData.length - maxIcons;
+    if (extraCount > 0) {
+        userIcon += createExtraUsersIcon(extraCount, maxIcons * overlapDistance);
     }
     return userIcon;
 }
+
+function createExtraUsersIcon(count, leftPosition) {
+    return `<span class="user_icon" style="background-color: black; left: ${leftPosition}px;">+${count}</span>`;
+}
+
+function createDisplayedUserIcons(usersData, maxIcons, overlapDistance) {
+    let icons = '';
+    let displayedUsers = usersData.slice(0, maxIcons);
+
+    for (let i = 0; i < displayedUsers.length; i++) {
+        let color = getColorForUser(displayedUsers[i].name); 
+        let leftPosition = i * overlapDistance;
+        icons += generateSingleUserIcon(displayedUsers[i].initials, leftPosition, color);
+    }
+
+    return icons;
+}
+
 
 function generateSingleUserIcon(initial, leftPosition, color) {
     return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;

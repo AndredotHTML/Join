@@ -1,7 +1,6 @@
 let assignedContacts =[];
 let updatedPriority = ''; 
 
-
 function selectCategory(category) {
     document.getElementById('category_add_task').innerText = category;
     document.getElementById('options_container').style.display = 'none';
@@ -177,36 +176,64 @@ function toggleSelectedUsersContainer(selectedUsersContainer) {
 }
 
 function updateSelectedUsers() {
-    assignedContacts = [];
-    let selectedUsersContainer = document.getElementById("selected_user_container");
-    selectedUsersContainer.innerHTML = ''; 
-    for (let i = 0; i < contacts.length; i++) {
-        let contact = contacts[i];
-        let userCheckbox = document.getElementById(`user-${contact.id}`);
-        if (userCheckbox && userCheckbox.checked) {
-            assignedContacts.push(contact.name);
-            let userIcon = generateUserIcon(contact);
-            selectedUsersContainer.innerHTML += userIcon;
-        }
-    }
+    assignedContacts = getCheckedUsers();
+    renderSelectedUserIcons(assignedContacts, "selected_user_container");
     localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
 }
 
-function showSelectedUsersFromTask() {
-    let selectedUsersContainer = document.getElementById("selected_user_container");
-    selectedUsersContainer.innerHTML = '';
-    let users = assignedContacts;  
-    for (let i = 0; i < users.length; i++) {
-        let userName = users[i];
-        if (userName) {
-            let userIcon = generateUserIconFromName(userName);
-            selectedUsersContainer.innerHTML += userIcon;
+function getCheckedUsers() {
+    let selected = [];
+    for (let contact of contacts) {
+        let checkbox = document.getElementById(`user-${contact.id}`);
+        if (checkbox && checkbox.checked) {
+            selected.push(contact.name);
         }
+    }
+    return selected;
+}
+
+function renderSelectedUserIcons(userList, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
+
+    for (let i = 0; i < userList.length && i < maxIcons; i++) {
+        let contact = contacts.find(c => c.name === userList[i]);
+        if (contact) container.innerHTML += generateUserIcon(contact);
+    }
+
+    if (userList.length > maxIcons) {
+        let remaining = userList.length - maxIcons;
+        container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
     }
 }
 
+function showSelectedUsersFromTask() {
+    renderUserIconsFromNames(assignedContacts, "selected_user_container");
+}
+
+function renderUserIconsFromNames(userNames, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
+
+    for (let i = 0; i < userNames.length && i < maxIcons; i++) {
+        container.innerHTML += generateUserIconFromName(userNames[i]);
+    }
+
+    if (userNames.length > maxIcons) {
+        let remaining = userNames.length - maxIcons;
+        container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
+    }
+}
+
+
 function generateUserIconFromName(userName) {
-    let initials = `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`; 
+    let parts = userName.trim().split(' ');
+    let initials = parts[0][0];
+    if (parts.length > 1) {
+        initials += parts[1][0];
+    }
     let color = getColorForUser(userName); 
     return `
         <span class="user-icon" style="background-color: ${color};">${initials}</span>
