@@ -48,7 +48,9 @@ li[contenteditable="true"] {
 }
 
 .subtask-edit-icons {
-    padding-right: 14px;
+    padding-right: 16px;
+    position: relative;
+    top: 4px;
 }
 
 .separator {
@@ -276,12 +278,12 @@ li[contenteditable="true"] {
 @media (min-width : 700px) {
     .addedSubtask:hover .subtask-hover-icons {
         display: flex !important;
-        padding-right: 16px;
+        padding-right: 14px;
     }
 
     .addedSubtask:hover {
         background-color: #E3EEFF;
-        align-items: center;
+        /* align-items: center; */
     }
 
     .disable-hover:hover .subtask-hover-icons {
@@ -300,11 +302,12 @@ li[contenteditable="true"] {
 
     .addedSubtask.disable-hover .subtask-edit-icons {
         display: flex !important;
+
     }
 
     .subtask-hover-icons {
         display: flex !important;
-        padding-right: 14px;
+        padding-right: 16px;
         background-color: #FFFFFF;
     }
 

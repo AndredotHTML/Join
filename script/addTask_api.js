@@ -2,12 +2,14 @@ const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.
 let getContactCache = [];
 user = []
 
+
 document.addEventListener("DOMContentLoaded", async function () {
-    dropDownForCategory()
+    dropdownForCategory()
     await getContacts(path = "/contacts");
-    document.getElementById("assigned-to-input").addEventListener("input", displayUser);
+    document.getElementById("assigned-to-input").addEventListener("input", displayContacts);
     radioBtnChecked("medium")
 });
+
 
 async function getCurrentUser() {
     let userData = JSON.parse(localStorage.getItem('user'));
@@ -18,6 +20,7 @@ async function getCurrentUser() {
         console.log("Kein Nutzer gefunden.");
     }
 }
+
 
 function generateUserIcon() {
     let userName = user[0].name;
@@ -212,7 +215,7 @@ function createTask() {
 
 
 /**
- * Change the style of the creat button and direkt the user to the board after a short delay
+ * Change the style of the create button and direkt the user to the board after a short delay
  */
 
 function transferToBoard() {

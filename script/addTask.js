@@ -1,8 +1,6 @@
-let isDropdownOpen = false;
 const form = document.getElementById("form-add-task");
-let lastCursPosDisc = 0
-let openDD = false
-let placeForCheckedIcon = false
+let lastCursPos = 0
+
 
 function authLogIn() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
@@ -10,38 +8,35 @@ function authLogIn() {
     }
 }
 
+
 function stopPropagation(event) {
     event.stopPropagation()
 }
 
+
 /** 
- * 
- * changes the date format and limits the days and months
+ * Filtera non-numeric characters from a date input and reconstructs the date as dd/mm/yyyy
  * @example 10/04/2025
 */
 
 function customDateInput() {
     let dateInputRef = document.getElementById("date-input-add-task");
     let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
-    let dayInput = day(dateInputVal)
-    let monthInput = month(dateInputVal)
-    let yearInput = year(dateInputVal)
-
-    // if (monthInput == "02"||"04"||"06"||"09"||"11" ) {
-    //     if (dayInput >=31) {
-    //         dayInput = 30
-    //         if (monthInput == "02") {
-    //             if (dayInput>=29) {
-    //                 dayInput = 28
-    //             }
-    //         }
-    //     }
-    // }
+    let dayInput = extractDay(dateInputVal)
+    let monthInput = extractMonth(dateInputVal)
+    let yearInput = extractYear(dateInputVal)
     let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
     dateInputRef.value = customDateInput
 }
 
-function day(dateInputVal) {
+
+/**
+ * Checks the first two characters of the input for valid day input
+ * @param {*} dateInputVal filtert input from customDateInput()
+ * @returns days for the reconstruction of the date
+ */
+
+function extractDay(dateInputVal) {
     if (dateInputVal.length >= 1) {
         let day = dateInputVal.slice(0, 2)
         if (day > 31) {
@@ -52,7 +47,14 @@ function day(dateInputVal) {
     return ""
 }
 
-function month(dateInputVal) {
+
+/**
+ * Checks the 3rd and 4th characters of the input for valid (01-12) month input
+ * @param {*} dateInputVal filtered input from customDateInput()
+ * @returns A "/" and a month (2 numbers) for the reconstruction of the date
+ */
+
+function extractMonth(dateInputVal) {
     if (dateInputVal.length >= 3) {
         let month = dateInputVal.slice(2, 4)
         if (month > 12) {
@@ -63,7 +65,14 @@ function month(dateInputVal) {
     return ""
 }
 
-function year(dateInputVal) {
+
+/**
+ * Validate the 5th to 8th Characters of the date input for reconstruction of the year
+ * @param {*} dateInputVal filtered input from customDateInput()
+ * @returns A "/" and a year (4 numbers) capt on 2099  for reconstruction of the date
+ */
+
+function extractYear(dateInputVal) {
     if (dateInputVal.length >= 5) {
         let year = dateInputVal.slice(4, 8)
         if (year >= 2100) {
@@ -76,17 +85,28 @@ function year(dateInputVal) {
     return ""
 }
 
+
 function showPicker() {
     let pickerRef = document.getElementById("nativ-date-input")
     pickerRef.showPicker()
 }
 
+
+/**
+ * Transfers the selected date from the nativ picker to the custom date input in the changed format (dd/mm/yyyy)
+ */
+
 function transferFromPicker() {
     let pickerRef = document.getElementById("nativ-date-input")
     let dateInputRef = document.getElementById("date-input-add-task")
-    let reversDate = pickerRef.value.split("-").reverse().join("/")
-    dateInputRef.value = reversDate
+    let reversedDate = pickerRef.value.split("-").reverse().join("/")
+    dateInputRef.value = reversedDate
 }
+
+
+/**
+ * Iterates over the validation messengs and clear their content
+ */
 
 function clearValidationArea() {
     let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
@@ -96,19 +116,37 @@ function clearValidationArea() {
     }
 }
 
+
+/**
+ * Stores the last position of the cursor of the first textarea in a global variable "lastCursPos"
+ */
+
+function lastCursorPosition() {
+    let textarea = document.querySelector("textarea")
+    lastCursPos = textarea.selectionStart;
+}
+
+
+/**
+ * Set the cursor at the start of the textarea if it's empty,
+ *  or at the end of the content if you click beyond it.
+ */
+
 function textareaCursPos() {
     let textarea = document.querySelector("textarea")
     if (textarea.value.trim() == "") {
         textarea.setSelectionRange(0, 0)
-    } if (textarea.selectionStart >= lastCursPosDisc) {
-        textarea.setSelectionRange(lastCursPosDisc, lastCursPosDisc)
+    }else if (textarea.selectionStart >= lastCursPos) {
+        textarea.setSelectionRange(lastCursPos, lastCursPos)
     }
 }
 
-function lastCurserposition() {
-    let textarea = document.querySelector("textarea")
-    lastCursPosDisc = textarea.selectionStart;
-}
+
+/**
+ * Enables resizeing the textarea by dragging, on mousedown save the mouse position and textarea height.
+ * on mousemove, adjusts the height by the Y-difference ,stop it on mouseup.
+ * @param {MouseEvent} event click on the resize element to store the current mouse position and textarea height
+ */
 
 function resizeTextarea(event) {
     let textareaRef = document.getElementById("description-add-task")
@@ -116,55 +154,84 @@ function resizeTextarea(event) {
     let textareaHeight = textareaRef.offsetHeight
     document.addEventListener('mousemove', newHeightTA)
     function newHeightTA(e) {
-        let mouseMovePos = e.clientY - mousePos
-        textareaRef.style.height = `${textareaHeight + mouseMovePos}px`
+        let mousePosDif = e.clientY - mousePos
+        textareaRef.style.height = `${textareaHeight + mousePosDif}px`
     }
     document.addEventListener('mouseup', () => {
         document.removeEventListener('mousemove', newHeightTA)
     }, { once: true });
 }
 
+
+/**
+ * Checks every click to see is it inside the wrapper, if not closes the dropdown menu and the input lose focus 
+ */
+
 document.addEventListener("click", function (e) {
     let wrapper = document.querySelector(".wrapper-assigned-to")
     if (!wrapper.contains(e.target)) {
-        if (isDropdownOpen) {
+        if (isAssignedDropdownOpen) {
             closeDropdown();
             blurAssig()
-            isDropdownOpen = false
+            isAssignedDropdownOpen = false
         }
     }
 })
 
-form.addEventListener("submit", function (event) {
+
+/**
+ * Prevents the default form submission  and checks that the form is valid
+ * @param {SubmitEvent} event The submit
+ */
+
+function submitForm(event) {
     event.preventDefault();
     let valide = true
-    let inputToValidateTitle = document.getElementById("title-add-task");
-    let requerdTitleRef = document.getElementById("title-validation");
-    let inputToValidateDate = document.getElementById("date-input-add-task");
-    let requerdDateRef = document.getElementById("date-validation");
     clearValidationArea()
-    errMsgAreaControl(inputToValidateTitle, requerdTitleRef, inputToValidateDate, requerdDateRef)
+    errMsgAreaControl()
     if (valide === true) {
         createTask()
     }
-})
+}
 
-function errorMsg(requerdRef, inputToValidate) {
+
+/**
+ * Checks the inputs, if them empty calls the errorMsg() for each one
+ */
+
+function errMsgAreaControl() {
+    let inputToValidateTitle = document.getElementById("title-add-task");
+    let requiredTitleRef = document.getElementById("title-validation");
+    let inputToValidateDate = document.getElementById("date-input-add-task");
+    let requiredDateRef = document.getElementById("date-validation");
+    if (inputToValidateTitle.value === "") {
+        errorMsg(requiredTitleRef, inputToValidateTitle)
+    }
+    if (inputToValidateDate.value === "") {
+        errorMsg(requiredDateRef, inputToValidateDate)
+    }
+}
+
+
+/**
+ * Marks the input as empty and shows an error message
+ * @param {HTMLElement} inputToValidate Input that have to be marked if it is empty
+ * @param {HTMLElement} requiredRef Container in which the error messege is displayed
+ */
+
+function errorMsg(requiredRef, inputToValidate) {
     let errMsg = "This field is required"
-    requerdRef.innerHTML = errMsg;
-    requerdRef.style.color = "#FF8190"
+    requiredRef.innerHTML = errMsg;
+    requiredRef.style.color = "#FF8190"
     inputToValidate.style.borderBottom = "1px solid #FF8190";
     valide = false
 }
 
-function errMsgAreaControl(inputToValidateTitle, requerdTitleRef, inputToValidateDate, requerdDateRef) {
-    if (inputToValidateTitle.value === "") {
-        errorMsg(requerdTitleRef, inputToValidateTitle)
-    }
-    if (inputToValidateDate.value === "") {
-        errorMsg(requerdDateRef, inputToValidateDate)
-    }
-}
+
+/**
+ * Delete the error message and turn back the style of the input border
+ * @param {HTMLElement} element Input which style have to be reseted
+ */
 
 function resValidOnInp(element) {
     let wrapperRef = element.closest(`[class$="-wrapper"]`)
@@ -173,82 +240,30 @@ function resValidOnInp(element) {
     element.style.borderBottom = "";
 }
 
+
+/**
+ * Resets the styles of the priority buttons and highlights the checked one.
+ * @param {string} priority Show the urgency ('low', 'medium', 'urgent')
+ */
+
 function radioBtnChecked(priority) {
     let labelList = document.querySelectorAll(".radio-btn")
-    let priorityRef = priority
-    let inputRef = document.getElementById(priorityRef + "-rad")
-    let labelRef = document.querySelector('label[for="' + priorityRef + '-rad"]')
+    let inputRef = document.getElementById(priority + "-rad")
+    let labelRef = document.querySelector('label[for="' + priority + '-rad"]')
     labelList.forEach(radioBtn => {
         radioBtn.style.backgroundColor = `var(--secondaryColor)`;
         radioBtn.style.color = `black`;
     });
     if (inputRef.checked) {
-        labelRef.style.backgroundColor = `var(--${priorityRef}Color)`;
+        labelRef.style.backgroundColor = `var(--${priority}Color)`;
         labelRef.style.color = `var(--secondaryColor)`;
     }
 }
 
-function addSubtask() {
-    let inputSubtaskRef = document.getElementById("subtask")
-    let displaydSubtaskRef = document.getElementById("added-subtasks")
-    let inputSubtaskVal = inputSubtaskRef.value
-    if (inputSubtaskVal !== "") {
-        displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
-        inputSubtaskRef.value = ""
-    }
-}
 
-function subtaskInputCheck() {
-    addSubtask()
-    changeSubtaskIcons()
-}
-
-function subtaskEnter(event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        addSubtask()
-    }
-}
-
-function changeSubtaskIcons() {
-    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
-    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
-    creatSubtaskAreaRef.classList.toggle("d_flex");
-    creatSubtaskAreaRef.classList.toggle("d_none");
-    displaySubtaskIconRef.classList.toggle("d_none")
-}
-
-function fokusSubtaskInp() {
-    let subtaskInput = document.getElementById("subtask")
-    subtaskInput.focus()
-    changeSubtaskIcons()
-}
-
-function hideSubtaskIcons(event) {
-    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
-    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
-    let subtaskAreaRef = document.getElementById("subtask-area")
-    if (subtaskAreaRef.contains(event.relatedTarget)) {
-        return
-    }
-    creatSubtaskAreaRef.classList.remove("d_flex");
-    creatSubtaskAreaRef.classList.add("d_none");
-    displaySubtaskIconRef.classList.remove("d_none")
-}
-
-function showSubtaskIcons() {
-    let creatSubtaskAreaRef = document.getElementById("input-subtask-icons");
-    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
-    creatSubtaskAreaRef.classList.add("d_flex");
-    creatSubtaskAreaRef.classList.remove("d_none");
-    displaySubtaskIconRef.classList.add("d_none")
-}
-
-function clearInputSubtask() {
-    let inputSubtaskRef = document.getElementById("subtask")
-    inputSubtaskRef.value = ""
-    changeSubtaskIcons()
-}
+/**
+ * Resets the inputs of the form
+ */
 
 function clearForm() {
     let displaydSubtaskRef = document.getElementById("added-subtasks")
@@ -262,7 +277,12 @@ function clearForm() {
     clearValidationArea()
 }
 
-function enabledCreatBtn() {
+
+/**
+ * Enables the create button when all required inputs (title , date, priority, category) are filled
+ */
+
+function enabledCreateBtn() {
     let titleNewTaskRef = document.getElementById("title-add-task")
     let dateNewTaskRef = document.getElementById("date-input-add-task")
     let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
@@ -276,7 +296,13 @@ function enabledCreatBtn() {
     }
 }
 
-function displayUser() {
+
+/**
+ * Creates a template for every contact, including the current user,  which collects and then displays them all at once.
+ * Highlights the current user by appending "You" after their name
+ */
+
+function displayContacts() {
     let currentUser = user[0] || 'guest';
     let userArray = searchAssigned()
     sortUserToTheTop(userArray, currentUser)
@@ -291,173 +317,17 @@ function displayUser() {
     assignedToAreaRef.innerHTML = allContacts
 }
 
+
+/**
+ * Sorts the contacts so that the current user are at the top of the list 
+ * @param {Array<Object>} userArray An array with data objects from the contacts
+ * @param {Object} currentUser An object with data from the current user
+ */
+
 function sortUserToTheTop(userArray, currentUser) {
     userArray.sort((a, b) => {
         if (a.name === currentUser.name) { return -1 }
         if (b.name === currentUser.name) { return 1 }
         return 0
     })
-}
-
-function dropDownForAssigned() {
-    if (!isDropdownOpen) {
-        openDropdown();
-    } else {
-        closeDropdown();
-        blurAssig()
-    }
-    isDropdownOpen = !isDropdownOpen;
-}
-
-function blurAssig() {
-    let assignRef = document.getElementById("assigned-to-input")
-    assignRef.value = ""
-    assignRef.blur()
-}
-
-function openDropdown() {
-    displayUser()
-    let assignedRef = document.getElementById("assigned-to-display");
-    let arrowOpenRef = document.getElementById("arrow-open-assigned")
-    let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    assignedRef.classList.add("visible-assigned");
-    assignedRef.classList.remove("visible-assigned-min")
-    assignedRef.style.display = "flex";
-    assignedRef.style.flexDirection = "column"
-    arrowImgToggle(arrowOpenRef)
-    styAssignedContOpen(assignedContactRef)
-}
-
-function styAssignedContOpen(assignedContactRef) {
-    assignedContactRef.forEach(contact => {
-        contact.style.display = "flex";
-        let nameTemplate = contact.querySelector(".assigned-template-name");
-        let inputTemplate = contact.querySelector(".input-assigned");
-        nameTemplate.style.display = "flex";
-        inputTemplate.style.display = "flex";
-    });
-}
-
-function closeDropdown() {
-    let assignedRef = document.getElementById("assigned-to-display");
-    let arrowOpenRef = document.getElementById("arrow-open-assigned")
-    let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
-    assignedRef.style.flexDirection = "row"
-    styAssignedContClosed(assignedContactRef, assignedRef)
-    arrowImgToggle(arrowOpenRef)
-}
-
-function styAssignedContClosed(assignedContactRef, assignedRef) {
-    assignedContactRef.forEach(contact => {
-        let checkbox = contact.querySelector("input[type='checkbox']");
-        let nameTemplate = contact.querySelector(".assigned-template-name");
-        let contactLabel = contact.querySelector("label")
-        if (checkbox.checked) {
-            styleForCheckedCont(contact, nameTemplate, checkbox, contactLabel)
-            placeForCheckedIcon = true
-        } else {
-            contact.classList.remove("visible-assigned");
-        }
-    });
-    styAssignedAreaClose(assignedRef)
-}
-
-function styAssignedAreaClose(assignedRef) {
-    if (placeForCheckedIcon) {
-        assignedRef.classList.remove("visible-assigned")
-        assignedRef.classList.add("visible-assigned-min")
-    } else {
-        assignedRef.classList.remove("visible-assigned", "visible-assigned-min")
-    }
-}
-
-function styleForCheckedCont(contact, name, checkbox, contactLabel) {
-    contact.classList.add("bg-white")
-    name.style.display = "none";
-    checkbox.style.display = "none";
-    contactLabel.style.padding = "8px 0 0 0"
-}
-
-function dropDownForCategory() {
-    let arrowOpenRef = document.getElementById("arrow-open-category")
-    let selectRef = document.getElementById("wrapper-category")
-    let options = document.querySelectorAll(".option-category")
-    selectRef.addEventListener("click", function () {
-        if (openDD === false) {
-            showCategoryDD(options, arrowOpenRef);
-            openDD = true;
-        } else {
-            closeCategoryDD(options, arrowOpenRef);
-            openDD = false;
-        }
-    });
-    changeCategory(options, arrowOpenRef)
-}
-
-function changeCategory(options, arrowOpenRef) {
-    let categoryInputRef = document.getElementById("category-add-task")
-    options.forEach(option => {
-        option.addEventListener("click", function () {
-            categoryInputRef.textContent = this.textContent;
-            closeCategoryDD(options, arrowOpenRef)
-            openDD = false;
-        })
-    })
-}
-
-function showCategoryDD(options, arrowOpenRef) {
-    options.forEach(option => {
-        option.classList.add("visible")
-    });
-    arrowImgToggle(arrowOpenRef)
-}
-
-function closeCategoryDD(options, arrowOpenRef) {
-    options.forEach(option => {
-        option.classList.remove("visible")
-    })
-    arrowImgToggle(arrowOpenRef)
-    return
-}
-
-function arrowImgToggle(arrowOpenRef) {
-    let imgRef = arrowOpenRef.querySelectorAll("img")
-    for (const img of imgRef) {
-        img.classList.toggle("d_none")
-    }
-}
-
-function editSubtasks(element) {
-    element.contentEditable = "true"
-    element.style.listStyleType = "none"
-    element.focus()
-    let subtaskContainerRef = element.closest(".addedSubtask")
-    let subtaskIconContainer = subtaskContainerRef.querySelector(".icon-for-subtask-work")
-    let editContainer = subtaskIconContainer.querySelector(".subtask-edit-icons")
-    styleSubtaskOnEditing(subtaskContainerRef, editContainer)
-    element.addEventListener("blur", function () {
-        styleSubtaskBlur(element, subtaskContainerRef, editContainer)
-    });
-}
-
-function styleSubtaskOnEditing(subtaskContainerRef, editContainer) {
-    subtaskContainerRef.classList.add("disable-hover")
-    subtaskContainerRef.style.borderBottom = "1px solid #005DFF";
-    subtaskContainerRef.style.borderRadius = "0"
-    editContainer.classList.remove("d_none")
-    editContainer.classList.add("d_flex", "d-f-row")
-}
-
-function styleSubtaskBlur(element, subtaskContainerRef, editContainer) {
-    element.contentEditable = false
-    element.style.listStyleType = ""
-    editContainer.classList.remove("d_flex", "d-f-row")
-    editContainer.classList.add("d_none")
-    subtaskContainerRef.classList.remove("disable-hover")
-    subtaskContainerRef.style.borderBottom = "";
-    subtaskContainerRef.style.borderRadius = ""
-}
-
-function deleteSubtask(element) {
-    element.remove();
 }

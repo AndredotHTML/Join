@@ -77,7 +77,7 @@
                 <div class="add-task-main">
                     <div class="form-scroll-container">
                         <form action="" id="form-add-task" class="d_flex d-f-column" method="POST"
-                            onmouseout="enabledCreatBtn()">
+                            onmouseout="enabledCreateBtn()" onsubmit="submitForm(event)">
                             <div class="form-header d_flex d-f-column">
                                 <div class="title-wrapper d_flex d-f-column">
                                     <input type="text" id="title-add-task" class="title-add-task poiner"
@@ -88,7 +88,7 @@
                                 <div class="description-wrapper d-f-column d_flex poiner">
                                     <label class="poiner" for="description-add-task">Description <span>(optional)</span>
                                     </label>
-                                    <textarea onclick="textareaCursPos()" oninput="lastCurserposition()"
+                                    <textarea onclick="textareaCursPos()" oninput="lastCursorPosition()"
                                         name="description-add-task" class="custom-resize description-add-task poiner"
                                         id="description-add-task" placeholder="Enter a Description">
                                 </textarea>
@@ -146,9 +146,9 @@
                                     Assigned to <span>(optional)</span>
                                 </label>
                                 <div id="assigned-to-container" class="assigned-to-container"
-                                    onclick="dropDownForAssigned()">
+                                    onclick="dropdownForAssigned()">
                                     <div class="d_flex wrapper-select">
-                                        <input oninput="displayUser()" type="text" type="text" id="assigned-to-input"
+                                        <input oninput="displayContacts()" type="text" type="text" id="assigned-to-input"
                                             class="assigned-to-input poiner" placeholder="Select contacts to assign">
                                         <div class="icon-24 icon-form d_flex center-center" id="arrow-open-assigned">
                                             <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
@@ -213,7 +213,7 @@
                             </div>
                         </button>
                         <button id="add-task-create-btn" class="btn add-task-create-btn center-center d_flex"
-                            form="form-add-task" type="submit" onclick="enabledCreatBtn()">
+                            form="form-add-task" type="submit" onclick="enabledCreateBtn()">
                             <div class="btn-title">Create Task </div>
                             <div class="btn-icon-check icon-24" id="btn-icon-check">
                             </div>
@@ -222,6 +222,8 @@
                 </div>
             </section>
         </div>
+        <script src="/script/addTask_DD.js"></script>
+        <script src="/script/addTask_subtask.js"></script>
         <script src="/script/addTask_api.js"></script>
         <script src="/script/template.js"></script>
         <script src="/script/addTask.js"></script>
