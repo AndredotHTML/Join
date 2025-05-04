@@ -53,7 +53,6 @@ function tempTaskToBoardOverlay() {
         `
 }
 
-
 function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);
     let { completed, total, progress } = calculateSubtaskProgress(element.subtasks);
@@ -62,7 +61,8 @@ function generateTask(element) {
 
     return `
     <div draggable="true"  ondragstart="startDragging('${element.id}')" class="ticket" onclick="showOverlay('${element.id}')">
-    <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span></div>
+    <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span> 
+    <img src="../assets/icons/up_down_arrow.png" alt=""></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
     ${element.subtasks ? `

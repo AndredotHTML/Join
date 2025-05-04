@@ -58,15 +58,7 @@
     align-items: center;
     gap: 15px;
     padding-bottom: 20px;
-}
-
-.placeholder {
-    width: 90%;
-    height: 150px;
-    border: 2px dashed #a8a8a8;
-    border-radius: 10px;
-    background-color: blue;
-    display: none; 
+    height: 100vh; 
 }
 
 .noTask_msg {
@@ -104,9 +96,40 @@
 .ticket_category {
     display: flex;
     align-items: center;
-    justify-content: left;
+    justify-content: space-between;
     padding: 20px ; 
+    position: relative;
 }
+
+.mini_overlay_container {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    z-index: 100;
+  }
+  
+  .mini_overlay {
+    background: white;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  min-width: 120px;
+  }
+
+.ticket_category img {
+    display: none;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.ticket_category img:hover {
+    transform: scale(1.05); 
+  }
+  
+  .ticket_category img:active {
+    transform: scale(0.95); 
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
 
 .ticket_category span {
     padding: 5px 15px;

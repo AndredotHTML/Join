@@ -175,6 +175,12 @@
 
     .toDo, .inProgress, .awaitFeedback, .done {
         width: unset;
+        
+    }
+
+    .inProgress, .awaitFeedback, .done {
+        margin-top: 20px;
+        
     }
 
     .ticket {
@@ -184,7 +190,7 @@
 
     .drag_area {
         width: auto; 
-        min-height: unset; 
+        height: unset; 
         display: flex; 
         flex-direction: row; 
         align-items: flex-start;
@@ -192,7 +198,6 @@
         padding-right: 10px;
         overflow-x: auto;
         gap: 10px;
-       
     }
 
     .toDo_content, .inProgress_content, .awaitFeedback_content, .done_content {
@@ -230,6 +235,9 @@
         width:100%;
     }
 
+    .ticket_category img {
+        display: flex;
+    }
 }
 
 @media(max-width:705px) {
