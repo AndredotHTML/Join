@@ -45,12 +45,12 @@ form {
 
 li[contenteditable="true"] {
     outline: none;
+    margin-left: -24px;
 }
 
 .subtask-edit-icons {
-    padding-right: 16px;
-    position: relative;
-    top: 4px;
+    padding-right: 14px;
+    padding-top: 4px;
 }
 
 .separator {
@@ -91,6 +91,7 @@ li[contenteditable="true"] {
 
 .subtask:focus {
     outline: none;
+    
 }
 
 .added-subtasks {
@@ -279,6 +280,7 @@ li[contenteditable="true"] {
     .addedSubtask:hover .subtask-hover-icons {
         display: flex !important;
         padding-right: 14px;
+        padding-top: 4px;
     }
 
     .addedSubtask:hover {
@@ -302,13 +304,15 @@ li[contenteditable="true"] {
 
     .addedSubtask.disable-hover .subtask-edit-icons {
         display: flex !important;
-
+        padding-right: 16px;
+        padding-top: 4px;
     }
 
     .subtask-hover-icons {
         display: flex !important;
         padding-right: 16px;
         background-color: #FFFFFF;
+        padding-top: 4px;
     }
 
     .addedSubtask:hover {

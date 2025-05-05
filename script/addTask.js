@@ -32,7 +32,7 @@ function customDateInput() {
 
 /**
  * Checks the first two characters of the input for valid day input
- * @param {*} dateInputVal filtert input from customDateInput()
+ * @param {number} dateInputVal filtert input from customDateInput()
  * @returns days for the reconstruction of the date
  */
 
@@ -42,6 +42,7 @@ function extractDay(dateInputVal) {
         if (day > 31) {
             day = 31
         }
+
         return day
     }
     return ""
@@ -50,7 +51,7 @@ function extractDay(dateInputVal) {
 
 /**
  * Checks the 3rd and 4th characters of the input for valid (01-12) month input
- * @param {*} dateInputVal filtered input from customDateInput()
+ * @param {number} dateInputVal filtered input from customDateInput()
  * @returns A "/" and a month (2 numbers) for the reconstruction of the date
  */
 
@@ -68,7 +69,7 @@ function extractMonth(dateInputVal) {
 
 /**
  * Validate the 5th to 8th Characters of the date input for reconstruction of the year
- * @param {*} dateInputVal filtered input from customDateInput()
+ * @param {number} dateInputVal filtered input from customDateInput()
  * @returns A "/" and a year (4 numbers) capt on 2099  for reconstruction of the date
  */
 
