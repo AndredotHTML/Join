@@ -1,5 +1,5 @@
 // Globale Deklarationen
-const DETAIL_ELEM = document.getElementById( 'detail' );
+const DETAIL_ELEM = document.getElementById( "detail" );
 const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
@@ -18,7 +18,7 @@ function authLogIn () {
  * redirects user to login
  */
 function redirectToLogin () {
-    location.href = "/html/login.html";
+    location.href = "index.html";
 }
 
 

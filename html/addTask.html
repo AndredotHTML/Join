@@ -33,7 +33,7 @@
                     <li class="profile_menu_item help-item"><a href="help.html">Help</a></li>
                     <li class="profile_menu_item"><a href="legalNotice.html">Legal Notice</a></li>
                     <li class="profile_menu_item"><a href="privacyPolicy.html">Privacy Policy</a></li>
-                    <li class="profile_menu_item"><a href="index.html">Log out</a></li>
+                    <li class="profile_menu_item"><a href="../index.html">Log out</a></li>
                 </ul>
             </div>
         </header>
@@ -148,8 +148,9 @@
                                 <div id="assigned-to-container" class="assigned-to-container"
                                     onclick="dropdownForAssigned()">
                                     <div class="d_flex wrapper-select">
-                                        <input oninput="displayContacts()" type="text" type="text" id="assigned-to-input"
-                                            class="assigned-to-input poiner" placeholder="Select contacts to assign">
+                                        <input oninput="displayContacts()" type="text" type="text"
+                                            id="assigned-to-input" class="assigned-to-input poiner"
+                                            placeholder="Select contacts to assign">
                                         <div class="icon-24 icon-form d_flex center-center" id="arrow-open-assigned">
                                             <img src="../assets/icons/arrow_drop_down.svg" class="poiner" alt="">
                                             <img class="d_none poiner" src="../assets/icons/arrow_drop_down_close.svg"
@@ -182,7 +183,8 @@
                             </div>
                             <div class="wrapper-subtasks d_flex d-f-column gap-8">
                                 <label for="subtask">Subtasks <span>(optional)</span></label>
-                                <div class="subtask-area" id="subtask-area" onfocusout="hideSubtaskIcons(event)" tabindex="1">
+                                <div class="subtask-area" id="subtask-area" onfocusout="hideSubtaskIcons(event)"
+                                    tabindex="1">
                                     <input type="text" id="subtask" class="subtask poiner" placeholder="Add new subtask"
                                         onclick="showSubtaskIcons()" onkeydown="subtaskEnter(event)">
                                     <div class="d_flex">
@@ -192,8 +194,8 @@
                                         </div>
                                         <div class="d_none icons-subtask center-center" id="input-subtask-icons">
                                             <img src="/assets/icons/close_cross.svg"
-                                                class="d_flex center-center icon-form icon-24 poiner" id="subtask_input_clear"
-                                                alt="" onclick="clearInputSubtask()" >
+                                                class="d_flex center-center icon-form icon-24 poiner"
+                                                id="subtask_input_clear" alt="" onclick="clearInputSubtask()">
                                             <div class="separator"></div>
                                             <img src="/assets/icons/check_blue.svg"
                                                 class="d_flex center-center icon-form icon-24 poiner" alt=""
