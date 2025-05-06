@@ -25,7 +25,7 @@ function customDateInput() {
     let dayInput = extractDay(dateInputVal)
     let monthInput = extractMonth(dateInputVal)
     let yearInput = extractYear(dateInputVal)
-    dayInput = checkFebruary(dayInput,monthInput,yearInput)
+    dayInput = validDays(dayInput,monthInput,yearInput)
     let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
     dateInputRef.value = customDateInput
 }
