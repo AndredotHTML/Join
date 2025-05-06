@@ -25,6 +25,7 @@ function customDateInput() {
     let dayInput = extractDay(dateInputVal)
     let monthInput = extractMonth(dateInputVal)
     let yearInput = extractYear(dateInputVal)
+    dayInput = checkFebruary(dayInput,monthInput,yearInput)
     let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
     dateInputRef.value = customDateInput
 }
@@ -32,7 +33,7 @@ function customDateInput() {
 
 /**
  * Checks the first two characters of the input for valid day input
- * @param {number} dateInputVal filtert input from customDateInput()
+ * @param {string} dateInputVal filtert input from customDateInput()
  * @returns days for the reconstruction of the date
  */
 
@@ -42,7 +43,9 @@ function extractDay(dateInputVal) {
         if (day > 31) {
             day = 31
         }
-
+        if (day.length == 2 && +day === 0) {
+            day = "01"
+        }
         return day
     }
     return ""
@@ -50,8 +53,8 @@ function extractDay(dateInputVal) {
 
 
 /**
- * Checks the 3rd and 4th characters of the input for valid (01-12) month input
- * @param {number} dateInputVal filtered input from customDateInput()
+ * Checks the 3rd and 4th characters of the input for valid month (01-12) input
+ * @param {string} dateInputVal filtered input from customDateInput()
  * @returns A "/" and a month (2 numbers) for the reconstruction of the date
  */
 
@@ -61,6 +64,9 @@ function extractMonth(dateInputVal) {
         if (month > 12) {
             month = 12
         }
+        if (month.length == 2 && +month === 0) {
+            month = "01"
+        }
         return "/" + month
     }
     return ""
@@ -68,22 +74,64 @@ function extractMonth(dateInputVal) {
 
 
 /**
- * Validate the 5th to 8th Characters of the date input for reconstruction of the year
- * @param {number} dateInputVal filtered input from customDateInput()
- * @returns A "/" and a year (4 numbers) capt on 2099  for reconstruction of the date
+ * Validate the 5th to 8th characters of the date input for reconstruction of the year
+ * @param {string} dateInputVal filtered input from customDateInput()
+ * @returns A "/" and a year (4 numbers) clamped betwenn 2025 and 2100 for reconstruction of the date
  */
 
 function extractYear(dateInputVal) {
-    if (dateInputVal.length >= 5) {
-        let year = dateInputVal.slice(4, 8)
-        if (year >= 2100) {
-            let twoThousend = 20
-            let tenthYear = dateInputVal.slice(6, 8)
-            year = twoThousend + tenthYear
-        }
-        return "/" + year
+    if (dateInputVal.length >= 5 && dateInputVal.length < 8) {
+        return "/" + dateInputVal.slice(4);
+    }
+    if (dateInputVal.length >= 8) {
+        let year = clampYear(dateInputVal.slice(4, 8))
+        return "/" + year;
     }
     return ""
+}
+
+
+/**
+ * Validates the day input for different month and for leap years
+ * @param {string} dayInput The first two characters of the date input
+ * @param {string} monthInput The 3rd and 4th characters of the date input
+ * @param {string} yearInput The 5th to 8th characters of the date input
+ * @returns {string} A corrected valid day for different months
+ */
+
+function validDays(dayInput,monthInput,yearInput) {
+    let shorterMonths = ["04", "06", "09", "11"]
+    let leapYear = yearInput.slice(1) % 4 === 0
+    if (shorterMonths.includes(monthInput.slice(1)) && +dayInput > 30) {
+        return dayInput = "30"
+    } 
+    if (monthInput.slice(1) == "02") {
+        if (+dayInput > 29) {
+            return dayInput = "29"
+        } else if (!leapYear && yearInput.length >= 5) {
+            return  "28"
+        } 
+    }
+    return dayInput
+}
+
+
+/**
+ * Clamped the year betwenn 2025 and 2100
+ * @param {string} dateInputVal filtered input from customDateInput() 
+ * @returns {number} A valid year number
+ */
+
+function clampYear(dateInputVal) {
+    let year = dateInputVal
+    let yearNumb = +year
+    if (yearNumb >= 2100) {
+        yearNumb = 2100
+    }
+    else if (yearNumb <= 2025) {
+        yearNumb = 2025
+    }
+    return yearNumb;
 }
 
 
@@ -137,7 +185,7 @@ function textareaCursPos() {
     let textarea = document.querySelector("textarea")
     if (textarea.value.trim() == "") {
         textarea.setSelectionRange(0, 0)
-    }else if (textarea.selectionStart >= lastCursPos) {
+    } else if (textarea.selectionStart >= lastCursPos) {
         textarea.setSelectionRange(lastCursPos, lastCursPos)
     }
 }

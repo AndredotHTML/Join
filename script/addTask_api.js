@@ -74,7 +74,7 @@ function fetchOptions(data) {
 
 /**
  * Fetch contacts and store them in the Cache
- * @param {*} path - appended to the BASE_URL.
+ * @param {/url} path - appended to the BASE_URL.
  * @returns an Object with data of the contacts if there are contacts, they are stored in the Contacts Cache
  */
 
@@ -183,7 +183,7 @@ function getTaskInputs() {
 
 /**
  * Create a new object with a different structure from the given object.
- * @param {*} inputData objekt with the values from the form inputs
+ * @param {object} inputData objekt with the values from the form inputs
  * @returns A Object in a new structure
  */
 
