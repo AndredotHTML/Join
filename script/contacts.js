@@ -1,121 +1,192 @@
 // Globale Deklarationen
 const DETAIL_ELEM = document.getElementById( "detail" );
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 let contacts = [];
 
+
+/**
+ * searches for contact in the contact array using the Id
+ * @param {string} contactId
+ * @return {object|undefined} 
+ */
 function findContactById ( contactId ) {
-    return contacts.find( contact => contact.id === contactId );
+    let contact = contacts.find( contact => contact.id === contactId );
+    return contact;
 }
 
+
+/**
+ * shows details of the selected contact
+ * @param {object} selectedContact
+ */
 function renderDetailPanel ( selectedContact ) {
     DETAIL_ELEM.innerHTML = contactDetailTemplate( selectedContact );
 }
 
+/**
+ * Adds an event to the delete button
+ * @param {string} contactId
+ */
 function addDeleteListener ( contactId ) {
-    const btn = DETAIL_ELEM.querySelector( '#btn-delete' );
-    if ( btn ) btn.addEventListener( 'click', () => deleteContact( contactId ) );
+    const DELETE_BTN = document.getElementById( "btn-delete" );
+    DELETE_BTN.addEventListener( 'click', () => deleteContact( contactId ) );
 }
 
-// Aktualisiert das Detail-Panel mit den Daten des ausgewählten Kontakts
+
+/**
+ * Updates the detail panel with the data of the selected contact
+ * @param {string} contactId
+ */
 function updateDetailPanel ( contactId ) {
     const selectedContact = findContactById( contactId );
-    if ( !selectedContact ) return;
     renderDetailPanel( selectedContact );
     addDeleteListener( selectedContact.id );
 }
 
+
+/**
+ * shows or hides detail panel
+ */
 function toggleDetailPanel () {
-    DETAIL_ELEM.classList.toggle( 'open' );
-    DETAIL_ELEM.classList.toggle( 'slide_in' );
+    DETAIL_ELEM.classList.toggle( "slide-in" );
 }
 
-function isContactSelected ( elem ) {
-    return elem.classList.contains( 'selected' );
+
+/**
+ * Checks whether contact is selected
+ * @param {HTMLElement} contact
+ * @return {boolean} 
+ */
+function isContactSelected ( contact ) {
+    return contact.classList.contains( "selected" );
 }
 
-function selectContact ( elem ) {
-    elem.classList.add( 'selected' );
+
+/**
+ * Adds the highlighting to the selected contact
+ * @param {HTMLElement} contact
+ */
+function selectContact ( contact ) {
+    contact.classList.add( "selected" );
 }
 
-function deselectContact ( elem ) {
-    elem.classList.remove( 'selected' );
+/**
+ * Removes highlighting on the selected contact
+ * @param {HTMLElement} contact
+ */
+function deselectContact ( contact ) {
+    contact.classList.remove( "selected" );
 }
 
+
+/**
+ * Removes the selected class from all contacts
+ */
 function deselectAllContacts () {
-    document.querySelectorAll( '.contact' ).forEach( deselectContact );
+    let concatList = document.querySelectorAll( ".contact" );
+    concatList.forEach( deselectContact );
 }
 
+
+/**
+ * fades in detail panel
+ */
 function ensureDetailPanelOpen () {
-    if ( !DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
-}
-function ensureDetailPanelClosed () {
-    if ( DETAIL_ELEM.classList.contains( 'open' ) ) toggleDetailPanel();
-}
-
-
-function handleContactClick ( event ) {
-    const elem = event.currentTarget;
-    if ( isContactSelected( elem ) ) {
-        deselectContact( elem );
-        ensureDetailPanelClosed();
-    } else {
-        deselectAllContacts();
-        selectContact( elem );
-        updateDetailPanel( elem.id );
-        ensureDetailPanelOpen();
+    if ( !DETAIL_ELEM.classList.contains( "slide-in" ) ) {
+        toggleDetailPanel();
     }
 }
+
+
+/**
+ * fades out detail panel
+ */
+function ensureDetailPanelClosed () {
+    if ( DETAIL_ELEM.classList.contains( "slide-in" ) ) {
+        toggleDetailPanel();
+    }
+}
+
+
+/**
+ * intercepts the click event and opens or closes the detail panel
+ * @param {Event} event
+ */
+function handleContactClick ( event ) {
+    const contactElem = event.currentTarget;
+    if ( isContactSelected( contactElem ) ) {
+        closeDetailPanel( contactElem );
+    } else {
+        deselectAllContacts();
+        openDetailPanel( contactElem );
+    }
+}
+
+
+/**
+ * closes detail panel
+ * @param {HTMLElement} contactElem
+ */
+function closeDetailPanel ( contactElem ) {
+    deselectContact( contactElem );
+    ensureDetailPanelClosed();
+}
+
+
+/**
+ * opens detail panel
+ * @param {HTMLElement} contactElem
+ */
+function openDetailPanel ( contactElem ) {
+    selectContact( contactElem );
+    updateDetailPanel( contactElem.id );
+    ensureDetailPanelOpen();
+}
+
 
 function getOverlay ( id ) {
     return document.getElementById( id );
 }
 
 function showEditContactOverlay ( contactId ) {
-    let overlayBackground = document.getElementById( "overlay-bg" );
-    overlayBackground.style.display = 'flex';
-    const editOverlay = document.getElementById( "editOverlay" );
-    const selectedContact = contacts.find( contact => contact.id === contactId );
-    if ( !selectedContact ) return;
-    editOverlay.innerHTML = createEditContactTemplate( selectedContact );
-    editOverlay.classList.add( "active" );
+    const SELECTED_CONTACT = contacts.find( contact => contact.id === contactId );
+    const EDIT_OVERLAY = document.getElementById( "editOverlay" );
+    const OVERLAY_BG = document.getElementById( "overlay-bg" );
+    OVERLAY_BG.classList.add( "d-flex" );
+    EDIT_OVERLAY.innerHTML = createEditContactTemplate( SELECTED_CONTACT );
+    EDIT_OVERLAY.classList.add( "slide-in" );
 }
 
-function showOverlay ( elem, html ) {
-    elem.innerHTML = html;
-    elem.style.display = 'flex';
-    elem.classList.add( 'slide_in' );
-}
 function hideOverlay ( elem, resetId = false ) {
     elem.style.display = '';
-    elem.classList.remove( 'slide_in', 'show', 'slide_in_left' );
+    elem.classList.remove( 'slide-in', 'show', 'slide_in_left' );
     if ( resetId ) elem.innerHTML = '';
 }
 
 function showAddContactOverlay () {
-    showOverlay( getOverlay( 'overlay-bg' ), '' );
-    showOverlay( getOverlay( 'overlay-add-contact' ), createAddContactTemplate() );
+    const EDIT_OVERLAY = document.getElementById( "overlay-add-contact" );
+    const OVERLAY_BG = document.getElementById( "overlay-bg" );
+    OVERLAY_BG.classList.add( "d-flex" );
+    EDIT_OVERLAY.innerHTML = createAddContactTemplate();
+    EDIT_OVERLAY.classList.add( "slide-in" );
 }
 
+
 function closeEditOverlay ( event ) {
-    let overlayBackground = document.getElementById( "overlay-bg" );
-    overlayBackground.style.display = '';
     const editOverlay = document.getElementById( "editOverlay" );
-    if ( !event || event.target === editOverlay || event.target.closest( ".btn-close" ) ) {
-        editOverlay.classList.remove( "active" );
-        setTimeout( () => {
-            editOverlay.innerHTML = "";
-        }, 300 );
+    let overlayBackground = document.getElementById( "overlay-bg" );
+    overlayBackground.classList.remove( "d-flex" );
+    if ( event.target.closest( ".btn-close" ) ) {
+        editOverlay.classList.remove( "slide-in" );
     }
 }
 
 
 function closeOverlay ( event ) {
     let overlayBackground = document.getElementById( "overlay-bg" );
-    overlayBackground.style.display = '';
     let overlay = document.getElementById( 'overlay-add-contact' );
+    overlayBackground.classList.remove( "d-flex" );
     if ( !event || event.target === overlay || event.target.closest( ".close-btn" ) ) {
-        overlay.classList.remove( 'show', 'slide_in', 'slide_in_left' );
-        overlay.style.display = 'none';
+        overlay.classList.remove( 'show', 'slide-in', 'slide_in_left' );
     }
 }
 
