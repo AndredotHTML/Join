@@ -175,7 +175,8 @@ function closeEditOverlay ( event ) {
     const editOverlay = document.getElementById( "editOverlay" );
     let overlayBackground = document.getElementById( "overlay-bg" );
     overlayBackground.classList.remove( "d-flex" );
-    if ( event.target.closest( ".btn-close" ) ) {
+    let btn = event.target;
+    if ( btn ) {
         editOverlay.classList.remove( "slide-in" );
     }
 }
@@ -185,53 +186,65 @@ function closeOverlay ( event ) {
     let overlayBackground = document.getElementById( "overlay-bg" );
     let overlay = document.getElementById( 'overlay-add-contact' );
     overlayBackground.classList.remove( "d-flex" );
-    if ( !event || event.target === overlay || event.target.closest( ".close-btn" ) ) {
-        overlay.classList.remove( 'show', 'slide-in', 'slide_in_left' );
+    let btn = event.target;
+    if ( btn ) {
+        overlay.classList.remove( 'slide-in' );
     }
 }
 
 
-/**
- * Liest das Formular aus, validiert nativ und legt den Kontakt an.
- * @param {Event} event
- * @returns {boolean} false verhindert Reload
- */
 /**
  * Erfasst und validiert das Add-Form, weist eine zufällige Farbe zu und speichert den Kontakt.
  * @param {SubmitEvent} event
  * @returns {boolean} false verhindert Reload
  */
-function getContactData ( event ) {
-    // 1. Standard-Submit unterbinden
+/**
+ * Erfasst und validiert das Add-Form,
+ * weist eine zufällige Farbe zu, speichert den Kontakt
+ * und wählt ihn anschließend aus.
+ *
+ * @param {SubmitEvent} event
+ * @returns {boolean}
+ */
+async function getContactData ( event ) {
     event.preventDefault();
-
-    // 2. Native HTML5-Validation
     const form = document.getElementById( 'add_contact_form' );
     if ( !form.checkValidity() ) {
         form.reportValidity();
-        return false;  // Abbruch: Formular ungültig
+        return false;
     }
 
-    // 3. Felddaten auslesen
     const { name, email, phone } = getContactFormData();
-
-    // 4. Zufällige Farb-Klasse ermitteln
     const avatarColorClass = getRandomColorClass();
 
-    // 5. POST in Firebase (inkl. avatarColorClass)
-    postContactData( '/contacts', {
-        name,
-        email,
-        phone,
-        avatarColorClass
-    } );
+    try {
+        // 1) Kontakt anlegen und neue ID holen
+        const newId = await postContactData( '/contacts', {
+            name, email, phone, avatarColorClass
+        } );
 
-    // 6. Kurze Erfolgsmeldung anzeigen
-    toggleMessage();
+        // 2) Overlay schließen & Erfolgsmeldung
+        closeOverlay( event );
+        toggleMessage();
 
-    // 7. Kein Reload
+        // 3) Alle bisherigen Selektionen zurücksetzen
+        deselectAllContacts();
+
+        // 4) Neu erstellten Eintrag markieren und panel öffnen
+        const el = document.getElementById( newId );
+        if ( el ) {
+            selectContact( el );
+            updateDetailPanel( newId );
+            ensureDetailPanelOpen();
+        }
+    } catch ( err ) {
+        // Fehlerbehandlung – z.B. Meldung ins UI
+        console.error( "Kontakt konnte nicht angelegt werden:", err );
+    }
+
     return false;
 }
+
 
 /**
  * Liest Namen, E-Mail und Telefon vom Add-Form aus und gibt ein Objekt zurück.
@@ -252,19 +265,31 @@ function getContactFormData () {
  * @param {string} path - Der Endpunkt in deiner Realtime-DB (z.B. "/contacts")
  * @param {object} data - Ein Objekt mit name, email, phone und avatarColorClass
  */
+/**
+ * Fügt einen neuen Eintrag unter dem angegebenen Pfad hinzu
+ * und lädt anschließend die Kontaktliste neu.
+ *
+ * @param {string} path
+ * @param {object} data
+ * @returns {string} newId – die Firebase-Schlüssel-ID des neuen Kontakts
+ */
 async function postContactData ( path = "", data = {} ) {
     try {
-        await fetch( BASE_URL + path + ".json", {
+        const response = await fetch( BASE_URL + path + ".json", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify( data )
         } );
-        // Nach dem Schreiben direkt die lokale Liste updaten
-        await pushToContactsArray();
+        const result = await response.json();
+        const newId = result.name;        // Firebase liefert { name: "<neuerKey>" }
+        await pushToContactsArray();      // Liste neu laden
+        return newId;
     } catch ( err ) {
         console.error( "Fehler beim Speichern des Kontakts:", err );
+        throw err;
     }
 }
+
 
 
 
@@ -278,7 +303,6 @@ async function pushToContactsArray () {
             contactData: response[ contactKeysArray[ index ] ]
         } );
     }
-    closeOverlay();
     renderContacts();
 }
 
@@ -337,27 +361,41 @@ function getAvatarFromName ( name ) {
 }
 
 // Funktion zum Aktualisieren eines Kontakts (Update)
-async function updateContact ( contactId ) {
-    const updatedName = document.getElementById( "edit_name" ).value;
-    const updatedEmail = document.getElementById( "edit_email" ).value;
-    const updatedPhone = document.getElementById( "edit_phone" ).value;
+async function updateContact ( contactId, event ) {
+    event.preventDefault(); // falls das Formular noch abschicken würde
+
     try {
+        // 1) Server-Patch
         await fetch( BASE_URL + "/contacts/" + contactId + ".json", {
             method: "PATCH",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify( {
-                name: updatedName,
-                email: updatedEmail,
-                phone: updatedPhone
+                name: document.getElementById( "edit_name" ).value,
+                email: document.getElementById( "edit_email" ).value,
+                phone: document.getElementById( "edit_phone" ).value
             } )
         } );
+
+        // 2) Neu laden und rendern
         await pushToContactsArray();
-        closeOverlay();
-        // Aktualisiere Detailpanel, falls dieser gerade angezeigt wird
-        updateDetailPanel( contactId );
-    } catch ( error ) {
-        console.error( "Error updating contact:", error );
+
+        // 3) Den gerade bearbeiteten Eintrag wieder auswählen
+        const el = document.getElementById( contactId );
+        if ( el ) {
+            // Variante A: Manuell
+            el.classList.add( "selected" );
+            updateDetailPanel( contactId );
+            ensureDetailPanelOpen();
+
+            // Variante B: Deiner bestehenden Funktion
+            // openDetailPanel(el);
+        }
+    } catch ( err ) {
+        console.error( "Error updating contact:", err );
     }
+
+    // 4) Overlay schließen
+    closeEditOverlay( event );
 }
 
 // Löscht einen Kontakt via DELETE-Request
