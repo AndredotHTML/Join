@@ -514,6 +514,10 @@ input.error {
     align-items: center;
 }
 
+.d-flex {
+    display: flex;
+}
+
 @media(max-width:1200px) {
     .active_span::before {
         background-color: transparent;
@@ -525,8 +529,61 @@ input.error {
     .active_span {
         flex-direction: column;
     }
-}
 
-.d-flex {
-    display: flex;
+    .contact_bar {
+        padding-left: 0;
+    }
+
+    .btn-container {
+        position: fixed;
+        top: calc(100vh - 160px);
+        right: 24px;
+        z-index: 1000;
+        background-color: transparent;
+        padding: 0;
+    }
+
+    .btn-add-contact {
+        min-width: unset;
+    }
+
+    .btn-add-contact > span {
+        display: none;
+    }
+
+    .contact_bar {
+        padding-bottom: 160px;
+    }
+
+    .header {
+        position: sticky;
+        top: 0;
+        z-index: 1000
+    }
+
+    .contact-detail {
+        position: fixed;
+        top: 96px;
+        right: 0;
+        width: calc(100% - 456px);
+        padding-top: 144px;
+        padding-left: 24px;
+    }
+
+    .overlay-profile-sec {
+        position: absolute;
+        top: 25%;
+        left: 50%;
+        transform: translate(-50%, 75%);
+        padding: 0;
+        z-index: 100;
+    }
+
+    .overlay-header {
+        position: relative;
+    }
+
+    .overlay-content {
+        padding-top: 92px;
+    }
 }
