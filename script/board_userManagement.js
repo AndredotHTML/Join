@@ -172,3 +172,63 @@ function showNoTasksFoundMessage() {
         }
     }
 }
+
+const statusMap = {
+    toDo: 'To Do',
+    inProgress: 'In Progress',
+    awaitFeedback: 'Await Feedback',
+    done: 'Done'
+};
+
+function showMiniMenu(event, taskId, currentStatus) {
+    event.stopPropagation();
+    let menuContent = generateStatusMenuHTML(taskId, currentStatus);
+    let menu = document.getElementById("statusMenu");
+
+    menu.innerHTML = menuContent;
+    menu.style.left = (event.pageX + 10) + "px";
+    menu.style.top = event.pageY + "px"; 
+    menu.classList.remove("hidden"); 
+}
+
+function generateStatusMenuHTML(taskId, currentStatus) {
+    let statuses = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+    let menu = '<strong>Move to:</strong><br>';
+    let currentIndex = statuses.indexOf(currentStatus);
+
+    for (let index = 0; index < statuses.length; index++) {
+        let status = statuses[index];
+        if(status !== currentStatus){
+            let direction = index < currentIndex ? '<img src="../assets/icons/arrow_up.png" alt="UpDownArrow" >'  : '<img src="../assets/icons/arrow_down.png" alt="UpDownArrow" >'
+            let displayName = `${direction} ${statusMap[status]}`;
+            menu += createStatusMenuOption(taskId, status, displayName);
+        }
+    }
+    return menu;
+}
+
+function createStatusMenuOption(taskId, status,displayedStatus) {
+    return `<div onclick="changeTaskStatus('${taskId}', '${status}')">${displayedStatus}</div>`;
+}
+
+function closeStatusMenu(event) {
+    let menu = document.getElementById('statusMenu');
+    let clickedInsideMenu = menu.contains(event.target);
+    
+    if (!clickedInsideMenu) {
+        menu.classList.add('hidden');
+    }
+}
+
+function closeStatusMenu() {
+    let menu = document.getElementById('statusMenu');
+    if (menu) menu.classList.add('hidden');
+}
+
+async function changeTaskStatus(taskId, newStatus) {
+    let task = tasks.find(t => t.id === taskId);
+    task.status = newStatus; 
+    await updateTaskInFirebase(taskId, { status: newStatus });
+    closeStatusMenu();
+    updateView();
+}

@@ -282,7 +282,7 @@
 }
 
 .status_menu {
-    position: absolute;
+    position: fixed;
     background: #0038ff;
     color: white;
     border: 1px solid #ccc;
@@ -306,4 +306,7 @@
     border-radius: 8px;
     color: black;
   }
-  
+
+  .status_menu div:hover img {
+    filter: brightness(0) saturate(100%);
+}
