@@ -120,6 +120,10 @@
     z-index: 1;
 }
 
+.circle-add-contact {
+    background-color: var(--placeholderColor);
+}
+
 .inner-circle {
     position: absolute;
     width: 120px;
