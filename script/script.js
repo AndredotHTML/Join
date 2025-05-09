@@ -14,5 +14,5 @@ function authLogIn () {
  * redirects user to login
  */
 function redirectToLogin () {
-    location.href = "/html/index.html";
+    location.href = "index.html";
 }

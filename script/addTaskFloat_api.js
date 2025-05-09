@@ -1,5 +1,4 @@
 let contacts =[];
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 
 /**
  * gets all contacts from Database
