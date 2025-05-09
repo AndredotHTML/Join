@@ -1,168 +1,167 @@
 label,
 legend {
-    height: 23px;
-    font-size: 19px;
-    font-weight: 700;
-    color: #42526e;
+  height: 23px;
+  font-size: 19px;
+  font-weight: 700;
+  color: #42526e;
 }
 
-label>span {
-    font-weight: 400;
+label > span {
+  font-weight: 400;
 }
 
 .form-header {
-    height: 361px;
-    gap: 12px;
-    z-index: 20;
+  height: 361px;
+  gap: 12px;
+  z-index: 20;
 }
 
 #date-input-add-task,
-.title-wrapper>input,
+.title-wrapper > input,
 .subtask-area {
-    padding: 12px 16px;
-    border: none;
-    border-bottom: 1px solid #D1D1D1;
-    appearance: none;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 19px;
-    width: 100%;
-    outline: none;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid #d1d1d1;
+  appearance: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 19px;
+  width: 100%;
+  outline: none;
 }
 
 .title-wrapper {
-    height: 84px;
-    gap: 4px;
+  height: 84px;
+  gap: 4px;
 }
 
 .title-add-task {
-    font-size: 32px !important;
+  font-size: 32px !important;
 }
 
 .description-wrapper {
-    gap: 4px;
-    position: relative;
+  gap: 4px;
+  position: relative;
 }
 
 textarea {
-    resize: none;
-    height: 103px;
-    border-radius: 0px 10px 10px 10px;
-    border: 1px solid #D1D1D1;
-    outline: none;
-    padding: 18px 0 0 16px;
-    font-size: 19px;
-    width: 100%;
+  resize: none;
+  height: 103px;
+  border-radius: 0px 10px 10px 10px;
+  border: 1px solid #d1d1d1;
+  outline: none;
+  padding: 18px 0 0 16px;
+  font-size: 19px;
+  width: 100%;
 }
 
 .resize {
-    cursor: ns-resize;
-    overflow: auto;
-    position: absolute;
-    bottom: 22px;
-    right: 3px;
-    width: 26px;
-    height: 24px;
-    background-color: #FFFFFF;
-    background-size: contain;
-    background: url(/assets/icons/Recurso.svg) no-repeat center center;
+  cursor: ns-resize;
+  overflow: auto;
+  position: absolute;
+  bottom: 22px;
+  right: 3px;
+  width: 26px;
+  height: 24px;
+  background-color: #ffffff;
+  background-size: contain;
+  background: url(/assets/icons/Recurso.svg) no-repeat center center;
 }
 
 textarea:focus {
-    border: 1px solid var(--primaryColor);
+  border: 1px solid var(--primaryColor);
 }
 
 .date-wrapper {
-    gap: 4px;
-    position: relative;
+  gap: 4px;
+  position: relative;
 }
 
 #nativ-date-input {
-    opacity: 0;
-    position: absolute;
-    right: 200px;
+  opacity: 0;
+  position: absolute;
+  right: 200px;
 }
 
-#custom-date-input>label {
-    position: absolute;
-    right: 18px;
+#custom-date-input > label {
+  position: absolute;
+  right: 18px;
 }
 
 .date-picker-icon {
-    position: relative;
-    object-fit: contain
+  position: relative;
+  object-fit: contain;
 }
 
 .validation-add-task-form {
-    height: 16px;
-    font-size: 13px;
-    font-family: inter;
+  height: 16px;
+  font-size: 13px;
+  font-family: inter;
 }
 
 input[type="radio"] {
-    opacity: 0;
-    position: absolute;
+  opacity: 0;
+  position: absolute;
 }
 
 .radio-btn {
-    height: 51px;
-    width: 136px;
-    padding: 18px 10px;
-    border-radius: 10px;
-    gap: 10px;
-    outline: 1px solid #D1D1D1;
-    background-color: var(--secondaryColor);
-    font-size: 19px;
-    font-weight: 400;
+  height: 51px;
+  width: 136px;
+  padding: 18px 10px;
+  border-radius: 10px;
+  gap: 10px;
+  outline: 1px solid #d1d1d1;
+  background-color: var(--secondaryColor);
+  font-size: 19px;
+  font-weight: 400;
 }
 
 .shell-radio-btn {
-    gap: 16px;
+  gap: 16px;
 }
 
 .shell-radio-area {
-    height: 82px;
-    gap: 8px;
+  height: 82px;
+  gap: 8px;
 }
 
-.shell-radio-btn>label>input~.unchecked-priority {
-    display: flex;
-    width: 20px;
-    height: 15px;
+.shell-radio-btn > label > input ~ .unchecked-priority {
+  display: flex;
+  width: 20px;
+  height: 15px;
 }
 
-.shell-radio-btn>label>input~.checked-priority {
-    display: none;
+.shell-radio-btn > label > input ~ .checked-priority {
+  display: none;
 }
 
-.shell-radio-btn>label>input:checked~.unchecked-priority {
-    display: none;
+.shell-radio-btn > label > input:checked ~ .unchecked-priority {
+  display: none;
 }
 
-.shell-radio-btn>label>input:checked~.checked-priority {
-    display: flex;
+.shell-radio-btn > label > input:checked ~ .checked-priority {
+  display: flex;
 }
 
 .add-task-urgent,
 .add-task-medium,
 .add-task-low {
-    border-bottom: 2px solid transparent;
+  border-bottom: 2px solid transparent;
 }
 
 .add-task-urgent:hover {
-    border-bottom: 2px solid var(--urgentColor);
+  border-bottom: 2px solid var(--urgentColor);
 }
 
 .add-task-medium:hover {
-    border-bottom: 2px solid var(--mediumColor);
+  border-bottom: 2px solid var(--mediumColor);
 }
 
 .add-task-low:hover {
-    border-bottom: 2px solid var(--lowColor);
+  border-bottom: 2px solid var(--lowColor);
 }
-
 
 #date-input-add-task:focus-within,
 .subtask-area:focus-within,
@@ -170,217 +169,217 @@ input[type="radio"] {
 .title-add-task:focus,
 .wrapper-select:hover,
 .wrapper-select:focus-within {
-    border-bottom: 1px solid var(--primaryColor);
+  border-bottom: 1px solid var(--primaryColor);
 }
 
 .wrapper-select {
-    width: 100%;
-    padding: 12px 16px;
-    border: none;
-    border-bottom: 1px solid #D1D1D1;
-    align-items: center;
-    font-size: 19px;
-    height: 48px;
-    outline: none;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  border-bottom: 1px solid #d1d1d1;
+  align-items: center;
+  font-size: 19px;
+  height: 48px;
+  outline: none;
 }
 
 .assigned-to-input {
-    width: 100%;
-    border: none;
-    align-items: center;
-    font-size: 19px;
-    height: 48px;
-    outline: none;
-    height: 100%;
+  width: 100%;
+  border: none;
+  align-items: center;
+  font-size: 19px;
+  height: 48px;
+  outline: none;
+  height: 100%;
 }
 
 .assigned-to-input::placeholder {
-    color: #000;
+  color: #000;
 }
 
 .category-add-task {
-    width: 100%;
+  width: 100%;
 }
 
 .option-category {
-    opacity: 0;
-    max-height: 0;
-    pointer-events: none;
-    transition: max-height 100ms ease-out, opacity 100ms ease-out;
+  opacity: 0;
+  max-height: 0;
+  pointer-events: none;
+  transition: max-height 100ms ease-out, opacity 100ms ease-out;
 }
 
 .option-category.visible {
-    opacity: 1;
-    width: 100%;
-    padding: 12px 16px;
-    border: none;
-    align-items: center;
-    font-size: 19px;
-    max-height: 47px;
-    border-radius: 10px;
-    pointer-events: all;
+  opacity: 1;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  align-items: center;
+  font-size: 19px;
+  max-height: 47px;
+  border-radius: 10px;
+  pointer-events: all;
 }
 
 .icon-form:hover {
-    background-color: #D9D9D9;
-    border-radius: 50%;
+  background-color: #d9d9d9;
+  border-radius: 50%;
 }
 
-.assigned-contacts>label {
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    font-weight: 400;
-    padding: 7px 16px;
-    color: #000;
+.assigned-contacts > label {
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  font-weight: 400;
+  padding: 7px 16px;
+  color: #000;
 }
 
 .assigned-contacts {
-    border-radius: 10px;
-    max-height: 0px;
-    gap: 16px;
-    opacity: 0;
-    max-width: 0;
-    transition: max-height 300ms ease-out, opacity 0ms ease-out;
+  border-radius: 10px;
+  max-height: 0px;
+  gap: 16px;
+  opacity: 0;
+  max-width: 0;
+  transition: max-height 300ms ease-out, opacity 0ms ease-out;
 }
 
 .assigned-contacts.visible-assigned {
-    opacity: 1;
-    max-height: 56px;
-    max-width: 100%;
+  opacity: 1;
+  max-height: 56px;
+  max-width: 100%;
 }
 
 .icon-name-template {
-    align-items: center;
-    gap: 16px;
+  align-items: center;
+  gap: 16px;
 }
 
-.assigned-template-name{
-    gap: 6px;
+.assigned-template-name {
+  gap: 6px;
 }
 
 .assigned-contacts:hover,
 .option-category:hover {
-    background-color: #D2E3FF;
+  background-color: #d2e3ff;
 }
 
 .assigned-contacts:has(input:checked) {
-    background-color: #4589FF;
+  background-color: #4589ff;
 }
 
 .assigned-contacts label:has(input:checked) {
-    color: var(--secondaryColor)
+  color: var(--secondaryColor);
 }
 
 .assigned-contacts:has(input:checked):hover {
-    background-color: #005DFF;
+  background-color: #005dff;
 }
 
 .name-icon {
-    color: white;
-    height: 42px;
-    min-width: 42px;
-    font-size: 12px;
-    border-radius: 50%;
-    border: 2px solid white;
-    justify-content: center;
-    align-items: center;
-    gap: 12px;
+  color: white;
+  height: 42px;
+  min-width: 42px;
+  font-size: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
 }
 
-.avatar-color-user{
-    background-color: #00BEE8;
+.avatar-color-user {
+  background-color: #00bee8;
 }
 
 input[type="checkbox"] {
-    appearance: none;
-    background: url(../assets/icons/unchecked.png) no-repeat center;
-    border-radius: 3px;
+  appearance: none;
+  background: url(../assets/icons/unchecked.png) no-repeat center;
+  border-radius: 3px;
 }
 
 input[type="checkbox"]:checked {
-    background-image: url(../assets/icons/Check_button_white.png)
+  background-image: url(../assets/icons/Check_button_white.png);
 }
 
 .assigned-to-scroll {
-    overflow-x: hidden;
-    overflow-y: auto;
-    max-height: 0px;
-    padding-right: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    opacity: 0;
-    transition: max-height 100ms ease-out, opacity 100ms ease-out;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 0px;
+  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  opacity: 0;
+  transition: max-height 100ms ease-out, opacity 100ms ease-out;
 }
 
 .assigned-to-scroll.visible-assigned {
-    opacity: 1;
-    max-height: 288px;
-    display: flex;
-    flex-direction: column;
+  opacity: 1;
+  max-height: 288px;
+  display: flex;
+  flex-direction: column;
 }
 
 .assigned-to-scroll.visible-assigned-min {
-    opacity: 1;
-    max-height: 50px;
+  opacity: 1;
+  max-height: 50px;
 }
 
-@media (max-width :700px) {
-    .title-wrapper {
-        height: 64px
-    }
-    .title-add-task {
-        font-size: 28px !important;
-    }
-    .resize{
-        display: none;
-    }
-    .form-header {
-        gap: 8px;
-    }
-    .radio-btn {
-        max-width: 30%;
-        margin: 0 auto;
-        height: 48px;
-    }
-    .assigned-contacts:has(input:checked):hover {
-        background-color: #4589FF;
-    }
-    .assigned-contacts:hover,
-    .option-category:hover {
+@media (max-width: 700px) {
+  .title-wrapper {
+    height: 64px;
+  }
+  .title-add-task {
+    font-size: 28px !important;
+  }
+  .resize {
+    display: none;
+  }
+  .form-header {
+    gap: 8px;
+  }
+  .radio-btn {
+    max-width: 30%;
+    margin: 0 auto;
+    height: 48px;
+  }
+  .assigned-contacts:has(input:checked):hover {
+    background-color: #4589ff;
+  }
+  .assigned-contacts:hover,
+  .option-category:hover {
     background-color: transparent;
-}
-}
-
-@media (max-width :400px){
-    .radio-btn {
-        font-size: 16px;
-        gap: 4px;
-    }
-    .shell-radio-btn>label>input~.unchecked-priority {
-        width: 16px;
-        height: 12px;
-    }
-    
-    .shell-radio-btn>label>input~.checked-priority {
-        width: 16px;
-        height: 12px;
-    }
-    .shell-radio-btn {
-        gap: 6px;
-    }
-    .icon-name-template {
-        gap: 10px;
-    }
-    .assigned-template-name{
-       flex-direction: column;
-    }
+  }
 }
 
-@media (max-width :350px){
-    .radio-btn {
-        max-width: 33%;
-    }
+@media (max-width: 400px) {
+  .radio-btn {
+    font-size: 16px;
+    gap: 4px;
+  }
+  .shell-radio-btn > label > input ~ .unchecked-priority {
+    width: 16px;
+    height: 12px;
+  }
+
+  .shell-radio-btn > label > input ~ .checked-priority {
+    width: 16px;
+    height: 12px;
+  }
+  .shell-radio-btn {
+    gap: 6px;
+  }
+  .icon-name-template {
+    gap: 10px;
+  }
+  .assigned-template-name {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 350px) {
+  .radio-btn {
+    max-width: 33%;
+  }
 }
