@@ -6,7 +6,7 @@ const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF",
 
 async function updateHTML() {
     authLogIn()
-    await pushToUsersArray(); 
+    await  pushToContactsArray()
     await pushToTask();
     await getCurrentUser();
     displayToDo();
@@ -186,12 +186,10 @@ async function updateTaskStatus(taskId, newStatus) {
 
 function removeHighlight(id) {
     document.getElementById(id).classList.remove('drag-area-highlight');
-
 }
 
 function highlight(id) {
-    document.getElementById(id).classList.add('drag-area-highlight');
-    
+    document.getElementById(id).classList.add('drag-area-highlight');     
 }
 
 function showOverlay(id){
@@ -330,14 +328,15 @@ function showAddTaskAwaitFeedbackOverlay(){
 function showEditOverlay(id) {
     let task = tasks.find(t => t.id === id);
     let overlay = document.getElementById('overlay');
-    assignedUsers = task.assignedUsers || [];
+    assignedContacts = task.assignedUsers || [];
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
     overlay.innerHTML = generateEditOverlay(task);
-    localStorage.setItem('selectedUsers', JSON.stringify(task.assignedUsers || []));
-    showSelectedUsersFromTask(task);
+    localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
+    showSelectedUsersFromTask();
     radioBtnChecked(task.priority);
 }
+
 
 async function updateTaskInFirebase(taskId, updatedTask) {
     const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;

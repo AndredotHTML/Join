@@ -108,6 +108,29 @@
     transition: background-color 0.3s ease;  
 }
 
+.contact_dropdown::-webkit-scrollbar {
+    width:  3px;
+    background-color:#e0e0e0;
+    border-radius: 10px;
+}
+
+.contact_dropdown::-webkit-scrollbar-thumb{
+    background-color:#4589ff; 
+    border-radius: 4px;
+}
+
+.contact_dropdown::-webkit-scrollbar-thumb:hover {
+    cursor: grab;
+}
+
+.contact_dropdown::-webkit-scrollbar-thumb:hover:active {
+    cursor: grabbing;
+}
+
+.contact_dropdown::-webkit-scrollbar-thumb:hover{
+    background-color: #005DFF;
+}
+
 #arrowIconCategory {
     transition: transform 0.2s ease;
 }

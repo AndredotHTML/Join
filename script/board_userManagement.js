@@ -3,9 +3,7 @@ async function getCurrentUser() {
     if (userData) {
         user.push(userData);
         generateUserIconHeader() 
-    } else {
-        console.log("Kein Nutzer gefunden.");
-    }
+    } 
 }
 
 function generateUserIconHeader() {
@@ -29,10 +27,7 @@ function getUsersInitials(assignedUsers) {
     for (let index = 0; index < assignedUsers.length; index++) {
         let name = assignedUsers[index];
         let nameParts = name.trim().split(' ');
-        let initials = nameParts.length >= 2
-            ? `${nameParts[0][0]}${nameParts[1][0]}`
-            : `${nameParts[0][0]}`;
-
+        let initials = nameParts.length >= 2? `${nameParts[0][0]}${nameParts[1][0]}` : `${nameParts[0][0]}`;
         usersWithInitials.push({
             initials: initials.toUpperCase(),
             name: name
@@ -41,19 +36,37 @@ function getUsersInitials(assignedUsers) {
     return usersWithInitials;
 }
 
-function generateUserIcons(assignedUsers){
+function generateUserIcons(assignedUsers) {
     let usersData = getUsersInitials(assignedUsers);
-    if (usersData.length === 0) return ''
-    let userIcon = '';
+    if (usersData.length === 0) return '';
     let overlapDistance = 30;
+    let maxIcons = 3;
 
-    for (let i = 0; i < usersData.length; i++) {
-        let color = getColorForUser(usersData[i].name); 
-        let leftPosition = i * overlapDistance;
-        userIcon += generateSingleUserIcon(usersData[i].initials, leftPosition, color);
+    let userIcon = createDisplayedUserIcons(usersData, maxIcons, overlapDistance);
+    let extraCount = usersData.length - maxIcons;
+    if (extraCount > 0) {
+        userIcon += createExtraUsersIcon(extraCount, maxIcons * overlapDistance);
     }
     return userIcon;
 }
+
+function createExtraUsersIcon(count, leftPosition) {
+    return `<span class="user_icon" style="background-color: black; left: ${leftPosition}px;">+${count}</span>`;
+}
+
+function createDisplayedUserIcons(usersData, maxIcons, overlapDistance) {
+    let icons = '';
+    let displayedUsers = usersData.slice(0, maxIcons);
+
+    for (let i = 0; i < displayedUsers.length; i++) {
+        let color = getColorForUser(displayedUsers[i].name); 
+        let leftPosition = i * overlapDistance;
+        icons += generateSingleUserIcon(displayedUsers[i].initials, leftPosition, color);
+    }
+
+    return icons;
+}
+
 
 function generateSingleUserIcon(initial, leftPosition, color) {
     return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
@@ -158,4 +171,64 @@ function showNoTasksFoundMessage() {
             container.style.display = 'flex';
         }
     }
+}
+
+const statusMap = {
+    toDo: 'To Do',
+    inProgress: 'In Progress',
+    awaitFeedback: 'Await Feedback',
+    done: 'Done'
+};
+
+function showMiniMenu(event, taskId, currentStatus) {
+    event.stopPropagation();
+    let menuContent = generateStatusMenuHTML(taskId, currentStatus);
+    let menu = document.getElementById("statusMenu");
+
+    menu.innerHTML = menuContent;
+    menu.style.left = (event.pageX + 10) + "px";
+    menu.style.top = event.pageY + "px"; 
+    menu.classList.remove("hidden"); 
+}
+
+function generateStatusMenuHTML(taskId, currentStatus) {
+    let statuses = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+    let menu = '<strong>Move to:</strong><br>';
+    let currentIndex = statuses.indexOf(currentStatus);
+
+    for (let index = 0; index < statuses.length; index++) {
+        let status = statuses[index];
+        if(status !== currentStatus){
+            let direction = index < currentIndex ? '<img src="../assets/icons/arrow_up.png" alt="UpDownArrow" >'  : '<img src="../assets/icons/arrow_down.png" alt="UpDownArrow" >'
+            let displayName = `${direction} ${statusMap[status]}`;
+            menu += createStatusMenuOption(taskId, status, displayName);
+        }
+    }
+    return menu;
+}
+
+function createStatusMenuOption(taskId, status,displayedStatus) {
+    return `<div onclick="changeTaskStatus('${taskId}', '${status}')">${displayedStatus}</div>`;
+}
+
+function closeStatusMenu(event) {
+    let menu = document.getElementById('statusMenu');
+    let clickedInsideMenu = menu.contains(event.target);
+    
+    if (!clickedInsideMenu) {
+        menu.classList.add('hidden');
+    }
+}
+
+function closeStatusMenu() {
+    let menu = document.getElementById('statusMenu');
+    if (menu) menu.classList.add('hidden');
+}
+
+async function changeTaskStatus(taskId, newStatus) {
+    let task = tasks.find(t => t.id === taskId);
+    task.status = newStatus; 
+    await updateTaskInFirebase(taskId, { status: newStatus });
+    closeStatusMenu();
+    updateView();
 }

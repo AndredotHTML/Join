@@ -1,3 +1,8 @@
+/**
+ * Generates the contact detail HTML for the provided contact object.
+ * @param {{id: string, contactData: object}} selectedContact – The contact to display details for.
+ * @returns {string} The HTML template string for the contact detail view.
+ */
 function contactDetailTemplate ( selectedContact ) {
   const initials = getAvatarFromName( selectedContact.contactData.name );
   const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
@@ -35,11 +40,13 @@ function contactDetailTemplate ( selectedContact ) {
     </div>`;
 }
 
-
+/**
+ * Returns the HTML template string for the add-contact overlay panel.
+ */
 function createAddContactTemplate () {
   return ( /*html*/ `
 <div class="overlay-header overlay-add-contact-header">
-  <button class="btn-close" onclick="closeOverlay()"></button>
+  <button class="btn-close" onclick="closeOverlay(event)"></button>
   <div class="overlay-header-row overlay-header-row-center">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
@@ -50,9 +57,12 @@ function createAddContactTemplate () {
 </div>
 <div class="overlay-content">
   <div class="overlay-profile-sec">
-    <div class="contact-circle" style="display: flex; align-items: center; justify-content: center; color: white;">
-      <img src="../assets/icons/person-white.svg" alt="person">
-    </div>
+    <div class="circle-wrapper">
+        <div class="outer-circle"></div>
+        <div class="inner-circle circle-add-contact">
+           <img src="../assets/icons/person-white.svg" alt="person">
+        </div>
+      </div>
   </div>
   <form id="add_contact_form" onsubmit="return getContactData(event)">
     <div class="input_container">
@@ -65,10 +75,10 @@ function createAddContactTemplate () {
       <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
     </div>
     <div class="overlay-footer">
-      <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay()">
+      <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay(event)">
         <span>Cancel</span>
       </button>
-      <button id="edit-task-save-btn" class="btn btn-primary btn-check" type="submit">
+      <button id="add-contact-save-btn" class="btn btn-primary btn-check" type="submit">
         <span>Create contact</span>
       </button>
     </div>
@@ -78,6 +88,12 @@ function createAddContactTemplate () {
   );
 }
 
+
+/**
+ * Returns the HTML template for the edit-contact overlay populated with the given contact’s data.
+ * @param {{id: string, contactData: object}} selectedContact – The contact to edit.
+ * @returns {string} The HTML template string for the edit overlay.
+ */
 function createEditContactTemplate ( selectedContact ) {
   const initials = getAvatarFromName( selectedContact.contactData.name );
   const cls = selectedContact.contactData.avatarColorClass; // z.B. "avatar-color-7"
@@ -116,11 +132,11 @@ function createEditContactTemplate ( selectedContact ) {
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-delete"
-              onclick="deleteContact('${ selectedContact.id }')">
+              onclick="handleDeleteContact ( '${ selectedContact.id }', event )">
         <span>Delete</span>
       </button>
       <button type="button" class="btn btn-primary btn-check"
-              onclick="updateContact('${ selectedContact.id }')">
+              onclick="updateContact('${ selectedContact.id }',event)">
         <span>Save</span>
       </button>
     </div>
@@ -129,10 +145,21 @@ function createEditContactTemplate ( selectedContact ) {
 }
 
 
+/**
+ * Generates the HTML for a contact list header with the specified letter.
+ *
+ * @param {string} letter – The letter to display in the header.
+ */
 function headerTemplate ( letter ) {
   return `<div class="contact_list_header"><div class="letter-header">${ letter }</div><div class="border_container"><hr class="seperator"></div></div>`;
 }
 
+
+/**
+ * Generates the HTML for a contact list item.
+ * @param {{id: string, contactData: {name: string, email: string, avatarColorClass: string}}} c – The contact object.
+ * @returns {string} The HTML template string for the contact element.
+ */
 function contactTemplate ( c ) {
   const initials = c.contactData.name
     .split( ' ' )

@@ -29,7 +29,7 @@ function templateAssignedTo(contact, isChecked, isCurrentUser) {
                     ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
                     </div>
                     <div class="assigned-template-name">
-                        <div>${contact.name}</div>
+                        <div>${contact.name.split(' ')[0][0].toUpperCase() + contact.name.slice(1) }</div>
                         ${isCurrentUser ? '<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>
@@ -53,7 +53,6 @@ function tempTaskToBoardOverlay() {
         `
 }
 
-
 function generateTask(element) {
     let bg_color = toggleCategoryColor(element.category);
     let { completed, total, progress } = calculateSubtaskProgress(element.subtasks);
@@ -62,7 +61,8 @@ function generateTask(element) {
 
     return `
     <div draggable="true"  ondragstart="startDragging('${element.id}')" class="ticket" onclick="showOverlay('${element.id}')">
-    <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span></div>
+    <div class="ticket_category"><span style="background-color: ${bg_color};" >${element.category}</span> 
+    <img src="../assets/icons/up_down_arrow.png" alt="UpDownArrow" onclick="showMiniMenu(event, '${element.id}', '${element.status}')"></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
     ${element.subtasks ? `
@@ -109,7 +109,8 @@ function generateTaskOverlay(element) {
         <div class="assigned_overlay">
             <table>
                 <tr><th>Assigned To:</th></tr>
-                <tr><td>${user_icon_name}</td></tr>
+                <tr><td><div class="assigned_users_scroll">${user_icon_name}</div>
+                </td></tr>
             </table>
         </div>
         ` : ''}

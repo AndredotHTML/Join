@@ -1,8 +1,7 @@
-let assignedUsers =[];
+let assignedContacts =[];
 let updatedPriority = ''; 
 
 function selectCategory(category) {
-    console.log("Category selected:", category);  
     document.getElementById('category_add_task').innerText = category;
     document.getElementById('options_container').style.display = 'none';
     document.getElementById('arrowIconCategory').src = "/assets/icons/arrow_drop_down.svg"; 
@@ -105,42 +104,46 @@ function deleteSubtask(icon) {
     subtaskItem.remove();
 }
 
-function displayUsers(){
+function displayContacts() {
     let contactMenu = document.getElementById('contactDropdown');
     let selectedUsers = JSON.parse(localStorage.getItem('selectedUsers')) || [];
     contactMenu.innerHTML = '';
 
-    for (let index = 0; index < users.length; index++) {
-       let element = users[index];
-       let isChecked = selectedUsers.includes(element.userData.name); 
-       contactMenu.innerHTML += generateSingleUser(element,isChecked); 
+    for (let index = 0; index < contacts.length; index++) {
+        let element = contacts[index];
+        let isChecked = selectedUsers.includes(element.name);
+        contactMenu.innerHTML += generateSingleUser(element, isChecked);
     }
 }
 
-function generateSingleUser(element,isChecked) {
-    let name = element.userData.name;
-    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+function generateSingleUser(element, isChecked) {
+    let name = element.name; 
+    let nameParts = name.split(' ');
+    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
     let color = getColorForUser(name); 
 
     return `
         <label for="user-${element.id}" class="user-item">
             <span class="user-icon" style="background-color: ${color};">${initials}</span>
             <span class="user-name">${name}</span>
-            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''}  onchange="updateSelectedUsers()">
-             <span class="checkbox-custom"></span>
+            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''} onchange="updateSelectedUsers()">
+            <span class="checkbox-custom"></span>
         </label>
     `;
 }
 
+
 function generateUserIcon(user) {
-    let name = user.userData.name;
-    let initials = `${name.split(' ')[0][0]}${name.split(' ')[1][0]}`;
+    let name = user.name;
+    let nameParts = name.split(' ');
+    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
     let color = getColorForUser(name); 
 
     return `
         <span class="user-icon" style="background-color: ${color};">${initials}</span>
     `;
 }
+
 
 function toggleUserDropdown() {
     let contactMenu = document.getElementById("contactDropdown");
@@ -157,7 +160,7 @@ function toggleContactMenu(contactMenu, arrowIcon) {
         arrowIcon.src = "/assets/icons/arrow_drop_down.svg"; 
     } else {
         contactMenu.style.display = "flex";
-        displayUsers(); 
+        displayContacts(); 
         arrowIcon.src = "/assets/icons/arrow_drop_down_close.svg";
     }
 }
@@ -173,42 +176,64 @@ function toggleSelectedUsersContainer(selectedUsersContainer) {
 }
 
 function updateSelectedUsers() {
-    assignedUsers = [];
+    assignedContacts = getCheckedUsers();
+    renderSelectedUserIcons(assignedContacts, "selected_user_container");
+    localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
+}
 
-    let selectedUsersContainer = document.getElementById("selected_user_container");
-    selectedUsersContainer.innerHTML = ''; 
-
-    for (let i = 0; i < users.length; i++) {
-        let userCheckbox = document.getElementById(`user-${users[i].id}`);
-        if (userCheckbox && userCheckbox.checked) {
-            assignedUsers.push(users[i].userData.name);
-
-            let userIcon = generateUserIcon(users[i]);
-            selectedUsersContainer.innerHTML += userIcon;
+function getCheckedUsers() {
+    let selected = [];
+    for (let contact of contacts) {
+        let checkbox = document.getElementById(`user-${contact.id}`);
+        if (checkbox && checkbox.checked) {
+            selected.push(contact.name);
         }
     }
-    localStorage.setItem('selectedUsers', JSON.stringify(assignedUsers));
+    return selected;
 }
 
-function showSelectedUsersFromTask(task) {
-    let selectedUsersContainer = document.getElementById("selected_user_container");
-    selectedUsersContainer.innerHTML = '';  
+function renderSelectedUserIcons(userList, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
 
-    if (!task.assignedUsers) {
-        task.assignedUsers = [];
+    for (let i = 0; i < userList.length && i < maxIcons; i++) {
+        let contact = contacts.find(c => c.name === userList[i]);
+        if (contact) container.innerHTML += generateUserIcon(contact);
     }
 
-    for (let i = 0; i < task.assignedUsers.length; i++) {
-            let userName = task.assignedUsers[i];
-            if (userName) {
-                let userIcon =  generateUserIconFromName(userName);  
-                selectedUsersContainer.innerHTML += userIcon;
-            }
+    if (userList.length > maxIcons) {
+        let remaining = userList.length - maxIcons;
+        container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
     }
 }
+
+function showSelectedUsersFromTask() {
+    renderUserIconsFromNames(assignedContacts, "selected_user_container");
+}
+
+function renderUserIconsFromNames(userNames, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
+
+    for (let i = 0; i < userNames.length && i < maxIcons; i++) {
+        container.innerHTML += generateUserIconFromName(userNames[i]);
+    }
+
+    if (userNames.length > maxIcons) {
+        let remaining = userNames.length - maxIcons;
+        container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
+    }
+}
+
 
 function generateUserIconFromName(userName) {
-    let initials = `${userName.split(' ')[0][0]}${userName.split(' ')[1][0]}`; 
+    let parts = userName.trim().split(' ');
+    let initials = parts[0][0];
+    if (parts.length > 1) {
+        initials += parts[1][0];
+    }
     let color = getColorForUser(userName); 
     return `
         <span class="user-icon" style="background-color: ${color};">${initials}</span>
@@ -216,7 +241,6 @@ function generateUserIconFromName(userName) {
 }
 
 async function createTask() {
-    await pushToUsersArray(); 
     const task =taskObject();
 
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
@@ -231,7 +255,7 @@ async function createTask() {
 }
 
 async function createTaskInProgress() {
-    await pushToUsersArray(); 
+    await  pushToContactsArray(); 
     const task =taskObjectInProgress();
 
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
@@ -246,7 +270,7 @@ async function createTaskInProgress() {
 }
 
 async function createTaskAwaitFeedback() {
-    await pushToUsersArray(); 
+    await  pushToContactsArray();
     const task =taskObjectAwaitFeedback();
 
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
@@ -266,7 +290,7 @@ function taskObject() {
         description: document.getElementById("description_add_task").value,
         dueDate: document.getElementById("dateInput-add-task").value,
         priority: getPriority(),
-        assignedUsers: assignedUsers,
+        assignedUsers: assignedContacts,
         category: document.getElementById("category_add_task").innerText, 
         subtasks: getNewSubtasks(),
         status: "toDo"
@@ -279,7 +303,7 @@ function taskObjectInProgress() {
         description: document.getElementById("description_add_task").value,
         dueDate: document.getElementById("dateInput-add-task").value,
         priority: getPriority(),
-        assignedUsers: assignedUsers,
+        assignedUsers: assignedContacts,
         category: document.getElementById("category_add_task").innerText, 
         subtasks: getNewSubtasks(),
         status: "inProgress"
@@ -292,7 +316,7 @@ function taskObjectAwaitFeedback() {
         description: document.getElementById("description_add_task").value,
         dueDate: document.getElementById("dateInput-add-task").value,
         priority: getPriority(),
-        assignedUsers: assignedUsers,
+        assignedUsers: assignedContacts,
         category: document.getElementById("category_add_task").innerText, 
         subtasks: getNewSubtasks(),
         status: "awaitFeedback"
