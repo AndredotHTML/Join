@@ -1,9 +1,9 @@
 function init() {
-    authLogIn()
+    authLogInLaP()
     toggleDNoneOnResize()
 }
 
-function authLogIn() {
+function authLogInLaP() {
     if (localStorage.getItem("isLoggedIn") !== "true") {
         document.getElementById("standart_nav_bar").classList.toggle("d_none")
         document.getElementById("alt_nav_bar").classList.toggle("d_none")

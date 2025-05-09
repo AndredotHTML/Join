@@ -47,7 +47,7 @@ function validateLoginForm() {
  */
 function redirectToSummary() {
   localStorage.setItem("isLoggedIn", "true");
-  window.location.href = "http://127.0.0.1:5500/html/summary.html";
+  window.location.href = "/html/summary.html";
 }
 
 

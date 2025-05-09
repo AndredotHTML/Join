@@ -1,18 +1,6 @@
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
-
 tasks = [];
 
 user = [];
-
-
-/**
- * Checks if the user is loggend in and redirects back to login if user is not logged in
- */
-function authLogIn() {
-    if (localStorage.getItem("isLoggedIn") !== "true") {
-        window.location.href = "http://127.0.0.1:5500/html/index.html"; 
-      }
-}
 
 
 /**

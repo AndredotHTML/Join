@@ -1,7 +1,6 @@
 // signup.js
 
 let users = [];
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/";
 
 /**
  * init runs all function which are aquired to run onload of the html

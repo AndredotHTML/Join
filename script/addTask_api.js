@@ -1,4 +1,3 @@
-const BASE_URL = "https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/"
 let getUserCache = [];
 let getContactCache = [];
 user = []
