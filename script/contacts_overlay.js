@@ -1,3 +1,7 @@
+let overlayBackground = document.getElementById( "overlay-bg" );
+
+
+
 /**
  * Displays the edit overlay populated with the specified contact’s data and slides it into view.
  * @param {string} contactId – The ID of the contact to edit.
