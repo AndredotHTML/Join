@@ -1,8 +1,5 @@
 let contacts =[];
 
-/**
- * gets all contacts from Database
- */
 async function getAllContacts ( path ) {
     let response = await fetch(BASE_URL + path + ".json");
     return  await response.json()
