@@ -182,14 +182,39 @@ const statusMap = {
 
 function showMiniMenu(event, taskId, currentStatus) {
     event.stopPropagation();
-    let menuContent = generateStatusMenuHTML(taskId, currentStatus);
-    let menu = document.getElementById("statusMenu");
+    const menu = document.getElementById("statusMenu");
+    const content = generateStatusMenuHTML(taskId, currentStatus);
 
-    menu.innerHTML = menuContent;
-    menu.style.left = (event.pageX + 10) + "px";
-    menu.style.top = event.pageY + "px"; 
-    menu.classList.remove("hidden"); 
+    prepareStatusMenu(menu, content);
+    const { x, y } = calculateMenuPosition(event, menu);
+
+    menu.style.left = `${x}px`;
+    menu.style.top = `${y}px`;
 }
+
+function prepareStatusMenu(menu, content) {
+    menu.innerHTML = content;
+    menu.style.left = "-9999px";
+    menu.style.top = "-9999px";
+    menu.classList.remove("hidden");
+}
+
+function calculateMenuPosition(event, menu) {
+    const menuWidth = menu.offsetWidth;
+    const menuHeight = menu.offsetHeight;
+    const pageWidth = window.innerWidth;
+    const pageHeight = window.innerHeight;
+    let x = event.pageX;
+    let y = event.pageY;
+    if (x + menuWidth > pageWidth) {
+        x = pageWidth - menuWidth - 10;
+    }
+    if (y + menuHeight > pageHeight) {
+        y = pageHeight - menuHeight - 10;
+    }
+    return { x, y };
+}
+
 
 function generateStatusMenuHTML(taskId, currentStatus) {
     let statuses = ['toDo', 'inProgress', 'awaitFeedback', 'done'];

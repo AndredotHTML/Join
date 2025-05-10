@@ -148,15 +148,25 @@ function togglePriority(priority){
     }
 }
 
+function isDragAndDropEnabled() {
+    return window.innerWidth > 820;
+}
+
 function startDragging(id) {
-    currentDraggedElement = id ;
+    if (!isDragAndDropEnabled()) {
+        showDragTooltip();
+        return;
+    }
+    currentDraggedElement = id;
 }
 
 function allowDrop(ev) {
+    if (!isDragAndDropEnabled()) return;
     ev.preventDefault();
 }
 
 async function moveTo(status) {
+    if (!isDragAndDropEnabled()) return;
     let taskIndex = tasks.findIndex(t => t.id === currentDraggedElement); 
     tasks[taskIndex].status = status;
 
@@ -167,6 +177,16 @@ async function moveTo(status) {
     displayAwaitFeedback();
     displayDone();
 }
+
+function showDragTooltip() {
+    const tooltip = document.getElementById('dragTooltip');
+    tooltip.classList.remove('hidden');
+
+    setTimeout(() => {
+        tooltip.classList.add('hidden');
+    }, 3000);
+}
+
 
 async function updateTaskStatus(taskId, newStatus) {
     const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
@@ -185,10 +205,12 @@ async function updateTaskStatus(taskId, newStatus) {
 }
 
 function removeHighlight(id) {
+    if (!isDragAndDropEnabled()) return;
     document.getElementById(id).classList.remove('drag-area-highlight');
 }
 
 function highlight(id) {
+    if (!isDragAndDropEnabled()) return;
     document.getElementById(id).classList.add('drag-area-highlight');     
 }
 
