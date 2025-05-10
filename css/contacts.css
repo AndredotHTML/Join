@@ -519,7 +519,14 @@ input.error {
     display: flex;
 }
 
+.contact-info-wrapper.slide-in {
+    padding: 72px 0 0 62px;
+    flex: 1;
+}
+
 @media screen and (max-width:1200px) {
+
+
     .active_span::before {
         background-color: transparent;
         color: #4589FF !important;
@@ -539,10 +546,10 @@ input.error {
         position: fixed;
         top: unset;
         right: 24px;
-        z-index: 1000;
         background-color: transparent;
         padding: 0;
         bottom: 100px;
+        z-index: 0;
     }
 
     .btn-add-contact {
@@ -608,4 +615,16 @@ input.error {
     .btn-cancel {
         display: none;
     }
+
+    .contact-info-wrapper.slide-in {
+        margin: unset;
+        position: fixed;
+        background-color: white;
+        top: 96px;
+        height: calc(100dvh - 96px - 76px);
+        z-index: 20;
+        padding: 64px 16px;
+    }
+
+
 }
