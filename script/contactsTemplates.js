@@ -17,7 +17,7 @@ function contactDetailTemplate ( selectedContact ) {
       </div>
       <div class="contact-main-info">
         <h2 class="contact-name">${ selectedContact.contactData.name }</h2>
-        <div class="contact-actions">
+        <div class="contact-actions" id="contact-actions">
           <button class="contact-action" onclick="showEditContactOverlay('${ selectedContact.id }')">
             <span class="btn-edit">Edit</span>
           </button>
@@ -40,7 +40,11 @@ function contactDetailTemplate ( selectedContact ) {
         <p class="label">Phone</p>
         <p>${ selectedContact.contactData.phone }</p>
       </div>
-    </div>`;
+    </div>
+    <button id="detail-actions" class="btn btn-primary btn-detail-actions" onclick="showActionsOverlay()">
+      <img src="../assets/icons/options_dot_white.svg" alt="""> 
+    </button
+    `;
 }
 
 /**

@@ -93,3 +93,23 @@ function CloseDetailPanel () {
     deselectAllContacts();
     ensureDetailPanelClosed();
 }
+
+
+function showActionsOverlay () {
+    const OOVERLAY = document.getElementById( "contact-actions" );
+    const ACTION_BTN = document.getElementById( "detail-actions" );
+    OOVERLAY.classList.add( "actions-show" );
+    ACTION_BTN.classList.add( "d-none" );
+}
+
+
+function hideActionsOverlay ( event ) {
+    console.log( event.target.id );
+
+    if ( event.target.id === "detail" ) {
+        const OOVERLAY = document.getElementById( "contact-actions" );
+        const ACTION_BTN = document.getElementById( "detail-actions" );
+        OOVERLAY.classList.remove( "actions-show" );
+        ACTION_BTN.classList.remove( "d-none" );
+    }
+}

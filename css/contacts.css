@@ -494,8 +494,6 @@ input.error {
     bottom: 50%;
 }
 
-
-/* TODO: move to navigation */
 .active_span:before {
     content: url("/assets/icons/contacts_icon.png");
     background-color: var(--menuHoverColor);
@@ -512,12 +510,28 @@ input.error {
 }
 
 .d-flex {
-    display: flex;
+    display: flex !important;
 }
 
 .contact-info-wrapper.slide-in {
     padding: 72px 0 0 62px;
     flex: 1;
+}
+
+.btn-detail-actions {
+    display: none;
+}
+
+.d-none {
+    display: none !important;
+}
+
+.contact-title-row > h3 {
+    font-size: 23px;
+}
+
+.contact-title-row {
+    padding: 21px 0;
 }
 
 @media screen and (max-width:1200px) {
@@ -591,9 +605,66 @@ input.error {
     .overlay-content {
         padding-top: 92px;
     }
+
+    .btn-add-contact {
+        width: 64px;
+        height: 64px
+    }
 }
 
 @media screen and (max-width:920px) {
+    .contact-info-wrapper .circle-wrapper {
+        width: 86px;
+        height: 86px;
+    }
+
+    .contact-info-wrapper .inner-circle {
+        width: 80px;
+        height: 80px;
+        font-size: 27px;
+    }
+
+    .contact-info-wrapper .contact-name {
+        font-weight: 400;
+        font-size: 33px;
+        padding-left: 20px;
+    }
+
+    .contact-info-wrapper .contact-header {
+        column-gap: 0;
+    }
+
+    .contact-title-row > h3 {
+        font-size: 19px;
+        padding-top: 0;
+    }
+
+    .contact-actions {
+        flex-direction: column;
+        row-gap: 20px;
+        border-radius: 20px;
+        padding: 10px;
+        box-shadow: 0 4px 4px 0 #00000040;
+        width: 116px;
+        height: 100px;
+        background-color: var(--secondaryColor);
+        position: absolute;
+        bottom: 24px;
+        right: 0px;
+        z-index: 10;
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    .actions-show {
+        animation: slideRight 0.125s ease-in-out forwards;
+        right: 24px;
+    }
+
+    .btn-detail-actions {
+        display: flex;
+    }
+
     .overlay {
         height: auto;
         border-radius: 30px;
@@ -627,6 +698,7 @@ input.error {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-top: 0;
     }
 
     .arrow-left {
@@ -645,5 +717,15 @@ input.error {
         content: url("../assets/icons/arrow_left_hover.svg");
         width: 32px;
         height: 32px;
+    }
+
+    .btn-detail-actions {
+        min-width: unset;
+        position: absolute;
+        bottom: 24px;
+        right: 24px;
+        padding: 16px;
+        width: 64px;
+        height: 64px;
     }
 }
