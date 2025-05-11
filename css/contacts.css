@@ -766,3 +766,27 @@ input.error {
         padding: 0;
     }
 }
+
+@media screen and (max-width: 360px) {
+    .overlay-header-headline {
+        font-size: 40px;
+    }
+
+    .sub-headline {
+        font-size: 18px;
+    }
+
+    .overlay-header {
+        height: 310px;
+    }
+
+    .overlay-footer {
+        flex-direction: column-reverse;
+        row-gap: 8px;
+    }
+
+    .overlay-profile-sec {
+        top: 250px;
+    }
+
+}
