@@ -518,12 +518,8 @@ input.error {
     flex: 1;
 }
 
-.btn-detail-actions {
-    display: none;
-}
-
 .d-none {
-    display: none !important;
+    display: none;
 }
 
 .contact-title-row > h3 {
@@ -532,6 +528,7 @@ input.error {
 
 .contact-title-row {
     padding: 21px 0;
+    width: auto important;
 }
 
 @media screen and (max-width:1200px) {
@@ -613,6 +610,13 @@ input.error {
 }
 
 @media screen and (max-width:920px) {
+    .slide-in {
+        left: 0;
+        r: 0;
+        bottom: 0;
+    }
+
+
     .contact-info-wrapper .circle-wrapper {
         width: 86px;
         height: 86px;
@@ -661,22 +665,14 @@ input.error {
         right: 24px;
     }
 
-    .btn-detail-actions {
-        display: flex;
-    }
+
 
     .overlay {
-        height: auto;
         border-radius: 30px;
     }
 
     .overlay-header {
         border-radius: 30px 30px 0 0;
-    }
-
-    .slide-in {
-        position: static;
-        margin: auto;
     }
 
     .btn-cancel {
@@ -724,8 +720,49 @@ input.error {
         position: absolute;
         bottom: 24px;
         right: 24px;
-        padding: 16px;
         width: 64px;
         height: 64px;
+    }
+
+    .btn-detail-actions img {
+        width: 32px;
+        height: 32px
+    }
+}
+
+@media screen and (max-width: 620px) {
+
+
+    ..overlay-content {
+        padding-top: 68px;
+    }
+
+    .overlay-header {
+        padding-inline: 0;
+
+    }
+
+    .sub-headline {
+        font-size: 21px;
+    }
+
+    .overlay-profile-sec {
+        top: 336px;
+    }
+
+    .overlay.slide-in,
+    .edit-overlay.slide-in {
+        top: 16px;
+        bottom: 16px;
+        left: 16px;
+        right: 16px;
+        width: auto;
+        height: auto;
+        border-radius: 20px;
+        padding: 0;
+    }
+
+    .overlay-footer {
+        padding: 0;
     }
 }
