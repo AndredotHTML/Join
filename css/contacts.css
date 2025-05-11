@@ -90,17 +90,13 @@
     color: var(--primaryColor);
 }
 
-.contact-detail {
-    box-sizing: border-box;
-    display: flex;
-    justify-content: end;
-    flex: 1;
-    padding: 72px 0 0 62px;
-}
+
 
 .contact-info-wrapper {
     width: 0%;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 }
 
 .contact-header {
@@ -626,5 +622,28 @@ input.error {
         padding: 64px 16px;
     }
 
+    .contact-title-row {
+        order: -1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
+    .arrow-left {
+        display: flex;
+        height: 32px;
+        width: 32px;
+    }
+
+    .arrow-left::after {
+        content: url("../assets/icons/arrow_left.svg");
+        width: 32px;
+        height: 32px;
+    }
+
+    .arrow-left:hover::after {
+        content: url("../assets/icons/arrow_left_hover.svg");
+        width: 32px;
+        height: 32px;
+    }
 }

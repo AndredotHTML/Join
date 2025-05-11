@@ -27,8 +27,11 @@ function contactDetailTemplate ( selectedContact ) {
         </div>
       </div>
     </div>
+      <div class="contact-title-row">
+        <h3>Contact Information</h3>
+        <a href="#" onclick="CloseDetailPanel()" class="arrow-left"></a>
+      </div>
     <div class="contact-detail-section">
-      <h3>Contact Information</h3>
       <div class="contact-field">
         <p class="label">Email</p>
         <a href="mailto:${ selectedContact.contactData.email }" class="email-link">${ selectedContact.contactData.email }</a>

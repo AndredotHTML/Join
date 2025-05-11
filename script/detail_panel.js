@@ -87,3 +87,9 @@ function selectAndShowDetail ( contact, id ) {
     updateDetailPanel( id );
     ensureDetailPanelOpen();
 }
+
+
+function CloseDetailPanel () {
+    deselectAllContacts();
+    ensureDetailPanelClosed();
+}
