@@ -87,3 +87,39 @@ function selectAndShowDetail ( contact, id ) {
     updateDetailPanel( id );
     ensureDetailPanelOpen();
 }
+
+
+/**
+ * Closes the detail panel, deselects all contacts, and hides the action button.
+ */
+function CloseDetailPanel () {
+    deselectAllContacts();
+    ensureDetailPanelClosed();
+    const ACTION_BTN = document.getElementById( "detail-actions" );
+    ACTION_BTN.classList.add( "d-none" );
+}
+
+
+/**
+ * Displays the contact actions overlay and hides the detail action button.
+ */
+function showActionsOverlay () {
+    const OOVERLAY = document.getElementById( "contact-actions" );
+    const ACTION_BTN = document.getElementById( "detail-actions" );
+    OOVERLAY.classList.add( "actions-show" );
+    ACTION_BTN.classList.add( "d-none" );
+}
+
+
+/**
+ * Hides the contact actions overlay and shows the detail action button when the event target is the detail element.
+ */
+function hideActionsOverlay ( event ) {
+    if ( event.target.id === "detail" ) {
+        const OOVERLAY = document.getElementById( "contact-actions" );
+        const ACTION_BTN = document.getElementById( "detail-actions" );
+        OOVERLAY.classList.remove( "actions-show" );
+        ACTION_BTN.classList.remove( "d-none" );
+
+    }
+}

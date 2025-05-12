@@ -19,7 +19,7 @@
 form {
   width: 100%;
   max-width: 488px;
-  padding: 64px 2px 0 24px;
+  padding: 64px 8px 0 24px;
   gap: 24px;
   height: calc(100vh - 96px);
 }
@@ -340,7 +340,7 @@ li[contenteditable="true"] {
 
 @media (max-width: 440px) {
   form {
-    padding: 64px 2px 0 16px;
+    padding: 64px 12px 0 12px;
     gap: 16px;
   }
 }

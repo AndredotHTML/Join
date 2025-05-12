@@ -43,16 +43,6 @@ function addSubtaskOverlay() {
     resetSubtaskIcons();  
 }
 
-function subtaskTemplate( subtaskValue){
-    return `<li class="added_subtask">
-             <span class="subtask_text">${subtaskValue}</span>
-            <div class="subtask_actions">
-                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon"  onclick="editSubtask(this)">
-                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtask(this)">
-                <img src="../assets/icons/check.png" alt="Confirm" class="check-icon" onclick="confirmEdit(this)" style="display:none;">
-            </div></li>`
-}
-
 function generateSubtasksHtml(subtasks) {
     let subtasksHtml = ''; 
     if (subtasks && subtasks.length > 0) {
@@ -62,6 +52,17 @@ function generateSubtasksHtml(subtasks) {
     }
     return subtasksHtml; 
 }
+
+function subtaskTemplate(subtaskValue){
+    return `<li class="added_subtask">
+             <span class="subtask_text">${subtaskValue}</span>
+            <div class="subtask_actions">
+                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon"  onclick="editSubtask(this)">
+                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtask(this)">
+                <img src="../assets/icons/check.png" alt="Confirm" class="check-icon" onclick="confirmEdit(this)" style="display:none;">
+            </div></li>`
+}
+
 
 function resetSubtaskIcons() {
     let subtaskInput = document.getElementById("subtask");
@@ -132,7 +133,6 @@ function generateSingleUser(element, isChecked) {
     `;
 }
 
-
 function generateUserIcon(user) {
     let name = user.name;
     let nameParts = name.split(' ');
@@ -196,12 +196,10 @@ function renderSelectedUserIcons(userList, containerId) {
     let container = document.getElementById(containerId);
     container.innerHTML = '';
     let maxIcons = 5;
-
     for (let i = 0; i < userList.length && i < maxIcons; i++) {
         let contact = contacts.find(c => c.name === userList[i]);
         if (contact) container.innerHTML += generateUserIcon(contact);
     }
-
     if (userList.length > maxIcons) {
         let remaining = userList.length - maxIcons;
         container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
@@ -216,11 +214,9 @@ function renderUserIconsFromNames(userNames, containerId) {
     let container = document.getElementById(containerId);
     container.innerHTML = '';
     let maxIcons = 5;
-
     for (let i = 0; i < userNames.length && i < maxIcons; i++) {
         container.innerHTML += generateUserIconFromName(userNames[i]);
     }
-
     if (userNames.length > maxIcons) {
         let remaining = userNames.length - maxIcons;
         container.innerHTML += `<span class="user-icon more_users">+${remaining}</span>`;
@@ -242,9 +238,7 @@ function generateUserIconFromName(userName) {
 
 async function createTask() {
     const task =taskObject();
-
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-
     let newId= await postTask("/tasks", task);
     if (newId) {
         task.id = newId; 
@@ -257,9 +251,7 @@ async function createTask() {
 async function createTaskInProgress() {
     await  pushToContactsArray(); 
     const task =taskObjectInProgress();
-
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-
     let newId= await postTask("/tasks", task);
     if (newId) {
         task.id = newId; 
@@ -272,9 +264,7 @@ async function createTaskInProgress() {
 async function createTaskAwaitFeedback() {
     await  pushToContactsArray();
     const task =taskObjectAwaitFeedback();
-
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-
     let newId= await postTask("/tasks", task);
     if (newId) {
         task.id = newId; 
@@ -380,7 +370,6 @@ function showTaskMessage() {
     let messageDiv = document.getElementById("task-message");
     messageDiv.style.display = "flex";  
     messageDiv.classList.add("show");  
-
     setTimeout(() => {
         messageDiv.classList.remove("show");
         messageDiv.style.display = "none";  

@@ -330,20 +330,25 @@ input[type="checkbox"]:checked {
   .title-wrapper {
     height: 64px;
   }
+
   .title-add-task {
     font-size: 28px !important;
   }
+
   .resize {
     display: none;
   }
+
   .form-header {
     gap: 8px;
   }
+
   .radio-btn {
     max-width: 30%;
     margin: 0 auto;
     height: 48px;
   }
+
   .assigned-contacts:has(input:checked):hover {
     background-color: #4589ff;
   }
@@ -358,6 +363,7 @@ input[type="checkbox"]:checked {
     font-size: 16px;
     gap: 4px;
   }
+
   .shell-radio-btn > label > input ~ .unchecked-priority {
     width: 16px;
     height: 12px;
@@ -367,12 +373,15 @@ input[type="checkbox"]:checked {
     width: 16px;
     height: 12px;
   }
+
   .shell-radio-btn {
     gap: 6px;
   }
+
   .icon-name-template {
     gap: 10px;
   }
+  
   .assigned-template-name {
     flex-direction: column;
   }
