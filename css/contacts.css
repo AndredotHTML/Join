@@ -531,6 +531,10 @@ input.error {
     width: auto important;
 }
 
+.btn-detail-actions {
+    display: none;
+}
+
 @media screen and (max-width:1200px) {
 
 
@@ -610,6 +614,10 @@ input.error {
 }
 
 @media screen and (max-width:920px) {
+    .btn-detail-actions {
+        display: flex;
+    }
+
     .slide-in {
         left: 0;
         r: 0;
