@@ -154,19 +154,6 @@ function transferFromPicker() {
 
 
 /**
- * Iterates over the validation messengs and clear their content
- */
-
-function clearValidationArea() {
-    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
-    for (let index = 0; index < validationAreaRef.length; index++) {
-        let singValidArea = validationAreaRef[index];
-        singValidArea.innerHTML = "";
-    }
-}
-
-
-/**
  * Stores the last position of the cursor of the first textarea in a global variable "lastCursPos"
  */
 
@@ -236,8 +223,8 @@ document.addEventListener("click", function (e) {
 function submitForm(event) {
     event.preventDefault();
     let valide = true
-    clearValidationArea()
-    errMsgAreaControl()
+    clearValidationAreas()
+    errMsgAreaAndInputs()
     if (valide === true) {
         createTask()
     }
@@ -248,16 +235,26 @@ function submitForm(event) {
  * Checks the inputs, if them empty calls the errorMsg() for each one
  */
 
-function errMsgAreaControl() {
+function errMsgAreaAndInputs() {
     let inputToValidateTitle = document.getElementById("title-add-task");
     let requiredTitleRef = document.getElementById("title-validation");
     let inputToValidateDate = document.getElementById("date-input-add-task");
     let requiredDateRef = document.getElementById("date-validation");
+    let inputToValidateCategory = document.getElementById("category-add-task")
+    let categoryWrapper = document.getElementById("select-category")
+    let requiredCategoryRef = document.getElementById("category-validation")
+    inputValidation(inputToValidateTitle,requiredTitleRef,inputToValidateDate,requiredDateRef,inputToValidateCategory,categoryWrapper,requiredCategoryRef)
+}
+
+function inputValidation(inputToValidateTitle,requiredTitleRef,inputToValidateDate,requiredDateRef,inputToValidateCategory,categoryWrapper,requiredCategoryRef) {
     if (inputToValidateTitle.value === "") {
         errorMsg(requiredTitleRef, inputToValidateTitle)
     }
     if (inputToValidateDate.value === "") {
         errorMsg(requiredDateRef, inputToValidateDate)
+    }
+    if (inputToValidateCategory.innerHTML.trim() == "Select task category") {
+       errorMsg(requiredCategoryRef, categoryWrapper)
     }
 }
 
@@ -283,10 +280,34 @@ function errorMsg(requiredRef, inputToValidate) {
  */
 
 function resValidOnInp(element) {
-    let wrapperRef = element.closest(`[class$="-wrapper"]`)
+    let wrapperRef = element.closest(`[class*="-wrapper"]`)
     let validAreaRef = wrapperRef.querySelector(".validation-add-task-form")
     validAreaRef.innerHTML = "";
     element.style.borderBottom = "";
+}
+
+
+function resValidCategory(element) {
+    let validAreaRef = document.getElementById("category-validation")
+    validAreaRef.innerHTML = "";
+    element.style.borderBottom = "";
+}
+
+/**
+ * Iterates over the validation messengs and clear their content
+ */
+
+function clearValidationAreas() {
+    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
+    for (let index = 0; index < validationAreaRef.length; index++) {
+        let singValidArea = validationAreaRef[index];
+        singValidArea.innerHTML = "";
+    }
+}
+
+function clearSingelValidationArea() {
+    let msgArea = document.querySelector(".validation-add-task-form")
+    msgArea.innerText = "";
 }
 
 
@@ -323,7 +344,7 @@ function clearForm() {
     categoryRef.innerHTML = "Select task category"
     displaydSubtaskRef.innerHTML = ""
     radioBtnChecked("medium")
-    clearValidationArea()
+    clearValidationAreas()
 }
 
 

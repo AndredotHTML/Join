@@ -16,8 +16,6 @@ async function getCurrentUser() {
     if (userData) {
         user.push(userData);
         generateUserIcon();
-    } else {
-        console.log("Kein Nutzer gefunden.");
     }
 }
 

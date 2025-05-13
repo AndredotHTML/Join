@@ -150,7 +150,6 @@
                   <div
                     class="d_flex custom-date-input center-center"
                     id="custom-date-input"
-                    onfocus="resValidOnInp(this)"
                   >
                     <input
                       type="text"
@@ -300,6 +299,7 @@
                   class="wrapper-select d_flex"
                   id="select-category"
                   tabindex="0"
+                  onfocus="resValidCategory(this)"
                 >
                   <div
                     name="category-add-task"
@@ -323,7 +323,12 @@
                       alt="Close the 'Category' dropdown"
                     />
                   </div>
+                  
                 </div>
+                <div
+                    class="validation-add-task-form"
+                    id="category-validation"
+                  ></div>
                 <div
                   class="option-category poiner"
                   onclick="stopPropagation(event)"
@@ -409,6 +414,7 @@
               form="form-add-task"
               type="submit"
               onclick="enabledCreateBtn()"
+              onmouseover="errMsgAreaAndInputs()"
             >
               <div class="btn-title">Create Task</div>
               <div class="btn-icon-check icon-24" id="btn-icon-check"></div>

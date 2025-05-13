@@ -6,7 +6,7 @@ function addSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let inputSubtaskVal = inputSubtaskRef.value
-    if (inputSubtaskVal !== "") {
+    if (inputSubtaskVal.trim() !== "") {
         displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
         inputSubtaskRef.value = ""
     }
