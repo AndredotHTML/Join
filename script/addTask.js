@@ -15,7 +15,8 @@ function stopPropagation(event) {
 
 
 /** 
- * Filtera non-numeric characters from a date input and reconstructs the date as dd/mm/yyyy
+ * Filters non-numeric characters from a date input, validate and reconstructs the date as dd/mm/yyyy
+ * If the selected date is earlier than today, sets the date to today
  * @example 10/04/2025
 */
 
@@ -26,8 +27,31 @@ function customDateInput() {
     let monthInput = extractMonth(dateInputVal)
     let yearInput = extractYear(dateInputVal)
     dayInput = validDays(dayInput,monthInput,yearInput)
-    let customDateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
-    dateInputRef.value = customDateInput
+    let today = todayDate(dateInputVal)
+    let dateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
+    if (dateInput<today) {
+        dateInput = today
+    }
+    dateInputRef.value = dateInput
+}
+
+
+/**
+ * Returns today’s date in dd/mm/yyyy format if the input has 8 digits
+ * @param {string} dateInputVal The raw date string
+ * @returns Today's date in dd/mm/yyyy format , or null
+ */
+
+function todayDate(dateInputVal) {
+     if (dateInputVal.length > 7 ) {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        dayInput = today.getDate();
+        monthInput = (today.getMonth() + 1);
+        yearInput =  today.getFullYear();
+        return `${dayInput}/${monthInput}/${yearInput}`
+    }
+    return null
 }
 
 
@@ -146,10 +170,31 @@ function showPicker() {
  */
 
 function transferFromPicker() {
-    let pickerRef = document.getElementById("nativ-date-input")
+    let pickerVal = document.getElementById("nativ-date-input").value
     let dateInputRef = document.getElementById("date-input-add-task")
-    let reversedDate = pickerRef.value.split("-").reverse().join("/")
-    dateInputRef.value = reversedDate
+    let selectedDate = new Date(pickerVal)
+    selectedDate = dateNotBelowTodayPicker(selectedDate)
+    let day   = selectedDate.getDate().toString().padStart(2, '0');
+    let month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
+    let year  = selectedDate.getFullYear();
+    dateInputRef.value = `${day}/${month}/${year}`
+}
+
+
+/**
+ * Sets the date on not below today
+ * @param {Date} selectedDate The date to check
+ * @returns The selected date , or today's date if it is earlier
+ */
+
+function dateNotBelowTodayPicker(selectedDate) {
+    let today = new Date()
+    selectedDate.setHours(0,0,0,0)
+    today.setHours(0,0,0,0)
+    if (selectedDate<today) {
+        return today
+    }
+    return selectedDate
 }
 
 
