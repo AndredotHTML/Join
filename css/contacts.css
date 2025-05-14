@@ -509,17 +509,9 @@ input.error {
     align-items: center;
 }
 
-.d-flex {
-    display: flex !important;
-}
-
 .contact-info-wrapper.slide-in {
     padding: 72px 0 0 62px;
     flex: 1;
-}
-
-.d-none {
-    display: none;
 }
 
 .contact-title-row > h3 {
@@ -797,4 +789,12 @@ input.error {
         top: 250px;
     }
 
+}
+
+.d-none {
+    display: none;
+}
+
+.d-flex {
+    display: none;
 }
