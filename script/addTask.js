@@ -305,11 +305,6 @@ function clearValidationAreas() {
     }
 }
 
-function clearSingelValidationArea() {
-    let msgArea = document.querySelector(".validation-add-task-form")
-    msgArea.innerText = "";
-}
-
 
 /**
  * Resets the styles of the priority buttons and highlights the checked one.
@@ -345,6 +340,16 @@ function clearForm() {
     displaydSubtaskRef.innerHTML = ""
     radioBtnChecked("medium")
     clearValidationAreas()
+    clearStyleChange()
+}
+
+function clearStyleChange() {
+    let titleRef = document.getElementById("title-add-task")
+    let dateRef = document.getElementById("date-input-add-task")
+    let categoryRef = document.getElementById("select-category")
+    titleRef.style.borderBottom = "";
+    dateRef.style.borderBottom = "";
+    categoryRef.style.borderBottom = "";
 }
 
 
