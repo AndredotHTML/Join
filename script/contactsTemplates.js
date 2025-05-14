@@ -54,7 +54,7 @@ function createAddContactTemplate () {
   return ( /*html*/ `
 <div class="overlay-header overlay-add-contact-header">
   <button class="btn-close" onclick="closeOverlay(event)"></button>
-  <div class="overlay-header-row overlay-header-row-center">
+  <div class="overlay-header-row overlay-header-row-center header-logo">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
   <div class="overlay-header-row overlay-header-row-center direction-column">
@@ -107,7 +107,7 @@ function createEditContactTemplate ( selectedContact ) {
   return /*html*/ `
 <div class="overlay-header">
   <button class="btn-close" onclick="closeEditOverlay(event)"></button>
-  <div class="overlay-header-row overlay-header-row-center">
+  <div class="overlay-header-row overlay-header-row-center header-logo">
     <img class="overlay-header-logo" src="../assets/icons/logo.svg" alt="Logo">
   </div>
   <div class="overlay-header-row overlay-header-row-center">
