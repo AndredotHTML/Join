@@ -6,10 +6,37 @@
  */
 async function getContactData ( event ) {
     event.preventDefault();
-    if ( !validateForm() ) return false;
-    const contactData = extractFormData();
+    const form = document.getElementById( 'add_contact_form' );
+
+    // Setze custom validity zurück
+    const phoneInput = document.getElementById( 'phone' );
+    const emailInput = document.getElementById( 'email' );
+    phoneInput.setCustomValidity( '' );
+    emailInput.setCustomValidity( '' );
+
+    // HTML5-Basics
+    if ( !form.checkValidity() ) {
+        form.reportValidity();
+        return false;
+    }
+
+    // Zusätzliche Prüfungen
+    const { name, email, phone } = getContactFormData();
+    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) ) {
+        emailInput.setCustomValidity( 'Ungültige E-Mail-Adresse.' );
+        form.reportValidity();
+        return false;
+    }
+    if ( !/^\+[0-9 ]+$/.test( phone ) ) {
+        phoneInput.setCustomValidity( 'Muss mit + beginnen, danach nur Ziffern und Leerzeichen.' );
+        form.reportValidity();
+        return false;
+    }
+
+    // Alles ok → senden
     try {
-        const newId = await sendContactData( '/contacts', contactData );
+        const data = extractFormData();
+        const newId = await sendContactData( '/contacts', data );
         handleSuccess( newId, event );
     } catch ( err ) {
         handleError( err );
@@ -27,8 +54,36 @@ async function getContactData ( event ) {
  */
 async function updateContact ( contactId, event ) {
     event.preventDefault();
+    const form = document.getElementById( 'edit_form' );
+
+    // Reset Validity
+    const phoneInput = document.getElementById( 'edit_phone' );
+    const emailInput = document.getElementById( 'edit_email' );
+    phoneInput.setCustomValidity( '' );
+    emailInput.setCustomValidity( '' );
+
+    // HTML5-Basics
+    if ( !form.checkValidity() ) {
+        form.reportValidity();
+        return;
+    }
+
+    // Zusätzliche Prüfungen
+    const { name, email, phone } = getEditFormData();
+    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) ) {
+        emailInput.setCustomValidity( 'Ungültige E-Mail-Adresse.' );
+        form.reportValidity();
+        return;
+    }
+    if ( !/^\+[0-9 ]+$/.test( phone ) ) {
+        phoneInput.setCustomValidity( 'Muss mit + beginnen, danach nur Ziffern und Leerzeichen.' );
+        form.reportValidity();
+        return;
+    }
+
+    // Alles ok → patchen
     try {
-        await patchContactData( contactId, getEditFormData() );
+        await patchContactData( contactId, { name, email, phone } );
         await refreshAndSelect( contactId );
     } catch ( err ) {
         console.error( "Error updating contact:", err );

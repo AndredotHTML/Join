@@ -312,5 +312,73 @@ function getRandomColorClass () {
     return `avatar-color-${ number }`;
 }
 
+/**
+ * Einfache E-Mail-Prüfung
+ * @param {string} email
+ * @returns {boolean}
+ */
+function isEmailValid ( email ) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email );
+}
+
+/**
+ * Telefon muss + vorne, danach nur Ziffern und Leerzeichen
+ * @param {string} phone
+ * @returns {boolean}
+ */
+function isPhoneValid ( phone ) {
+    return /^\+[0-9 ]+$/.test( phone );
+}
+
+/**
+ * Sanitizer: entfernt alles außer +, Ziffern und Leerzeichen,
+ * behält ein führendes + nur, wenn der Nutzer es eingegeben hat
+ * @param {string} value
+ * @returns {string}
+ */
+function sanitizePhone ( value ) {
+    // nur Ziffern, Leerzeichen, + zulassen
+    let v = value.replace( /[^0-9+ ]/g, '' );
+    // Extrahiere führendes +, falls vorhanden
+    const leadingPlus = v.startsWith( '+' ) ? '+' : '';
+    // entferne alle weiteren +
+    v = v.replace( /\+/g, '' );
+    // füge das eine führende + zurück (wenn es exisitiert)
+    v = leadingPlus + v;
+    // max. Länge 20
+    return v.slice( 0, 20 );
+}
+
+/**
+ * Hängt Live-Filter & Keypress-Blocker ans Inputfeld,
+ * erlaubt Plus nur wenn Cursor an Pos 0 und Tastendruck '+'
+ * @param {string} inputId
+ */
+function attachPhoneFilter ( inputId ) {
+    const input = document.getElementById( inputId );
+    if ( !input ) return;
+
+    // Live-Sanitizing
+    input.addEventListener( 'input', () => {
+        input.value = sanitizePhone( input.value );
+    } );
+
+    // Plus & Ziffern/Leer blocken auf Keypress-Ebene
+    input.addEventListener( 'keypress', evt => {
+        const k = evt.key;
+        // Plus nur zulassen, wenn Cursor am Anfang und noch kein +
+        if ( k === '+' ) {
+            if ( input.selectionStart !== 0 || input.value.startsWith( '+' ) ) {
+                evt.preventDefault();
+            }
+            return;
+        }
+        // ansonsten nur 0–9 oder Leer
+        if ( !/[0-9 ]/.test( k ) ) {
+            evt.preventDefault();
+        }
+    } );
+}
+
 
 pushToContactsArray();

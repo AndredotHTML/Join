@@ -7,12 +7,12 @@ let overlayBackground = document.getElementById( "overlay-bg" );
  * @param {string} contactId – The ID of the contact to edit.
  */
 function showEditContactOverlay ( contactId ) {
-    const SELECTED_CONTACT = contacts.find( contact => contact.id === contactId );
-    const EDIT_OVERLAY = document.getElementById( "editOverlay" );
-    const OVERLAY_BG = document.getElementById( "overlay-bg" );
-    OVERLAY_BG.classList.add( "d-flex" );
-    EDIT_OVERLAY.innerHTML = createEditContactTemplate( SELECTED_CONTACT );
-    EDIT_OVERLAY.classList.add( "slide-in" );
+    const sel = findContactById( contactId );
+    const editO = document.getElementById( "editOverlay" );
+    overlayBackground.classList.add( "d-flex" );
+    editO.innerHTML = createEditContactTemplate( sel );
+    editO.classList.add( "slide-in" );
+    attachPhoneFilter( 'edit_phone' );
 }
 
 
@@ -34,11 +34,11 @@ function closeEditOverlay ( event ) {
  * Displays the add-contact overlay by showing the background, injecting the add form template, and sliding it into view.
  */
 function showAddContactOverlay () {
-    const EDIT_OVERLAY = document.getElementById( "overlay-add-contact" );
-    const OVERLAY_BG = document.getElementById( "overlay-bg" );
-    OVERLAY_BG.classList.add( "d-flex" );
-    EDIT_OVERLAY.innerHTML = createAddContactTemplate();
-    EDIT_OVERLAY.classList.add( "slide-in" );
+    const addO = document.getElementById( "overlay-add-contact" );
+    overlayBackground.classList.add( "d-flex" );
+    addO.innerHTML = createAddContactTemplate();
+    addO.classList.add( "slide-in" );
+    attachPhoneFilter( 'phone' );
 }
 
 
