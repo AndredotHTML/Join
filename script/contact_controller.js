@@ -1,96 +1,77 @@
 /**
- * Prevents default form submission, validates input, sends contact data, and handles the result.
- * @async
+ * Validates the add-contact form fields for non-empty, correct email, and phone format.
+ * @returns {boolean} True if form is valid, false otherwise.
+ */
+function validateAddForm () {
+    const form = document.getElementById( 'add_contact_form' ),
+        emailInput = document.getElementById( 'email' ),
+        phoneInput = document.getElementById( 'phone' );
+    emailInput.setCustomValidity( "" ); phoneInput.setCustomValidity( "" );
+    if ( !form.checkValidity() ) return form.reportValidity(), false;
+    const { email, phone } = getContactFormData();
+    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) )
+        return emailInput.setCustomValidity( 'Invalid email address.' ), form.reportValidity(), false;
+    if ( !/^\+[0-9 ]+$/.test( phone ) )
+        return phoneInput.setCustomValidity( 'Must start with + and contain only digits and spaces.' ), form.reportValidity(), false;
+    return true;
+}
+
+
+/**
+ * Handles the add-contact form submission by validating, sending data, and processing success or error.
  * @param {Event} event - The form submission event.
- * @returns {Promise<boolean>} Always returns false to block default submission.
+ * @returns {Promise<boolean>} Always returns false to prevent default form submission.
  */
 async function getContactData ( event ) {
     event.preventDefault();
-    const form = document.getElementById( 'add_contact_form' );
-
-    // Setze custom validity zurück
-    const phoneInput = document.getElementById( 'phone' );
-    const emailInput = document.getElementById( 'email' );
-    phoneInput.setCustomValidity( '' );
-    emailInput.setCustomValidity( '' );
-
-    // HTML5-Basics
-    if ( !form.checkValidity() ) {
-        form.reportValidity();
-        return false;
-    }
-
-    // Zusätzliche Prüfungen
-    const { name, email, phone } = getContactFormData();
-    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) ) {
-        emailInput.setCustomValidity( 'Ungültige E-Mail-Adresse.' );
-        form.reportValidity();
-        return false;
-    }
-    if ( !/^\+[0-9 ]+$/.test( phone ) ) {
-        phoneInput.setCustomValidity( 'Muss mit + beginnen, danach nur Ziffern und Leerzeichen.' );
-        form.reportValidity();
-        return false;
-    }
-
-    // Alles ok → senden
+    if ( !validateAddForm() ) return false;
     try {
         const data = extractFormData();
         const newId = await sendContactData( '/contacts', data );
         handleSuccess( newId, event );
-    } catch ( err ) {
-        handleError( err );
+    } catch ( error ) {
+        handleError( error );
     }
     return false;
 }
 
 
 /**
- * Prevents default submission, updates the contact via PATCH, refreshes and selects it, handles errors, and closes the edit overlay.
- * @async
+ * Validates the edit-contact form fields for non-empty, correct email, and phone format.
+ * @returns {boolean} True if form is valid, false otherwise.
+ */
+function validateEditForm () {
+    const form = document.getElementById( 'edit_form' ),
+        emailInput = document.getElementById( 'edit_email' ),
+        phoneInput = document.getElementById( 'edit_phone' );
+    emailInput.setCustomValidity( '' ); phoneInput.setCustomValidity( '' );
+    if ( !form.checkValidity() ) return form.reportValidity(), false;
+    const { email, phone } = getEditFormData();
+    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) )
+        return emailInput.setCustomValidity( 'Invalid email address.' ), form.reportValidity(), false;
+    if ( !/^\+[0-9 ]+$/.test( phone ) )
+        return phoneInput.setCustomValidity( 'Must start with + and contain only digits and spaces.' ), form.reportValidity(), false;
+    return true;
+}
+
+
+/**
+ * Handles the edit-contact form submission by validating, patching data, and refreshing the UI.
  * @param {string} contactId – The ID of the contact to update.
- * @param {Event} event – The form submission event triggering the update.
- * @returns {Promise<void>} Resolves once the update and UI actions complete.
+ * @param {Event} event – The form submission event.
  */
 async function updateContact ( contactId, event ) {
     event.preventDefault();
-    const form = document.getElementById( 'edit_form' );
-
-    // Reset Validity
-    const phoneInput = document.getElementById( 'edit_phone' );
-    const emailInput = document.getElementById( 'edit_email' );
-    phoneInput.setCustomValidity( '' );
-    emailInput.setCustomValidity( '' );
-
-    // HTML5-Basics
-    if ( !form.checkValidity() ) {
-        form.reportValidity();
-        return;
-    }
-
-    // Zusätzliche Prüfungen
-    const { name, email, phone } = getEditFormData();
-    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) ) {
-        emailInput.setCustomValidity( 'Ungültige E-Mail-Adresse.' );
-        form.reportValidity();
-        return;
-    }
-    if ( !/^\+[0-9 ]+$/.test( phone ) ) {
-        phoneInput.setCustomValidity( 'Muss mit + beginnen, danach nur Ziffern und Leerzeichen.' );
-        form.reportValidity();
-        return;
-    }
-
-    // Alles ok → patchen
+    if ( !validateEditForm() ) return;
     try {
+        const { name, email, phone } = getEditFormData();
         await patchContactData( contactId, { name, email, phone } );
         await refreshAndSelect( contactId );
-    } catch ( err ) {
-        console.error( "Error updating contact:", err );
+    } catch ( error ) {
+        console.error( "Error updating contact:", error );
     }
     closeEditOverlay( event );
 }
-
 
 /**
  * intercepts the click event and opens or closes the detail panel

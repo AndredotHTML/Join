@@ -312,6 +312,7 @@ function getRandomColorClass () {
     return `avatar-color-${ number }`;
 }
 
+
 /**
  * Einfache E-Mail-Prüfung
  * @param {string} email
@@ -321,6 +322,7 @@ function isEmailValid ( email ) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email );
 }
 
+
 /**
  * Telefon muss + vorne, danach nur Ziffern und Leerzeichen
  * @param {string} phone
@@ -329,6 +331,7 @@ function isEmailValid ( email ) {
 function isPhoneValid ( phone ) {
     return /^\+[0-9 ]+$/.test( phone );
 }
+
 
 /**
  * Sanitizer: entfernt alles außer +, Ziffern und Leerzeichen,
@@ -349,6 +352,7 @@ function sanitizePhone ( value ) {
     return v.slice( 0, 20 );
 }
 
+
 /**
  * Hängt Live-Filter & Keypress-Blocker ans Inputfeld,
  * erlaubt Plus nur wenn Cursor an Pos 0 und Tastendruck '+'
@@ -357,26 +361,15 @@ function sanitizePhone ( value ) {
 function attachPhoneFilter ( inputId ) {
     const input = document.getElementById( inputId );
     if ( !input ) return;
-
-    // Live-Sanitizing
-    input.addEventListener( 'input', () => {
+    input.addEventListener( "input", () => {
+        input.setCustomValidity( "" );
         input.value = sanitizePhone( input.value );
     } );
-
-    // Plus & Ziffern/Leer blocken auf Keypress-Ebene
-    input.addEventListener( 'keypress', evt => {
-        const k = evt.key;
-        // Plus nur zulassen, wenn Cursor am Anfang und noch kein +
-        if ( k === '+' ) {
-            if ( input.selectionStart !== 0 || input.value.startsWith( '+' ) ) {
-                evt.preventDefault();
-            }
-            return;
-        }
-        // ansonsten nur 0–9 oder Leer
-        if ( !/[0-9 ]/.test( k ) ) {
-            evt.preventDefault();
-        }
+    input.addEventListener( "keypress", ( event ) => {
+        const key = event.key, value = input.value, pos = input.selectionStart;
+        if ( key === "+" ) {
+            if ( pos !== 0 || value.startsWith( "+" ) ) event.preventDefault(); return;
+        } if ( !( /[0-9 ]/.test( key ) ) ) event.preventDefault();
     } );
 }
 
