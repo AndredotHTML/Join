@@ -616,8 +616,7 @@ input.error {
     }
 
     .slide-in {
-        left: 0;
-        r: 0;
+        right: 0;
         bottom: 0;
     }
 
@@ -820,6 +819,19 @@ input.error {
     .overlay-footer .btn-delete, .btn-check {
         min-height: unset;
     }
+
+}
+
+@media screen and (min-width:1921px) {
+
+    .overlay.slide-in,
+    .edit-overlay.slide-in {
+        left: 50%;
+        top: 50%;
+        height: auto;
+        transform: translate(-50%, -50%) !important;
+    }
+}
 
 }
 
