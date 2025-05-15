@@ -1,6 +1,9 @@
 .header {
     background-color: var(--primaryColor);
     color: var(--secondaryColor);
+}
+
+.header_content{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -8,6 +11,7 @@
     font-size: var(--fontSize-6);
     position: relative;
     z-index: 999;
+    max-width: 1920px;
 }
 
 .logo-container {
