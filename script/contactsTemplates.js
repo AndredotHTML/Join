@@ -76,7 +76,7 @@ function createAddContactTemplate () {
       <input required id="name" type="text" placeholder="Name" class="input-person" maxlength="50">
     </div>
     <div class="input_container">
-      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255">
+      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Please enter a valid e-mail address (e.g. name@domain.tld).">
     </div>
     <div class="input_container">
       <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
@@ -130,7 +130,7 @@ function createEditContactTemplate ( selectedContact ) {
     <div class="input_container">
       <input required id="edit_email" type="email" placeholder="Email"
              value="${ selectedContact.contactData.email }"
-             class="input-email" maxlength="255">
+             class="input-email" maxlength="255" title="Please enter a valid e-mail address (e.g. name@domain.tld)." pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
     </div>
     <div class="input_container">
       <input required id="edit_phone" type="tel" placeholder="Phone"
