@@ -8,6 +8,10 @@
     box-sizing: border-box;
 }
 
+body {
+    overflow-x: hidden;
+}
+
 .content {
     display: flex;
     max-width: 1920px;
@@ -97,6 +101,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    transform: translateX(100%);
 }
 
 .contact-header {
@@ -823,5 +828,5 @@ input.error {
 }
 
 .d-flex {
-    display: none;
+    display: flex;
 }

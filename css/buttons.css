@@ -162,6 +162,7 @@
     position: absolute;
     top: 24px;
     right: 24px;
+    z-index: 10;
 }
 
 .btn-close::after {

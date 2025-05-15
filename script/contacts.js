@@ -269,6 +269,7 @@ async function deleteContact ( contactId ) {
     } );
     pushToContactsArray();
     DETAIL_ELEM.innerHTML = "";
+    ensureDetailPanelClosed();
 }
 
 
