@@ -31,8 +31,8 @@ function todayDate(dateInputVal) {
         let today = new Date();
         today.setHours(0, 0, 0, 0);
         dayInput = today.getDate();
-        monthInput = (today.getMonth() + 1);
-        yearInput =  today.getFullYear();
+        monthInput = (today.getMonth() + 1).toString().padStart(2, '0');
+        yearInput =  today.getFullYear().toString().padStart(2, '0');
         return `${dayInput}/${monthInput}/${yearInput}`
     }
     return null
@@ -71,9 +71,6 @@ function extractMonth(dateInputVal) {
         let month = dateInputVal.slice(2, 4)
         if (month > 12) {
             month = 12
-        }
-        if (month.length == 2 && +month === 0) {
-            month = "01"
         }
         return "/" + month
     }
@@ -125,7 +122,7 @@ function validDays(dayInput,monthInput,yearInput) {
 
 
 /**
- * Clamped the year betwenn 2025 and 2100
+ * Clamps the year to a maximum of 2100
  * @param {string} dateInputVal filtered input from customDateInput() 
  * @returns {number} A valid year number
  */
@@ -136,17 +133,29 @@ function clampYear(dateInputVal) {
     if (yearNumb >= 2100) {
         yearNumb = 2100
     }
-    else if (yearNumb <= 2025) {
-        yearNumb = 2025
-    }
     return yearNumb;
 }
 
+
+/**
+ * Opens the native date picker
+ */
 
 function showPicker() {
     let pickerRef = document.getElementById("nativ-date-input")
     pickerRef.showPicker()
 }
+
+
+/**
+ * Sets the minimum selectable date of the native date picker to today.
+ */
+
+function minPickerDate(){
+  const picker = document.getElementById("nativ-date-input");
+  const today = new Date().toISOString().split("T")[0];
+  picker.setAttribute("min", today);
+};
 
 
 /**
@@ -156,27 +165,6 @@ function showPicker() {
 function transferFromPicker() {
     let pickerVal = document.getElementById("nativ-date-input").value
     let dateInputRef = document.getElementById("date-input-add-task")
-    let selectedDate = new Date(pickerVal)
-    selectedDate = dateNotBelowTodayPicker(selectedDate)
-    let day   = selectedDate.getDate().toString().padStart(2, '0');
-    let month = (selectedDate.getMonth() + 1).toString().padStart(2, '0');
-    let year  = selectedDate.getFullYear();
-    dateInputRef.value = `${day}/${month}/${year}`
-}
-
-
-/**
- * Sets the date on not below today
- * @param {Date} selectedDate The date to check
- * @returns The selected date , or today's date if it is earlier
- */
-
-function dateNotBelowTodayPicker(selectedDate) {
-    let today = new Date()
-    selectedDate.setHours(0,0,0,0)
-    today.setHours(0,0,0,0)
-    if (selectedDate<today) {
-        return today
-    }
-    return selectedDate
+    let formatet = pickerVal.split("-").reverse().join("/");
+    dateInputRef.value = formatet
 }
