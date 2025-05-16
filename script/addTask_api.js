@@ -1,6 +1,9 @@
-// let getUserCache = [];
 let getContactCache = [];
 
+
+/**
+ * Initializes the application on load
+ */
 
 async function init() {
     authLogIn()
