@@ -1,3 +1,0 @@
-<input required id="email" type="email" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
-                        title="Please enter a valid e-mail address (e.g. name@domain.tld)."
-                        placeholder="z.B. max.mustermann@beispiel.at" />
