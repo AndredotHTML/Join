@@ -22,8 +22,8 @@ function subtaskTemplat(inputSubtaskVal) {
 
 function templateAssignedTo(contact, isChecked, isCurrentUser) {
     return `
-    <div class="assigned-contacts visible-assigned d_flex">
-            <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex">
+    <div class="assigned-contacts visible-assigned d_flex ">
+            <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex poiner">
                 <div class="d_flex icon-name-template">
                     <div class="name-icon d_flex ${contact.avatarColorClass? contact.avatarColorClass: `avatar-color-user` }" data-value="${contact.name}">
                     ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
@@ -33,7 +33,7 @@ function templateAssignedTo(contact, isChecked, isCurrentUser) {
                         ${isCurrentUser ? '<span class="you-label"> (You)</span>' : ''}
                     </div>
                 </div>
-                <input type="checkbox" ${isChecked ? "checked" : ""} class="input-assigned icon-24" name="assigned-user-${contact.name}" id="assigned-user-${contact.name}">
+                <input type="checkbox" ${isChecked ? "checked" : ""} class="input-assigned icon-24 pointer" name="assigned-user-${contact.name}" id="assigned-user-${contact.name}">
             </label>  
         </div>    
     `
