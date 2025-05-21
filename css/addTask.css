@@ -99,7 +99,7 @@ li[contenteditable="true"] {
 }
 
 #added-subtasks {
-  min-height: 48px;
+  min-height: 56px;
   padding-top: 10px;
   padding-inline-start: 0;
 }
