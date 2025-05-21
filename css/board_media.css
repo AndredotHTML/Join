@@ -171,6 +171,7 @@
         justify-content: space-between;
         padding-left: 20px;
         padding-right: 20px;
+        flex: 1;
     }
 
     .toDo, .inProgress, .awaitFeedback, .done {
@@ -190,7 +191,7 @@
 
     .drag_area {
         width: auto; 
-        height: unset; 
+        min-height: 200px;
         display: flex; 
         flex-direction: row; 
         align-items: flex-start;
@@ -240,9 +241,30 @@
     }
 }
 
+@media(max-height:740px){
+    .ticket_overlay,.ticketEdit_overlay {
+        transform: scale(0.85);
+        transform-origin: center;
+    }
+}
+
 @media(max-width:705px) {
     .board_header {
         padding-left: 20px !important;
+    }
+}
+
+@media(max-height:670px){
+    .ticket_overlay,.ticketEdit_overlay {
+        transform: scale(0.75);
+        transform-origin: center;
+    }
+}
+
+@media(max-height:600px){
+    .ticket_overlay,.ticketEdit_overlay {
+        transform: scale(0.70);
+        transform-origin: center;
     }
 }
 

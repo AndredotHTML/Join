@@ -6,7 +6,6 @@
     padding-bottom: 50px;
     overflow-y: auto;
     flex: 1;
-
 }
 
 .board_content::-webkit-scrollbar {
@@ -33,7 +32,6 @@
 }
 
 .toDo, .inProgress, .awaitFeedback, .done {
-    height: 100%;
     width: 300px;
 }
 
@@ -58,7 +56,8 @@
     align-items: center;
     gap: 15px;
     padding-bottom: 20px;
-    height: 100vh; 
+    min-height: 500px; 
+     flex: 1;
 }
 
 .noTask_msg {

@@ -65,13 +65,13 @@ function generateTask(element) {
     <img src="../assets/icons/up_down_arrow.png" alt="UpDownArrow" onclick="showMiniMenu(event, '${element.id}', '${element.status}')"></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
-    ${element.subtasks ? `
-    <div class="ticket_subtasks">
+    ${element.subtasks && completed > 0 ? ` <div class="ticket_subtasks">
     <div class="progress_bar">
     <div class="progress" style="width: ${progress}%;"></div>
     </div>
     <div class="completed"><span>${completed}/${total} Subtasks</span></div>
-    </div>` : ''}
+    </div>` : ''
+    }
     <div class="ticket_footer ${!user_icon ? 'no_users' : ''}">
     <div class="ticket_users">${user_icon || ''}</div>
     <div class="ticket_priority">${priority_img}</div>

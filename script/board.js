@@ -321,6 +321,7 @@ function showAddTaskOverlay(){
     document.body.style.overflow ='hidden';
     overlay.innerHTML = addTaskOverlay();
     overlay.classList.add('slide_in');
+    radioBtnChecked('Medium');
 }
 
 function showAddTaskInProgressOverlay(){
@@ -333,6 +334,7 @@ function showAddTaskInProgressOverlay(){
     document.body.style.overflow ='hidden';
     overlay.innerHTML = addTaskInProgressOverlay();
     overlay.classList.add('slide_in');
+     radioBtnChecked('Medium');
 }
 
 function showAddTaskAwaitFeedbackOverlay(){
@@ -345,6 +347,7 @@ function showAddTaskAwaitFeedbackOverlay(){
     document.body.style.overflow ='hidden';
     overlay.innerHTML = addTaskAwaitFeedbackOverlay();
     overlay.classList.add('slide_in');
+     radioBtnChecked('Medium');
 }
 
 function showEditOverlay(id) {
