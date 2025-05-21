@@ -146,6 +146,7 @@ function styleForCheckedCont(contact, name, checkbox, contactLabel) {
   name.style.display = "none";
   checkbox.style.display = "none";
   contactLabel.style.padding = "8px 0 0 0";
+  contactLabel.style.cursor = "default"
 }
 
 
