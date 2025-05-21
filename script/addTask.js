@@ -202,6 +202,7 @@ function clearForm() {
     radioBtnChecked("medium")
     clearValidationAreas()
     clearStyleChange()
+    placeForSubtasks()
 }
 
 function clearStyleChange() {
