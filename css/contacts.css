@@ -94,8 +94,6 @@ body {
     color: var(--primaryColor);
 }
 
-
-
 .contact-info-wrapper {
     width: 0%;
     overflow: hidden;
@@ -677,8 +675,6 @@ input.error {
         right: 24px;
     }
 
-
-
     .overlay {
         border-radius: 30px;
     }
@@ -846,7 +842,6 @@ input.error {
     .overlay-footer .btn-delete, .btn-check {
         min-height: unset;
     }
-
 }
 
 @media screen and (min-width:1921px) {
@@ -862,8 +857,6 @@ input.error {
         transform: translate(-50%, -50%) !important;
     }
 }
-
-
 
 .d-none {
     display: none;
