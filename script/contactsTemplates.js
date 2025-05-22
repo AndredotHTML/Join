@@ -82,7 +82,7 @@ function createAddContactTemplate () {
     </div>
     <div class="input_container">
       <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
-      <div id="phone-error-add" class="error-message d-none">The telephone number entered is invalid.</div>
+      <div id="phone-error-add" class="error-message d-none">The field is empty or does not begin with a "+".</div>
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay(event)">

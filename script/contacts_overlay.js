@@ -34,11 +34,27 @@ function closeEditOverlay ( event ) {
  * Displays the add-contact overlay by showing the background, injecting the add form template, and sliding it into view.
  */
 function showAddContactOverlay () {
-    const addO = document.getElementById( "overlay-add-contact" );
+    const overlay = document.getElementById( "overlay-add-contact" );
     overlayBackground.classList.add( "d-flex" );
-    addO.innerHTML = createAddContactTemplate();
-    addO.classList.add( "slide-in" );
-    attachPhoneFilter( 'phone' );
+    overlay.innerHTML = createAddContactTemplate();
+    overlay.classList.add( "slide-in" );
+    attachPhoneFilter( "phone" );
+    initEnterNavigation( "add_contact_form", "add-contact-save-btn" );
+}
+
+function initEnterNavigation ( formId, btnId ) {
+    const inputs = Array.from( document.getElementById( formId ).querySelectorAll( "input" ) );
+    inputs[ 0 ].focus();
+    inputs.forEach( ( el, index ) =>
+        el.addEventListener( 'keydown', event => {
+            if ( event.key === 'Enter' ) {
+                event.preventDefault();
+                index < inputs.length - 1
+                    ? inputs[ index + 1 ].focus()
+                    : document.getElementById( btnId ).click();
+            }
+        } )
+    );
 }
 
 
