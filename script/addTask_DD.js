@@ -32,6 +32,8 @@ function openAssignedDropdown() {
   let assignedRef = document.getElementById("assigned-to-display");
   let arrowOpenRef = document.getElementById("arrow-open-assigned");
   let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+  console.log(assignedContactRef);
+  
   assignedRef.classList.add("visible-assigned");
   assignedRef.classList.remove("visible-assigned-min");
   assignedRef.style.display = "flex";
@@ -61,6 +63,9 @@ function closeDropdown() {
   let assignedRef = document.getElementById("assigned-to-display");
   let arrowOpenRef = document.getElementById("arrow-open-assigned");
   let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+  assignedContactRef.forEach(contact => {
+    contact.classList.remove("pointer")
+  });
   assignedRef.style.flexDirection = "row";
   controlClosedAssignedCont(assignedContactRef, assignedRef);
   arrowImgToggle(arrowOpenRef);

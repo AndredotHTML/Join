@@ -109,8 +109,8 @@
                   <input
                     type="text"
                     id="title-add-task"
-                    class="title-add-task poiner"
-                    placeholder="*Enter a title"
+                    class="title-add-task pointer"
+                    placeholder="Enter a title *"
                     onfocus="resValidOnInp(this)"
                   />
                   <div
@@ -118,15 +118,15 @@
                     id="title-validation"
                   ></div>
                 </div>
-                <div class="description-wrapper d-f-column d_flex poiner">
-                  <label class="poiner" for="description-add-task"
+                <div class="description-wrapper d-f-column d_flex pointer">
+                  <label class="pointer" for="description-add-task"
                     >Description <span>(optional)</span>
                   </label>
                   <textarea
                     onclick="textareaCursPos()"
                     oninput="lastCursorPosition()"
                     name="description-add-task"
-                    class="custom-resize description-add-task poiner"
+                    class="custom-resize description-add-task pointer"
                     id="description-add-task"
                     placeholder="Enter a Description"
                   >
@@ -135,8 +135,8 @@
                   <div class="validation-add-task-form"></div>
                 </div>
                 <div class="date-wrapper d-f-column d_flex">
-                  <label for="date-input-add-task" class="poiner"
-                    >*Due date
+                  <label for="date-input-add-task" class="pointer"
+                    >Due date *
                   </label>
                   <input
                     type="date"
@@ -154,7 +154,7 @@
                       type="text"
                       name="date-input-add-task"
                       id="date-input-add-task"
-                      class="date-input-add-task poiner"
+                      class="date-input-add-task pointer"
                       maxlength="10"
                       placeholder="dd/mm/yyyy"
                       oninput="customDateInput()"
@@ -162,7 +162,7 @@
                     />
                     <label for="nativ-date-input" onclick="showPicker()">
                       <img
-                        class="date-picker-icon poiner"
+                        class="date-picker-icon pointer"
                         src="/assets/icons/event.png"
                         alt="Open the date picker"
                       />
@@ -178,7 +178,7 @@
                 <legend>Priority</legend>
                 <div class="shell-radio-btn d_flex">
                   <label
-                    class="radio-btn center-center d_flex btn add-task-urgent poiner"
+                    class="radio-btn center-center d_flex btn add-task-urgent pointer"
                     id="add-task-urgent"
                     for="urgent-rad"
                   >
@@ -202,7 +202,7 @@
                     />
                   </label>
                   <label
-                    class="radio-btn center-center d_flex btn add-task-medium poiner"
+                    class="radio-btn center-center d_flex btn add-task-medium pointer"
                     id="add-task-medium"
                     for="medium-rad"
                   >
@@ -227,7 +227,7 @@
                     />
                   </label>
                   <label
-                    class="radio-btn center-center d_flex btn add-task-low poiner"
+                    class="radio-btn center-center d_flex btn add-task-low pointer"
                     id="add-task-low"
                     for="low-rad"
                   >
@@ -253,7 +253,7 @@
                 </div>
               </div>
               <div class="wrapper-assigned-to">
-                <label for="assigned-to-input" class="poiner">
+                <label for="assigned-to-input" class="pointer">
                   Assigned to <span>(optional)</span>
                 </label>
                 <div
@@ -267,7 +267,7 @@
                       type="text"
                       type="text"
                       id="assigned-to-input"
-                      class="assigned-to-input poiner"
+                      class="assigned-to-input pointer"
                       placeholder="Select contacts to assign"
                     />
                     <div
@@ -276,11 +276,11 @@
                     >
                       <img
                         src="../assets/icons/arrow_drop_down.svg"
-                        class="poiner"
+                        class="pointer"
                         alt="Open the 'Assigned to' dropdown"
                       />
                       <img
-                        class="d_none poiner"
+                        class="d_none pointer"
                         src="../assets/icons/arrow_drop_down_close.svg"
                         alt="Close the 'Assigned to' dropdown"
                       />
@@ -293,7 +293,7 @@
                 </div>
               </div>
               <div class="wrapper-category" id="wrapper-category">
-                <label class="poiner"> *Category </label>
+                <label class="pointer"> Category * </label>
                 <div
                   class="wrapper-select d_flex"
                   id="select-category"
@@ -303,7 +303,7 @@
                   <div
                     name="category-add-task"
                     id="category-add-task"
-                    class="category-add-task poiner"
+                    class="category-add-task pointer"
                   >
                     Select task category
                   </div>
@@ -313,11 +313,11 @@
                   >
                     <img
                       src="../assets/icons/arrow_drop_down.svg"
-                      class="poiner"
+                      class="pointer"
                       alt="Open the 'Category' dropdown"
                     />
                     <img
-                      class="d_none poiner"
+                      class="d_none pointer"
                       src="../assets/icons/arrow_drop_down_close.svg"
                       alt="Close the 'Category' dropdown"
                     />
@@ -329,14 +329,14 @@
                     id="category-validation"
                   ></div>
                 <div
-                  class="option-category poiner"
+                  class="option-category pointer"
                   onclick="stopPropagation(event)"
                   data-value="Technical Task"
                 >
                   Technical Task
                 </div>
                 <div
-                  class="option-category poiner"
+                  class="option-category pointer"
                   onclick="stopPropagation(event)"
                   data-value="User Story"
                 >
@@ -354,7 +354,7 @@
                   <input
                     type="text"
                     id="subtask"
-                    class="subtask poiner"
+                    class="subtask pointer"
                     placeholder="Add new subtask"
                     onclick="showSubtaskIcons()"
                     onkeydown="subtaskEnter(event)"
@@ -367,7 +367,7 @@
                       <img
                         src="/assets/icons/add.png"
                         alt="Start typing a subtask"
-                        class="poiner"
+                        class="pointer"
                         onclick="fokusSubtaskInp()"
                       />
                     </div>
@@ -377,7 +377,7 @@
                     >
                       <img
                         src="/assets/icons/close_cross.svg"
-                        class="d_flex center-center icon-form icon-24 poiner"
+                        class="d_flex center-center icon-form icon-24 pointer"
                         id="subtask_input_clear"
                         alt="Clear subtask input"
                         onclick="clearInputSubtask()"
@@ -385,7 +385,7 @@
                       <div class="separator"></div>
                       <img
                         src="/assets/icons/check_blue.svg"
-                        class="d_flex center-center icon-form icon-24 poiner"
+                        class="d_flex center-center icon-form icon-24 pointer"
                         alt="Add subtask"
                         onclick="subtaskInputCheck()"
                       />
@@ -401,7 +401,7 @@
           </div>
           <div class="add-task-btns d_flex">
             <button
-              class="btn poiner clear-form-btn center-center d_flex"
+              class="btn pointer clear-form-btn center-center d_flex"
               onclick="clearForm()"
             >
               <div class="btn-title">Clear</div>
@@ -409,7 +409,7 @@
             </button>
             <button
               id="add-task-create-btn"
-              class="btn poiner add-task-create-btn center-center d_flex"
+              class="btn pointer add-task-create-btn center-center d_flex"
               form="form-add-task"
               type="submit"
               onclick="enabledCreateBtn()"
