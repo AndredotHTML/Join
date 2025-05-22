@@ -129,23 +129,26 @@ function createEditContactTemplate ( selectedContact ) {
       <input required id="edit_name" type="text" placeholder="Name"
              value="${ selectedContact.contactData.name }"
              class="input-person" maxlength="50">
+             <div id="name-error-edit" class="error-message d-none">Field must not be empty.</div>
     </div>
     <div class="input_container">
       <input required id="edit_email" type="email" placeholder="Email"
              value="${ selectedContact.contactData.email }"
-             class="input-email" maxlength="255" title="Please enter a valid e-mail address (e.g. name@domain.tld)." pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$">
+             class="input-email" maxlength="255" title="Please enter a valid e-mail address (e.g. name@domain.tld).">
+              <div id="email-error-edit" class="error-message d-none">Missing or incorrect e-mail address.</div>
     </div>
     <div class="input_container">
       <input required id="edit_phone" type="tel" placeholder="Phone"
              value="${ selectedContact.contactData.phone }"
              class="input-call" maxlength="20">
+              <div id="phone-error-edit" class="error-message d-none">The field is empty or does not begin with a "+".</div>
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-delete"
               onclick="handleDeleteContact ( '${ selectedContact.id }', event )">
         <span>Delete</span>
       </button>
-      <button type="button" class="btn btn-primary btn-check"
+      <button id="edit-contact-save-btn" type="button" class="btn btn-primary btn-check"
               onclick="updateContact('${ selectedContact.id }',event)">
         <span>Save</span>
       </button>

@@ -12,7 +12,8 @@ function showEditContactOverlay ( contactId ) {
     overlayBackground.classList.add( "d-flex" );
     editO.innerHTML = createEditContactTemplate( sel );
     editO.classList.add( "slide-in" );
-    attachPhoneFilter( 'edit_phone' );
+    attachPhoneFilter( "edit_phone" );
+    initEnterNavigation( "edit_form", "edit-contact-save-btn" );
 }
 
 

@@ -35,19 +35,45 @@ async function getContactData ( event ) {
  * @returns {boolean} True if form is valid, false otherwise.
  */
 function validateEditForm () {
-    const form = document.getElementById( 'edit_form' ),
-        emailInput = document.getElementById( 'edit_email' ),
-        phoneInput = document.getElementById( 'edit_phone' );
-    emailInput.setCustomValidity( '' ); phoneInput.setCustomValidity( '' );
-    if ( !form.checkValidity() ) return form.reportValidity(), false;
-    const { email, phone } = getEditFormData();
-    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) )
-        return emailInput.setCustomValidity( 'Invalid email address.' ), form.reportValidity(), false;
-    if ( !/^\+[0-9 ]+$/.test( phone ) )
-        return phoneInput.setCustomValidity( 'Must start with + and contain only digits and spaces.' ), form.reportValidity(), false;
+    const { name, email, phone } = getEditFormData();
+    const nameOK = isNameValidEdit( name );
+    const emailOK = isEmailValidEdit( email );
+    const phoneOK = isPhoneValidEdit( phone );
+    return nameOK && emailOK && phoneOK;
+}
+
+
+function isNameValidEdit ( name ) {
+    const el = document.getElementById( 'name-error-edit' );
+    if ( !name.trim() ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
     return true;
 }
 
+function isEmailValidEdit ( email ) {
+    const el = document.getElementById( 'email-error-edit' );
+    const ok = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test( email );
+    if ( !ok ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
+    return true;
+}
+
+function isPhoneValidEdit ( phone ) {
+    const el = document.getElementById( 'phone-error-edit' );
+    const ok = /^\+[0-9 ]+$/.test( phone );
+    if ( !ok ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
+    return true;
+}
 
 /**
  * Handles the edit-contact form submission by validating, patching data, and refreshing the UI.
