@@ -43,6 +43,12 @@ function showAddContactOverlay () {
     initEnterNavigation( "add_contact_form", "add-contact-save-btn" );
 }
 
+
+/**
+ * Sets up Enter-key navigation through all inputs in the given form and clicks the button when Enter is pressed on the last input.
+ * @param {string} formId - The ID of the form containing the input elements.
+ * @param {string} btnId - The ID of the button to trigger when Enter is pressed on the last input.
+ */
 function initEnterNavigation ( formId, btnId ) {
     const inputs = Array.from( document.getElementById( formId ).querySelectorAll( "input" ) );
     inputs[ 0 ].focus();
@@ -50,9 +56,7 @@ function initEnterNavigation ( formId, btnId ) {
         el.addEventListener( 'keydown', event => {
             if ( event.key === 'Enter' ) {
                 event.preventDefault();
-                index < inputs.length - 1
-                    ? inputs[ index + 1 ].focus()
-                    : document.getElementById( btnId ).click();
+                index < inputs.length - 1 ? inputs[ index + 1 ].focus() : document.getElementById( btnId ).click();
             }
         } )
     );

@@ -299,49 +299,6 @@ function getRandomColorClass () {
 
 
 /**
- * Einfache E-Mail-Prüfung
- * @param {string} email
- * @returns {boolean}
- */
-function isEmailValid ( email ) {
-    if ( /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test( email ) === false ) {
-        document.getElementById( 'email-error-add' ).classList.remove( 'd-none' );
-        return false;
-    } else {
-        document.getElementById( 'email-error-add' ).classList.add( 'd-none' );
-        return true;
-    }
-}
-
-
-/**
- * Telefon muss + vorne, danach nur Ziffern und Leerzeichen
- * @param {string} phone
- * @returns {boolean}
- */
-function isPhoneValid ( phone ) {
-    if ( /^\+[0-9 ]+$/.test( phone ) === false ) {
-        document.getElementById( 'phone-error-add' ).classList.remove( 'd-none' );
-        return false;
-    }
-    else {
-        document.getElementById( 'phone-error-add' ).classList.add( 'd-none' );
-        return true;
-    }
-}
-
-function isNameValid ( name ) {
-    if ( name.length > 0 === false ) {
-        document.getElementById( 'name-error-add' ).classList.remove( 'd-none' );
-        return false;
-    } else {
-        document.getElementById( 'name-error-add' ).classList.add( 'd-none' );
-        return true;
-    }
-}
-
-
-/**
  * Hängt Live-Filter & Keypress-Blocker ans Inputfeld,
  * erlaubt Plus nur wenn Cursor an Pos 0 und Tastendruck '+'
  * @param {string} inputId
