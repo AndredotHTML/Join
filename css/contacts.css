@@ -298,6 +298,8 @@ label > span {
     display: flex;
     justify-content: space-between;
     position: relative;
+    flex-direction: column;
+    row-gap: 4px;
 }
 
 .input_container input {
@@ -532,6 +534,12 @@ input.error {
 
 .btn-detail-actions {
     display: none;
+}
+
+.error-message {
+    color: #ff8190;
+    font-size: 13px;
+    font-family: "Inter", sans-serif;
 }
 
 @media screen and (max-width:1200px) {
@@ -855,7 +863,7 @@ input.error {
     }
 }
 
-}
+
 
 .d-none {
     display: none;

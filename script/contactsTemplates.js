@@ -71,15 +71,18 @@ function createAddContactTemplate () {
         </div>
       </div>
   </div>
-  <form id="add_contact_form" onsubmit="return getContactData(event)">
+  <form id="add_contact_form" onsubmit="return getContactData(event)" novalidate>
     <div class="input_container">
       <input required id="name" type="text" placeholder="Name" class="input-person" maxlength="50">
+      <div id="name-error-add" class="error-message d-none">Field must not be empty.</div>
     </div>
     <div class="input_container">
-      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255" pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$" title="Please enter a valid e-mail address (e.g. name@domain.tld).">
+      <input required id="email" type="email" placeholder="Email" class="input-email" maxlength="255" title="Please enter a valid e-mail address (e.g. name@domain.tld).">
+      <div id="email-error-add" class="error-message d-none">Missing or incorrect e-mail address.</div>
     </div>
     <div class="input_container">
       <input required id="phone" type="tel" placeholder="Phone" class="input-call" maxlength="20">
+      <div id="phone-error-add" class="error-message d-none">The telephone number entered is invalid.</div>
     </div>
     <div class="overlay-footer">
       <button type="button" class="btn btn-secondary btn-cancel" onclick="closeOverlay(event)">

@@ -47,21 +47,6 @@ function deselectAllContacts () {
 
 
 /**
- * Checks the add-contact form’s HTML5 validity, reports any validation errors, and returns the result.
- *
- * @returns {boolean} True if the form is valid; otherwise false.
- */
-function validateForm () {
-    const form = document.getElementById( 'add_contact_form' );
-    if ( !form.checkValidity() ) {
-        form.reportValidity();
-        return false;
-    }
-    return true;
-}
-
-
-/**
  * Extracts contact form fields and appends a randomly generated avatar color class.
  * @returns {{name: string, email: string, phone: string, avatarColorClass: string}} The contact data with avatar color.
  */
@@ -319,7 +304,13 @@ function getRandomColorClass () {
  * @returns {boolean}
  */
 function isEmailValid ( email ) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email );
+    if ( /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test( email ) === false ) {
+        document.getElementById( 'email-error-add' ).classList.remove( 'd-none' );
+        return false;
+    } else {
+        document.getElementById( 'email-error-add' ).classList.add( 'd-none' );
+        return true;
+    }
 }
 
 
@@ -329,27 +320,24 @@ function isEmailValid ( email ) {
  * @returns {boolean}
  */
 function isPhoneValid ( phone ) {
-    return /^\+[0-9 ]+$/.test( phone );
+    if ( /^\+[0-9 ]+$/.test( phone ) === false ) {
+        document.getElementById( 'phone-error-add' ).classList.remove( 'd-none' );
+        return false;
+    }
+    else {
+        document.getElementById( 'phone-error-add' ).classList.add( 'd-none' );
+        return true;
+    }
 }
 
-
-/**
- * Sanitizer: entfernt alles außer +, Ziffern und Leerzeichen,
- * behält ein führendes + nur, wenn der Nutzer es eingegeben hat
- * @param {string} value
- * @returns {string}
- */
-function sanitizePhone ( value ) {
-    // nur Ziffern, Leerzeichen, + zulassen
-    let v = value.replace( /[^0-9+ ]/g, '' );
-    // Extrahiere führendes +, falls vorhanden
-    const leadingPlus = v.startsWith( '+' ) ? '+' : '';
-    // entferne alle weiteren +
-    v = v.replace( /\+/g, '' );
-    // füge das eine führende + zurück (wenn es exisitiert)
-    v = leadingPlus + v;
-    // max. Länge 20
-    return v.slice( 0, 20 );
+function isNameValid ( name ) {
+    if ( name.length > 0 === false ) {
+        document.getElementById( 'name-error-add' ).classList.remove( 'd-none' );
+        return false;
+    } else {
+        document.getElementById( 'name-error-add' ).classList.add( 'd-none' );
+        return true;
+    }
 }
 
 
@@ -361,10 +349,6 @@ function sanitizePhone ( value ) {
 function attachPhoneFilter ( inputId ) {
     const input = document.getElementById( inputId );
     if ( !input ) return;
-    input.addEventListener( "input", () => {
-        input.setCustomValidity( "" );
-        input.value = sanitizePhone( input.value );
-    } );
     input.addEventListener( "keypress", ( event ) => {
         const key = event.key, value = input.value, pos = input.selectionStart;
         if ( key === "+" ) {

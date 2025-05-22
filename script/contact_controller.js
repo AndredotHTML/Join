@@ -3,17 +3,11 @@
  * @returns {boolean} True if form is valid, false otherwise.
  */
 function validateAddForm () {
-    const form = document.getElementById( 'add_contact_form' ),
-        emailInput = document.getElementById( 'email' ),
-        phoneInput = document.getElementById( 'phone' );
-    emailInput.setCustomValidity( "" ); phoneInput.setCustomValidity( "" );
-    if ( !form.checkValidity() ) return form.reportValidity(), false;
-    const { email, phone } = getContactFormData();
-    if ( !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test( email ) )
-        return emailInput.setCustomValidity( 'Invalid email address.' ), form.reportValidity(), false;
-    if ( !/^\+[0-9 ]+$/.test( phone ) )
-        return phoneInput.setCustomValidity( 'Must start with + and contain only digits and spaces.' ), form.reportValidity(), false;
-    return true;
+    const { name, email, phone } = getContactFormData();
+    const nameResult = isNameValid( name );
+    const emailResult = isEmailValid( email );
+    const phoneResult = isPhoneValid( phone );
+    return nameResult && emailResult && phoneResult;
 }
 
 
