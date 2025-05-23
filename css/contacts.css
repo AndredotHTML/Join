@@ -283,7 +283,7 @@ label > span {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 72px 0 32px;
+    padding: 22px 0 32px;
 }
 
 .contact-circle > img {
@@ -392,7 +392,7 @@ input.error {
     position: relative;
     padding: 108px 46px;
     gap: 12px;
-    height: 383px;
+    height: 373px;
 }
 
 .overlay-header-logo {
@@ -519,6 +519,7 @@ input.error {
 .contact-info-wrapper.slide-in {
     padding: 72px 0 0 62px;
     flex: 1;
+    background-color: var(--secondaryColor);
 }
 
 .contact-title-row > h3 {
@@ -527,7 +528,7 @@ input.error {
 
 .contact-title-row {
     padding: 21px 0;
-    width: auto important;
+    width: auto;
 }
 
 .btn-detail-actions {
@@ -540,7 +541,7 @@ input.error {
     font-family: "Inter", sans-serif;
 }
 
-@media screen and (max-width:1200px) {
+@media screen and (max-width:1300px) {
 
 
     .active_span::before {
@@ -619,7 +620,6 @@ input.error {
 }
 
 @media screen and (max-width:920px) {
-
 
     .slide-in {
         right: 0;
@@ -740,6 +740,11 @@ input.error {
 }
 
 @media screen and (max-width: 620px) {
+    .contact-circle {
+        height: 80px;
+        width: 80px;
+    }
+
     .overlay-header {
         border-radius: 30px 30px 0 0;
     }
@@ -790,10 +795,7 @@ input.error {
 }
 
 @media screen and (max-width: 540px) {
-    .contact-circle {
-        height: 80px;
-        width: 80px;
-    }
+
 
     .header-logo {
         position: absolute;
