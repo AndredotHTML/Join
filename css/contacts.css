@@ -542,6 +542,25 @@ input.error {
 }
 
 @media screen and (max-width:1300px) {
+    .overlay-profile-sec {
+        position: absolute;
+        top: 320px;
+        left: 50%;
+        transform: translate(-50%, 0);
+        padding: 0;
+        z-index: 100;
+    }
+
+    .overlay-header {
+        position: relative;
+    }
+
+    .overlay-content {
+        padding-top: 92px;
+    }
+}
+
+@media screen and (max-width:1200px) {
 
 
     .active_span::before {
@@ -594,23 +613,6 @@ input.error {
         width: calc(100% - 456px);
         padding-top: 144px;
         padding-left: 24px;
-    }
-
-    .overlay-profile-sec {
-        position: absolute;
-        top: 320px;
-        left: 50%;
-        transform: translate(-50%, 0);
-        padding: 0;
-        z-index: 100;
-    }
-
-    .overlay-header {
-        position: relative;
-    }
-
-    .overlay-content {
-        padding-top: 92px;
     }
 
     .btn-add-contact {
