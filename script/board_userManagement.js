@@ -51,7 +51,7 @@ function generateUserIcons(assignedUsers) {
 }
 
 function createExtraUsersIcon(count, leftPosition) {
-    return `<span class="user_icon" style="background-color: black; left: ${leftPosition}px;">+${count}</span>`;
+    return `<span class="user_icon" style="background-color:gray; left: ${leftPosition}px;">+${count}</span>`;
 }
 
 function createDisplayedUserIcons(usersData, maxIcons, overlapDistance) {
