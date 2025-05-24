@@ -47,21 +47,6 @@ function deselectAllContacts () {
 
 
 /**
- * Checks the add-contact form’s HTML5 validity, reports any validation errors, and returns the result.
- *
- * @returns {boolean} True if the form is valid; otherwise false.
- */
-function validateForm () {
-    const form = document.getElementById( 'add_contact_form' );
-    if ( !form.checkValidity() ) {
-        form.reportValidity();
-        return false;
-    }
-    return true;
-}
-
-
-/**
  * Extracts contact form fields and appends a randomly generated avatar color class.
  * @returns {{name: string, email: string, phone: string, avatarColorClass: string}} The contact data with avatar color.
  */
@@ -269,6 +254,7 @@ async function deleteContact ( contactId ) {
     } );
     pushToContactsArray();
     DETAIL_ELEM.innerHTML = "";
+    ensureDetailPanelClosed();
 }
 
 
@@ -309,6 +295,23 @@ async function refreshAndSelect ( contactId ) {
 function getRandomColorClass () {
     const number = Math.floor( Math.random() * 15 ) + 1;
     return `avatar-color-${ number }`;
+}
+
+
+/**
+ * Hängt Live-Filter & Keypress-Blocker ans Inputfeld,
+ * erlaubt Plus nur wenn Cursor an Pos 0 und Tastendruck '+'
+ * @param {string} inputId
+ */
+function attachPhoneFilter ( inputId ) {
+    const input = document.getElementById( inputId );
+    if ( !input ) return;
+    input.addEventListener( "keypress", ( event ) => {
+        const key = event.key, value = input.value, pos = input.selectionStart;
+        if ( key === "+" ) {
+            if ( pos !== 0 || value.startsWith( "+" ) ) event.preventDefault(); return;
+        } if ( !( /[0-9 ]/.test( key ) ) ) event.preventDefault();
+    } );
 }
 
 

@@ -1,25 +1,18 @@
-let getUserCache = [];
 let getContactCache = [];
-user = []
 
 
-document.addEventListener("DOMContentLoaded", async function () {
+/**
+ * Initializes the application on load
+ */
+
+async function init() {
+    authLogIn()
     dropdownForCategory()
     await getContacts(path = "/contacts");
     document.getElementById("assigned-to-input").addEventListener("input", displayContacts);
     radioBtnChecked("medium")
-});
-
-
-async function getCurrentUser() {
-    let userData = JSON.parse(localStorage.getItem('user'));
-    if (userData) {
-        user.push(userData);
-        generateUserIcon();
-    } else {
-        console.log("Kein Nutzer gefunden.");
-    }
-}
+    minPickerDate()
+};
 
 
 /**

@@ -1,16 +1,16 @@
 function subtaskTemplat(inputSubtaskVal) {
     return ` 
-            <div class="d_flex addedSubtask" id="">
-                <li class="subtask-value poiner" ondblclick="editSubtasks(this)">
+            <div class="d_flex addedSubtask pointer" id="">
+                <li class="subtask-value" ondblclick="editSubtasks(this)">
                     ${inputSubtaskVal} 
                 </li>
-                <div class="icon-for-subtask-work poiner" id="input-subtask-icons" >
+                <div class="icon-for-subtask-work" id="input-subtask-icons" >
                     <div class="icons-subtask d_none subtask-hover-icons">
                         <img src="/assets/icons/edit.svg" class="icon-form  edit-subtask-icon" alt="edit Subtask" onclick="editSubtasks(this.closest('.addedSubtask').querySelector('.subtask-value'))">
                         <div class="separator"></div>
                         <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onclick="deleteSubtask(this.closest('.addedSubtask'))">
                     </div>
-                    <div class="icons-subtask d_none subtask-edit-icons poiner">
+                    <div class="icons-subtask d_none subtask-edit-icons">
                         <img src="/assets/icons/delete.svg" class="icon-form  delete-subtask-icon" alt="delete Subtask" onmousedown="deleteSubtask(this.closest('.addedSubtask'))">
                         <div class="separator "></div>
                         <img src="/assets/icons/check_blue.svg" class="icon-form " alt="check Subtask" >
@@ -22,8 +22,8 @@ function subtaskTemplat(inputSubtaskVal) {
 
 function templateAssignedTo(contact, isChecked, isCurrentUser) {
     return `
-    <div class="assigned-contacts visible-assigned d_flex">
-            <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex">
+    <div class="assigned-contacts visible-assigned d_flex pointer">
+            <label for="assigned-user-${contact.name}" onclick="stopPropagation(event)" class="d_flex ">
                 <div class="d_flex icon-name-template">
                     <div class="name-icon d_flex ${contact.avatarColorClass? contact.avatarColorClass: `avatar-color-user` }" data-value="${contact.name}">
                     ${contact.name.split(' ').length > 1 ? contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[1][0].toUpperCase() : contact.name.split(' ')[0][0].toUpperCase() + contact.name.split(' ')[0][1].toUpperCase()}
@@ -65,13 +65,13 @@ function generateTask(element) {
     <img src="../assets/icons/up_down_arrow.png" alt="UpDownArrow" onclick="showMiniMenu(event, '${element.id}', '${element.status}')"></div>
     <div class="ticket_title"><h3>${element.title}</h3></div>
     <div class="ticket_description">${element.description}</div>
-    ${element.subtasks ? `
-    <div class="ticket_subtasks">
+    ${element.subtasks && completed > 0 ? ` <div class="ticket_subtasks">
     <div class="progress_bar">
     <div class="progress" style="width: ${progress}%;"></div>
     </div>
     <div class="completed"><span>${completed}/${total} Subtasks</span></div>
-    </div>` : ''}
+    </div>` : ''
+    }
     <div class="ticket_footer ${!user_icon ? 'no_users' : ''}">
     <div class="ticket_users">${user_icon || ''}</div>
     <div class="ticket_priority">${priority_img}</div>

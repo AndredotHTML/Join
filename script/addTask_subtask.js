@@ -6,10 +6,24 @@ function addSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     let displaydSubtaskRef = document.getElementById("added-subtasks")
     let inputSubtaskVal = inputSubtaskRef.value
-    if (inputSubtaskVal !== "") {
+    if (inputSubtaskVal.trim() !== "") {
         displaydSubtaskRef.innerHTML += subtaskTemplat(inputSubtaskVal)
         inputSubtaskRef.value = ""
     }
+    placeForSubtasks()
+}
+
+
+/**
+ * Adds bottom padding based on the count of subtasks.
+ * @param {HTMLElement} displaydSubtaskRef The container holding all subtasks
+ */
+
+function placeForSubtasks() {
+    let displaydSubtaskRef = document.getElementById("added-subtasks")
+    let countedSubtasks = displaydSubtaskRef.children.length
+    let extraPadding = countedSubtasks * 44
+    displaydSubtaskRef.style.paddingBottom = extraPadding+"px"
 }
 
 
@@ -67,6 +81,7 @@ function styleSubtaskBlur(element, subtaskContainerRef, editContainer) {
 
 function deleteSubtask(element) {
     element.remove();
+    placeForSubtasks()
 }
 
 
@@ -131,4 +146,5 @@ function clearInputSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
     inputSubtaskRef.value = ""
     changeSubtaskIcons()
+    placeForSubtasks()
 }
