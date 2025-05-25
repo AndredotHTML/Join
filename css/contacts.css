@@ -368,7 +368,7 @@ input.error {
     top: 0;
     left: 0;
     width: 584px;
-    height: 100vh;
+    height: 100dvh;
     background: white;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
@@ -433,7 +433,7 @@ input.error {
     top: 0;
     right: 0;
     width: 584px;
-    height: 100vh;
+    height: 100dvh;
     background: white;
     transform: translateX(100%);
     transition: transform 125ms ease-in-out;
