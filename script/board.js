@@ -1,7 +1,6 @@
 let currentDraggedElement;
 const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
 
-
 async function updateHTML() {
     authLogIn()
     await  pushToContactsArray()

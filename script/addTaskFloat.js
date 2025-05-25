@@ -25,10 +25,7 @@ function showSubtaskActions() {
     let subtaskIcons = document.getElementById("subtask-icons");
 
     subtaskInput.disabled = false;   
-    subtaskIcons.innerHTML = `
-        <img id="subtask-check-icon" src="../assets/icons/check.png" alt="Check" onclick="addSubtaskOverlay()">
-        <img id="subtask-delete-icon" src="../assets/icons/x.png" alt="Delete" onclick="resetSubtaskIcons()">
-    `;
+    subtaskIcons.innerHTML = subtaskActionsTemplate();
 }
 
 function addSubtaskOverlay() {
@@ -52,17 +49,6 @@ function generateSubtasksHtml(subtasks) {
     }
     return subtasksHtml; 
 }
-
-function subtaskTemplate(subtaskValue){
-    return `<li class="added_subtask">
-             <span class="subtask_text">${subtaskValue}</span>
-            <div class="subtask_actions">
-                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon"  onclick="editSubtask(this)">
-                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtask(this)">
-                <img src="../assets/icons/check.png" alt="Confirm" class="check-icon" onclick="confirmEdit(this)" style="display:none;">
-            </div></li>`
-}
-
 
 function resetSubtaskIcons() {
     let subtaskInput = document.getElementById("subtask");
@@ -116,34 +102,6 @@ function displayContacts() {
         contactMenu.innerHTML += generateSingleUser(element, isChecked);
     }
 }
-
-function generateSingleUser(element, isChecked) {
-    let name = element.name; 
-    let nameParts = name.split(' ');
-    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
-    let color = getColorForUser(name); 
-
-    return `
-        <label for="user-${element.id}" class="user-item">
-            <span class="user-icon" style="background-color: ${color};">${initials}</span>
-            <span class="user-name">${name}</span>
-            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''} onchange="updateSelectedUsers()">
-            <span class="checkbox-custom"></span>
-        </label>
-    `;
-}
-
-function generateUserIcon(user) {
-    let name = user.name;
-    let nameParts = name.split(' ');
-    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
-    let color = getColorForUser(name); 
-
-    return `
-        <span class="user-icon" style="background-color: ${color};">${initials}</span>
-    `;
-}
-
 
 function toggleUserDropdown() {
     let contactMenu = document.getElementById("contactDropdown");
@@ -236,81 +194,38 @@ function generateUserIconFromName(userName) {
     `;
 }
 
-async function createTask() {
-    const task =taskObject();
+async function createTaskByStatus(status) {
+    await pushToContactsArray();
+    const task = taskObject(status);
     if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-    let newId= await postTask("/tasks", task);
+
+    let newId = await postTask("/tasks", task);
     if (newId) {
-        task.id = newId; 
+        task.id = newId;
         tasks.push(task);
-        updateToDo(task);
+        updateTaskOnBoard(status, task);
     }
     createTaskFinale();
 }
 
-async function createTaskInProgress() {
-    await  pushToContactsArray(); 
-    const task =taskObjectInProgress();
-    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-    let newId= await postTask("/tasks", task);
-    if (newId) {
-        task.id = newId; 
-        tasks.push(task);
-        updateInProgress(task);
-    }
-    createTaskFinale();
-}
 
-async function createTaskAwaitFeedback() {
-    await  pushToContactsArray();
-    const task =taskObjectAwaitFeedback();
-    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
-    let newId= await postTask("/tasks", task);
-    if (newId) {
-        task.id = newId; 
-        tasks.push(task);
-        updateAwaitFeedback(task);
-    }
-    createTaskFinale();
-}
-
-function taskObject() {
+function taskObject(status) {
     return {
         title: document.getElementById("title_add_task").value,
         description: document.getElementById("description_add_task").value,
         dueDate: document.getElementById("dateInput-add-task").value,
         priority: getPriority(),
         assignedUsers: assignedContacts,
-        category: document.getElementById("category_add_task").innerText, 
+        category: document.getElementById("category_add_task").innerText,
         subtasks: getNewSubtasks(),
-        status: "toDo"
+        status: status
     };
 }
 
-function taskObjectInProgress() {
-    return {
-        title: document.getElementById("title_add_task").value,
-        description: document.getElementById("description_add_task").value,
-        dueDate: document.getElementById("dateInput-add-task").value,
-        priority: getPriority(),
-        assignedUsers: assignedContacts,
-        category: document.getElementById("category_add_task").innerText, 
-        subtasks: getNewSubtasks(),
-        status: "inProgress"
-    };
-}
-
-function taskObjectAwaitFeedback() {
-    return {
-        title: document.getElementById("title_add_task").value,
-        description: document.getElementById("description_add_task").value,
-        dueDate: document.getElementById("dateInput-add-task").value,
-        priority: getPriority(),
-        assignedUsers: assignedContacts,
-        category: document.getElementById("category_add_task").innerText, 
-        subtasks: getNewSubtasks(),
-        status: "awaitFeedback"
-    };
+function updateTaskOnBoard(status, task) {
+    if (status === 'toDo') updateToDo(task);
+    else if (status === 'inProgress') updateInProgress(task);
+    else if (status === 'awaitFeedback') updateAwaitFeedback(task);
 }
 
 function createTaskFinale() {

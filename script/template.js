@@ -220,3 +220,19 @@ function generateSingleSubtask(title, checked, taskId, index) {
         </div>
     `;
 }
+
+function generateOverlaySingleUserIcon(initial,name, color) {
+    return `<div class="user_icon_plus_name">
+                <span class="user_icon_overlay" style="background-color: ${color}">${initial}</span>
+                <span class="user_name_overlay">${name}</span>
+            </div>`;
+}
+
+function createExtraUsersIcon(count, leftPosition) {
+    return `<span class="user_icon" style="background-color:gray; left: ${leftPosition}px;">+${count}</span>`;
+}
+
+
+function generateSingleUserIcon(initial, leftPosition, color) {
+    return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
+}

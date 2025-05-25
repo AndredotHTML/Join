@@ -106,3 +106,11 @@ async function updateTaskInFirebase(taskId, updatedTask) {
         console.error("Firebase update error:", error);
     }
 }
+
+async function changeTaskStatus(taskId, newStatus) {
+    let task = tasks.find(t => t.id === taskId);
+    task.status = newStatus; 
+    await updateTaskInFirebase(taskId, { status: newStatus });
+    closeStatusMenu();
+    updateView();
+}

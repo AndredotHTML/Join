@@ -1,4 +1,4 @@
-function addTaskOverlay(){
+function addTaskOverlay(status = 'toDo'){
     return `<div id="task-message" style="display: none;">
             <p>Task added to board</p>
             <img src="../assets/icons/board_icon.png" alt="Board Icon">
@@ -77,7 +77,7 @@ function addTaskOverlay(){
             </div>
             </div>
                 <div class="button_div">
-                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTask()">
+                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTaskByStatus('${status}')">
                     <div class="btn_title">Create Task </div>
                     <img src="../assets/icons/check.svg" alt="">
                 </button>
@@ -85,7 +85,7 @@ function addTaskOverlay(){
    </div> `
 }
 
-function addTaskInProgressOverlay(){
+function addTaskInProgressOverlay(status = 'inProgress'){
     return `<div id="task-message" style="display: none;">
             <p>Task added to board</p>
             <img src="../assets/icons/board_icon.png" alt="Board Icon">
@@ -164,7 +164,7 @@ function addTaskInProgressOverlay(){
             </div>
             </div>
                 <div class="button_div">
-                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTaskInProgress()">
+                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTaskByStatus('${status}')">
                     <div class="btn_title">Create Task </div>
                     <img src="../assets/icons/check.svg" alt="">
                 </button>
@@ -172,7 +172,7 @@ function addTaskInProgressOverlay(){
    </div> `
 }
 
-function addTaskAwaitFeedbackOverlay(){
+function addTaskAwaitFeedbackOverlay(status = 'awaitFeedback'){
     return `<div id="task-message" style="display: none;">
             <p>Task added to board</p>
             <img src="../assets/icons/board_icon.png" alt="Board Icon">
@@ -251,10 +251,54 @@ function addTaskAwaitFeedbackOverlay(){
             </div>
             </div>
                 <div class="button_div">
-                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTaskAwaitFeedback()">
+                <button class="add_task_create_btn" id="add_task_create_btn" onclick="createTaskByStatus('${status}')">
                     <div class="btn_title">Create Task </div>
                     <img src="../assets/icons/check.svg" alt="">
                 </button>
             </div> 
    </div> `
+}
+
+function subtaskActionsTemplate() {
+    return `
+        <img id="subtask-check-icon" src="../assets/icons/check.png" alt="Check" onclick="addSubtaskOverlay()">
+        <img id="subtask-delete-icon" src="../assets/icons/x.png" alt="Delete" onclick="resetSubtaskIcons()">
+    `;
+}
+
+function subtaskTemplate(subtaskValue){
+    return `<li class="added_subtask">
+             <span class="subtask_text">${subtaskValue}</span>
+            <div class="subtask_actions">
+                <img src="../assets/icons/edit.png" alt="Edit" class="edit-icon"  onclick="editSubtask(this)">
+                <img src="../assets/icons/delete.png" alt="Delete" class="delete-icon" onclick="deleteSubtask(this)">
+                <img src="../assets/icons/check.png" alt="Confirm" class="check-icon" onclick="confirmEdit(this)" style="display:none;">
+            </div></li>`
+}
+
+function generateSingleUser(element, isChecked) {
+    let name = element.name; 
+    let nameParts = name.split(' ');
+    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
+    let color = getColorForUser(name); 
+
+    return `
+        <label for="user-${element.id}" class="user-item">
+            <span class="user-icon" style="background-color: ${color};">${initials}</span>
+            <span class="user-name">${name}</span>
+            <input type="checkbox" id="user-${element.id}" value="${name}" ${isChecked ? 'checked' : ''} onchange="updateSelectedUsers()">
+            <span class="checkbox-custom"></span>
+        </label>
+    `;
+}
+
+function generateUserIcon(user) {
+    let name = user.name;
+    let nameParts = name.split(' ');
+    let initials = nameParts.length >= 2 ? `${nameParts[0][0]}${nameParts[1][0]}` : name[0];
+    let color = getColorForUser(name); 
+
+    return `
+        <span class="user-icon" style="background-color: ${color};">${initials}</span>
+    `;
 }

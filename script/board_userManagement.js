@@ -50,10 +50,6 @@ function generateUserIcons(assignedUsers) {
     return userIcon;
 }
 
-function createExtraUsersIcon(count, leftPosition) {
-    return `<span class="user_icon" style="background-color:gray; left: ${leftPosition}px;">+${count}</span>`;
-}
-
 function createDisplayedUserIcons(usersData, maxIcons, overlapDistance) {
     let icons = '';
     let displayedUsers = usersData.slice(0, maxIcons);
@@ -67,11 +63,6 @@ function createDisplayedUserIcons(usersData, maxIcons, overlapDistance) {
     return icons;
 }
 
-
-function generateSingleUserIcon(initial, leftPosition, color) {
-    return `<span class="user_icon" style="background-color: ${color}; left: ${leftPosition}px;">${initial}</span>`;
-}
-
 function generateOverlayUserIcons(assignedUsers){
     let usersData = getUsersInitials(assignedUsers);
     let userIcon = '';
@@ -81,13 +72,6 @@ function generateOverlayUserIcons(assignedUsers){
         userIcon += generateOverlaySingleUserIcon(usersData[i].initials,usersData[i].name,color)
     }
     return userIcon;
-}
-
-function generateOverlaySingleUserIcon(initial,name, color) {
-    return `<div class="user_icon_plus_name">
-                <span class="user_icon_overlay" style="background-color: ${color}">${initial}</span>
-                <span class="user_name_overlay">${name}</span>
-            </div>`;
 }
 
 function getColorForUser(name) {
@@ -250,10 +234,3 @@ function closeStatusMenu() {
     if (menu) menu.classList.add('hidden');
 }
 
-async function changeTaskStatus(taskId, newStatus) {
-    let task = tasks.find(t => t.id === taskId);
-    task.status = newStatus; 
-    await updateTaskInFirebase(taskId, { status: newStatus });
-    closeStatusMenu();
-    updateView();
-}
