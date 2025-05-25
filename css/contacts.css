@@ -882,6 +882,10 @@ input.error {
     display: none;
 }
 
+.modal {
+    overflow: hidden;
+}
+
 .d-flex {
     display: flex;
 }

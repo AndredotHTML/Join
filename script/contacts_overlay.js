@@ -9,6 +9,7 @@ let overlayBackground = document.getElementById( "overlay-bg" );
 function showEditContactOverlay ( contactId ) {
     const sel = findContactById( contactId );
     const editO = document.getElementById( "editOverlay" );
+    document.body.parentElement.classList.add( "modal" );
     overlayBackground.classList.add( "d-flex" );
     editO.innerHTML = createEditContactTemplate( sel );
     editO.classList.add( "slide-in" );
@@ -23,6 +24,7 @@ function showEditContactOverlay ( contactId ) {
  */
 function closeEditOverlay ( event ) {
     const editOverlay = document.getElementById( "editOverlay" );
+    document.body.parentElement.classList.remove( "modal" );
     overlayBackground.classList.remove( "d-flex" );
     let btn = event.target;
     if ( btn ) {
@@ -36,6 +38,7 @@ function closeEditOverlay ( event ) {
  */
 function showAddContactOverlay () {
     const overlay = document.getElementById( "overlay-add-contact" );
+    document.body.parentElement.classList.add( "modal" );
     overlayBackground.classList.add( "d-flex" );
     overlay.innerHTML = createAddContactTemplate();
     overlay.classList.add( "slide-in" );
@@ -68,6 +71,7 @@ function initEnterNavigation ( formId, btnId ) {
  * @param {Event} event – The event that triggered the overlay close.
  */
 function closeOverlay ( event ) {
+    document.body.parentElement.classList.remove( "modal" );
     let overlay = document.getElementById( 'overlay-add-contact' );
     overlayBackground.classList.remove( "d-flex" );
     let btn = event.target;
