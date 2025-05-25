@@ -558,10 +558,26 @@ input.error {
     .overlay-content {
         padding-top: 92px;
     }
+
+    .main_wrapper {
+        overflow-x: hidden;
+    }
 }
 
 @media screen and (max-width:1200px) {
 
+    .content {
+        flex-direction: unset !important;
+        height: unset !important;
+    }
+
+    .contact_bar {
+        box-shadow: unset;
+    }
+
+    .content {
+        height: calc(100vh - 96px - 77.38px);
+    }
 
     .active_span::before {
         background-color: transparent;
