@@ -26,10 +26,10 @@ function updateView(){
  * @param {string} status - The status of the tasks to display ('toDo', 'inProgress', 'awaitFeedback', 'done').
  */
 function displayTasks(status) {
-    let filteredTasks = tasks.filter(t => t['status'] === status);
     let container = document.getElementById(status);
-    let label = getLabelForStatus(status);
+    let filteredTasks = tasks.filter(t => t['status'] === status);
     container.innerHTML = '';
+    let label = getLabelForStatus(status);
 
     if (filteredTasks.length === 0) {
         container.innerHTML = generateNoTask(label);

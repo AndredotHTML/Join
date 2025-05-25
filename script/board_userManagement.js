@@ -160,7 +160,7 @@ function filterTasksByStatusAndSearch(status, searchTerm) {
  * @param {HTMLElement} container - Container DOM element to display tasks.
  * @param {Object[]} filteredTasks - Array of tasks to display.
  */
-function displayTasks(container, filteredTasks) {
+function displayFilteredTasks(container, filteredTasks) {
     container.innerHTML = ''; 
 
     if (filteredTasks.length > 0) {
@@ -186,7 +186,7 @@ function filterAndDisplayTasks(status, searchTerm) {
     if (!container) return false;
 
     let filteredTasks = filterTasksByStatusAndSearch(status, searchTerm);
-    displayTasks(container, filteredTasks);
+    displayFilteredTasks(container, filteredTasks);
     
     return filteredTasks.length > 0; 
 }
