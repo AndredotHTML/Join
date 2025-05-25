@@ -211,3 +211,12 @@ function generateEditOverlay(task) {
             </div> 
         </div>`;
 }
+
+function generateSingleSubtask(title, checked, taskId, index) {
+    return `
+        <div class="subtask_item">
+            <input type="checkbox" id="${taskId}-subtask-${index}" ${checked} onchange="toggleSubtask('${taskId}', '${index}')">
+            <label for="${taskId}-subtask-${index}">${title}</label>
+        </div>
+    `;
+}

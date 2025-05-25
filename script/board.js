@@ -1,5 +1,3 @@
-let tasks = [];
-
 let currentDraggedElement;
 const predefinedColors = ["#FF4646", "#FC71FF", "#9327FF", "#FFC701", "#0038FF","#1FD7C1","#FF7A00","#FF3D00","#7AE229"];
 
@@ -9,102 +7,47 @@ async function updateHTML() {
     await  pushToContactsArray()
     await pushToTask();
     await getCurrentUser();
-    displayToDo();
-    displayInProgress();
-    displayAwaitFeedback();
-    displayDone(); 
+     displayAllTaskSections();
 }
 
 function updateView(){
-    displayToDo();
-    displayInProgress();
-    displayAwaitFeedback();
-    displayDone(); 
+     displayAllTaskSections();
 }
 
-async function getAllTasks(path) {
-    let response = await fetch(BASE_URL + path + ".json");
-    return  await response.json()
-}
+function displayTasks(status) {
+    let filteredTasks = tasks.filter(t => t['status'] === status);
+    let container = document.getElementById(status);
+    let label = getLabelForStatus(status);
+    container.innerHTML = '';
 
-async function pushToTask() {
-    let task = await getAllTasks("/tasks"); 
-    let tasksArray = task ? Object.keys(task) : [];
-
-    for (let index = 0; index < tasksArray.length; index++) {
-        let taskData = task[tasksArray[index]]; 
-        tasks.push({
-            id: tasksArray[index], 
-            category: taskData.category,
-            title: taskData.title,
-            description: taskData.description,
-            dueDate: taskData.dueDate,
-            priority: taskData.priority,
-            status: taskData.status,
-            subtasks: taskData.subtasks,
-            assignedUsers: taskData.assignedUsers
-        });
-    }
-    updateView()
-}
-
-function displayToDo() {
-    let toDo = tasks.filter(t => t['status'] == 'toDo');
-    let toDoContainer = document.getElementById('toDo');
-    toDoContainer.innerHTML = '';
-    
-    if(toDo.length === 0) {
-        toDoContainer.innerHTML = generateNoTask('To do ');
-    }else {
-        for(let i = 0 ; i < toDo.length ; i++){
-            const element = toDo[i];
-            toDoContainer.innerHTML += generateTask(element);
+    if (filteredTasks.length === 0) {
+        container.innerHTML = generateNoTask(label);
+    } else {
+        for (let i = 0; i < filteredTasks.length; i++) {
+            container.innerHTML += generateTask(filteredTasks[i]);
         }
     }
 }
 
-function displayInProgress(){
-    let inProgress = tasks.filter(t => t['status'] == 'inProgress')
-    let inProgressContainer = document.getElementById('inProgress');
-    inProgressContainer.innerHTML = '';
-
-    if(inProgress.length === 0) {
-        inProgressContainer.innerHTML = generateNoTask('In progress');
-    }else {
-        for(let i = 0 ; i < inProgress.length ; i++) {
-            const element = inProgress[i];
-            inProgressContainer.innerHTML += generateTask(element);
-        }
+function getLabelForStatus(status) {
+    switch (status) {
+        case 'toDo':
+            return 'To do';
+        case 'inProgress':
+            return 'In progress';
+        case 'awaitFeedback':
+            return 'Await Feedback';
+        case 'done':
+            return 'Done';
+        default:
+            return '';
     }
 }
 
-function displayAwaitFeedback(){
-    let aFeedback = tasks.filter(t => t['status'] == 'awaitFeedback');
-    let aFeedbackContainer = document.getElementById('awaitFeedback');
-    aFeedbackContainer.innerHTML = '' ;
-
-    if(aFeedback.length === 0) {
-        aFeedbackContainer.innerHTML = generateNoTask('Await Feedback');
-    }else {
-        for(let i = 0 ; i < aFeedback.length ; i++) {
-            const element = aFeedback[i];
-            aFeedbackContainer.innerHTML += generateTask(element);
-        }
-    }
-}
-
- function displayDone() {
-    let done = tasks.filter(t => t['status'] == 'done');
-    let doneContainer = document.getElementById('done');
-    doneContainer.innerHTML = '';
-
-    if(done.length === 0) {
-        doneContainer.innerHTML = generateNoTask('Done');
-    }else {
-        for(let i = 0 ; i < done.length ; i++) {
-            const element = done[i];
-            doneContainer.innerHTML += generateTask(element);
-        }
+function displayAllTaskSections() {
+    let statuses = ['toDo', 'inProgress', 'awaitFeedback', 'done'];
+    for (let i = 0; i < statuses.length; i++) {
+        displayTasks(statuses[i]);
     }
 }
 
@@ -172,36 +115,15 @@ async function moveTo(status) {
 
     await updateTaskStatus(currentDraggedElement, status);
     removeHighlight(status);
-    displayToDo();
-    displayInProgress();
-    displayAwaitFeedback();
-    displayDone();
+    updateView();
 }
 
 function showDragTooltip() {
     const tooltip = document.getElementById('dragTooltip');
     tooltip.classList.remove('hidden');
-
     setTimeout(() => {
         tooltip.classList.add('hidden');
     }, 3000);
-}
-
-
-async function updateTaskStatus(taskId, newStatus) {
-    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
-
-    try {
-
-            await fetch(url, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ status: newStatus })
-        });
-
-    } catch (error) {
-        console.error("Firebase update error:", error);
-    }
 }
 
 function removeHighlight(id) {
@@ -260,94 +182,42 @@ function generateSubtasks(subtasks,taskId){
     return subtaskHTML;
 }
 
-function generateSingleSubtask(title, checked, taskId, index) {
-    return `
-        <div class="subtask_item">
-            <input type="checkbox" id="${taskId}-subtask-${index}" ${checked} onchange="toggleSubtask('${taskId}', '${index}')">
-            <label for="${taskId}-subtask-${index}">${title}</label>
-        </div>
-    `;
-}
-
 async function toggleSubtask(taskId, subtaskId) {
     let task = tasks.find(t => t.id === taskId);
     if (task) {
         let subtask = task.subtasks[subtaskId];
         if (subtask) { 
-            subtask.completed = !subtask.completed;
-            
+            subtask.completed = !subtask.completed;   
             await updateSubtaskStatus(taskId, subtaskId, subtask.completed);
             updateView();
         }
     }
 }
 
-async function updateSubtaskStatus(taskId, subtaskId, newStatus) {
-    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}/subtasks/${subtaskId}.json`;
-
-    try {
-        await fetch(url, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ completed: newStatus })
-        });
-    } catch (error) {
-        console.error("Firebase update error:", error);
-    }
-}
-
-async function deleteTask(taskId) {
-    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
-
-    try {
-        await fetch(url, {
-            method : "DELETE"
-        });
-        tasks = tasks.filter(task => task.id !== taskId);
-        updateView();
-        closeOverlay();
-    } catch (error) {
-        console.error("Firebase delete error:", error);
-    }
-}
-
-function showAddTaskOverlay(){
+function showAddTaskOverlayByStatus(status) {
     if (window.innerWidth <= 705) {
-        window.location.href = 'addTask.html'; 
+        window.location.href = 'addTask.html';
         return;
     }
+
     let overlay = document.getElementById('overlay');
-    overlay.style.display ='flex';
-    document.body.style.overflow ='hidden';
-    overlay.innerHTML = addTaskOverlay();
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+    overlay.innerHTML = getAddTaskOverlayHTML(status);
     overlay.classList.add('slide_in');
     radioBtnChecked('Medium');
 }
 
-function showAddTaskInProgressOverlay(){
-    if (window.innerWidth <= 705) {
-        window.location.href = 'addTask.html'; 
-        return;
+function getAddTaskOverlayHTML(status) {
+    if (status === 'toDo') {
+        return addTaskOverlay();
+    } else if (status === 'inProgress') {
+        return addTaskInProgressOverlay();
+    } else if (status === 'awaitFeedback') {
+        return addTaskAwaitFeedbackOverlay();
+    } else {
+        return ''; 
     }
-    let overlay = document.getElementById('overlay');
-    overlay.style.display ='flex';
-    document.body.style.overflow ='hidden';
-    overlay.innerHTML = addTaskInProgressOverlay();
-    overlay.classList.add('slide_in');
-     radioBtnChecked('Medium');
-}
-
-function showAddTaskAwaitFeedbackOverlay(){
-    if (window.innerWidth <= 705) {
-        window.location.href = 'addTask.html'; 
-        return;
-    }
-    let overlay = document.getElementById('overlay');
-    overlay.style.display ='flex';
-    document.body.style.overflow ='hidden';
-    overlay.innerHTML = addTaskAwaitFeedbackOverlay();
-    overlay.classList.add('slide_in');
-     radioBtnChecked('Medium');
 }
 
 function showEditOverlay(id) {
@@ -360,19 +230,4 @@ function showEditOverlay(id) {
     localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
     showSelectedUsersFromTask();
     radioBtnChecked(task.priority);
-}
-
-
-async function updateTaskInFirebase(taskId, updatedTask) {
-    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
-
-    try {
-        await fetch(url, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedTask)
-        });
-    } catch (error) {
-        console.error("Firebase update error:", error);
-    }
 }

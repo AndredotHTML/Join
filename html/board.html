@@ -100,7 +100,7 @@
                     <div class="toDo">
                         <div class="toDo_header">
                             <h2>To do </h2>
-                            <img src="../assets/icons/plus_button.png" alt="" onclick="showAddTaskOverlay()">
+                            <img src="../assets/icons/plus_button.png" alt="" onclick="showAddTaskOverlayByStatus('toDo')">
                         </div>
                         <div class="toDo_content">
                             <div class="drag_area" id="toDo" ondrop="moveTo('toDo')"
@@ -111,7 +111,7 @@
                     <div class="inProgress">
                         <div class="inProgress_header">
                             <h2>In progress</h2>
-                            <img src="../assets/icons/plus_button.png" alt="" onclick="showAddTaskInProgressOverlay()">
+                            <img src="../assets/icons/plus_button.png" alt="" onclick="showAddTaskOverlayByStatus('inProgress')">
                         </div>
                         <div class="inProgress_content">
                             <div class="drag_area" id="inProgress" ondrop="moveTo('inProgress')"
@@ -124,7 +124,7 @@
                         <div class="awaitFeedback_header">
                             <h2>Await Feedback</h2>
                             <img src="../assets/icons/plus_button.png" alt=""
-                                onclick="showAddTaskAwaitFeedbackOverlay()">
+                                onclick="showAddTaskOverlayByStatus('awaitFeedback')">
                         </div>
                         <div class="awaitFeedback_content">
                             <div class="drag_area" id="awaitFeedback" ondrop="moveTo('awaitFeedback')"
@@ -149,7 +149,7 @@
         <div id="statusMenu" class="status_menu hidden" onclick="event.stopPropagation()"></div>
         <div id="dragTooltip" class="tooltip hidden">Use the Up/Down arrows to move tasks</div>
     </body>
-    <script src="../script/addTaskFloat_api.js"></script>
+    <script src="../script/board_api.js"></script>
     <script src="../script/board_userManagement.js"></script>
     <script src="../script/board.js"></script>
     <script src="../script/addTaskFloat.js"></script>
