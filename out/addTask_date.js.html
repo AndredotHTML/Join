@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: addTask_date.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: addTask_date.js</h1>
 
     
 
@@ -26,233 +26,175 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
+            <pre class="prettyprint source linenums"><code>/** 
+ * Filters non-numeric characters from a date input, validate and reconstructs the date as dd/mm/yyyy
+ * If the selected date is earlier than today, sets the date to today
+ * @example 10/04/2025
+*/
 
-let users = [];
-
-/**
- * init runs all function which are aquired to run onload of the html
- */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
-}
-
-/**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
- */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
-    } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+function customDateInput() {
+    let dateInputRef = document.getElementById("date-input-add-task");
+    let dateInputVal = dateInputRef.value.replace(/[^\d]/g, '');
+    let dayInput = extractDay(dateInputVal)
+    let monthInput = extractMonth(dateInputVal)
+    let yearInput = extractYear(dateInputVal)
+    dayInput = validDays(dayInput,monthInput,yearInput)
+    let today = todayDate(dateInputVal)
+    let dateInput = `${dayInput}` + `${monthInput}` + `${yearInput}`
+    if (dateInput&lt;today) {
+        dateInput = today
     }
+    dateInputRef.value = dateInput
 }
 
-/**
- * checks if the password and the confirmed password are equal
- */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
-    } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+/**
+ * Returns today’s date in dd/mm/yyyy format if the input has 8 digits
+ * @param {string} dateInputVal The raw date string
+ * @returns Today's date in dd/mm/yyyy format , or null
+ */
+
+function todayDate(dateInputVal) {
+     if (dateInputVal.length > 7 ) {
+        let today = new Date();
+        today.setHours(0, 0, 0, 0);
+        dayInput = today.getDate();
+        monthInput = (today.getMonth() + 1).toString().padStart(2, '0');
+        yearInput =  today.getFullYear().toString().padStart(2, '0');
+        return `${dayInput}/${monthInput}/${yearInput}`
     }
+    return null
 }
 
-/**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
- */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
-    }
-}
 
 /**
- * validates the input for name and email and displays error if the input is wrong
+ * Checks the first two characters of the input for valid day input
+ * @param {string} dateInputVal filtert input from customDateInput()
+ * @returns days for the reconstruction of the date
  */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
 
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
-    }
-}
-
-/**
- * checks if e-mail already exists
- */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
-
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
-}
-
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
+function extractDay(dateInputVal) {
+    if (dateInputVal.length >= 1) {
+        let day = dateInputVal.slice(0, 2)
+        if (day > 31) {
+            day = 31
         }
+        if (day.length == 2 &amp;&amp; +day === 0) {
+            day = "01"
+        }
+        return day
     }
+    return ""
 }
 
-/**
- * redirects after sucessfull signup back to login
- */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
-}
 
 /**
- * generates a random  number between 1 and 15 and adds a css class
+ * Checks the 3rd and 4th characters of the input for valid month (01-12) input
+ * @param {string} dateInputVal filtered input from customDateInput()
+ * @returns A "/" and a month (2 numbers) for the reconstruction of the date
  */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
+
+function extractMonth(dateInputVal) {
+    if (dateInputVal.length >= 3) {
+        let month = dateInputVal.slice(2, 4)
+        if (month > 12) {
+            month = 12
+        }
+        return "/" + month
+    }
+    return ""
+}
+
+
+/**
+ * Validate the 5th to 8th characters of the date input for reconstruction of the year
+ * @param {string} dateInputVal filtered input from customDateInput()
+ * @returns A "/" and a year (4 numbers) clamped betwenn 2025 and 2100 for reconstruction of the date
+ */
+
+function extractYear(dateInputVal) {
+    if (dateInputVal.length >= 5 &amp;&amp; dateInputVal.length &lt; 8) {
+        return "/" + dateInputVal.slice(4);
+    }
+    if (dateInputVal.length >= 8) {
+        let year = clampYear(dateInputVal.slice(4, 8))
+        return "/" + year;
+    }
+    return ""
+}
+
+
+/**
+ * Validates the day input for different month and for leap years
+ * @param {string} dayInput The first two characters of the date input
+ * @param {string} monthInput The 3rd and 4th characters of the date input
+ * @param {string} yearInput The 5th to 8th characters of the date input
+ * @returns {string} A corrected valid day for different months
+ */
+
+function validDays(dayInput,monthInput,yearInput) {
+    let shorterMonths = ["04", "06", "09", "11"]
+    let leapYear = yearInput.slice(1) % 4 === 0
+    if (shorterMonths.includes(monthInput.slice(1)) &amp;&amp; +dayInput > 30) {
+        return dayInput = "30"
+    } 
+    if (monthInput.slice(1) == "02") {
+        if (+dayInput > 29) {
+            return dayInput = "29"
+        } else if (!leapYear &amp;&amp; yearInput.length >= 5) {
+            return  "28"
+        } 
+    }
+    return dayInput
+}
+
+
+/**
+ * Clamps the year to a maximum of 2100
+ * @param {string} dateInputVal filtered input from customDateInput() 
+ * @returns {number} A valid year number
+ */
+
+function clampYear(dateInputVal) {
+    let year = dateInputVal
+    let yearNumb = +year
+    if (yearNumb >= 2100) {
+        yearNumb = 2100
+    }
+    return yearNumb;
+}
+
+
+/**
+ * Opens the native date picker
+ */
+
+function showPicker() {
+    let pickerRef = document.getElementById("nativ-date-input")
+    pickerRef.showPicker()
+}
+
+
+/**
+ * Sets the minimum selectable date of the native date picker to today.
+ */
+
+function minPickerDate(){
+  const picker = document.getElementById("nativ-date-input");
+  const today = new Date().toISOString().split("T")[0];
+  picker.setAttribute("min", today);
+};
+
+
+/**
+ * Transfers the selected date from the nativ picker to the custom date input in the changed format (dd/mm/yyyy)
+ */
+
+function transferFromPicker() {
+    let pickerVal = document.getElementById("nativ-date-input").value
+    let dateInputRef = document.getElementById("date-input-add-task")
+    let formatet = pickerVal.split("-").reverse().join("/");
+    dateInputRef.value = formatet
 }
 </code></pre>
         </article>

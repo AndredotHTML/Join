@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: contact_controller.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: contact_controller.js</h1>
 
     
 
@@ -26,235 +26,220 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
-
-let users = [];
-
-/**
- * init runs all function which are aquired to run onload of the html
+            <pre class="prettyprint source linenums"><code>/**
+ * Validates the add-contact form fields for non-empty, correct email, and phone format.
+ * @returns {boolean} True if form is valid, false otherwise.
  */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
+function validateAddForm () {
+    const { name, email, phone } = getContactFormData();
+    const nameResult = isNameValid( name );
+    const emailResult = isEmailValid( email );
+    const phoneResult = isPhoneValid( phone );
+    return nameResult &amp;&amp; emailResult &amp;&amp; phoneResult;
 }
 
+
 /**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
+ * Einfache E-Mail-Prüfung
+ * @param {string} email
+ * @returns {boolean}
  */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
+function isEmailValid ( email ) {
+    if ( /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test( email ) === false ) {
+        document.getElementById( 'email-error-add' ).classList.remove( 'd-none' );
+        return false;
     } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+        document.getElementById( 'email-error-add' ).classList.add( 'd-none' );
+        return true;
     }
 }
 
-/**
- * checks if the password and the confirmed password are equal
- */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
+/**
+ * Telefon muss + vorne, danach nur Ziffern und Leerzeichen
+ * @param {string} phone
+ * @returns {boolean}
+ */
+function isPhoneValid ( phone ) {
+    if ( /^\+[0-9 ]+$/.test( phone ) === false ) {
+        document.getElementById( 'phone-error-add' ).classList.remove( 'd-none' );
+        return false;
+    }
+    else {
+        document.getElementById( 'phone-error-add' ).classList.add( 'd-none' );
+        return true;
+    }
+}
+
+
+/**
+ * Validates that the given name is non-empty, toggles the name error display, and returns the validation result.
+ * @param {string} name - The name string to validate.
+ * @returns {boolean} True if non-empty; otherwise false.
+ */
+function isNameValid ( name ) {
+    if ( name.length > 0 === false ) {
+        document.getElementById( 'name-error-add' ).classList.remove( 'd-none' );
+        return false;
     } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+        document.getElementById( 'name-error-add' ).classList.add( 'd-none' );
+        return true;
     }
 }
 
+
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Handles the add-contact form submission by validating, sending data, and processing success or error.
+ * @param {Event} event - The form submission event.
+ * @returns {Promise&lt;boolean>} Always returns false to prevent default form submission.
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
+async function getContactData ( event ) {
+    event.preventDefault();
+    if ( !validateAddForm() ) return false;
+    try {
+        const data = extractFormData();
+        const newId = await sendContactData( '/contacts', data );
+        handleSuccess( newId, event );
+    } catch ( error ) {
+        handleError( error );
+    }
+    return false;
+}
+
+
+/**
+ * Validates the edit-contact form fields for non-empty, correct email, and phone format.
+ * @returns {boolean} True if form is valid, false otherwise.
+ */
+function validateEditForm () {
+    const { name, email, phone } = getEditFormData();
+    const nameOK = isNameValidEdit( name );
+    const emailOK = isEmailValidEdit( email );
+    const phoneOK = isPhoneValidEdit( phone );
+    return nameOK &amp;&amp; emailOK &amp;&amp; phoneOK;
+}
+
+
+/**
+ * Validates that the edited name is non-empty, toggles the edit name error display, and returns the validation result.
+ * @param {string} name - The name string to validate.
+ * @returns {boolean} True if the trimmed name is non-empty; otherwise false.
+ */
+function isNameValidEdit ( name ) {
+    const el = document.getElementById( 'name-error-edit' );
+    if ( !name.trim() ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
+    return true;
+}
+
+/** 
+ * Validates that the edited email matches the required pattern, toggles the edit email error display, and returns the validation result.
+ * @param { String } email - The email string to validate.
+ * @returns { boolean } True if the email is valid; otherwise false.
+ */
+function isEmailValidEdit ( email ) {
+    const el = document.getElementById( 'email-error-edit' );
+    const ok = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/.test( email );
+    if ( !ok ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
+    return true;
+}
+
+
+/**
+ * Validates that the edited phone number starts with '+' followed by digits or spaces, toggles the edit phone error display, and returns the validation result.
+ * @param {string} phone - The phone number string to validate.
+ * @returns {boolean} True if the phone number is valid; otherwise false.
+ */
+function isPhoneValidEdit ( phone ) {
+    const el = document.getElementById( 'phone-error-edit' );
+    const ok = /^\+[0-9 ]+$/.test( phone );
+    if ( !ok ) {
+        el.classList.remove( 'd-none' );
+        return false;
+    }
+    el.classList.add( 'd-none' );
+    return true;
+}
+
+
+/**
+ * Handles the edit-contact form submission by validating, patching data, and refreshing the UI.
+ * @param {string} contactId – The ID of the contact to update.
+ * @param {Event} event – The form submission event.
+ */
+async function updateContact ( contactId, event ) {
+    event.preventDefault();
+    if ( !validateEditForm() ) return;
+    try {
+        const { name, email, phone } = getEditFormData();
+        await patchContactData( contactId, { name, email, phone } );
+        await refreshAndSelect( contactId );
+    } catch ( error ) {
+        console.error( "Error updating contact:", error );
+    }
+    closeEditOverlay( event );
+}
+
+
+/**
+ * intercepts the click event and opens or closes the detail panel
+ * @param {Event} event
+ */
+function handleContactClick ( event ) {
+    const contactElem = event.currentTarget;
+    if ( isContactSelected( contactElem ) ) {
+        closeDetailPanel( contactElem );
     } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
+        deselectAllContacts();
+        openDetailPanel( contactElem );
     }
 }
 
-/**
- * validates the input for name and email and displays error if the input is wrong
- */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
 
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
+/**
+ * Löscht einen Kontakt und schließt das Edit-Overlay
+ * @param {string} contactId 
+ * @param {Event} event 
+ */
+async function handleDeleteContact ( contactId, event ) {
+    event.preventDefault();
+    try {
+        await deleteContact( contactId );
+    } catch ( err ) {
+        console.error( "Error deleting contact:", err );
     }
+    closeEditOverlay( event );
 }
+
 
 /**
- * checks if e-mail already exists
+ * Logs a contact creation error to the console.
+ * @param {Error} err – The error thrown during contact creation.
  */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
-
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
+function handleError ( err ) {
+    console.error( 'Contact could not be created:', err );
 }
+
 
 /**
- * checks the user array if the email already exists
+ * Closes the overlay, shows a success message, clears selections, and highlights the new contact.
+ * @param {string} newId - The ID of the newly created contact.
+ * @param {Event} event - The event that triggered the success handler.
  */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
-        }
-    }
-}
-
-/**
- * redirects after sucessfull signup back to login
- */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
-}
-
-/**
- * generates a random  number between 1 and 15 and adds a css class
- */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
-}
-</code></pre>
+function handleSuccess ( newId, event ) {
+    closeOverlay( event );
+    toggleMessage();
+    deselectAllContacts();
+    const contact = document.getElementById( newId );
+    if ( contact ) selectAndShowDetail( contact, newId );
+}</code></pre>
         </article>
     </section>
 

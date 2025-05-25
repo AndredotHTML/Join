@@ -109,8 +109,8 @@ function isNameValidEdit ( name ) {
 
 /** 
  * Validates that the edited email matches the required pattern, toggles the edit email error display, and returns the validation result.
- * @param { string; } email - The email string to validate.
- * @returns { boolean; } True if the email is valid; otherwise false.
+ * @param { String } email - The email string to validate.
+ * @returns { boolean } True if the email is valid; otherwise false.
  */
 function isEmailValidEdit ( email ) {
     const el = document.getElementById( 'email-error-edit' );

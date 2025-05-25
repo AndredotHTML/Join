@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: addTask_DD.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: addTask_DD.js</h1>
 
     
 
@@ -26,233 +26,226 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
-
-let users = [];
+            <pre class="prettyprint source linenums"><code>let openCategoryDD = false;
+let isAssignedDropdownOpen = false;
+let placeForCheckedIcon = false;
 
 /**
- * init runs all function which are aquired to run onload of the html
+ * Toggles the assignedTo dropdown ,  opnes it if close, close and clear focus if open
  */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
+function dropdownForAssigned() {
+  if (!isAssignedDropdownOpen) {
+    openAssignedDropdown();
+  } else {
+    closeDropdown();
+    blurAssig();
+  }
+  isAssignedDropdownOpen = !isAssignedDropdownOpen;
 }
 
+
+function blurAssig() {
+  let assignRef = document.getElementById("assigned-to-input");
+  assignRef.value = "";
+  assignRef.blur();
+}
+
+
 /**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
+ * Opens the dropdown menu for the assigned contacts
  */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
+
+function openAssignedDropdown() {
+  displayContacts();
+  let assignedRef = document.getElementById("assigned-to-display");
+  let arrowOpenRef = document.getElementById("arrow-open-assigned");
+  let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+  assignedRef.classList.add("visible-assigned");
+  assignedRef.classList.remove("visible-assigned-min");
+  assignedRef.style.display = "flex";
+  assignedRef.style.flexDirection = "column";
+  arrowImgToggle(arrowOpenRef);
+  styleAssignedContOpen(assignedContactRef);
+}
+
+
+/**
+ * Changes the styles for each contact while the dropdown menu is open
+ * @param {NodeList} assignedContactRef A list of all contacts
+ */
+
+function styleAssignedContOpen(assignedContactRef) {
+  assignedContactRef.forEach((contact) => {
+    contact.style.display = "flex";
+    let nameTemplate = contact.querySelector(".assigned-template-name");
+    let inputTemplate = contact.querySelector(".input-assigned");
+    nameTemplate.style.display = "flex";
+    inputTemplate.style.display = "flex";
+  });
+}
+
+
+function closeDropdown() {
+  let assignedRef = document.getElementById("assigned-to-display");
+  let arrowOpenRef = document.getElementById("arrow-open-assigned");
+  let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+  assignedContactRef.forEach(contact => {
+    contact.classList.remove("pointer")
+  });
+  assignedRef.style.flexDirection = "row";
+  controlClosedAssignedCont(assignedContactRef, assignedRef);
+  arrowImgToggle(arrowOpenRef);
+}
+
+
+/**
+ * When the dropdown menu is closed , highlights checked contacts and hides unchecked
+ * @param {NodeList} assignedContactRef A list of all contacts
+ * @param {HTMLElement} assignedRef A Container for all contacts
+ */
+
+function controlClosedAssignedCont(assignedContactRef, assignedRef) {
+  let maxIcon = 5;
+  let checkedContacts = [...assignedContactRef].filter(
+    (contact) => contact.querySelector("input[type='checkbox']").checked
+  );
+  let contactDiffrence = checkedContacts.length - (maxIcon - 1);
+  hideNotCheckedContacts(assignedContactRef);
+  styleControlCheckedContacts(checkedContacts, maxIcon);
+  displayBadge(contactDiffrence, assignedRef);
+}
+
+
+/**
+ * Hides all unchecked contacts removing the "visible-assigned" CSS class.
+ * @param {NodeList&lt;Element>} assignedContactRef A List with all contacts
+ */
+
+function hideNotCheckedContacts(assignedContactRef) {
+  assignedContactRef.forEach((contact) => {
+    let checkbox = contact.querySelector("input[type='checkbox']");
+    if (!checkbox.checked) {
+      contact.classList.remove("visible-assigned");
+    }
+  });
+}
+
+
+/**
+ * Styles the first four checked contacts and hides the others.
+ * @param {Array} checkedContacts An array of checked Contacts
+ * @param {number} maxIcon The maximum number of contacts to style.
+ */
+
+function styleControlCheckedContacts(checkedContacts, maxIcon) {
+  for (let i = 0; i &lt; checkedContacts.length; i++) {
+    const contact = checkedContacts[i];
+    if (i &lt; maxIcon - 1) {
+      let checkbox = contact.querySelector("input[type='checkbox']");
+      let nameTemplate = contact.querySelector(".assigned-template-name");
+      let contactLabel = contact.querySelector("label");
+      styleForCheckedCont(contact, nameTemplate, checkbox, contactLabel);
     } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+      contact.classList.remove("visible-assigned");
     }
+  }
 }
 
-/**
- * checks if the password and the confirmed password are equal
- */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
+/**
+ * Creates a badge for all hidden checked contacts
+ * @param {number} contactDiffrence Difference between all checked contacts and the displayed checked contacts
+ * @param {HTMLElement} assignedRef Container for the checked contacts and the badge
+ */
+
+function displayBadge(contactDiffrence, assignedRef) {
+  if (contactDiffrence > 0) {
+    let badgeAssigned = document.createElement("div");
+    badgeAssigned.classList.add("badgeIcon");
+    badgeAssigned.textContent = `+${contactDiffrence}`;
+    assignedRef.appendChild(badgeAssigned);
+  }
+}
+
+
+/**
+ * Style for displayed checked contacts
+ */
+
+function styleForCheckedCont(contact, name, checkbox, contactLabel) {
+  contact.classList.add("bg-white");
+  name.style.display = "none";
+  checkbox.style.display = "none";
+  contactLabel.style.padding = "8px 0 0 0";
+  contactLabel.style.cursor = "default"
+}
+
+
+/**
+ * Toggles dropdown menu if the wrapper is clicked.
+ */
+
+function dropdownForCategory() {
+  let selectRef = document.getElementById("wrapper-category");
+  let options = document.querySelectorAll(".option-category");
+  selectRef.addEventListener("click", function () {
+    if (openCategoryDD === false) {
+      showCategoryDD(options);
+      openCategoryDD = true;
     } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+      closeCategoryDD(options);
+      openCategoryDD = false;
     }
+  });
+  changeCategory(options);
 }
 
+
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Adds every option the visible class.
+ * @param {NodeList} options A list of options for the category
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
-    }
+
+function showCategoryDD(options) {
+  let arrowOpenRef = document.getElementById("arrow-open-category");
+  options.forEach((option) => {
+    option.classList.add("visible");
+  });
+  arrowImgToggle(arrowOpenRef);
 }
 
-/**
- * validates the input for name and email and displays error if the input is wrong
- */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
 
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
-    }
+/**
+ * Update the category input to the clicked option and close the dropdown menu.
+ * @param {NodeList} options A list of options for the category
+ */
+
+function changeCategory(options) {
+  let categoryInputRef = document.getElementById("category-add-task");
+  options.forEach((option) => {
+    option.addEventListener("click", function () {
+      categoryInputRef.textContent = this.textContent;
+      closeCategoryDD(options);
+      openCategoryDD = false;
+    });
+  });
 }
 
-/**
- * checks if e-mail already exists
- */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
 
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
+function closeCategoryDD(options) {
+  let arrowOpenRef = document.getElementById("arrow-open-category");
+  options.forEach((option) => {
+    option.classList.remove("visible");
+  });
+  arrowImgToggle(arrowOpenRef);
 }
 
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
 
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
-        }
-    }
-}
-
-/**
- * redirects after sucessfull signup back to login
- */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
-}
-
-/**
- * generates a random  number between 1 and 15 and adds a css class
- */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
+function arrowImgToggle(arrowOpenRef) {
+  let imgRef = arrowOpenRef.querySelectorAll("img");
+  for (const img of imgRef) {
+    img.classList.toggle("d_none");
+  }
 }
 </code></pre>
         </article>

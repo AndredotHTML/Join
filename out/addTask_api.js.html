@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: addTask_api.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: addTask_api.js</h1>
 
     
 
@@ -26,235 +26,214 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
+            <pre class="prettyprint source linenums"><code>let getContactCache = [];
 
-let users = [];
-
-/**
- * init runs all function which are aquired to run onload of the html
- */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
-}
 
 /**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
+ * Initializes the application on load
  */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
-    } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+
+async function init() {
+    authLogIn()
+    dropdownForCategory()
+    await getContacts(path = "/contacts");
+    document.getElementById("assigned-to-input").addEventListener("input", displayContacts);
+    radioBtnChecked("medium")
+    minPickerDate()
+};
+
+
+/**
+ * Sends an asynchronous POST request to an API endpoint URL
+ * @async
+ * @param {string} path - Appended to the BASE_URL.
+ * @param {Object} data - Values that have to be sent as JSON
+ * @returns {Promise&lt;Object|null>} Parsed responsed data or null on failure
+ */
+
+async function postTask(path = "", data = {}) {
+    try {
+        const response = await fetch(BASE_URL + path + ".json", fetchOptions(data))
+        return await handleResponse(response);
+    } catch (error) {
+        console.error("Fehler:", error.message);
+        return null;
     }
 }
 
-/**
- * checks if the password and the confirmed password are equal
- */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
-
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
-    } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
-    }
-}
 
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Prepares the options for sending data as JSON in a POST request.
+ * @param {Object} data - Values that have to be sent as JSON.
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
-    }
-}
 
-/**
- * validates the input for name and email and displays error if the input is wrong
- */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
-
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
-    }
-}
-
-/**
- * checks if e-mail already exists
- */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
-
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
-}
-
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
+function fetchOptions(data) {
+    return {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data)
     }
 }
 
+
 /**
- * gets all current Contacts
+ * Fetch contacts and store them in the Cache
+ * @param {/url} path - appended to the BASE_URL.
+ * @returns an Object with data of the contacts if there are contacts, they are stored in the Contacts Cache
  */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
+
+async function getContacts(path = "") {
+    if (getContactCache.length > 0) {
+        return getContactCache;
+    }
+    try {
+        const response = await fetch(BASE_URL + path + ".json")
+        const result = await handleResponse(response)
+        const userArray = Object.values(result)
+        getContactCache = userArray;
+        return getContactCache;
+    } catch (error) {
+        console.error("Fehler:", error.message);
+    }
 }
 
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
 
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
+/**
+ * Checks the response status and returns the parsed JSON Object
+ * @param {*} response data from the server
+ * @returns the parsed JSON-Object
+ */
+
+async function handleResponse(response) {
+    if (!response.ok) {
+        throw new Error("Fehler an den API Daten");
+    }
+    return response.json()
+}
+
+
+/**
+ * Sorts the getContactCache alphabetically, compares each name with the input and stores matched results in an array "filteredContacts"
+ * @returns An array of filtered contacts
+ */
+
+function searchAssigned() {
+    let userArray = getContactCache.sort((a, b) => a.name.localeCompare(b.name))
+    let inputRef = document.getElementById("assigned-to-input")
+    let inputVal = inputRef.value.toLowerCase()
+    let filteredContacts = userArray.filter(function (nameToSearch) {
+        return nameToSearch.name.toLowerCase().includes(inputVal)
+    }
+    )
+    return filteredContacts
+}
+
+
+/**
+ * checks which contacts are selected and stores them in "selectedContacts"
+ * @returns An array of selected Contacts
+ */
+
+function assignedContactsToData() {
+    let assignedRef = document.getElementById("assigned-to-display");
+    let assignedContactRef = assignedRef.querySelectorAll(".assigned-contacts");
+    let selectedContacts = [];
+    assignedContactRef.forEach(contact => {
+        let nameIcon = contact.querySelector(".name-icon");
+        let checkbox = contact.querySelector("input[type='checkbox']");
+        if (checkbox &amp;&amp; checkbox.checked) {
+            let assignedData = nameIcon.dataset.value;
+            selectedContacts.push(assignedData)
         }
+    })
+    return selectedContacts
+}
+
+
+/**
+ * Collects the title and status of subtasks in an object and stores them in an array
+ * @returns An array of subtasks{ title, completed }
+ */
+
+function getSubtasks() {
+    let subtasks = [];
+    let subtaskElements = document.querySelectorAll("#added-subtasks li");
+    for (let i = 0; i &lt; subtaskElements.length; i++) {
+        subtasks.push({
+            title: subtaskElements[i].innerText,
+            completed: false
+        });
     }
+    return subtasks;
 }
 
-/**
- * redirects after sucessfull signup back to login
- */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
-}
 
 /**
- * generates a random  number between 1 and 15 and adds a css class
+ * Collects the input values from the form for creating a new task
+ * @returns An object with all inputs of the form
  */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
+
+function getTaskInputs() {
+    let titleNewTaskRef = document.getElementById("title-add-task").value
+    let descriptionNewTaskRef = document.getElementById("description-add-task").value
+    let dateNewTaskRef = document.getElementById("date-input-add-task").value
+    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked').value
+    let categoryNewTaskRef = document.getElementById("category-add-task").textContent
+    let assignedUserRef = assignedContactsToData()
+    let subtasks = getSubtasks();
+    return { titleNewTaskRef, descriptionNewTaskRef, dateNewTaskRef, priorityNewTaskRef, categoryNewTaskRef, assignedUserRef, subtasks }
 }
-</code></pre>
+
+
+/**
+ * Create a new object with a different structure from the given object.
+ * @param {object} inputData objekt with the values from the form inputs
+ * @returns A Object in a new structure
+ */
+
+function createTaskData(inputData) {
+    return {
+        title: inputData.titleNewTaskRef,
+        description: inputData.descriptionNewTaskRef,
+        dueDate: inputData.dateNewTaskRef,
+        priority: inputData.priorityNewTaskRef,
+        category: inputData.categoryNewTaskRef,
+        assignedUsers: inputData.assignedUserRef,
+        status: "toDo",
+        subtasks: inputData.subtasks,
+    };
+}
+
+
+/**
+ * Create a new task by collecting the input values, restructuring them, and sending them to the server.
+ * Afterward the user is redirected to the board.
+ */
+
+function createTask() {
+    let inputs = getTaskInputs()
+    let data = createTaskData(inputs)
+    postTask("/tasks", data)
+    transferToBoard()
+}
+
+
+/**
+ * Change the style of the create button and direkt the user to the board after a short delay
+ */
+
+function transferToBoard() {
+    document.body.innerHTML += tempTaskToBoardOverlay()
+    let createTaskBtn = document.getElementById("add-task-create-btn")
+    let createTaskIcon = document.getElementById("btn-icon-check")
+    createTaskBtn.classList.add("active-creat-btn")
+    createTaskIcon.classList.add("checkt-icon")
+    setTimeout(() => {
+        window.location.href = "/html/board.html";
+    }, 800);
+}</code></pre>
         </article>
     </section>
 

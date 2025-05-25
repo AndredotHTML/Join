@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: addTask.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: addTask.js</h1>
 
     
 
@@ -26,235 +26,276 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
+            <pre class="prettyprint source linenums"><code>const form = document.getElementById("form-add-task");
+let lastCursPos = 0
 
-let users = [];
 
-/**
- * init runs all function which are aquired to run onload of the html
- */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
-}
-
-/**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
- */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
-    } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+function authLogIn() {
+    if (localStorage.getItem("isLoggedIn") !== "true") {
+        window.location.href = "http://127.0.0.1:5500/html/index.html";
     }
 }
 
-/**
- * checks if the password and the confirmed password are equal
- */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
-    } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+function stopPropagation(event) {
+    event.stopPropagation()
+}
+
+
+/**
+ * Stores the last position of the cursor of the first textarea in a global variable "lastCursPos"
+ */
+
+function lastCursorPosition() {
+    let textarea = document.querySelector("textarea")
+    lastCursPos = textarea.selectionStart;
+}
+
+
+/**
+ * Set the cursor at the start of the textarea if it's empty,
+ *  or at the end of the content if you click beyond it.
+ */
+
+function textareaCursPos() {
+    let textarea = document.querySelector("textarea")
+    if (textarea.value.trim() == "") {
+        textarea.setSelectionRange(0, 0)
+    } else if (textarea.selectionStart >= lastCursPos) {
+        textarea.setSelectionRange(lastCursPos, lastCursPos)
     }
 }
 
+
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Enables resizeing the textarea by dragging, on mousedown save the mouse position and textarea height.
+ * on mousemove, adjusts the height by the Y-difference ,stop it on mouseup.
+ * @param {MouseEvent} event click on the resize element to store the current mouse position and textarea height
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
+
+function resizeTextarea(event) {
+    let textareaRef = document.getElementById("description-add-task")
+    let mousePos = event.clientY
+    let textareaHeight = textareaRef.offsetHeight
+    document.addEventListener('mousemove', newHeightTA)
+    function newHeightTA(e) {
+        let mousePosDif = e.clientY - mousePos
+        textareaRef.style.height = `${textareaHeight + mousePosDif}px`
     }
+    document.addEventListener('mouseup', () => {
+        document.removeEventListener('mousemove', newHeightTA)
+    }, { once: true });
 }
 
-/**
- * validates the input for name and email and displays error if the input is wrong
- */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
-
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
-    }
-}
 
 /**
- * checks if e-mail already exists
+ * Checks every click to see is it inside the wrapper, if not closes the dropdown menu and the input lose focus 
  */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
 
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
-}
-
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
+document.addEventListener("click", function (e) {
+    let wrapper = document.querySelector(".wrapper-assigned-to")
+    if (!wrapper.contains(e.target)) {
+        if (isAssignedDropdownOpen) {
+            closeDropdown();
+            blurAssig()
+            isAssignedDropdownOpen = false
         }
     }
+})
+
+
+/**
+ * Prevents the default form submission  and checks that the form is valid
+ * @param {SubmitEvent} event The submit
+ */
+
+function submitForm(event) {
+    event.preventDefault();
+    let valide = true
+    clearValidationAreas()
+    errMsgAreaAndInputs()
+    if (valide === true) {
+        createTask()
+    }
+}
+
+
+/**
+ * Checks the inputs, if them empty calls the errorMsg() for each one
+ */
+
+function errMsgAreaAndInputs() {
+    let inputToValidateTitle = document.getElementById("title-add-task");
+    let requiredTitleRef = document.getElementById("title-validation");
+    let inputToValidateDate = document.getElementById("date-input-add-task");
+    let requiredDateRef = document.getElementById("date-validation");
+    let inputToValidateCategory = document.getElementById("category-add-task")
+    let categoryWrapper = document.getElementById("select-category")
+    let requiredCategoryRef = document.getElementById("category-validation")
+    inputValidation(inputToValidateTitle,requiredTitleRef,inputToValidateDate,requiredDateRef,inputToValidateCategory,categoryWrapper,requiredCategoryRef)
+}
+
+function inputValidation(inputToValidateTitle,requiredTitleRef,inputToValidateDate,requiredDateRef,inputToValidateCategory,categoryWrapper,requiredCategoryRef) {
+    if (inputToValidateTitle.value === "") {
+        errorMsg(requiredTitleRef, inputToValidateTitle)
+    }
+    if (inputToValidateDate.value === "") {
+        errorMsg(requiredDateRef, inputToValidateDate)
+    }
+    if (inputToValidateCategory.innerHTML.trim() == "Select task category") {
+       errorMsg(requiredCategoryRef, categoryWrapper)
+    }
+}
+
+
+/**
+ * Marks the input as empty and shows an error message
+ * @param {HTMLElement} inputToValidate Input that have to be marked if it is empty
+ * @param {HTMLElement} requiredRef Container in which the error messege is displayed
+ */
+
+function errorMsg(requiredRef, inputToValidate) {
+    let errMsg = "This field is required"
+    requiredRef.innerHTML = errMsg;
+    requiredRef.style.color = "#FF8190"
+    inputToValidate.style.borderBottom = "1px solid #FF8190";
+    valide = false
+}
+
+
+/**
+ * Delete the error message and turn back the style of the input border
+ * @param {HTMLElement} element Input which style have to be reseted
+ */
+
+function resValidOnInp(element) {
+    let wrapperRef = element.closest(`[class*="-wrapper"]`)
+    let validAreaRef = wrapperRef.querySelector(".validation-add-task-form")
+    validAreaRef.innerHTML = "";
+    element.style.borderBottom = "";
+}
+
+
+function resValidCategory(element) {
+    let validAreaRef = document.getElementById("category-validation")
+    validAreaRef.innerHTML = "";
+    element.style.borderBottom = "";
 }
 
 /**
- * redirects after sucessfull signup back to login
+ * Iterates over the validation messengs and clear their content
  */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
+
+function clearValidationAreas() {
+    let validationAreaRef = document.getElementsByClassName("validation-add-task-form");
+    for (let index = 0; index &lt; validationAreaRef.length; index++) {
+        let singValidArea = validationAreaRef[index];
+        singValidArea.innerHTML = "";
+    }
 }
 
+
 /**
- * generates a random  number between 1 and 15 and adds a css class
+ * Resets the styles of the priority buttons and highlights the checked one.
+ * @param {string} priority Show the urgency ('low', 'medium', 'urgent')
  */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
+
+function radioBtnChecked(priority) {
+    let labelList = document.querySelectorAll(".radio-btn")
+    let inputRef = document.getElementById(priority + "-rad")
+    let labelRef = document.querySelector('label[for="' + priority + '-rad"]')
+    labelList.forEach(radioBtn => {
+        radioBtn.style.backgroundColor = `var(--secondaryColor)`;
+        radioBtn.style.color = `black`;
+    });
+    if (inputRef.checked) {
+        labelRef.style.backgroundColor = `var(--${priority}Color)`;
+        labelRef.style.color = `var(--secondaryColor)`;
+    }
 }
-</code></pre>
+
+
+/**
+ * Resets the inputs of the form
+ */
+
+function clearForm() {
+    let displaydSubtaskRef = document.getElementById("added-subtasks")
+    let categoryRef = document.getElementById("category-add-task")
+    let assignedToAreaRef = document.getElementById("assigned-to-display")
+    document.forms[0].reset()
+    assignedToAreaRef.innerHTML = ""
+    categoryRef.innerHTML = "Select task category"
+    displaydSubtaskRef.innerHTML = ""
+    radioBtnChecked("medium")
+    clearValidationAreas()
+    clearStyleChange()
+    placeForSubtasks()
+}
+
+function clearStyleChange() {
+    let titleRef = document.getElementById("title-add-task")
+    let dateRef = document.getElementById("date-input-add-task")
+    let categoryRef = document.getElementById("select-category")
+    titleRef.style.borderBottom = "";
+    dateRef.style.borderBottom = "";
+    categoryRef.style.borderBottom = "";
+}
+
+
+/**
+ * Enables the create button when all required inputs (title , date, priority, category) are filled
+ */
+
+function enabledCreateBtn() {
+    let titleNewTaskRef = document.getElementById("title-add-task")
+    let dateNewTaskRef = document.getElementById("date-input-add-task")
+    let priorityNewTaskRef = document.querySelector('input[name="priority"]:checked')
+    let categoryNewTaskRef = document.getElementById("category-add-task")
+    let btn = document.getElementById("add-task-create-btn")
+    if (titleNewTaskRef.value !== "" &amp;&amp; dateNewTaskRef.value !== "" &amp;&amp; priorityNewTaskRef !== null &amp;&amp; categoryNewTaskRef.innerText !== "Select task category") {
+        btn.disabled = false
+    }
+    else {
+        btn.disabled = true
+    }
+}
+
+
+/**
+ * Creates a template for every contact, including the current user,  which collects and then displays them all at once.
+ * Highlights the current user by appending "You" after their name
+ */
+
+function displayContacts() {
+    let currentUser = user[0] || 'guest';
+    let userArray = searchAssigned()
+    sortUserToTheTop(userArray, currentUser)
+    let selectedContacts = assignedContactsToData()
+    let assignedToAreaRef = document.getElementById("assigned-to-display")
+    let allContacts = ""
+    userArray.forEach(contact => {
+        let isChecked = selectedContacts.includes(contact.name)
+        let isCurrentUser = contact.name === currentUser.name
+        allContacts += templateAssignedTo(contact, isChecked, isCurrentUser)
+    });
+    assignedToAreaRef.innerHTML = allContacts
+}
+
+
+/**
+ * Sorts the contacts so that the current user are at the top of the list 
+ * @param {Array&lt;Object>} userArray An array with data objects from the contacts
+ * @param {Object} currentUser An object with data from the current user
+ */
+
+function sortUserToTheTop(userArray, currentUser) {
+    userArray.sort((a, b) => {
+        if (a.name === currentUser.name) { return -1 }
+        if (b.name === currentUser.name) { return 1 }
+        return 0
+    })
+}</code></pre>
         </article>
     </section>
 

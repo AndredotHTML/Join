@@ -157,9 +157,9 @@ function sortContacts ( contactArray ) {
 
 
 /**
- * Groups contacts by the first uppercase letter of their name.
- * @param {Array<{id: string, contactData: {name: string}}>} contactArray – The array of contacts to group.
- * @returns {{ [letter: string]: Array<{id: string, contactData: object}> }} An object mapping each uppercase letter to the array of contacts whose names start with that letter.
+ * Groups an array of contact objects by the first letter of their names.
+ * @param {Array} contactArray - Array of contact objects to group.
+ * @returns {Object} An object where each key is a capitalized letter and the value is an array of contacts.
  */
 function groupContacts ( contactArray ) {
     const groups = {};

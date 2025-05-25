@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: board_api.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: board_api.js</h1>
 
     
 
@@ -26,235 +26,171 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
-
-let users = [];
+            <pre class="prettyprint source linenums"><code>let tasks = [];
+let contacts =[];
 
 /**
- * init runs all function which are aquired to run onload of the html
+ * Fetches all tasks from Firebase at the given path.
+ * @param {string} path - The path to the tasks collection in Firebase.
+ * @returns {Promise&lt;Object>} - A promise that resolves to the tasks object.
  */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
+async function getAllTasks(path) {
+    let response = await fetch(BASE_URL + path + ".json");
+    return  await response.json()
 }
 
 /**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
+ * Pushes all tasks from Firebase into the `tasks` array and updates the view.
+ * @returns {Promise&lt;void>}
  */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
-    } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+async function pushToTask() {
+    let task = await getAllTasks("/tasks"); 
+    let tasksArray = task ? Object.keys(task) : [];
+
+    for (let index = 0; index &lt; tasksArray.length; index++) {
+        let taskData = task[tasksArray[index]]; 
+        tasks.push({
+            id: tasksArray[index], 
+            category: taskData.category,
+            title: taskData.title,
+            description: taskData.description,
+            dueDate: taskData.dueDate,
+            priority: taskData.priority,
+            status: taskData.status,
+            subtasks: taskData.subtasks,
+            assignedUsers: taskData.assignedUsers
+        });
+    }
+    updateView()
+}
+
+/**
+ * Fetches all contacts from Firebase at the given path.
+ * @param {string} path - The path to the contacts collection in Firebase.
+ * @returns {Promise&lt;Object>} - A promise that resolves to the contacts object.
+ */
+async function getAllContacts ( path ) {
+    let response = await fetch(BASE_URL + path + ".json");
+    return  await response.json()
+}
+
+/**
+ * Pushes all contacts from Firebase into the `contacts` array.
+ * @returns {Promise&lt;void>}
+ */
+async function pushToContactsArray() {
+    let contact = await getAllContacts ("/contacts");
+    let contactsArray = contact? Object.keys(contact) : [];
+
+    for (let index = 0; index &lt; contactsArray.length; index++) {
+        let contactData = contact[contactsArray[index]];
+        contacts.push({
+            id:contactsArray[index],
+           colorClass: contactData.avatarColorClass,
+           email: contactData.email,
+           name: contactData.name,
+           phone: contactData.phone
+        });
     }
 }
 
 /**
- * checks if the password and the confirmed password are equal
+ * Updates the status of a task in Firebase.
+ * @param {string} taskId - The ID of the task to update.
+ * @param {string} newStatus - The new status to set.
+ * @returns {Promise&lt;void>}
  */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
+async function updateTaskStatus(taskId, newStatus) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
-    } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+    try {
+
+            await fetch(url, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: newStatus })
+        });
+
+    } catch (error) {
+        console.error("Firebase update error:", error);
+    }
+}
+
+
+/**
+ * Updates the completion status of a subtask in Firebase.
+ * @param {string} taskId - The ID of the task containing the subtask.
+ * @param {string} subtaskId - The ID of the subtask to update.
+ * @param {boolean} newStatus - The new completed status.
+ * @returns {Promise&lt;void>}
+ */
+async function updateSubtaskStatus(taskId, subtaskId, newStatus) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}/subtasks/${subtaskId}.json`;
+
+    try {
+        await fetch(url, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ completed: newStatus })
+        });
+    } catch (error) {
+        console.error("Firebase update error:", error);
     }
 }
 
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Deletes a task from Firebase and updates the local task array and view.
+ * @param {string} taskId - The ID of the task to delete.
+ * @returns {Promise&lt;void>}
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
+async function deleteTask(taskId) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
+
+    try {
+        await fetch(url, {
+            method : "DELETE"
+        });
+        tasks = tasks.filter(task => task.id !== taskId);
+        updateView();
+        closeOverlay();
+    } catch (error) {
+        console.error("Firebase delete error:", error);
     }
 }
 
 /**
- * validates the input for name and email and displays error if the input is wrong
+ * Updates a task object in Firebase with new data.
+ * @param {string} taskId - The ID of the task to update.
+ * @param {Object} updatedTask - The updated task data.
+ * @returns {Promise&lt;void>}
  */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
+async function updateTaskInFirebase(taskId, updatedTask) {
+    const url = `https://join-5677e-default-rtdb.europe-west1.firebasedatabase.app/tasks/${taskId}.json`;
 
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
+    try {
+        await fetch(url, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(updatedTask)
+        });
+    } catch (error) {
+        console.error("Firebase update error:", error);
     }
 }
 
 /**
- * checks if e-mail already exists
+ * Changes the status of a task, updates Firebase, and refreshes the view.
+ * @param {string} taskId - The ID of the task to update.
+ * @param {string} newStatus - The new status to assign.
+ * @returns {Promise&lt;void>}
  */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
-
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
-}
-
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
-        }
-    }
-}
-
-/**
- * redirects after sucessfull signup back to login
- */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
-}
-
-/**
- * generates a random  number between 1 and 15 and adds a css class
- */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
-}
-</code></pre>
+async function changeTaskStatus(taskId, newStatus) {
+    let task = tasks.find(t => t.id === taskId);
+    task.status = newStatus; 
+    await updateTaskInFirebase(taskId, { status: newStatus });
+    closeStatusMenu();
+    updateView();
+}</code></pre>
         </article>
     </section>
 

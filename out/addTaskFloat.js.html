@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: signup.js</title>
+    <title>JSDoc: Source: addTaskFloat.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: signup.js</h1>
+    <h1 class="page-title">Source: addTaskFloat.js</h1>
 
     
 
@@ -26,234 +26,398 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>// signup.js
-
-let users = [];
+            <pre class="prettyprint source linenums"><code>let assignedContacts =[];
+let updatedPriority = ''; 
 
 /**
- * init runs all function which are aquired to run onload of the html
+ * Sets the selected category text and hides the category options dropdown.
+ * @param {string} category - The category selected by the user.
  */
-function signupInit () {
-    pushToUsersArray();
-    toggleSignupButton( "signup_button_activate" );
+function selectCategory(category) {
+    document.getElementById('category_add_task').innerText = category;
+    document.getElementById('options_container').style.display = 'none';
+    document.getElementById('arrowIconCategory').src = "/assets/icons/arrow_drop_down.svg"; 
 }
 
 /**
- * toggles the visibility for the password input
- * @param {string} id - id of the password input
- * @param {string} icon - id of the toggle icon
+ * Toggles the visibility of the category options dropdown and changes the arrow icon accordingly.
  */
-function togglePassword ( id, icon ) {
-    const passwordInput = document.getElementById( id );
-    const passwordIcon = document.getElementById( icon );
-    if ( passwordInput.type === "password" ) {
-        passwordInput.type = "text";
-        passwordIcon.src = "/assets/icons/visibility.png";
+function toggleOptions() {
+    const optionsContainer = document.getElementById('options_container');
+    const arrowIcon = document.getElementById('arrowIconCategory');
+    
+    if (optionsContainer.style.display === 'none') {
+        optionsContainer.style.display = 'block';
+        arrowIcon.src = "../assets/icons/arrow_drop_down_close.svg"; 
     } else {
-        passwordInput.type = "password";
-        passwordIcon.src = "/assets/icons/visibility_off.png";
+        optionsContainer.style.display = 'none';
+        arrowIcon.src = "../assets/icons/arrow_drop_down.svg"; 
     }
 }
 
 /**
- * checks if the password and the confirmed password are equal
+ * Enables the subtask input field and shows the subtask action icons.
  */
-function checkPasswords () {
-    const password = document.getElementById( "password" );
-    const confirmPassword = document.getElementById( "confirm_password" );
-    const errorMsg = document.getElementById( "error_msg_password" );
+function showSubtaskActions() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskIcons = document.getElementById("subtask-icons");
 
-    if ( password.value === confirmPassword.value &amp;&amp;
-        password.value !== "" &amp;&amp;
-        confirmPassword.value !== "" ) {
-        errorMsg.style.display = "none";
-        confirmPassword.classList.remove( "error" );
-        checkEmail();
-    } else {
-        confirmPassword.classList.add( "error" );
-        errorMsg.style.display = "block";
+    subtaskInput.disabled = false;   
+    subtaskIcons.innerHTML = subtaskActionsTemplate();
+}
+
+/**
+ * Adds a new subtask to the subtask list from the input field.
+ * Clears the input and resets icons afterward.
+ */
+function addSubtaskOverlay() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskList = document.getElementById("added-subtasks");
+
+    if (subtaskInput.value.trim() === "") {
+        return;  
     }
+    subtaskList.innerHTML += subtaskTemplate(subtaskInput.value);
+    subtaskInput.value = "";  
+    resetSubtaskIcons();  
 }
 
 /**
- * enable or disables the button to signup dependig on if the user accepted the privacy policy
- * @param {string} id - id of the button
+ * Generates HTML for a list of subtasks.
+ * @param {Array&lt;{title: string}>} subtasks - Array of subtasks.
+ * @returns {string} HTML string representing all subtasks.
  */
-function toggleSignupButton ( id ) {
-    const checkbox = document.getElementById( "signup_checkbox" );
-    const btn = document.getElementById( id );
-    if ( checkbox.checked ) {
-        btn.disabled = false;
-        btn.style.pointerEvents = "auto";
-    } else {
-        btn.disabled = true;
-        btn.style.pointerEvents = "none";
-    }
-}
-
-/**
- * validates the input for name and email and displays error if the input is wrong
- */
-function validateForm () {
-    const name = document.getElementById( "name" );
-    const email = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg" );
-
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
-        name.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        email.classList.remove( "error" );
-        name.classList.remove( "error" );
-        errorMsg.style.display = "none";
-    }
-}
-
-/**
- * checks if e-mail already exists
- */
-async function checkEmail () {
-    const emailValue = document.getElementById( "email" ).value;
-    const emailElem = document.getElementById( "email" );
-    const errorMsg = document.getElementById( "error_msg_email" );
-
-    if ( await checkEmailExists( emailValue ) ) {
-        emailElem.classList.add( "error" );
-        errorMsg.style.display = "block";
-    } else {
-        emailElem.classList.remove( "error" );
-        errorMsg.style.display = "none";
-        toggleOverlay();
-        getUserData();
-        redirectToLogin();
-    }
-}
-
-/**
- * checks the user array if the email already exists
- */
-async function checkEmailExists ( inputMail ) {
-    return users.some( u => u.userData.email === inputMail );
-}
-
-/**
- * shows the overlay for a succesfull signup for 3 seconds
- */
-function toggleOverlay () {
-    const overlay = document.getElementById( "signup_overlay" );
-    const div = document.getElementById( "signup_msg" );
-    overlay.classList.remove( "d_none" );
-    fadeInDiv( div );
-    setTimeout( () => {
-        overlay.classList.add( "d_none" );
-        div.classList.remove( "show" );
-    }, 3000 );
-}
-
-/**
- * animation for the Overlay
- */
-function fadeInDiv ( div ) {
-    div.classList.add( "show" );
-}
-
-/**
- * gets the data from the user inputs in the sigup form
- */
-function getUserData () {
-    const name = document.getElementById( "name" ).value;
-    const email = document.getElementById( "email" ).value;
-    const password = document.getElementById( "password" ).value;
-    postUserData( "/users", { name, email, password } );
-}
-
-/**
- * saves new users in the API and merges them with the contacts after
- */
-async function postUserData ( path = "", data = {} ) {
-    await fetch( BASE_URL + path + ".json", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify( data )
-    } );
-    await pushToUsersArray();
-    await mergeUsersToContacts();
-}
-
-/**
- * gets all users from the API
- */
-async function getAllUsers ( path ) {
-    const res = await fetch( BASE_URL + path + ".json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * pushes all users to the local user-array
- */
-async function pushToUsersArray () {
-    const userResponse = await getAllUsers( "/users" );
-    users = [];
-    for ( const key of Object.keys( userResponse ) ) {
-        users.push( {
-            id: key,
-            userData: userResponse[ key ]
-        } );
-    }
-}
-
-/**
- * gets all current Contacts
- */
-async function getAllContacts () {
-    const res = await fetch( BASE_URL + "/contacts.json" );
-    return ( await res.json() ) || {};
-}
-
-/**
- * adds all users to contacts
- */
-async function mergeUsersToContacts () {
-    const contactsObj = await getAllContacts();
-    const existingEmails = new Set(
-        Object.values( contactsObj ).map( c => c.email )
-    );
-
-    for ( const { userData } of users ) {
-        const { name, email } = userData;
-        if ( !existingEmails.has( email ) ) {
-            const avatarColorClass = getRandomColorClass();
-            await fetch( BASE_URL + "/contacts.json", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify( {
-                    name,
-                    email,
-                    phone: "",  // beim Signup kein Telefon vorhanden
-                    avatarColorClass
-                } )
-            } );
+function generateSubtasksHtml(subtasks) {
+    let subtasksHtml = ''; 
+    if (subtasks &amp;&amp; subtasks.length > 0) {
+        for (let i = 0; i &lt; subtasks.length; i++) {
+            subtasksHtml += subtaskTemplate(subtasks[i].title);
         }
     }
+    return subtasksHtml; 
 }
 
 /**
- * redirects after sucessfull signup back to login
+ * Resets subtask input field to disabled state and restores default subtask icons.
  */
-function redirectToLogin () {
-    setTimeout( () => {
-        window.location.href = "/html/login.html";
-    }, 3000 );
+function resetSubtaskIcons() {
+    let subtaskInput = document.getElementById("subtask");
+    let subtaskIcons = document.getElementById("subtask-icons");
+
+    subtaskInput.disabled = true;  
+    subtaskIcons.innerHTML = `&lt;img id="subtask-add-icon" src="../assets/icons/add.png" alt="Add" onclick="showSubtaskActions()">`;
+    document.getElementById("subtask").value = "";  
 }
 
 /**
- * generates a random  number between 1 and 15 and adds a css class
+ * Enables editing mode on a subtask item.
+ * @param {HTMLElement} icon - The edit icon clicked.
  */
-function getRandomColorClass () {
-    const idx = Math.floor( Math.random() * 15 ) + 1;
-    return `avatar-color-${ idx }`;
+function editSubtask(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    let subtaskText = subtaskItem.querySelector('.subtask_text'); 
+    let deleteIcon = subtaskItem.querySelector('.delete-icon');
+    let checkIcon = subtaskItem.querySelector('.check-icon'); 
+    let editIcon = subtaskItem.querySelector('.edit-icon');
+
+    subtaskText.contentEditable = "true";  
+    subtaskText.focus(); 
+    subtaskItem.classList.add('editing');
+    editIcon.style.display='none';
+    deleteIcon.style.display = 'inline';
+    checkIcon.style.display = 'inline'; 
 }
+
+/**
+ * Confirms editing of a subtask, disables content editing mode.
+ * @param {HTMLElement} icon - The check icon clicked to confirm edit.
+ */
+function confirmEdit(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    let subtaskText = subtaskItem.querySelector('.subtask_text');
+    let checkIcon = subtaskItem.querySelector('.check-icon');
+    let editIcon = subtaskItem.querySelector('.edit-icon');
+
+    subtaskText.contentEditable = "false";
+    checkIcon.style.display = 'none';
+    editIcon.style.display='inline';
+    subtaskItem.classList.remove('editing');
+}
+
+/**
+ * Deletes a subtask item from the list.
+ * @param {HTMLElement} icon - The delete icon clicked.
+ */
+function deleteSubtask(icon) {
+    let subtaskItem = icon.closest('.added_subtask');
+    subtaskItem.remove();
+}
+
+/**
+ * Displays the list of contacts with checkboxes indicating selected users.
+ */
+function displayContacts() {
+    let contactMenu = document.getElementById('contactDropdown');
+    let selectedUsers = JSON.parse(localStorage.getItem('selectedUsers')) || [];
+    contactMenu.innerHTML = '';
+
+    for (let index = 0; index &lt; contacts.length; index++) {
+        let element = contacts[index];
+        let isChecked = selectedUsers.includes(element.name);
+        contactMenu.innerHTML += generateSingleUser(element, isChecked);
+    }
+}
+
+/**
+ * Toggles the dropdown menu for selecting contacts and the container showing selected users.
+ */
+function toggleUserDropdown() {
+    let contactMenu = document.getElementById("contactDropdown");
+    let arrowIcon = document.getElementById("arrowIcon");
+    let selectedUsersContainer = document.getElementById("selected_user_container");
+
+    toggleContactMenu(contactMenu, arrowIcon);
+    toggleSelectedUsersContainer(selectedUsersContainer);
+}
+
+/**
+ * Helper to toggle the contact dropdown menu visibility and update arrow icon.
+ * @param {HTMLElement} contactMenu - The dropdown menu container.
+ * @param {HTMLElement} arrowIcon - The arrow icon element.
+ */
+function toggleContactMenu(contactMenu, arrowIcon) {
+    if (contactMenu.style.display === "flex") {
+        contactMenu.style.display = "none";
+        arrowIcon.src = "/assets/icons/arrow_drop_down.svg"; 
+    } else {
+        contactMenu.style.display = "flex";
+        displayContacts(); 
+        arrowIcon.src = "/assets/icons/arrow_drop_down_close.svg";
+    }
+}
+
+/**
+ * Helper to toggle the display of the selected users container based on its content.
+ * @param {HTMLElement} selectedUsersContainer - Container for selected user icons.
+ */
+function toggleSelectedUsersContainer(selectedUsersContainer) {
+    if (selectedUsersContainer.innerHTML.trim() === "") {
+        selectedUsersContainer.style.display = "none"; 
+    } else {
+        selectedUsersContainer.style.display = "inline-flex";
+        selectedUsersContainer.style.paddingLeft = "10px";
+        selectedUsersContainer.style.paddingTop = "10px";
+    }
+}
+
+/**
+ * Updates the list of assigned contacts based on checked checkboxes and stores it locally.
+ */
+function updateSelectedUsers() {
+    assignedContacts = getCheckedUsers();
+    renderSelectedUserIcons(assignedContacts, "selected_user_container");
+    localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
+}
+
+/**
+ * Retrieves the list of checked user names from the contacts list.
+ * @returns {string[]} Array of selected user names.
+ */
+function getCheckedUsers() {
+    let selected = [];
+    for (let contact of contacts) {
+        let checkbox = document.getElementById(`user-${contact.id}`);
+        if (checkbox &amp;&amp; checkbox.checked) {
+            selected.push(contact.name);
+        }
+    }
+    return selected;
+}
+
+/**
+ * Renders user icons for the given list of user names inside a container.
+ * Shows a "+N" icon if more than max icons are present.
+ * @param {string[]} userList - Array of user names.
+ * @param {string} containerId - The id of the container to render icons into.
+ */
+function renderSelectedUserIcons(userList, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
+    for (let i = 0; i &lt; userList.length &amp;&amp; i &lt; maxIcons; i++) {
+        let contact = contacts.find(c => c.name === userList[i]);
+        if (contact) container.innerHTML += generateUserIcon(contact);
+    }
+    if (userList.length > maxIcons) {
+        let remaining = userList.length - maxIcons;
+        container.innerHTML += `&lt;span class="user-icon more_users">+${remaining}&lt;/span>`;
+    }
+}
+
+/**
+ * Renders user icons from a list of assigned contacts (by name).
+ */
+function showSelectedUsersFromTask() {
+    renderUserIconsFromNames(assignedContacts, "selected_user_container");
+}
+
+/**
+ * Renders user icons given an array of user names inside a specified container.
+ * @param {string[]} userNames - Array of user names.
+ * @param {string} containerId - The id of the container to render into.
+ */
+function renderUserIconsFromNames(userNames, containerId) {
+    let container = document.getElementById(containerId);
+    container.innerHTML = '';
+    let maxIcons = 5;
+    for (let i = 0; i &lt; userNames.length &amp;&amp; i &lt; maxIcons; i++) {
+        container.innerHTML += generateUserIconFromName(userNames[i]);
+    }
+    if (userNames.length > maxIcons) {
+        let remaining = userNames.length - maxIcons;
+        container.innerHTML += `&lt;span class="user-icon more_users">+${remaining}&lt;/span>`;
+    }
+}
+
+/**
+ * Generates a user icon element (initials with background color) from a user name.
+ * @param {string} userName - Full name of the user.
+ * @returns {string} HTML span element string for the user icon.
+ */
+function generateUserIconFromName(userName) {
+    let parts = userName.trim().split(' ');
+    let initials = parts[0][0];
+    if (parts.length > 1) {
+        initials += parts[1][0];
+    }
+    let color = getColorForUser(userName); 
+    return `
+        &lt;span class="user-icon" style="background-color: ${color};">${initials}&lt;/span>
+    `;
+}
+
+/**
+ * Creates a new task with a given status, validates input, posts to backend, and updates UI.
+ * @param {string} status - Status of the new task (e.g., "toDo", "inProgress").
+ */
+async function createTaskByStatus(status) {
+    await pushToContactsArray();
+    const task = taskObject(status);
+    if (!validateForm(task.title, task.dueDate, task.priority, task.category)) return;
+
+    let newId = await postTask("/tasks", task);
+    if (newId) {
+        task.id = newId;
+        tasks.push(task);
+        updateTaskOnBoard(status, task);
+    }
+    createTaskFinale();
+}
+
+/**
+ * Constructs a task object from the form inputs and assigned contacts.
+ * @param {string} status - Status of the task.
+ * @returns {Object} Task object ready to be saved.
+ */
+function taskObject(status) {
+    return {
+        title: document.getElementById("title_add_task").value,
+        description: document.getElementById("description_add_task").value,
+        dueDate: document.getElementById("dateInput-add-task").value,
+        priority: getPriority(),
+        assignedUsers: assignedContacts,
+        category: document.getElementById("category_add_task").innerText,
+        subtasks: getNewSubtasks(),
+        status: status
+    };
+}
+
+/**
+ * Updates the task on the board based on its status.
+ * @param {string} status - Status of the task.
+ * @param {Object} task - The task object to update.
+ */
+function updateTaskOnBoard(status, task) {
+    if (status === 'toDo') updateToDo(task);
+    else if (status === 'inProgress') updateInProgress(task);
+    else if (status === 'awaitFeedback') updateAwaitFeedback(task);
+}
+
+/**
+ * Shows a confirmation message, resets the form and subtasks, reloads page, and closes overlay.
+ */
+function createTaskFinale() {
+    showTaskMessage();
+    resetFormFields();
+    resetSubtasks();
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+    setTimeout(closeOverlay, 1000);
+}
+
+/**
+ * Validates the task creation form fields.
+ * @param {string} title - Task title.
+ * @param {string} dueDate - Due date.
+ * @param {string} priority - Priority level.
+ * @param {string} category - Task category.
+ * @returns {boolean} True if all fields are valid, false otherwise.
+ */
+function validateForm(title, dueDate, priority, category) {
+    if (!title) {
+        showErrorMessage('Please enter a title.', 'title-error');
+        return false;
+    }
+    if (!dueDate) {
+        showErrorMessage('Please select a date.', 'date-error');
+        return false;
+    }
+    if (!priority) {
+        showErrorMessage('Please select a priority.', 'priority-error');
+        return false;
+    }
+    if (!category || category === "Select category") {
+        showErrorMessage('Please select a category.', 'category-error');
+        return false;
+    }
+    return true; 
+}
+
+/**
+ * Retrieves the selected priority radio button value.
+ * @returns {string|null} Priority string or null if none selected.
+ */
+function getPriority() {
+    if (document.getElementById("urgent-rad").checked) return "Urgent";
+    if (document.getElementById("medium-rad").checked) return "Medium";
+    if (document.getElementById("low-rad").checked) return "Low";
+    return null;
+}
+
+/**
+ * Extracts subtasks from the DOM and returns them as an array of objects.
+ * @returns {Array&lt;{title: string, completed: boolean}>} List of subtasks.
+ */
+function getNewSubtasks() {
+    let subtasks = [];
+    let subtaskElements = document.querySelectorAll("#added-subtasks li");
+
+    for (let i = 0; i &lt; subtaskElements.length; i++) {
+        let subtaskTextElement = subtaskElements[i].querySelector('.subtask_text');
+        if (subtaskTextElement) {
+            subtasks.push({
+                title: subtaskTextElement.textContent.trim(),
+                completed: false
+            });
+        }
+    }
+    return subtasks;
+}
+
+
+
+
 </code></pre>
         </article>
     </section>
