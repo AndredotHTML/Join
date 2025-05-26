@@ -155,10 +155,10 @@ function hideSubtaskIcons(event) {
     displaySubtaskIconRef.classList.remove("d_none")
 }
 
+
 /**
  * Changes the subtask input icons when the input field is fokused
  */
-
 
 function showSubtaskIcons() {
     let createSubtaskAreaRef = document.getElementById("input-subtask-icons");
@@ -170,14 +170,12 @@ function showSubtaskIcons() {
 
 
 /**
- * Clears and reset the subtask input
+ * Clears the subtask input and reset icons and styles on default.
  */
 
 function clearInputSubtask() {
-    let inputSubtaskRef = document.getElementById("subtask")
-    console.log(inputSubtaskRef);
-    
-    inputSubtaskRef.value = ""
-    changeSubtaskIconsOnInput()
-    placeForSubtasks()
+    let inputSubtaskRef = document.getElementById("subtask");
+    inputSubtaskRef.value = "";
+    changeSubtaskIconsOnInput();
+    placeForSubtasks();
 }
