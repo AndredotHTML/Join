@@ -26,7 +26,7 @@
                 </a>
                 <div id="signup_container">
                     <h2>Sign up</h2>
-                    <form id="signup_form" action="" onsubmit="checkPasswords(); return false">
+                    <form id="signup_form" novalidate action="" onsubmit="checkPasswords(); return false">
                         <div class="input_container">
                             <input required id="name" type="text" placeholder="Name">
                             <img class="input_icon_email" src="/assets/icons/person.png">
@@ -43,6 +43,7 @@
                             <img class="input_icon_password" id="password_icon"
                                 onclick="togglePassword('password','password_icon')"
                                 src="/assets/icons/visibility_off.png">
+                            <p id="error_msg_password">Youre Passwords don't match. Please try again.</p>
                         </div>
 
                         <div class="input_container">
@@ -50,7 +51,6 @@
                             <img class="input_icon_password" id="confirm_password_icon"
                                 onclick="togglePassword('confirm_password','confirm_password_icon')"
                                 src="/assets/icons/visibility_off.png">
-                            <p id="error_msg_password">Youre Passwords don't match. Please try again.</p>
                             <p id="error_msg">Check your email and name. Please try again.</p>
                         </div>
 

@@ -40,9 +40,11 @@ function checkPasswords () {
         confirmPassword.value !== "" ) {
         errorMsg.style.display = "none";
         confirmPassword.classList.remove( "error" );
+        password.classList.remove( "error" );
         checkEmail();
     } else {
         confirmPassword.classList.add( "error" );
+        password.classList.add( "error" );
         errorMsg.style.display = "block";
     }
 }
