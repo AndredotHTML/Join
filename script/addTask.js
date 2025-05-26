@@ -205,6 +205,10 @@ function clearForm() {
     placeForSubtasks()
 }
 
+/**
+ * Reset the red border style of requierd filds to their default color
+ */
+
 function clearStyleChange() {
     let titleRef = document.getElementById("title-add-task")
     let dateRef = document.getElementById("date-input-add-task")

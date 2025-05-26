@@ -3,7 +3,7 @@ let isAssignedDropdownOpen = false;
 let placeForCheckedIcon = false;
 
 /**
- * Toggles the assignedTo dropdown ,  opnes it if close, close and clear focus if open
+ * Toggles the assignedTo dropdown, opnes it if close, close and clear focus if open
  */
 function dropdownForAssigned() {
   if (!isAssignedDropdownOpen) {
@@ -15,6 +15,10 @@ function dropdownForAssigned() {
   isAssignedDropdownOpen = !isAssignedDropdownOpen;
 }
 
+
+/**
+ * Blurs and clears the input field for the searching assigned contacts
+ */
 
 function blurAssig() {
   let assignRef = document.getElementById("assigned-to-input");
@@ -56,6 +60,9 @@ function styleAssignedContOpen(assignedContactRef) {
   });
 }
 
+/**
+ * Closes the dropdown menu for assigning contacts.
+ */
 
 function closeDropdown() {
   let assignedRef = document.getElementById("assigned-to-display");
@@ -204,6 +211,11 @@ function changeCategory(options) {
 }
 
 
+/**
+ * Closes all Category dropdown options
+ * @param {NodeList} options A list of category option
+ */
+
 function closeCategoryDD(options) {
   let arrowOpenRef = document.getElementById("arrow-open-category");
   options.forEach((option) => {
@@ -212,6 +224,11 @@ function closeCategoryDD(options) {
   arrowImgToggle(arrowOpenRef);
 }
 
+
+/**
+ * Toggle the arrow icons, arrow up  if dropdown menu is open and arrow down if it's closed
+ * @param {HTMLElement} arrowOpenRef A Container that holds the arrows
+ */
 
 function arrowImgToggle(arrowOpenRef) {
   let imgRef = arrowOpenRef.querySelectorAll("img");

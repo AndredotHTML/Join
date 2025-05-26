@@ -79,6 +79,11 @@ function styleSubtaskBlur(element, subtaskContainerRef, editContainer) {
 }
 
 
+/**
+ * Deletes the selected subtask element
+ * @param {HTMLElement} element The subtask list item to be deleted
+ */
+
 function deleteSubtask(element) {
     element.remove();
     placeForSubtasks()
@@ -98,7 +103,11 @@ function subtaskEnter(event) {
 }
 
 
-function changeSubtaskIcons() {
+/**
+ * Toggles visibility of the subtask input icons.
+ */
+
+function changeSubtaskIconsOnInput() {
     let createSubtaskAreaRef = document.getElementById("input-subtask-icons");
     let displaySubtaskIconRef = document.getElementById("working-icons-opener")
     createSubtaskAreaRef.classList.toggle("d_flex");
@@ -107,18 +116,31 @@ function changeSubtaskIcons() {
 }
 
 
+/**
+ * Adds a new subtask and Toggles the visibility of the subtask input icons.
+ */
+
 function subtaskInputCheck() {
     addSubtask()
-    changeSubtaskIcons()
+    changeSubtaskIconsOnInput()
 }
 
+
+/**
+ * Sets fokus on the subtask input and toggles the subtask input icons
+ */
 
 function fokusSubtaskInp() {
     let subtaskInput = document.getElementById("subtask")
     subtaskInput.focus()
-    changeSubtaskIcons()
+    changeSubtaskIconsOnInput()
 }
 
+
+/**
+ * Changes the subtask input icons when the input field loses fokus. 
+ * @param {FokusEvent} event The fokus event triggered on losing focus
+ */
 
 function hideSubtaskIcons(event) {
     let createSubtaskAreaRef = document.getElementById("input-subtask-icons");
@@ -127,24 +149,35 @@ function hideSubtaskIcons(event) {
     if (subtaskAreaRef.contains(event.relatedTarget)) {
         return
     }
+    changeSubtaskIconsOnInput()
     createSubtaskAreaRef.classList.remove("d_flex");
     createSubtaskAreaRef.classList.add("d_none");
     displaySubtaskIconRef.classList.remove("d_none")
 }
 
+/**
+ * Changes the subtask input icons when the input field is fokused
+ */
+
 
 function showSubtaskIcons() {
     let createSubtaskAreaRef = document.getElementById("input-subtask-icons");
-    let displaySubtaskIconRef = document.getElementById("working-icons-opener")
+    let displaySubtaskIconRef = document.getElementById("working-icons-opener");
     createSubtaskAreaRef.classList.add("d_flex");
     createSubtaskAreaRef.classList.remove("d_none");
-    displaySubtaskIconRef.classList.add("d_none")
+    displaySubtaskIconRef.classList.add("d_none");
 }
 
 
+/**
+ * Clears and reset the subtask input
+ */
+
 function clearInputSubtask() {
     let inputSubtaskRef = document.getElementById("subtask")
+    console.log(inputSubtaskRef);
+    
     inputSubtaskRef.value = ""
-    changeSubtaskIcons()
+    changeSubtaskIconsOnInput()
     placeForSubtasks()
 }
