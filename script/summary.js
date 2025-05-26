@@ -6,7 +6,7 @@ user = [];
 /**
  * Fetches all Tasks for the Summary Dashboard from the API
  * @param {string} path The Firebase API URL 
- * @returns 
+ * @returns The Tasks from API to the Summary
  */
 async function getAllTasks(path) {
     let response = await fetch(BASE_URL + path + ".json");
@@ -226,7 +226,6 @@ function renderDoneTasks(id) {
 
 /**
  * Renders the Date of the next due date for the urgent tasks
- * @returns 
  */
 function renderUrgentDate() {
     const urgentTasks = tasks.filter(task => task.priority === "Urgent");

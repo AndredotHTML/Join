@@ -283,6 +283,7 @@ a {
 
 .user-greeting {
     transition: all 2s;
+    z-index: -1;
 }
 
 .greet_transition {
@@ -305,9 +306,17 @@ a {
         gap: 4px;
         flex-direction: column; 
     }
+
+    .main_wrapper {
+        height: 80vh;
+    }
 }
 
 @media (max-width: 910px) {
+    .main_wrapper {
+        height: unset;
+    }
+
     .user-greeting {
         display: flex;
         justify-content: center;

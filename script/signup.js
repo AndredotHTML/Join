@@ -90,6 +90,13 @@ async function checkEmail () {
     const emailElem = document.getElementById( "email" );
     const errorMsg = document.getElementById( "error_msg_email" );
 
+    if (!emailValue.includes(".")) {
+    emailElem.classList.add("error");
+    errorMsg.textContent = "Please enter a valid email address.";
+    errorMsg.style.display = "block";
+    return;
+    }
+
     if ( await checkEmailExists( emailValue ) ) {
         emailElem.classList.add( "error" );
         errorMsg.style.display = "block";
@@ -98,7 +105,7 @@ async function checkEmail () {
         errorMsg.style.display = "none";
         toggleOverlay();
         getUserData();
-        redirectToLogin();
+        signupRedirectToLogin();
     }
 }
 
@@ -213,9 +220,9 @@ async function mergeUsersToContacts () {
 /**
  * redirects after sucessfull signup back to login
  */
-function redirectToLogin () {
+function signupRedirectToLogin () {
     setTimeout( () => {
-        window.location.href = "/html/login.html";
+        location.href = "../index.html";
     }, 3000 );
 }
 
