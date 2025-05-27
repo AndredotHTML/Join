@@ -129,14 +129,13 @@ function generateEditOverlay(task) {
     let allSubtasks = generateSubtasksHtml(task.subtasks)
 
     return `<div id="task-message" style="display: none;">
-            <p>Task added to board</p>
+            <p>Edit successful </p>
             <img src="../assets/icons/board_icon.png" alt="Board Icon">
             </div>
             <div class="ticketEdit_overlay ">
             <div class="addTask_header_overlay">
             <div class="header_x"  onclick="closeOverlay()"><img src="../assets/icons/x.png" alt="X"></div>
             </div>
-            <div class="addTask_content">
              <input type="text" class="title_add_task" id="title_add_task" value="${task.title}">
             <div id="title-error" class="error-message" style="color: red; display: none;"></div>
             <div class="description">
@@ -202,7 +201,6 @@ function generateEditOverlay(task) {
             </div>
                     <ul id="added-subtasks"> ${allSubtasks}</ul>
             </div> 
-            </div>
                 <div class="button_div">
                 <button class="ok_btn"  onclick="saveEditedTask('${task.id}')">
                     <div class="btn_title">Ok</div>

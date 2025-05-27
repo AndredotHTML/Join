@@ -212,6 +212,7 @@
     cursor: pointer;
     height: 20px; 
     gap: 10px;
+    font-size: 19px;
 }
 
 .delete_btn {

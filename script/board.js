@@ -335,5 +335,6 @@ function showEditOverlay(id) {
     overlay.innerHTML = generateEditOverlay(task);
     localStorage.setItem('selectedUsers', JSON.stringify(assignedContacts));
     showSelectedUsersFromTask();
+    toggleSelectedUsersContainer(document.getElementById('selected_user_container'));
     radioBtnChecked(task.priority);
 }
