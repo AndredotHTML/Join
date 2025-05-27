@@ -208,6 +208,10 @@
     column-gap: 6px;
 }
 
+.btn-edit, .btn-delete {
+    font-size: 16px;
+}
+
 .contact-action .btn-edit:hover {
     color: var(--lightBlue);
     font-weight: 700;
