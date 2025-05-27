@@ -30,7 +30,7 @@ function togglePassword ( id, icon ) {
 /**
  * checks if the password and the confirmed password are equal
  */
-function checkPasswords () {
+function checkPasswords() {
     const password = document.getElementById( "password" );
     const confirmPassword = document.getElementById( "confirm_password" );
     const errorMsg = document.getElementById( "error_msg_password" );
@@ -72,15 +72,21 @@ function validateForm () {
     const name = document.getElementById( "name" );
     const email = document.getElementById( "email" );
     const errorMsg = document.getElementById( "error_msg" );
+    const errorMsgName = document.getElementById( "error_msg_name");
 
-    if ( !email.validity.valid || !name.validity.valid ) {
-        email.classList.add( "error" );
+    if (name.value.trim() === ""){
+        errorMsgName.style.display = "block";
         name.classList.add( "error" );
+        return
+    } else if (!email.validity.valid || !name.validity.valid ) {
         errorMsg.style.display = "block";
+        email.classList.add( "error" );
     } else {
         email.classList.remove( "error" );
         name.classList.remove( "error" );
         errorMsg.style.display = "none";
+        errorMsgName.style.display = "none";
+        checkPasswords()
     }
 }
 

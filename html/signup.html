@@ -26,10 +26,11 @@
                 </a>
                 <div id="signup_container">
                     <h2>Sign up</h2>
-                    <form id="signup_form" novalidate action="" onsubmit="checkPasswords(); return false">
+                    <form id="signup_form" novalidate action="" onsubmit="validateForm(); return false">
                         <div class="input_container">
                             <input required id="name" type="text" placeholder="Name">
                             <img class="input_icon_email" src="/assets/icons/person.png">
+                            <p id="error_msg_name">Please type in youre name</p>
                         </div>
 
                         <div class="input_container">
@@ -60,7 +61,7 @@
                         </div>
 
                         <div id="signup_button">
-                            <button id="signup_button_activate" disabled type="submit" onclick="validateForm()">Sign up</button>
+                            <button id="signup_button_activate" disabled type="submit">Sign up</button>
                         </div>
                     </form>
                 </div>
