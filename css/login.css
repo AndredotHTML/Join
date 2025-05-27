@@ -47,7 +47,7 @@ body {
 #to_signup {
     justify-content: flex-end;
     display: flex;
-    width: 32%;
+    width: 60%;
     gap: 40px;
     align-items: center;
     font-size: 20px;
@@ -154,15 +154,15 @@ input {
   }
 
 input.error {
-    border-bottom: 2px solid rgba(255, 0, 0, 0.534); 
+    border-bottom: 2px solid rgb(255 0 0); 
   }
 
 #error_msg {
-    color: rgba(255, 0, 0, 0.534);
+    color: rgb(255 0 0);
     position: absolute;
     bottom: -20px; 
     left: 0;
-    font-size: 12px; 
+    font-size: 14px; 
     display: none;
 }
 
@@ -205,15 +205,6 @@ input.error {
 }
 
 @media (max-width: 900px) {
-    #to_signup {
-        top: unset;
-        bottom: 10%;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 100%;
-        justify-content: center;
-    }
-
     #login_buttons {
         flex-direction: column;
     }
@@ -232,6 +223,15 @@ input.error {
         padding: 16px 32px;
     }
 
+    #to_signup {
+        top: unset;
+        bottom: 10%;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+        justify-content: center;
+    }
+
     .input_container input {
         padding-right: 0;
         font-size: 18px;
@@ -241,12 +241,16 @@ input.error {
         padding-bottom: 16px;
     }
 
+    #login_top {
+        padding: 0px;
+    }
+
     .join_logo {
-        width: 64px;
-        height: 78.03px;
+        width: 48px;
         background-size: contain;
-        top: 32px;
-        left: 32px;
+        height: 60px;
+        top: 12px;
+        left: 24px;
     }
 
     #to_signup {
@@ -256,4 +260,18 @@ input.error {
     button {
         font-size: 16px;
     }
+
+    #error_msg {
+        bottom: -34px;
+    }
+
+    #login_buttons {
+        display: flex;
+        gap: 12px;
+    }
+
+    #login_container {
+        padding: 4px 16px;
+    }
 } 
+

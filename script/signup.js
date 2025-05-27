@@ -81,6 +81,8 @@ function validateForm () {
     } else if (!email.validity.valid || !name.validity.valid ) {
         errorMsg.style.display = "block";
         email.classList.add( "error" );
+        name.classList.remove( "error" );
+        errorMsgName.style.display = "none";
     } else {
         email.classList.remove( "error" );
         name.classList.remove( "error" );
